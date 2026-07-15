@@ -1,0 +1,109 @@
+﻿<style>
+  .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .page-header h2 { margin: 0; font-size: 1.5rem; color: #1a1a2e; }
+  .table-container { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e9ecef; }
+  th { background: #f8f9fa; font-weight: 600; color: #495057; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  tr:hover { background: #f8f9fa; }
+  .loading { padding: 2rem; text-align: center; color: #6c757d; }
+  .btn { padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem; }
+  .btn-sm { padding: 0.25rem 0.625rem; font-size: 0.8125rem; }
+  .btn-primary { background: #4361ee; color: #fff; }
+  .btn-ghost { background: transparent; color: #4361ee; border: 1px solid #4361ee; }
+  .pagination { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-top: 1px solid #e9ecef; }
+  .pagination-info { font-size: 0.875rem; color: #6c757d; }
+  .pagination-controls { display: flex; gap: 4px; align-items: center; }
+  .pagination-controls button { padding: 4px 8px; border: 1px solid #dee2e6; background: #fff; border-radius: 4px; cursor: pointer; font-size: 0.8125rem; }
+  .pagination-controls button:hover:not(:disabled) { background: #e9ecef; }
+  .pagination-controls button.active { background: #4361ee; color: #fff; border-color: #4361ee; }
+  .pagination-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .pagination-controls select { padding: 4px 8px; border: 1px solid #dee2e6; border-radius: 4px; font-size: 0.8125rem; }
+  .detail-panel { position: fixed; top: 0; right: 0; width: 400px; height: 100vh; background: #fff; box-shadow: -2px 0 8px rgba(0,0,0,0.15); z-index: 1000; padding: 1.5rem; overflow-y: auto; }
+  .detail-panel h3 { margin-top: 0; }
+  .detail-row { display: flex; padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; }
+  .detail-label { font-weight: 600; width: 120px; font-size: 0.875rem; color: #495057; }
+  .detail-value { flex: 1; font-size: 0.875rem; word-break: break-all; }
+  .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); z-index: 999; }
+  .user-badge { display: inline-block; background: #e9ecef; padding: 2px 8px; border-radius: 4px; font-size: 0.8125rem; }
+</style>
+
+<div class="page-header">
+  <h2>Audit Logs</h2>
+</div>
+
+<div class="table-container">
+  @if (loading) {
+    <div class="loading">Loading...</div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Action</th>
+          <th>Entity Type</th>
+          <th>Entity ID</th>
+          <th>IP Address</th>
+          <th>User</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of pagedData?.content || []; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.action }}</td>
+            <td>{{ item.entityType }}</td>
+            <td>{{ item.entityId }}</td>
+            <td>{{ item.ipAddress }}</td>
+            <td><span class="user-badge">{{ getUserName(item) }}</span></td>
+            <td>{{ item.createdAt }}</td>
+            <td>
+              <button class="btn btn-sm btn-ghost" (click)="viewDetails(item)">View</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr><td colspan="8" class="loading">No records found</td></tr>
+        }
+      </tbody>
+    </table>
+    <div class="pagination">
+      <div class="pagination-info">
+        Showing {{ (pagedData?.page || 0) * (pagedData?.size || 0) + 1 }} to {{ Math.min(((pagedData?.page || 0) + 1) * (pagedData?.size || 0), pagedData?.totalElements || 0) }} of {{ pagedData?.totalElements || 0 }}
+      </div>
+      <div class="pagination-controls">
+        <button [disabled]="pagedData?.first" (click)="onPageChange({...params, page: (pagedData?.page || 1) - 1})">┬½</button>
+        <button [disabled]="pagedData?.last" (click)="onPageChange({...params, page: (pagedData?.page || 0) + 1})">┬╗</button>
+        <select [value]="params.size" (change)="onPageChange({...params, size: +$any($event.target).value, page: 0})">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+  }
+</div>
+
+@if (selectedLog) {
+  <div class="overlay" (click)="closeDetails()"></div>
+  <div class="detail-panel">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3>Audit Log Details</h3>
+      <button class="btn btn-sm btn-ghost" (click)="closeDetails()">Close</button>
+    </div>
+    <div class="detail-row"><div class="detail-label">ID</div><div class="detail-value">{{ selectedLog.id }}</div></div>
+    <div class="detail-row"><div class="detail-label">Action</div><div class="detail-value">{{ selectedLog.action }}</div></div>
+    <div class="detail-row"><div class="detail-label">Entity Type</div><div class="detail-value">{{ selectedLog.entityType }}</div></div>
+    <div class="detail-row"><div class="detail-label">Entity ID</div><div class="detail-value">{{ selectedLog.entityId }}</div></div>
+    <div class="detail-row"><div class="detail-label">User</div><div class="detail-value">{{ getUserName(selectedLog) }}</div></div>
+    <div class="detail-row"><div class="detail-label">IP Address</div><div class="detail-value">{{ selectedLog.ipAddress }}</div></div>
+    <div class="detail-row"><div class="detail-label">Date</div><div class="detail-value">{{ selectedLog.createdAt }}</div></div>
+    @if (selectedLog.oldValue) {
+      <div class="detail-row"><div class="detail-label">Old Value</div><div class="detail-value" style="font-family: monospace; font-size: 0.75rem; white-space: pre-wrap;">{{ selectedLog.oldValue }}</div></div>
+    }
+    @if (selectedLog.newValue) {
+      <div class="detail-row"><div class="detail-label">New Value</div><div class="detail-value" style="font-family: monospace; font-size: 0.75rem; white-space: pre-wrap;">{{ selectedLog.newValue }}</div></div>
+    }
+  </div>
+}

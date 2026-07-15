@@ -1,0 +1,151 @@
+﻿<style>
+  .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .page-header h2 { margin: 0; font-size: 1.5rem; color: #1a1a2e; }
+  .btn { padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.375rem; }
+  .btn-primary { background: #4361ee; color: #fff; }
+  .btn-primary:hover { background: #3a56d4; }
+  .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.8125rem; }
+  .btn-success { background: #2ec4b6; color: #fff; }
+  .btn-danger { background: #ef233c; color: #fff; }
+  .btn-ghost { background: transparent; color: #4361ee; border: 1px solid #4361ee; }
+  .tree { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem; }
+  .tree-item { padding: 0.5rem 0.75rem; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; gap: 0.5rem; }
+  .tree-item:hover { background: #f8f9fa; }
+  .tree-item.level-0 { font-weight: 600; }
+  .tree-item.level-1 { padding-left: 2rem; }
+  .tree-item.level-2 { padding-left: 3.5rem; }
+  .tree-item .expand-btn { background: none; border: none; cursor: pointer; width: 20px; font-size: 0.8rem; color: #6c757d; }
+  .tree-item .title { flex: 1; }
+  .tree-item .meta { font-size: 0.75rem; color: #6c757d; display: flex; gap: 0.75rem; }
+  .tree-item .meta span { background: #e9ecef; padding: 2px 6px; border-radius: 4px; }
+  .tree-item .actions { display: flex; gap: 0.25rem; }
+  .loading { padding: 2rem; text-align: center; color: #6c757d; }
+  .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+  .modal { background: #fff; border-radius: 8px; padding: 1.5rem; width: 500px; max-height: 80vh; overflow-y: auto; }
+  .modal h3 { margin-top: 0; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; margin-bottom: 0.25rem; font-weight: 500; font-size: 0.875rem; }
+  .form-group input, .form-group select { width: 100%; padding: 0.5rem; border: 1px solid #dee2e6; border-radius: 4px; font-size: 0.875rem; box-sizing: border-box; }
+  .form-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
+</style>
+
+<div class="page-header">
+  <h2>Menu Management</h2>
+  <button class="btn btn-primary" (click)="openCreate()">+ Add Root Menu</button>
+</div>
+
+@if (loading) {
+  <div class="loading">Loading menus...</div>
+} @else {
+  <div class="tree">
+    @for (menu of menus; track menu.id) {
+      <div class="tree-item level-0">
+        @if (menu.children && menu.children.length > 0) {
+          <button class="expand-btn" (click)="toggleExpand(menu)">{{ menu._expanded ? 'Γû╝' : 'Γû╢' }}</button>
+        } @else {
+          <span class="expand-btn"></span>
+        }
+        <span class="title">{{ menu.title }}</span>
+        <div class="meta">
+          <span>{{ menu.module }}</span>
+          <span>{{ menu.route }}</span>
+          <span>{{ menu.permissionCode }}</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-sm btn-ghost" (click)="openCreate(menu.id)">+ Child</button>
+          <button class="btn btn-sm btn-primary" (click)="openEdit(menu)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteMenu(menu.id)">Delete</button>
+        </div>
+      </div>
+      @if (menu._expanded && menu.children) {
+        @for (child of menu.children; track child.id) {
+          <div class="tree-item level-1">
+            @if (child.children && child.children.length > 0) {
+              <button class="expand-btn" (click)="toggleExpand(child)">{{ child._expanded ? 'Γû╝' : 'Γû╢' }}</button>
+            } @else {
+              <span class="expand-btn"></span>
+            }
+            <span class="title">{{ child.title }}</span>
+            <div class="meta">
+              <span>{{ child.module }}</span>
+              <span>{{ child.route }}</span>
+            </div>
+            <div class="actions">
+              <button class="btn btn-sm btn-ghost" (click)="openCreate(child.id)">+ Child</button>
+              <button class="btn btn-sm btn-primary" (click)="openEdit(child)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteMenu(child.id)">Delete</button>
+            </div>
+          </div>
+          @if (child._expanded && child.children) {
+            @for (grandchild of child.children; track grandchild.id) {
+              <div class="tree-item level-2">
+                <span class="expand-btn"></span>
+                <span class="title">{{ grandchild.title }}</span>
+                <div class="meta">
+                  <span>{{ grandchild.route }}</span>
+                </div>
+                <div class="actions">
+                  <button class="btn btn-sm btn-primary" (click)="openEdit(grandchild)">Edit</button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteMenu(grandchild.id)">Delete</button>
+                </div>
+              </div>
+            }
+          }
+        }
+      }
+    } @empty {
+      <div class="loading">No menus found. Create your first menu.</div>
+    }
+  </div>
+}
+
+@if (showModal) {
+  <div class="modal-overlay" (click)="showModal = false">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3>{{ isEditing ? 'Edit Menu' : 'Create Menu' }}</h3>
+      <div class="form-group">
+        <label>Title</label>
+        <input [(ngModel)]="selectedMenu.title" placeholder="Menu title">
+      </div>
+      <div class="form-group">
+        <label>Icon</label>
+        <input [(ngModel)]="selectedMenu.icon" placeholder="e.g. fas fa-users">
+      </div>
+      <div class="form-group">
+        <label>Route</label>
+        <input [(ngModel)]="selectedMenu.route" placeholder="e.g. /security/users">
+      </div>
+      <div class="form-group">
+        <label>Module</label>
+        <select [(ngModel)]="selectedMenu.module">
+          @for (mod of modules; track mod) {
+            <option [value]="mod">{{ mod }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Permission Code</label>
+        <select [(ngModel)]="selectedMenu.permissionCode">
+          <option value="">None</option>
+          @for (perm of allPermissions; track perm.id) {
+            <option [value]="perm.code">{{ perm.code }} - {{ perm.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Order No</label>
+        <input type="number" [(ngModel)]="selectedMenu.orderNo">
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="selectedMenu.visible"> Visible</label>
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="selectedMenu.active"> Active</label>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" (click)="showModal = false">Cancel</button>
+        <button class="btn btn-primary" (click)="save()">{{ isEditing ? 'Update' : 'Create' }}</button>
+      </div>
+    </div>
+  </div>
+}

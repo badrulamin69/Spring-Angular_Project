@@ -1,0 +1,41 @@
+package com.badrulamin.University_Management.service;
+
+import com.badrulamin.University_Management.entity.ExamSchedule;
+import com.badrulamin.University_Management.repository.ExamScheduleRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class ExamScheduleService {
+
+    private final ExamScheduleRepository examScheduleRepository;
+
+    public Page<ExamSchedule> findAll(Pageable pageable) {
+        return examScheduleRepository.findAll(pageable);
+    }
+
+    public ExamSchedule findById(Long id) {
+        return examScheduleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ExamSchedule not found with id: " + id));
+    }
+
+    public ExamSchedule save(ExamSchedule examSchedule) {
+        return examScheduleRepository.save(examSchedule);
+    }
+
+    public ExamSchedule update(Long id, ExamSchedule examSchedule) {
+        findById(id);
+        examSchedule.setId(id);
+        return examScheduleRepository.save(examSchedule);
+    }
+
+    public void delete(Long id) {
+        findById(id);
+        examScheduleRepository.deleteById(id);
+    }
+}

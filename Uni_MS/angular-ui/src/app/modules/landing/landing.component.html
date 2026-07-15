@@ -1,0 +1,361 @@
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     SMART TOP BAR
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<nav class="topbar" [class.scrolled]="navScrolled">
+  <div class="topbar-inner">
+    <a class="topbar-brand" routerLink="/">
+      <span class="brand-name">UMS<span>ERP</span></span>
+    </a>
+
+    <div class="topbar-nav">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#modules">Modules</a>
+      <a href="#stats">Stats</a>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="theme-toggle-btn" (click)="toggleTheme()" [attr.aria-label]="isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme'">
+        <span class="material-symbols-outlined" *ngIf="!isDarkMode">dark_mode</span>
+        <span class="material-symbols-outlined" *ngIf="isDarkMode">light_mode</span>
+      </button>
+      <a routerLink="/login" class="btn-ghost">Sign In</a>
+      <a routerLink="/login" class="btn-smart">
+        Get Started
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     HERO
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <div class="hero-badge-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        Enterprise-Grade University Platform
+      </div>
+
+      <h1 class="hero-title">
+        The Smart Way to<br>
+        <span class="gradient">Manage Your University</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        A complete ERP solution powering 15 academic and administrative modules.
+        Role-based access, dynamic menus, server-side pagination, and full audit logging
+        ΓÇö built for scale.
+      </p>
+
+      <div class="hero-actions">
+        <a routerLink="/login" class="btn-hero-primary">
+          Start Free Demo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="#features" class="btn-hero-secondary">
+          Explore Features
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 16 16 12 12 8"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-dashboard">
+        <div class="dash-topbar">
+          <div class="dash-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="dash-nav">
+            <span class="dash-nav-item active">Dashboard</span>
+            <span class="dash-nav-item">Students</span>
+            <span class="dash-nav-item">Finance</span>
+          </div>
+        </div>
+
+        <div class="dash-stats">
+          <div class="dash-stat">
+            <div class="dash-stat-label">Students</div>
+            <div class="dash-stat-value" style="color: #818cf8;">2,847</div>
+            <div class="dash-stat-change up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+              +12.5%
+            </div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Administration</div>
+            <div class="dash-stat-value" style="color: #34d399;">186</div>
+            <div class="dash-stat-change up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+              +4.2%
+            </div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Revenue</div>
+            <div class="dash-stat-value" style="color: #fbbf24;">$1.2M</div>
+            <div class="dash-stat-change up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+              +18.7%
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-chart">
+          <div class="dash-chart-header">
+            <span class="dash-chart-title">Enrollment Trend</span>
+            <div class="dash-chart-legend">
+              <span class="legend-dot primary">This Year</span>
+              <span class="legend-dot secondary">Last Year</span>
+            </div>
+          </div>
+          <div class="dash-bars">
+            <div class="dash-bar" style="height: 40%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 55%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 35%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 70%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 50%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 65%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 45%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 80%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 60%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 75%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 55%; background: linear-gradient(180deg, #6366f1, #4f46e5);"></div>
+            <div class="dash-bar" style="height: 90%; background: linear-gradient(180deg, #818cf8, #6366f1);"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-card float-card-1">
+        <div class="float-card-inner">
+          <div class="float-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="float-text">RBAC Secured</div>
+            <div class="float-sub">50+ permissions</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-card float-card-2">
+        <div class="float-card-inner">
+          <div class="float-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="float-text">Audit Logged</div>
+            <div class="float-sub">Full activity trail</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     TRUSTED BY
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<section class="trusted">
+  <p class="trusted-label">Built for Modern Universities</p>
+  <div class="trusted-logos">
+    <span class="trusted-logo">Spring Boot 3.4</span>
+    <span class="trusted-logo">Angular 21</span>
+    <span class="trusted-logo">MySQL 8.0</span>
+    <span class="trusted-logo">JWT Auth</span>
+    <span class="trusted-logo">REST API</span>
+  </div>
+</section>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     FEATURES
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<section class="features-section" id="features">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Features</span>
+      <h2 class="section-title">15 Modules. Zero Compromises.</h2>
+      <p class="section-desc">
+        Every module is database-driven with server-side pagination, permission-based UI,
+        and full audit logging. Nothing is hardcoded.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      @for (f of features; track f.title) {
+        <div class="feature-card" [style.--accent]="f.color">
+          <div class="feature-icon-wrap" [style.background]="f.color + '15'" [style.color]="f.color">
+            <span class="material-symbols-outlined">{{ f.icon }}</span>
+          </div>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     HOW IT WORKS
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<section class="how-section" id="how">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">How It Works</span>
+      <h2 class="section-title">Setup in Four Steps</h2>
+      <p class="section-desc">
+        Super Admin configures everything from the UI. No code changes needed.
+      </p>
+    </div>
+
+    <div class="steps-grid">
+      @for (step of steps; track step.num) {
+        <div class="step-card">
+          <div class="step-number">{{ step.num }}</div>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     MODULES
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<section class="modules-section" id="modules">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Modules</span>
+      <h2 class="section-title">15 Complete Modules</h2>
+      <p class="section-desc">
+        Each module is fully functional with CRUD operations, server-side pagination,
+        role-based access control, and audit logging. Click any module to explore.
+      </p>
+    </div>
+
+    <div class="modules-grid">
+      @for (m of modules; track m.name) {
+        <a class="module-card" routerLink="/login" [style.--mod-color]="m.color">
+          <div class="module-icon" [style.background]="m.color + '15'" [style.color]="m.color">
+            <span class="material-symbols-outlined">{{ m.icon }}</span>
+          </div>
+          <div class="module-info">
+            <h3>{{ m.name }}</h3>
+            <p>{{ m.desc }}</p>
+          </div>
+          <div class="module-meta">
+            <span class="module-count">{{ m.count }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     STATS
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<section class="stats-section" id="stats">
+  <div class="stats-row">
+    @for (s of stats; track s.label) {
+      <div class="stat-block">
+        <div class="stat-value">{{ s.value }}</div>
+        <div class="stat-label">{{ s.label }}</div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     CTA
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<section class="cta-section">
+  <div class="cta-container">
+    <div class="cta-glow"></div>
+    <div class="cta-box">
+      <h2 class="cta-title">Ready to See It in Action?</h2>
+      <p class="cta-desc">
+        Explore the full system with pre-configured demo accounts.
+        Each role sees a different dashboard and menu set.
+      </p>
+
+      <div class="cta-demo-grid">
+        <div class="demo-item">
+          <div class="demo-item-role">Super Admin</div>
+          <div class="demo-item-creds">admin / admin123</div>
+        </div>
+        <div class="demo-item">
+          <div class="demo-item-role">Registrar</div>
+          <div class="demo-item-creds">registrar / registrar123</div>
+        </div>
+        <div class="demo-item">
+          <div class="demo-item-role">HR Manager</div>
+          <div class="demo-item-creds">hrmanager / hr123</div>
+        </div>
+      </div>
+
+      <a routerLink="/login" class="btn-hero-primary">
+        Launch Demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+     FOOTER
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="topbar-brand" routerLink="/">
+          <span class="brand-name">UMS<span>ERP</span></span>
+        </a>
+        <p>Enterprise-grade university management system built with modern technologies for scalability and security.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="#stats">Statistics</a>
+        <a routerLink="/login">Sign In</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Modules</h4>
+        <a href="#modules">Academic</a>
+        <a href="#modules">Admissions</a>
+        <a href="#modules">Finance</a>
+        <a href="#modules">Library</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Tech Stack</h4>
+        <a href="#">Spring Boot 3.4</a>
+        <a href="#">Angular 21</a>
+        <a href="#">MySQL 8.0</a>
+        <a href="#">JWT Auth</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 UMSERP. University Management System.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Support</a>
+      </div>
+    </div>
+  </div>
+</footer>

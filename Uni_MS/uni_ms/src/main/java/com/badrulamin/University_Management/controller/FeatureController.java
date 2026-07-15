@@ -1,0 +1,156 @@
+package com.badrulamin.University_Management.controller;
+
+import com.badrulamin.University_Management.entity.Feature;
+import com.badrulamin.University_Management.entity.FeatureAuditLog;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
+import com.badrulamin.University_Management.service.FeatureService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/features")
+public class FeatureController {
+
+    @Autowired
+    private FeatureService featureService;
+
+    @GetMapping
+    public ResponseEntity<?> getAllFeatures() {
+        List<Feature> features = featureService.getAllFeatures();
+        return ResponseEntity.ok(ApiResponse.success(features));
+    }
+
+    @GetMapping("/states")
+    public ResponseEntity<?> getFeatureStates() {
+        Map<String, Boolean> states = featureService.getAllFeatureStates();
+        return ResponseEntity.ok(ApiResponse.success(states));
+    }
+
+    @GetMapping("/enabled")
+    public ResponseEntity<?> getEnabledFeatures() {
+        List<String> enabled = featureService.getAllFeatureStates().entrySet().stream()
+                .filter(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
+                .toList();
+        return ResponseEntity.ok(ApiResponse.success(enabled));
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<?> getStats() {
+        return ResponseEntity.ok(ApiResponse.success(featureService.getFeatureStats()));
+    }
+
+    @GetMapping("/modules")
+    public ResponseEntity<?> getModules() {
+        return ResponseEntity.ok(ApiResponse.success(featureService.getModules()));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<?> getCategories() {
+        return ResponseEntity.ok(ApiResponse.success(featureService.getCategories()));
+    }
+
+    @GetMapping("/module/{moduleName}")
+    public ResponseEntity<?> getByModule(@PathVariable String moduleName) {
+        return ResponseEntity.ok(ApiResponse.success(featureService.getFeaturesByModule(moduleName)));
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity<?> getByCategory(@PathVariable String category) {
+        return ResponseEntity.ok(ApiResponse.success(featureService.getFeaturesByCategory(category)));
+    }
+
+    @GetMapping("/audit-logs")
+    public ResponseEntity<?> getAuditLogs(@RequestParam(required = false) String featureKey) {
+        return ResponseEntity.ok(ApiResponse.success(featureService.getAuditLogs(featureKey)));
+    }
+
+    @GetMapping("/{featureKey}")
+    public ResponseEntity<?> getByKey(@PathVariable String featureKey) {
+        Optional<Feature> feature = featureService.getFeatureByKey(featureKey);
+        if (feature.isEmpty()) {
+            return ResponseEntity.badRequest().body(ApiResponse.error("Feature not found"));
+        }
+        return ResponseEntity.ok(ApiResponse.success(feature.get()));
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<?> createFeature(@RequestBody Feature feature) {
+        try {
+            Feature created = featureService.createFeature(feature, "superadmin");
+            return ResponseEntity.ok(ApiResponse.success("Feature created", created));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<?> updateFeature(@PathVariable Long id, @RequestBody Feature feature) {
+        try {
+            Feature updated = featureService.updateFeature(id, feature, "superadmin");
+            return ResponseEntity.ok(ApiResponse.success("Feature updated", updated));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<?> deleteFeature(@PathVariable Long id) {
+        try {
+            featureService.deleteFeature(id);
+            return ResponseEntity.ok(ApiResponse.success("Feature deleted", null));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    @PutMapping("/{featureKey}/toggle")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<?> toggleFeature(
+            @PathVariable String featureKey,
+            @RequestBody Map<String, Object> body,
+            HttpServletRequest request) {
+        boolean enabled = (Boolean) body.getOrDefault("enabled", true);
+        try {
+            Feature toggled = featureService.toggleFeature(featureKey, enabled, "superadmin", request);
+            return ResponseEntity.ok(ApiResponse.success("Feature toggled", toggled));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    @PutMapping("/bulk-toggle")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<?> bulkToggle(
+            @RequestBody Map<String, Object> body,
+            HttpServletRequest request) {
+        String moduleName = (String) body.get("moduleName");
+        boolean enabled = (Boolean) body.getOrDefault("enabled", true);
+        List<Feature> toggled = featureService.bulkToggle(moduleName, enabled, "superadmin", request);
+        return ResponseEntity.ok(ApiResponse.success("Module features toggled", toggled));
+    }
+
+    @GetMapping("/check/{featureKey}")
+    public ResponseEntity<?> checkFeature(@PathVariable String featureKey) {
+        boolean enabled = featureService.isFeatureEnabled(featureKey);
+        Map<String, Object> result = new HashMap<>();
+        result.put("featureKey", featureKey);
+        result.put("enabled", enabled);
+        return ResponseEntity.ok(ApiResponse.success(result));
+    }
+
+    @PostMapping("/reload-cache")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    public ResponseEntity<?> reloadCache() {
+        featureService.loadFeaturesIntoCache();
+        return ResponseEntity.ok(ApiResponse.success("Feature cache reloaded", null));
+    }
+}

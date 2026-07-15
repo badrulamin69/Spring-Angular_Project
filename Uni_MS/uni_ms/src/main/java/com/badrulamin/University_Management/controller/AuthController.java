@@ -63,6 +63,7 @@ public class AuthController {
         "ROLE_TRANSPORT_MANAGER",
         "ROLE_REGISTRAR",
         "ROLE_HR_MANAGER",
+        "ROLE_FINANCE",
         "ROLE_GENERAL_STAFF",
         "ROLE_APPLICANT",
         "ROLE_STUDENT"
@@ -229,6 +230,7 @@ public class AuthController {
 
     @PostMapping("/logout")
     @PreAuthorize("isAuthenticated()")
+    @org.springframework.transaction.annotation.Transactional
     public ResponseEntity<?> logoutUser(HttpServletRequest request) {
         String jwt = parseJwt(request);
         if (jwt != null) {
@@ -467,7 +469,9 @@ public class AuthController {
                 user.setLockedUntil(LocalDateTime.now().plusMinutes(LOCKOUT_MINUTES));
             }
             userRepository.save(user);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(AuthController.class).error("Failed to increment login attempts for user: {}", user.getUsername(), e);
+        }
     }
 
     private List<Map<String, Object>> buildMenuTree(User user) {
@@ -499,7 +503,9 @@ public class AuthController {
         map.put("visible", menu.getVisible());
         if (menu.getChildren() != null && !menu.getChildren().isEmpty()) {
             List<Map<String, Object>> filteredChildren = menu.getChildren().stream()
-                    .filter(child -> child.getPermissionCode() == null || userPermissions.contains(child.getPermissionCode()))
+                    .filter(child -> (child.getActive() == null || child.getActive()) 
+                            && (child.getVisible() == null || child.getVisible())
+                            && (child.getPermissionCode() == null || userPermissions.contains(child.getPermissionCode())))
                     .map(child -> menuToMap(child, userPermissions))
                     .collect(Collectors.toList());
             if (!filteredChildren.isEmpty()) {
@@ -521,7 +527,9 @@ public class AuthController {
             User user = userRepository.findByUsername(username).orElse(null);
             lh.setUser(user);
             loginHistoryRepository.save(lh);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(AuthController.class).error("Failed to record login attempt for user: {}", username, e);
+        }
     }
 
     private void recordLogout(User user) {
@@ -531,7 +539,9 @@ public class AuthController {
                     h.setLogoutTimestamp(LocalDateTime.now());
                     loginHistoryRepository.save(h);
                 });
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(AuthController.class).error("Failed to record logout for user: {}", user.getUsername(), e);
+        }
     }
 
     private void saveRefreshToken(String token, User user) {
@@ -563,7 +573,10 @@ public class AuthController {
         try {
             LoginSession session = new LoginSession();
             session.setUser(user);
-            session.setSessionToken(token.substring(0, Math.min(token.length(), 500)));
+            java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(token.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            String tokenHash = bytesToHex(hash);
+            session.setSessionToken(tokenHash);
             session.setIpAddress(ipAddress);
             session.setLoginTime(LocalDateTime.now());
             session.setActive(true);
@@ -573,7 +586,17 @@ public class AuthController {
                 session.setDeviceType(parseDevice(userAgent));
             }
             loginSessionRepository.save(session);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(AuthController.class).error("Failed to create login session for user: {}", user.getUsername(), e);
+        }
+    }
+
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder(bytes.length * 2);
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 
     private void terminateActiveSession(Long userId) {
@@ -584,7 +607,9 @@ public class AuthController {
                 session.setLogoutTime(LocalDateTime.now());
                 loginSessionRepository.save(session);
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(AuthController.class).error("Failed to terminate active sessions for user id: {}", userId, e);
+        }
     }
 
     private void logActivity(String username, String action, String module, String description, String entityType, String entityId, String ipAddress, String userAgent) {
@@ -601,7 +626,9 @@ public class AuthController {
             User user = userRepository.findByUsername(username).orElse(null);
             log.setUser(user);
             activityLogRepository.save(log);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(AuthController.class).error("Failed to log activity for user: {} action: {}", username, action, e);
+        }
     }
 
     private String parseBrowser(String userAgent) {

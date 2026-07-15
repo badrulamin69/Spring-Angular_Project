@@ -105,6 +105,7 @@ export class LayoutComponent implements OnInit {
   logout() {
     this.showUserMenu = false;
     this.sessionTimeoutService.stop();
+    this.menuService.clearMenus();
     this.authService.logout().subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => {

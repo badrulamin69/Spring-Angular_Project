@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/dashboards/super-admin")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')")
+@PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', 'ROLE_ADMIN')")
 public class SuperAdminDashboardController {
 
     private final UniversityRepository universityRepository;

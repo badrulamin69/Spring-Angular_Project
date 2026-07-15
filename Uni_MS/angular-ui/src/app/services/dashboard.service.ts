@@ -14,6 +14,7 @@ export class DashboardService {
     const role = this.currentUser.roleCode();
     const endpoints: Record<string, string> = {
       'ROLE_SUPER_ADMIN': 'super-admin',
+      'ROLE_ADMIN': 'super-admin',
       'ROLE_UNIVERSITY_ADMIN': 'university-admin',
       'ROLE_DEPT_HEAD': 'department-head',
       'ROLE_FACULTY': 'faculty',

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 import { TokenService } from './token.service';
 import { CurrentUserService } from './current-user.service';
 import { environment } from '../../environments/environment';
@@ -23,15 +23,16 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
         const token = response?.data?.token || response?.token;
-        if (token) {
-          this.tokenService.saveToken(token);
-          const refreshToken = response?.data?.refreshToken || response?.refreshToken;
-          if (refreshToken) {
-            this.tokenService.saveRefreshToken(refreshToken);
-          }
-          const userData = response?.data || response;
-          this.currentUserService.setUser(userData);
+        if (!token) {
+          throw new Error('No authentication token received from server');
         }
+        this.tokenService.saveToken(token);
+        const refreshToken = response?.data?.refreshToken || response?.refreshToken;
+        if (refreshToken) {
+          this.tokenService.saveRefreshToken(refreshToken);
+        }
+        const userData = response?.data || response;
+        this.currentUserService.setUser(userData);
       })
     );
   }

@@ -357,16 +357,20 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     private Role createRole(String name, String code, String desc, Set<Permission> permissions, int level, Role parentRole) {
-        Role role = roleRepository.findByCode(code).orElseGet(() -> {
-            Role r = new Role();
-            r.setName(name);
-            r.setCode(code);
-            r.setDescription(desc);
-            r.setActive(true);
-            r.setLevel(level);
-            r.setParentRole(parentRole);
-            return r;
-        });
+        Role role = roleRepository.findByCode(code)
+                .or(() -> roleRepository.findByName(name))
+                .orElseGet(() -> {
+                    Role r = new Role();
+                    r.setName(name);
+                    r.setCode(code);
+                    r.setDescription(desc);
+                    r.setActive(true);
+                    r.setLevel(level);
+                    r.setParentRole(parentRole);
+                    return r;
+                });
+        if (role.getCode() == null) role.setCode(code);
+        if (role.getName() == null) role.setName(name);
         role.setPermissions(permissions);
         role.setLevel(level);
         role.setParentRole(parentRole);

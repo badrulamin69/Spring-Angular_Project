@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SessionTimeoutService } from '../../../services/session-timeout.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-session-timeout-warning',
@@ -58,6 +59,10 @@ import { SessionTimeoutService } from '../../../services/session-timeout.service
 })
 export class SessionTimeoutWarningComponent implements OnInit, OnDestroy {
   private sessionService = inject(SessionTimeoutService);
+<<<<<<< HEAD
+=======
+  private authService = inject(AuthService);
+>>>>>>> 9555f3aecfb465097f98f175bfaea2d4cde79dea
   private router = inject(Router);
   private sub?: Subscription;
 
@@ -94,7 +99,14 @@ export class SessionTimeoutWarningComponent implements OnInit, OnDestroy {
     this.sessionService.stop();
     this.visible = false;
     if (this.countdownInterval) clearInterval(this.countdownInterval);
+<<<<<<< HEAD
     this.router.navigate(['/login']);
+=======
+    this.authService.logout().subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: () => this.router.navigate(['/login'])
+    });
+>>>>>>> 9555f3aecfb465097f98f175bfaea2d4cde79dea
   }
 
   ngOnDestroy() {

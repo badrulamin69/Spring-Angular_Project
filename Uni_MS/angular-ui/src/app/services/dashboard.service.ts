@@ -11,6 +11,7 @@ export class DashboardService {
   private apiUrl = `${environment.apiUrl}/dashboard`;
 
   getDashboard(): Observable<any> {
+<<<<<<< HEAD
     return this.http.get<any>(`${this.apiUrl}/my`).pipe(
       map(response => {
         const payload = response?.data || response;
@@ -92,6 +93,26 @@ export class DashboardService {
       'Total Alumni': 'totalAlumni',
       'Recent Submissions': 'recentSubmissions',
       'Recent Activities': 'recentActivities',
+=======
+    const role = this.currentUser.roleCode();
+    const endpoints: Record<string, string> = {
+      'ROLE_SUPER_ADMIN': 'super-admin',
+      'ROLE_ADMIN': 'super-admin',
+      'ROLE_UNIVERSITY_ADMIN': 'university-admin',
+      'ROLE_DEPT_HEAD': 'department-head',
+      'ROLE_FACULTY': 'faculty',
+      'ROLE_ADVISOR': 'faculty',
+      'ROLE_ADMISSION_OFFICER': 'admission-officer',
+      'ROLE_ACCOUNTS_OFFICER': 'accounts-officer',
+      'ROLE_LIBRARIAN': 'librarian',
+      'ROLE_HALL_PROVOST': 'university-admin',
+      'ROLE_TRANSPORT_MANAGER': 'university-admin',
+      'ROLE_GENERAL_STAFF': 'university-admin',
+      'ROLE_APPLICANT': 'university-admin',
+      'ROLE_STUDENT': 'student',
+      'ROLE_REGISTRAR': 'registrar',
+      'ROLE_HR_MANAGER': 'hr-manager',
+>>>>>>> 9555f3aecfb465097f98f175bfaea2d4cde79dea
     };
     return map[title] || title.replace(/\s+/g, '').toLowerCase();
   }

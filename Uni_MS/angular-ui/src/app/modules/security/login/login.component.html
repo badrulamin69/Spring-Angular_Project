@@ -44,7 +44,7 @@
       </div>
 
       <div *ngIf="errorMessage" class="error-banner">
-        <span>ΓÜá∩╕Å</span> {{ errorMessage }}
+        <span>&#9888;</span> {{ errorMessage }}
       </div>
 
       <button type="submit" class="btn btn-primary btn-block" [disabled]="loading || loginForm.invalid">
@@ -56,9 +56,9 @@
     <div class="demo-accounts">
       <p class="demo-title">Demo Accounts</p>
       <div class="demo-list">
-        <button type="button" class="demo-btn" (click)="fillDemo('admin', 'admin123')">
+        <button type="button" class="demo-btn" (click)="fillDemo('superadmin', 'admin123')">
           <span class="demo-role">Super Admin</span>
-          <span class="demo-creds">admin / admin123</span>
+          <span class="demo-creds">superadmin / admin123</span>
         </button>
         <button type="button" class="demo-btn" (click)="fillDemo('registrar', 'registrar123')">
           <span class="demo-role">Registrar</span>

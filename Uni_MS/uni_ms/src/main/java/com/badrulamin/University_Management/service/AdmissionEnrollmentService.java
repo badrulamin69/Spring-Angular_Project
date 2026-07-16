@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class AdmissionEnrollmentService {
@@ -23,7 +24,7 @@ public class AdmissionEnrollmentService {
     }
 
     public AdmissionEnrollment findById(Long id) {
-        return admissionEnrollmentRepository.findById(id).orElseThrow(() -> new RuntimeException("AdmissionEnrollment not found with id: " + id));
+        return admissionEnrollmentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AdmissionEnrollment", "id", id));
     }
 
     public AdmissionEnrollment create(AdmissionEnrollment enrollment) {
@@ -35,7 +36,7 @@ public class AdmissionEnrollmentService {
 
     public AdmissionEnrollment update(Long id, AdmissionEnrollment enrollment) {
         AdmissionEnrollment existing = admissionEnrollmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AdmissionEnrollment not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AdmissionEnrollment", "id", id));
         existing.setApplication(enrollment.getApplication());
         existing.setStudent(enrollment.getStudent());
         existing.setProgram(enrollment.getProgram());

@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.AdmissionRequirementRepos
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class AdmissionRequirementService {
@@ -20,7 +21,7 @@ public class AdmissionRequirementService {
     }
 
     public AdmissionRequirement findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("AdmissionRequirement not found with id: " + id));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AdmissionRequirement", "id", id));
     }
 
     public AdmissionRequirement create(AdmissionRequirement entity) {
@@ -29,7 +30,7 @@ public class AdmissionRequirementService {
 
     public AdmissionRequirement update(Long id, AdmissionRequirement entity) {
         AdmissionRequirement existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AdmissionRequirement not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AdmissionRequirement", "id", id));
         existing.setName(entity.getName());
         existing.setDescription(entity.getDescription());
         existing.setDocumentType(entity.getDocumentType());

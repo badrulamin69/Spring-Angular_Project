@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.entity.Permission;
 import com.badrulamin.University_Management.entity.UserPermission;
 import com.badrulamin.University_Management.repository.UserPermissionRepository;
@@ -23,7 +24,7 @@ public class UserPermissionService {
 
     public UserPermission findById(Long id) {
         return userPermissionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("UserPermission not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("UserPermission", "id", id));
     }
 
     public UserPermission save(UserPermission userPermission) {

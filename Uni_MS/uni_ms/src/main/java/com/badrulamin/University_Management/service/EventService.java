@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class EventService {
 
     public Event findById(Long id) {
         return eventRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Event not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Event", "id", id));
     }
 
     public Event save(Event event) {

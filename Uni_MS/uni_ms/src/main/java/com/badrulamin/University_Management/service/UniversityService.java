@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class UniversityService {
 
     public University findById(Long id) {
         return universityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("University not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("University", "id", id));
     }
 
     public University save(University university) {

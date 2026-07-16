@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class AssignmentSubmissionService {
 
     public AssignmentSubmission findById(Long id) {
         return assignmentSubmissionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AssignmentSubmission not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AssignmentSubmission", "id", id));
     }
 
     public AssignmentSubmission save(AssignmentSubmission assignmentSubmission) {

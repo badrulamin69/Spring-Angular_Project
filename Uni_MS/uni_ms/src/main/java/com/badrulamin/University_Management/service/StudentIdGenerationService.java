@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.StudentIdGenerationReposi
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class StudentIdGenerationService {
@@ -20,7 +21,7 @@ public class StudentIdGenerationService {
     }
 
     public StudentIdGeneration findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("StudentIdGeneration not found with id: " + id));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("StudentIdGeneration", "id", id));
     }
 
     public StudentIdGeneration create(StudentIdGeneration entity) {
@@ -29,7 +30,7 @@ public class StudentIdGenerationService {
 
     public StudentIdGeneration update(Long id, StudentIdGeneration entity) {
         StudentIdGeneration existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("StudentIdGeneration not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("StudentIdGeneration", "id", id));
         existing.setStudentId(entity.getStudentId());
         existing.setStudentName(entity.getStudentName());
         existing.setDepartment(entity.getDepartment());

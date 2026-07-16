@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class SemesterService {
 
     public Semester findById(Long id) {
         return semesterRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Semester not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Semester", "id", id));
     }
 
     public Semester save(Semester semester) {

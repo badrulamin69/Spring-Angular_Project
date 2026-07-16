@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class DocumentVerificationService {
 
     public DocumentVerification findById(Long id) {
         return documentVerificationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("DocumentVerification not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("DocumentVerification", "id", id));
     }
 
     public DocumentVerification save(DocumentVerification documentVerification) {

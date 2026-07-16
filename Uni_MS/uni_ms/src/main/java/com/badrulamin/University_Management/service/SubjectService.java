@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class SubjectService {
 
     public Subject findById(Long id) {
         return subjectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subject not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Subject", "id", id));
     }
 
     public Subject save(Subject subject) {

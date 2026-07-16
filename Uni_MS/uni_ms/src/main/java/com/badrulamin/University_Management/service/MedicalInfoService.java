@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.MedicalInfoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class MedicalInfoService {
@@ -21,12 +22,12 @@ public class MedicalInfoService {
 
     public MedicalInfo findById(Long id) {
         return medicalInfoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("MedicalInfo not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("MedicalInfo", "id", id));
     }
 
     public MedicalInfo findByStudentId(Long studentId) {
         return medicalInfoRepository.findByStudent_Id(studentId)
-                .orElseThrow(() -> new RuntimeException("MedicalInfo not found for student id: " + studentId));
+                .orElseThrow(() -> new ResourceNotFoundException("MedicalInfo", "studentId", studentId));
     }
 
     public boolean existsByStudentId(Long studentId) {

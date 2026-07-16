@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class AdmissionWaitingListService {
 
     public AdmissionWaitingList findById(Long id) {
         return waitingListRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Waiting list not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Waiting list", "id", id));
     }
 
     public AdmissionWaitingList save(AdmissionWaitingList waitingList) {

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class ProgramService {
 
     public Program findById(Long id) {
         return programRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Program not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Program", "id", id));
     }
 
     public Program save(Program program) {

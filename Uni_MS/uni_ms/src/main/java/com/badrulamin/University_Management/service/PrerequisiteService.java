@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class PrerequisiteService {
 
     public Prerequisite findById(Long id) {
         return prerequisiteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prerequisite not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Prerequisite", "id", id));
     }
 
     public Prerequisite save(Prerequisite prerequisite) {

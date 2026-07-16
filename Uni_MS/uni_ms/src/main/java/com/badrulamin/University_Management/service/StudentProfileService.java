@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class StudentProfileService {
 
     public StudentProfile findById(Long id) {
         return studentProfileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("StudentProfile not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("StudentProfile", "id", id));
     }
 
     public StudentProfile save(StudentProfile studentProfile) {

@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.DisciplinaryRecordReposit
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class DisciplinaryRecordService {
@@ -21,7 +22,7 @@ public class DisciplinaryRecordService {
 
     public DisciplinaryRecord findById(Long id) {
         return disciplinaryRecordRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("DisciplinaryRecord not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("DisciplinaryRecord", "id", id));
     }
 
     public DisciplinaryRecord create(DisciplinaryRecord disciplinaryRecord) {

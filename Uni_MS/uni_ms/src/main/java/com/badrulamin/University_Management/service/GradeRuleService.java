@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class GradeRuleService {
 
     public GradeRule findById(Long id) {
         return gradeRuleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("GradeRule not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("GradeRule", "id", id));
     }
 
     public GradeRule save(GradeRule gradeRule) {

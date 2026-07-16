@@ -1,0 +1,31 @@
+export interface PreAdmissionRegistration {
+  id?: number;
+  registrationNumber?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  dateOfBirth: string;
+  gender?: string;
+  address?: string;
+  photoUrl?: string;
+  fatherName?: string;
+  motherName?: string;
+  guardianPhone?: string;
+  sscGpa?: number;
+  sscYear?: number;
+  sscBoard?: string;
+  hscGpa?: number;
+  hscYear?: number;
+  hscBoard?: string;
+  programPreference1: string;
+  programPreference2?: string;
+  programPreference3?: string;
+  status?: string;
+  remarks?: string;
+  isEmailVerified?: boolean;
+  sessionId?: number;
+  circularId?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}

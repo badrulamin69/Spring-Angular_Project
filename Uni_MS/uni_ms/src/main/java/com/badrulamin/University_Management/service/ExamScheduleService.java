@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class ExamScheduleService {
 
     public ExamSchedule findById(Long id) {
         return examScheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("ExamSchedule not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("ExamSchedule", "id", id));
     }
 
     public ExamSchedule save(ExamSchedule examSchedule) {

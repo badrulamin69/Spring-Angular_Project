@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class PayrollService {
 
     public Payroll findById(Long id) {
         return payrollRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payroll not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Payroll", "id", id));
     }
 
     public Payroll save(Payroll payroll) {

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class ClassRoutineService {
 
     public ClassRoutine findById(Long id) {
         return classRoutineRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("ClassRoutine not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("ClassRoutine", "id", id));
     }
 
     public ClassRoutine save(ClassRoutine classRoutine) {

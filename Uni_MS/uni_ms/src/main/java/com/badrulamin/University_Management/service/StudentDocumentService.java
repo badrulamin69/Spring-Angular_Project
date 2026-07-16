@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.StudentDocumentRepository
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class StudentDocumentService {
@@ -21,7 +22,7 @@ public class StudentDocumentService {
 
     public StudentDocument findById(Long id) {
         return studentDocumentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("StudentDocument not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("StudentDocument", "id", id));
     }
 
     public StudentDocument create(StudentDocument studentDocument) {

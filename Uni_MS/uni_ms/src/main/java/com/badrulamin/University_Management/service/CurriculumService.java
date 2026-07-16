@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class CurriculumService {
 
     public Curriculum findById(Long id) {
         return curriculumRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Curriculum not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Curriculum", "id", id));
     }
 
     public Curriculum save(Curriculum curriculum) {

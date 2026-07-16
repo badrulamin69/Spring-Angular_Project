@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.CertificateRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class CertificateService {
@@ -21,7 +22,7 @@ public class CertificateService {
 
     public Certificate findById(Long id) {
         return certificateRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Certificate not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Certificate", "id", id));
     }
 
     public Certificate create(Certificate certificate) {

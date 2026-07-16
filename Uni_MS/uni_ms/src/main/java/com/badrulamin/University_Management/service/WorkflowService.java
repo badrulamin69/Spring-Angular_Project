@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class WorkflowService {
 
     public Workflow findById(Long id) {
         return workflowRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Workflow not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Workflow", "id", id));
     }
 
     public Workflow save(Workflow workflow) {
@@ -58,7 +59,7 @@ public class WorkflowService {
 
     public WorkflowStep updateStep(Long stepId, WorkflowStep updated) {
         WorkflowStep existing = workflowStepRepository.findById(stepId)
-                .orElseThrow(() -> new RuntimeException("Workflow step not found: " + stepId));
+                .orElseThrow(() -> new ResourceNotFoundException("Workflow step", "id", stepId));
         existing.setName(updated.getName());
         existing.setStepOrder(updated.getStepOrder());
         existing.setRequiredRole(updated.getRequiredRole());
@@ -78,9 +79,9 @@ public class WorkflowService {
     public WorkflowApproval approve(Long stepId, String entityType, Long entityId,
                                      Long approverId, String comments) {
         WorkflowStep step = workflowStepRepository.findById(stepId)
-                .orElseThrow(() -> new RuntimeException("Workflow step not found: " + stepId));
+                .orElseThrow(() -> new ResourceNotFoundException("Workflow step", "id", stepId));
         User approver = userRepository.findById(approverId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + approverId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", approverId));
 
         WorkflowApproval approval = new WorkflowApproval();
         approval.setWorkflowStep(step);
@@ -95,9 +96,9 @@ public class WorkflowService {
     public WorkflowApproval reject(Long stepId, String entityType, Long entityId,
                                     Long approverId, String rejectionReason) {
         WorkflowStep step = workflowStepRepository.findById(stepId)
-                .orElseThrow(() -> new RuntimeException("Workflow step not found: " + stepId));
+                .orElseThrow(() -> new ResourceNotFoundException("Workflow step", "id", stepId));
         User approver = userRepository.findById(approverId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + approverId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", approverId));
 
         WorkflowApproval approval = new WorkflowApproval();
         approval.setWorkflowStep(step);

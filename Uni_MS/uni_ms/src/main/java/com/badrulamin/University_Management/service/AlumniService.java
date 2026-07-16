@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.AlumniRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class AlumniService {
@@ -21,7 +22,7 @@ public class AlumniService {
 
     public Alumni findById(Long id) {
         return alumniRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alumni not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Alumni", "id", id));
     }
 
     public Alumni create(Alumni alumni) {

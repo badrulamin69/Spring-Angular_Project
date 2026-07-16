@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class AdmissionCircularService {
@@ -22,7 +23,7 @@ public class AdmissionCircularService {
     }
 
     public AdmissionCircular findById(Long id) {
-        return admissionCircularRepository.findById(id).orElseThrow(() -> new RuntimeException("AdmissionCircular not found with id: " + id));
+        return admissionCircularRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AdmissionCircular", "id", id));
     }
 
     public AdmissionCircular create(AdmissionCircular circular) {
@@ -31,7 +32,7 @@ public class AdmissionCircularService {
 
     public AdmissionCircular update(Long id, AdmissionCircular circular) {
         AdmissionCircular existing = admissionCircularRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AdmissionCircular not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AdmissionCircular", "id", id));
         existing.setTitle(circular.getTitle());
         existing.setDescription(circular.getDescription());
         existing.setEligibility(circular.getEligibility());

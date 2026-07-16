@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class AdmissionInterviewService {
@@ -22,7 +23,7 @@ public class AdmissionInterviewService {
     }
 
     public AdmissionInterview findById(Long id) {
-        return admissionInterviewRepository.findById(id).orElseThrow(() -> new RuntimeException("AdmissionInterview not found with id: " + id));
+        return admissionInterviewRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AdmissionInterview", "id", id));
     }
 
     public AdmissionInterview create(AdmissionInterview interview) {
@@ -32,7 +33,7 @@ public class AdmissionInterviewService {
 
     public AdmissionInterview update(Long id, AdmissionInterview interview) {
         AdmissionInterview existing = admissionInterviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AdmissionInterview not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AdmissionInterview", "id", id));
         existing.setApplication(interview.getApplication());
         existing.setInterviewer(interview.getInterviewer());
         existing.setScheduledAt(interview.getScheduledAt());

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class ReportTemplateService {
 
     public ReportTemplate findById(Long id) {
         return reportTemplateRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("ReportTemplate not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("ReportTemplate", "id", id));
     }
 
     public ReportTemplate save(ReportTemplate reportTemplate) {

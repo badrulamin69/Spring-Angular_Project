@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class AdmissionMeritListService {
 
     public AdmissionMeritList findById(Long id) {
         return meritListRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Merit list not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Merit list", "id", id));
     }
 
     public AdmissionMeritList save(AdmissionMeritList meritList) {

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class OnlineClassService {
 
     public OnlineClass findById(Long id) {
         return onlineClassRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("OnlineClass not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("OnlineClass", "id", id));
     }
 
     public OnlineClass save(OnlineClass onlineClass) {

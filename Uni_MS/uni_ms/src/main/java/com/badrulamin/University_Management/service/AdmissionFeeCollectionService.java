@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.AdmissionFeeCollectionRep
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class AdmissionFeeCollectionService {
@@ -20,7 +21,7 @@ public class AdmissionFeeCollectionService {
     }
 
     public AdmissionFeeCollection findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("AdmissionFeeCollection not found with id: " + id));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AdmissionFeeCollection", "id", id));
     }
 
     public AdmissionFeeCollection create(AdmissionFeeCollection entity) {
@@ -29,7 +30,7 @@ public class AdmissionFeeCollectionService {
 
     public AdmissionFeeCollection update(Long id, AdmissionFeeCollection entity) {
         AdmissionFeeCollection existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AdmissionFeeCollection not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AdmissionFeeCollection", "id", id));
         existing.setApplicantName(entity.getApplicantName());
         existing.setApplicantId(entity.getApplicantId());
         existing.setFeeType(entity.getFeeType());

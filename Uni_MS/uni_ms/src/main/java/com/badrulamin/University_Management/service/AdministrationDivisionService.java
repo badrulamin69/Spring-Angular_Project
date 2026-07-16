@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class AdministrationDivisionService {
 
     public AdministrationDivision findById(Long id) {
         return administrationDivisionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AdministrationDivision not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AdministrationDivision", "id", id));
     }
 
     public AdministrationDivision save(AdministrationDivision administrationDivision) {

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class CreditRuleService {
 
     public CreditRule findById(Long id) {
         return creditRuleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("CreditRule not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("CreditRule", "id", id));
     }
 
     public CreditRule save(CreditRule creditRule) {

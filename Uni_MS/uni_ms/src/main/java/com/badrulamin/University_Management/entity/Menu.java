@@ -28,7 +28,7 @@ public class Menu extends BaseEntity {
     @JsonIgnore
     private Menu parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @OrderBy("orderNo ASC")
     private List<Menu> children;
 

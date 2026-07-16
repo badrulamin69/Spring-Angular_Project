@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class FeatureService {
@@ -87,7 +88,7 @@ public class FeatureService {
     public Feature toggleFeature(String featureKey, boolean enabled, String updatedBy,
                                   HttpServletRequest request) {
         Feature feature = featureRepository.findByFeatureKey(featureKey)
-                .orElseThrow(() -> new RuntimeException("Feature not found: " + featureKey));
+                .orElseThrow(() -> new ResourceNotFoundException("Feature", "id", featureKey));
 
         Boolean previousStatus = feature.getIsEnabled();
         feature.setIsEnabled(enabled);
@@ -152,7 +153,7 @@ public class FeatureService {
     @Transactional
     public Feature updateFeature(Long id, Feature updated, String updatedBy) {
         Feature feature = featureRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Feature not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Feature", "id", id));
         feature.setFeatureName(updated.getFeatureName());
         feature.setModuleName(updated.getModuleName());
         feature.setCategory(updated.getCategory());
@@ -167,7 +168,7 @@ public class FeatureService {
     @Transactional
     public void deleteFeature(Long id) {
         Feature feature = featureRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Feature not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Feature", "id", id));
         featureRepository.delete(feature);
         featureCache.remove(feature.getFeatureKey());
     }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class AcademicSessionService {
 
     public AcademicSession findById(Long id) {
         return academicSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AcademicSession not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AcademicSession", "id", id));
     }
 
     public AcademicSession save(AcademicSession academicSession) {

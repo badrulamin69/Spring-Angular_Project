@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class BookCategoryService {
 
     public BookCategory findById(Long id) {
         return bookCategoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("BookCategory not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("BookCategory", "id", id));
     }
 
     public BookCategory save(BookCategory bookCategory) {

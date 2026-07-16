@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class BatchService {
 
     public Batch findById(Long id) {
         return batchRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Batch not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Batch", "id", id));
     }
 
     public Batch save(Batch batch) {

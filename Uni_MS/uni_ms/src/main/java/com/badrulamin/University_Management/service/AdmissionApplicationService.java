@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class AdmissionApplicationService {
@@ -25,7 +26,7 @@ public class AdmissionApplicationService {
     }
 
     public AdmissionApplication findById(Long id) {
-        return admissionApplicationRepository.findById(id).orElseThrow(() -> new RuntimeException("AdmissionApplication not found with id: " + id));
+        return admissionApplicationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("AdmissionApplication", "id", id));
     }
 
     public AdmissionApplication create(AdmissionApplication application) {
@@ -39,7 +40,7 @@ public class AdmissionApplicationService {
 
     public AdmissionApplication update(Long id, AdmissionApplication application) {
         AdmissionApplication existing = admissionApplicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("AdmissionApplication not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("AdmissionApplication", "id", id));
         existing.setApplicant(application.getApplicant());
         existing.setSession(application.getSession());
         existing.setProgram(application.getProgram());

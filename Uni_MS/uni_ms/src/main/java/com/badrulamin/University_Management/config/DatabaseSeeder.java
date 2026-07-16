@@ -54,12 +54,14 @@ public class DatabaseSeeder implements CommandLineRunner {
         perms.put("BATCH_MANAGE", createPerm("Manage Batches", "BATCH_MANAGE", "Academic", "MANAGE"));
         perms.put("SECTION_MANAGE", createPerm("Manage Sections", "SECTION_MANAGE", "Academic", "MANAGE"));
         perms.put("SUBJECT_MANAGE", createPerm("Manage Subjects", "SUBJECT_MANAGE", "Academic", "MANAGE"));
+        perms.put("TEACHER_VIEW", createPerm("View Teachers", "TEACHER_VIEW", "Academic", "VIEW"));
 
         // Students
         perms.put("STUDENT_VIEW", createPerm("View Students", "STUDENT_VIEW", "Students", "VIEW"));
         perms.put("STUDENT_CREATE", createPerm("Create Students", "STUDENT_CREATE", "Students", "CREATE"));
         perms.put("STUDENT_EDIT", createPerm("Edit Students", "STUDENT_EDIT", "Students", "EDIT"));
         perms.put("STUDENT_DELETE", createPerm("Delete Students", "STUDENT_DELETE", "Students", "DELETE"));
+        perms.put("STUDENT_MANAGE", createPerm("Manage Students", "STUDENT_MANAGE", "Students", "MANAGE"));
 
         // Administration
         perms.put("ADMINISTRATION_VIEW", createPerm("View Administration", "ADMINISTRATION_VIEW", "Administration", "VIEW"));
@@ -68,6 +70,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         // Admissions
         perms.put("ADMISSION_VIEW", createPerm("View Admissions", "ADMISSION_VIEW", "Admissions", "VIEW"));
         perms.put("ADMISSION_MANAGE", createPerm("Manage Admissions", "ADMISSION_MANAGE", "Admissions", "MANAGE"));
+        perms.put("PRE_ADMISSION_VIEW", createPerm("View Pre-Admissions", "PRE_ADMISSION_VIEW", "Admissions", "VIEW"));
+        perms.put("PRE_ADMISSION_MANAGE", createPerm("Manage Pre-Admissions", "PRE_ADMISSION_MANAGE", "Admissions", "MANAGE"));
+        perms.put("QUESTION_MANAGE", createPerm("Manage Questions", "QUESTION_MANAGE", "Admissions", "MANAGE"));
+        perms.put("QUESTION_VIEW", createPerm("View Questions", "QUESTION_VIEW", "Admissions", "VIEW"));
 
         // HRM
         perms.put("HRM_VIEW", createPerm("View HRM", "HRM_VIEW", "HRM", "VIEW"));
@@ -144,6 +150,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         deptHeadPerms.add(perms.get("STUDENT_VIEW"));
         deptHeadPerms.add(perms.get("STUDENT_CREATE"));
         deptHeadPerms.add(perms.get("STUDENT_EDIT"));
+        deptHeadPerms.add(perms.get("STUDENT_MANAGE"));
         deptHeadPerms.add(perms.get("EXAM_VIEW"));
         deptHeadPerms.add(perms.get("EXAM_MANAGE"));
         deptHeadPerms.add(perms.get("MARKS_ENTER"));
@@ -153,6 +160,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         deptHeadPerms.add(perms.get("REPORT_VIEW"));
         deptHeadPerms.add(perms.get("REPORT_GENERATE"));
         deptHeadPerms.add(perms.get("COMMUNICATION_VIEW"));
+        deptHeadPerms.add(perms.get("TEACHER_VIEW"));
         Role departmentHead = createRole("Department Head", "ROLE_DEPT_HEAD", "Department head access", deptHeadPerms, 2, universityAdmin);
 
         // Level 3: Faculty Member (child of Department Head)
@@ -168,6 +176,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         facultyPerms.add(perms.get("ASSIGNMENT_MANAGE"));
         facultyPerms.add(perms.get("REPORT_VIEW"));
         facultyPerms.add(perms.get("COMMUNICATION_VIEW"));
+        facultyPerms.add(perms.get("TEACHER_VIEW"));
         Role facultyMember = createRole("Faculty Member", "ROLE_FACULTY", "Faculty member access", facultyPerms, 3, departmentHead);
 
         // Level 3: Advisor (child of Department Head)
@@ -175,6 +184,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         advisorPerms.add(perms.get("STUDENT_CREATE"));
         advisorPerms.add(perms.get("STUDENT_EDIT"));
         advisorPerms.add(perms.get("STUDENT_DELETE"));
+        advisorPerms.add(perms.get("STUDENT_MANAGE"));
         advisorPerms.add(perms.get("BATCH_MANAGE"));
         advisorPerms.add(perms.get("SECTION_MANAGE"));
         Role advisor = createRole("Advisor", "ROLE_ADVISOR", "Academic advisor access", advisorPerms, 3, departmentHead);
@@ -187,10 +197,15 @@ public class DatabaseSeeder implements CommandLineRunner {
         admissionPerms.add(perms.get("STUDENT_VIEW"));
         admissionPerms.add(perms.get("STUDENT_CREATE"));
         admissionPerms.add(perms.get("STUDENT_EDIT"));
+        admissionPerms.add(perms.get("STUDENT_MANAGE"));
         admissionPerms.add(perms.get("ACADEMIC_VIEW"));
         admissionPerms.add(perms.get("REPORT_VIEW"));
         admissionPerms.add(perms.get("REPORT_GENERATE"));
         admissionPerms.add(perms.get("COMMUNICATION_VIEW"));
+        admissionPerms.add(perms.get("PRE_ADMISSION_VIEW"));
+        admissionPerms.add(perms.get("PRE_ADMISSION_MANAGE"));
+        admissionPerms.add(perms.get("QUESTION_VIEW"));
+        admissionPerms.add(perms.get("QUESTION_MANAGE"));
         Role admissionOfficer = createRole("Admission Officer", "ROLE_ADMISSION_OFFICER", "Admission management access", admissionPerms, 2, universityAdmin);
 
         // Level 2: Accounts Officer (child of University Admin)
@@ -268,6 +283,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         studentPerms.add(perms.get("COMMUNICATION_VIEW"));
         studentPerms.add(perms.get("ACTIVITY_VIEW"));
         studentPerms.add(perms.get("FINANCE_VIEW"));
+        studentPerms.add(perms.get("TEACHER_VIEW"));
         Role student = createRole("Student", "ROLE_STUDENT", "Student access", studentPerms, 2, universityAdmin);
 
         // Level 2: Registrar (child of University Admin)
@@ -278,6 +294,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         registrarPerms.add(perms.get("STUDENT_VIEW"));
         registrarPerms.add(perms.get("STUDENT_CREATE"));
         registrarPerms.add(perms.get("STUDENT_EDIT"));
+        registrarPerms.add(perms.get("STUDENT_MANAGE"));
         registrarPerms.add(perms.get("ADMISSION_VIEW"));
         registrarPerms.add(perms.get("ADMISSION_MANAGE"));
         registrarPerms.add(perms.get("EXAM_VIEW"));
@@ -440,6 +457,11 @@ public class DatabaseSeeder implements CommandLineRunner {
         saveMenu(repo, "Student ID Generation", null, "/admissions/student-id-generation", admissions, 13, "ADMISSION_MANAGE", "Admissions");
         saveMenu(repo, "Admission Analytics", null, "/admissions/analytics", admissions, 14, "ADMISSION_VIEW", "Admissions");
         saveMenu(repo, "Reports", null, "/admissions/reports", admissions, 15, "ADMISSION_VIEW", "Admissions");
+        saveMenu(repo, "Pre-Admission Registrations", null, "/admissions/pre-admissions", admissions, 16, "PRE_ADMISSION_VIEW", "Admissions");
+        saveMenu(repo, "Test Results", null, "/admissions/test-results", admissions, 17, "PRE_ADMISSION_VIEW", "Admissions");
+        saveMenu(repo, "Merit Processing", null, "/admissions/merit-processing", admissions, 18, "PRE_ADMISSION_MANAGE", "Admissions");
+        saveMenu(repo, "Department Allocations", null, "/admissions/allocations", admissions, 19, "PRE_ADMISSION_VIEW", "Admissions");
+        saveMenu(repo, "Question Bank", null, "/admissions/question-bank", admissions, 20, "QUESTION_MANAGE", "Admissions");
 
         // Students
         Menu students = saveMenu(repo, "Students", "person", null, null, 4, "STUDENT_VIEW", "Students");

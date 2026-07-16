@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class GuardianService {
 
     public Guardian findById(Long id) {
         return guardianRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Guardian not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Guardian", "id", id));
     }
 
     public Guardian save(Guardian guardian) {

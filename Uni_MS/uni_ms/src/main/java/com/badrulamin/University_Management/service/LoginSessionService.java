@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class LoginSessionService {
 
     public LoginSession findById(Long id) {
         return loginSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Login session not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Login session", "id", id));
     }
 
     public LoginSession save(LoginSession loginSession) {
@@ -60,7 +61,7 @@ public class LoginSessionService {
 
     public LoginSession createSession(Long userId, String token, String ipAddress, String userAgent) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         LoginSession session = new LoginSession();
         session.setUser(user);

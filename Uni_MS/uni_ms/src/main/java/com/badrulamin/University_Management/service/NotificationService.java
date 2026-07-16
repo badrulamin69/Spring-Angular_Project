@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class NotificationService {
     public void markAsRead(Long notificationId, Long userId) {
         int updated = notificationRepository.markAsRead(notificationId, userId);
         if (updated == 0) {
-            throw new RuntimeException("Notification not found or not owned by user");
+            throw new ResourceNotFoundException("Notification not found or not owned by user", "id", "unknown");
         }
     }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SessionTimeoutService } from '../../../services/session-timeout.service';
 
@@ -57,6 +58,7 @@ import { SessionTimeoutService } from '../../../services/session-timeout.service
 })
 export class SessionTimeoutWarningComponent implements OnInit, OnDestroy {
   private sessionService = inject(SessionTimeoutService);
+  private router = inject(Router);
   private sub?: Subscription;
 
   visible = false;
@@ -92,7 +94,7 @@ export class SessionTimeoutWarningComponent implements OnInit, OnDestroy {
     this.sessionService.stop();
     this.visible = false;
     if (this.countdownInterval) clearInterval(this.countdownInterval);
-    window.location.href = '/login';
+    this.router.navigate(['/login']);
   }
 
   ngOnDestroy() {

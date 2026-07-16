@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class ActivityLogService {
 
     public ActivityLog findById(Long id) {
         return activityLogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Activity log not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Activity log", "id", id));
     }
 
     @Transactional

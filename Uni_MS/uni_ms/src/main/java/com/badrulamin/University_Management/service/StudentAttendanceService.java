@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.StudentAttendanceReposito
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class StudentAttendanceService {
@@ -21,7 +22,7 @@ public class StudentAttendanceService {
 
     public StudentAttendance findById(Long id) {
         return studentAttendanceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("StudentAttendance not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("StudentAttendance", "id", id));
     }
 
     public StudentAttendance create(StudentAttendance studentAttendance) {

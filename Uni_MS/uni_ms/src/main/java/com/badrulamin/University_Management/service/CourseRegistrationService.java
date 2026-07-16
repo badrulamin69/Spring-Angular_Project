@@ -5,6 +5,7 @@ import com.badrulamin.University_Management.repository.CourseRegistrationReposit
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 public class CourseRegistrationService {
@@ -21,7 +22,7 @@ public class CourseRegistrationService {
 
     public CourseRegistration findById(Long id) {
         return courseRegistrationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("CourseRegistration not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("CourseRegistration", "id", id));
     }
 
     public CourseRegistration create(CourseRegistration courseRegistration) {

@@ -30,6 +30,24 @@ export const routes: Routes = [
     loadComponent: () => import('./modules/security/access-denied/access-denied.component').then(m => m.AccessDeniedComponent)
   },
   {
+    path: 'pre-admission/register',
+    loadComponent: () => import('./modules/admissions/pre-admission-register/pre-admission-register.component').then(m => m.PreAdmissionRegisterComponent)
+  },
+  {
+    path: 'pre-admission/status',
+    loadComponent: () => import('./modules/admissions/pre-admission-status/pre-admission-status.component').then(m => m.PreAdmissionStatusComponent)
+  },
+  {
+    path: 'applicant/dashboard',
+    loadComponent: () => import('./modules/applicant/applicant-dashboard/applicant-dashboard.component').then(m => m.ApplicantDashboardComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'applicant/test',
+    loadComponent: () => import('./modules/applicant/applicant-test/applicant-test.component').then(m => m.ApplicantTestComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
@@ -104,6 +122,11 @@ export const routes: Routes = [
       { path: 'admissions/orientation', loadComponent: () => import('./modules/admissions/orientation/orientation.component').then(m => m.OrientationComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
       { path: 'admissions/analytics', loadComponent: () => import('./modules/admissions/admission-analytics/admission-analytics.component').then(m => m.AdmissionAnalyticsComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
       { path: 'admissions/reports', loadComponent: () => import('./modules/admissions/admission-reports/admission-reports.component').then(m => m.AdmissionReportsComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
+      { path: 'admissions/pre-admissions', loadComponent: () => import('./modules/admissions/pre-admissions/pre-admissions.component').then(m => m.PreAdmissionsComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
+      { path: 'admissions/test-results', loadComponent: () => import('./modules/admissions/test-results/test-results.component').then(m => m.TestResultsComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
+      { path: 'admissions/merit-processing', loadComponent: () => import('./modules/admissions/merit-processing/merit-processing.component').then(m => m.MeritProcessingComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_MANAGE' } },
+      { path: 'admissions/allocations', loadComponent: () => import('./modules/admissions/allocations/allocations.component').then(m => m.AllocationsComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
+      { path: 'admissions/question-bank', loadComponent: () => import('./modules/admissions/question-bank/question-bank.component').then(m => m.QuestionBankComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
 
       // Students
       { path: 'students/list', loadComponent: () => import('./modules/students/list/list.component').then(m => m.StudentsListComponent), canActivate: [permissionGuard], data: { permission: 'STUDENT_VIEW' } },

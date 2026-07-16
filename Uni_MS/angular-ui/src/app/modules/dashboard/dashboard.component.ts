@@ -490,10 +490,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     if (role.includes('SUPER_ADMIN')) {
       return [
-        { label: 'Total Users', value: d.totalUsers ?? 0, icon: icons.users, colorClass: 'card-purple', route: '/users' },
-        { label: 'Total Roles', value: d.totalRoles ?? 0, icon: icons.shield, colorClass: 'card-teal', route: '/roles' },
-        { label: 'Permissions', value: d.totalPermissions ?? 0, icon: icons.check, colorClass: 'card-green', route: '/permissions' },
-        { label: 'Active Sessions', value: d.activeSessions ?? 0, icon: icons.clock, colorClass: 'card-amber', route: '/sessions' },
+        { label: 'Total Users', value: d.totalUsers ?? 0, icon: icons.users, colorClass: 'card-purple', route: '/security/users' },
+        { label: 'Total Roles', value: d.totalRoles ?? 0, icon: icons.shield, colorClass: 'card-teal', route: '/security/roles' },
+        { label: 'Permissions', value: d.totalPermissions ?? 0, icon: icons.check, colorClass: 'card-green', route: '/security/permissions' },
+        { label: 'Active Sessions', value: d.activeSessions ?? 0, icon: icons.clock, colorClass: 'card-amber', route: '/security/login-sessions' },
       ];
     }
 
@@ -520,7 +520,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         { label: 'Total Courses', value: d.totalCourses ?? 0, icon: icons.book, colorClass: 'card-purple', route: '/academic/courses' },
         { label: 'Total Students', value: d.totalStudents ?? 0, icon: icons.users, colorClass: 'card-teal', route: '/students/list' },
         { label: 'Total Faculty', value: d.totalFaculty ?? 0, icon: icons.star, colorClass: 'card-green', route: '/hrm/employees' },
-        { label: 'Pending Approvals', value: d.pendingApprovals ?? 0, icon: icons.clock, colorClass: 'card-amber', route: '/approvals' },
+        { label: 'Pending Approvals', value: d.pendingApprovals ?? 0, icon: icons.clock, colorClass: 'card-amber', route: '/hrm/leave-requests' },
       ];
     }
 
@@ -608,7 +608,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (role.includes('UNIVERSITY_ADMIN') || role.includes('HALL_PROVOST') || role.includes('TRANSPORT_MANAGER') || role.includes('GENERAL_STAFF')) {
       return [
         { label: 'Total Employees', value: d.totalEmployees ?? 0, icon: icons.users, colorClass: 'card-indigo', route: '/hrm/employees' },
-        { label: 'Pending Approvals', value: d.pendingApprovals ?? 0, icon: icons.clock, colorClass: 'card-pink', route: '/approvals' },
+        { label: 'Pending Approvals', value: d.pendingApprovals ?? 0, icon: icons.clock, colorClass: 'card-pink', route: '/hrm/leave-requests' },
         { label: 'Recent Activities', value: d.recentActivities ?? 0, icon: icons.check, colorClass: 'card-blue' },
       ];
     }
@@ -644,9 +644,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     if (role.includes('SUPER_ADMIN')) {
       return [
-        { label: 'Users', route: '/users', icon: iconPaths.users, color: '#6366f1' },
-        { label: 'Roles', route: '/roles', icon: iconPaths.bell, color: '#3b82f6' },
-        { label: 'Permissions', route: '/permissions', icon: iconPaths.check, color: '#22c55e' },
+        { label: 'Users', route: '/security/users', icon: iconPaths.users, color: '#6366f1' },
+        { label: 'Roles', route: '/security/roles', icon: iconPaths.bell, color: '#3b82f6' },
+        { label: 'Permissions', route: '/security/permissions', icon: iconPaths.check, color: '#22c55e' },
         { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#f59e0b' },
       ];
     }
@@ -705,8 +705,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (role.includes('LIBRARIAN')) {
       return [
         { label: 'Books', route: '/library/books', icon: iconPaths.book, color: '#3b82f6' },
-        { label: 'Issue/Return', route: '/library/issue-return', icon: iconPaths.check, color: '#22c55e' },
-        { label: 'Members', route: '/library/members', icon: iconPaths.users, color: '#6366f1' },
+        { label: 'Issue/Return', route: '/library/issues', icon: iconPaths.check, color: '#22c55e' },
+        { label: 'Categories', route: '/library/categories', icon: iconPaths.users, color: '#6366f1' },
          { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#8b5cf6' },
       ];
     }

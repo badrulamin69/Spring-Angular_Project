@@ -46,7 +46,7 @@ public class StudentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('STUDENT_EDIT')")
+    @PreAuthorize("hasAuthority('STUDENT_CREATE')")
     public ResponseEntity<Student> save(@Valid @RequestBody Student student) {
         return ResponseEntity.ok(studentService.save(student));
     }
@@ -58,7 +58,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('STUDENT_EDIT')")
+    @PreAuthorize("hasAuthority('STUDENT_DELETE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         studentService.delete(id);
         return ResponseEntity.noContent().build();

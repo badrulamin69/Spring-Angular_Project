@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { ApplicantPortalService } from '../../../services/applicant-portal.service';
 import { PreAdmissionService } from '../../../services/pre-admission.service';
 
 @Component({
   selector: 'app-applicant-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   template: `
     <div class="applicant-page">
       <div class="applicant-header">

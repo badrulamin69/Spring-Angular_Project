@@ -59,10 +59,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class SessionTimeoutWarningComponent implements OnInit, OnDestroy {
   private sessionService = inject(SessionTimeoutService);
-<<<<<<< HEAD
-=======
   private authService = inject(AuthService);
->>>>>>> 9555f3aecfb465097f98f175bfaea2d4cde79dea
   private router = inject(Router);
   private sub?: Subscription;
 
@@ -99,14 +96,10 @@ export class SessionTimeoutWarningComponent implements OnInit, OnDestroy {
     this.sessionService.stop();
     this.visible = false;
     if (this.countdownInterval) clearInterval(this.countdownInterval);
-<<<<<<< HEAD
-    this.router.navigate(['/login']);
-=======
     this.authService.logout().subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => this.router.navigate(['/login'])
     });
->>>>>>> 9555f3aecfb465097f98f175bfaea2d4cde79dea
   }
 
   ngOnDestroy() {

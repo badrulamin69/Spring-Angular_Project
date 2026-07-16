@@ -32,6 +32,7 @@ public class DashboardController {
     @Autowired private BookRepository bookRepository;
     @Autowired private InvoiceRepository invoiceRepository;
     @Autowired private ExamRepository examRepository;
+    @Autowired private AssignmentRepository assignmentRepository;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -115,6 +116,7 @@ public class DashboardController {
             case "books" -> bookRepository.count();
             case "invoices" -> invoiceRepository.count();
             case "exams" -> examRepository.count();
+            case "assignments" -> assignmentRepository.count();
             default -> 0;
         };
     }

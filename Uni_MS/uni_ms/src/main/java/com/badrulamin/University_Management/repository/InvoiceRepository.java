@@ -8,30 +8,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
+    Optional<Invoice> findByInvoiceNumber(String invoiceNumber);
+    List<Invoice> findByStudentId(Long studentId);
+    Page<Invoice> findByStudentId(Long studentId, Pageable pageable);
+    List<Invoice> findByStatus(String status);
+    Page<Invoice> findByStatus(String status, Pageable pageable);
+    long countByStatus(String status);
 
     @Query("SELECT i FROM Invoice i WHERE " +
-           "LOWER(i.invoiceNumber) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(i.student.firstName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(i.student.lastName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    Page<Invoice> searchInvoices(@Param("keyword") String keyword, Pageable pageable);
-
-    @Query("SELECT i FROM Invoice i WHERE " +
-           "(:status IS NULL OR i.status = :status) AND " +
-           "(:studentId IS NULL OR i.student.id = :studentId)")
-    Page<Invoice> findAllWithFilters(@Param("status") String status,
-                                     @Param("studentId") Long studentId,
-                                     Pageable pageable);
-
-    @Query("SELECT i FROM Invoice i WHERE " +
-           "(LOWER(i.invoiceNumber) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(i.student.firstName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
-           "LOWER(i.student.lastName) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND " +
-           "(:status IS NULL OR i.status = :status) AND " +
-           "(:studentId IS NULL OR i.student.id = :studentId)")
-    Page<Invoice> searchInvoicesWithFilters(@Param("keyword") String keyword,
-                                            @Param("status") String status,
-                                            @Param("studentId") Long studentId,
-                                            Pageable pageable);
+           "(:search IS NULL OR :search = '' OR " +
+           "LOWER(i.invoiceNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "LOWER(i.student.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "LOWER(i.student.lastName) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+           "(:status IS NULL OR :status = '' OR i.status = :status)")
+    Page<Invoice> search(@Param("search") String search, @Param("status") String status, Pageable pageable);
 }

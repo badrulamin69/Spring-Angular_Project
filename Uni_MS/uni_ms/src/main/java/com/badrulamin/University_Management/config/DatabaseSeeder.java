@@ -96,6 +96,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         perms.put("FEE_TYPE_MANAGE", createPerm("Manage Fee Types", "FEE_TYPE_MANAGE", "Finance", "MANAGE"));
         perms.put("INVOICE_MANAGE", createPerm("Manage Invoices", "INVOICE_MANAGE", "Finance", "MANAGE"));
         perms.put("PAYMENT_APPROVE", createPerm("Approve Payments", "PAYMENT_APPROVE", "Finance", "APPROVE"));
+        perms.put("FINANCE_MANAGE", createPerm("Manage Finance", "FINANCE_MANAGE", "Finance", "MANAGE"));
+        perms.put("DISCOUNT_MANAGE", createPerm("Manage Discounts", "DISCOUNT_MANAGE", "Finance", "MANAGE"));
+        perms.put("REFUND_MANAGE", createPerm("Manage Refunds", "REFUND_MANAGE", "Finance", "MANAGE"));
+        perms.put("FINE_MANAGE", createPerm("Manage Fines", "FINE_MANAGE", "Finance", "MANAGE"));
 
         // Library
         perms.put("LIBRARY_VIEW", createPerm("View Library", "LIBRARY_VIEW", "Library", "VIEW"));
@@ -519,11 +523,14 @@ public class DatabaseSeeder implements CommandLineRunner {
         // Finance
         Menu finance = saveMenu(repo, "Finance", "payments", null, null, 9, "FINANCE_VIEW", "Finance");
         saveMenu(repo, "Fee Types", null, "/finance/fee-types", finance, 1, "FEE_TYPE_MANAGE", "Finance");
-        saveMenu(repo, "Student Fees", null, "/finance/student-fees", finance, 2, "FINANCE_VIEW", "Finance");
+        saveMenu(repo, "Fee Structures", null, "/finance/fee-structures", finance, 2, "FINANCE_MANAGE", "Finance");
         saveMenu(repo, "Invoices", null, "/finance/invoices", finance, 3, "INVOICE_MANAGE", "Finance");
-        saveMenu(repo, "Payments", null, "/finance/payments", finance, 4, "PAYMENT_APPROVE", "Finance");
-        saveMenu(repo, "Accounts", null, "/finance/accounts", finance, 5, "FINANCE_VIEW", "Finance");
-        saveMenu(repo, "Transactions", null, "/finance/transactions", finance, 6, "FINANCE_VIEW", "Finance");
+        saveMenu(repo, "Payments", null, "/finance/payments", finance, 4, "FINANCE_MANAGE", "Finance");
+        saveMenu(repo, "Discounts", null, "/finance/discounts", finance, 5, "DISCOUNT_MANAGE", "Finance");
+        saveMenu(repo, "Refunds", null, "/finance/refunds", finance, 6, "REFUND_MANAGE", "Finance");
+        saveMenu(repo, "Fines", null, "/finance/fines", finance, 7, "FINE_MANAGE", "Finance");
+        saveMenu(repo, "Payment Reports", null, "/finance/payment-reports", finance, 8, "FINANCE_VIEW", "Finance");
+        saveMenu(repo, "Transactions", null, "/finance/transactions", finance, 9, "FINANCE_VIEW", "Finance");
 
         // Library
         Menu library = saveMenu(repo, "Library", "local_library", null, null, 10, "LIBRARY_VIEW", "Library");

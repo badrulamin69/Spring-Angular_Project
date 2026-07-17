@@ -44,12 +44,20 @@ public class PreAdmissionRegistration extends BaseEntity {
     @Size(max = 20)
     private String gender;
 
+    @Size(max = 10)
+    @Column(name = "blood_group")
+    private String bloodGroup;
+
     @Column(columnDefinition = "TEXT")
     private String address;
 
     @Size(max = 500)
     @Column(name = "photo_url")
     private String photoUrl;
+
+    @Size(max = 500)
+    @Column(name = "signature_url")
+    private String signatureUrl;
 
     @Size(max = 100)
     @Column(name = "father_name")

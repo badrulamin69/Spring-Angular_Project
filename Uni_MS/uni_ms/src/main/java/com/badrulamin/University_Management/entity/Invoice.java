@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -21,30 +21,43 @@ import java.time.LocalDate;
 public class Invoice extends BaseEntity {
 
     @NotBlank
+    @Size(max = 30)
     @Column(name = "invoice_number", unique = true, nullable = false)
     private String invoiceNumber;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @NotNull
-    @Column(name = "issue_date", nullable = false)
-    private LocalDate issueDate;
+    @Size(max = 20)
+    @Column(name = "academic_year")
+    private String academicYear;
 
-    @NotNull
-    @Column(name = "due_date", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+
+    @Column(name = "total_amount")
+    private Double totalAmount = 0.0;
+
+    @Column(name = "paid_amount")
+    private Double paidAmount = 0.0;
+
+    @Column(name = "due_amount")
+    private Double dueAmount = 0.0;
+
+    @Column(name = "discount_amount")
+    private Double discountAmount = 0.0;
+
+    @Column(name = "fine_amount")
+    private Double fineAmount = 0.0;
+
+    @Size(max = 20)
+    @Column(nullable = false)
+    private String status = "PENDING";
+
     private LocalDate dueDate;
-
-    @NotNull
-    @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalAmount;
-
-    @Column(name = "paid_amount", precision = 10, scale = 2)
-    private BigDecimal paidAmount;
-
-    private String status;
 
     private String notes;
 
@@ -59,5 +72,18 @@ public class Invoice extends BaseEntity {
     @JsonProperty
     public Long getStudentId() {
         return this.student != null ? this.student.getId() : null;
+    }
+
+    @JsonProperty("semesterId")
+    public void setSemesterId(Long id) {
+        if (id != null) {
+            this.semester = new Semester();
+            this.semester.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getSemesterId() {
+        return this.semester != null ? this.semester.getId() : null;
     }
 }

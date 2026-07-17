@@ -53,7 +53,15 @@ export class PreAdmissionService {
     return this.http.post(`${this.apiUrl}/process-merit`, {});
   }
 
+  getMeritPreview(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/merit-preview`);
+  }
+
   getAdmitCard(id: number): Observable<string> {
     return this.http.get(`${this.apiUrl}/${id}/admit-card`, { responseType: 'text' });
+  }
+
+  getAdmitCardPdf(id: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/${id}/admit-card/pdf`, { responseType: 'blob' });
   }
 }

@@ -188,10 +188,12 @@ export const routes: Routes = [
 
       // Finance
       { path: 'finance/fee-types', loadComponent: () => import('./modules/finance/fee-types/fee-types.component').then(m => m.FeeTypesComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
-      { path: 'finance/student-fees', loadComponent: () => import('./modules/finance/student-fees/student-fees.component').then(m => m.StudentFeesComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
+      { path: 'finance/fee-structures', loadComponent: () => import('./modules/finance/fee-structures/fee-structures.component').then(m => m.FeeStructuresComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
       { path: 'finance/invoices', loadComponent: () => import('./modules/finance/invoices/invoices.component').then(m => m.InvoicesComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
       { path: 'finance/payments', loadComponent: () => import('./modules/finance/payments/payments.component').then(m => m.PaymentsComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
-      { path: 'finance/accounts', loadComponent: () => import('./modules/finance/accounts/accounts.component').then(m => m.AccountsComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
+      { path: 'finance/discounts', loadComponent: () => import('./modules/finance/discounts/discounts.component').then(m => m.DiscountsComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
+      { path: 'finance/fines', loadComponent: () => import('./modules/finance/fines/fines.component').then(m => m.FinesComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
+      { path: 'finance/payment-reports', loadComponent: () => import('./modules/finance/payment-reports/payment-reports.component').then(m => m.PaymentReportsComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
       { path: 'finance/transactions', loadComponent: () => import('./modules/finance/transactions/transactions.component').then(m => m.TransactionsComponent), canActivate: [permissionGuard], data: { permission: 'FINANCE_VIEW' } },
 
       // Library

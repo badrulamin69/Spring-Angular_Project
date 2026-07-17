@@ -28,6 +28,10 @@ export class AdmissionTestResultService {
     return this.http.post<AdmissionTestResult>(this.apiUrl, data);
   }
 
+  saveBulk(data: AdmissionTestResult[]): Observable<any> {
+    return this.http.post(`${this.apiUrl}/bulk`, data);
+  }
+
   update(id: number, data: AdmissionTestResult): Observable<AdmissionTestResult> {
     return this.http.put<AdmissionTestResult>(`${this.apiUrl}/${id}`, data);
   }

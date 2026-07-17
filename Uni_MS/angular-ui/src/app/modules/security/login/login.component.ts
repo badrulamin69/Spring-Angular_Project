@@ -66,8 +66,14 @@ export class LoginComponent implements OnInit {
     };
 
     this.authService.login(credentials).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
+      next: (response) => {
+        const userData = response?.data || response;
+        const roleCode = userData?.roleCode || userData?.role?.code || '';
+        if (roleCode === 'ROLE_APPLICANT') {
+          this.router.navigate(['/applicant/dashboard']);
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.loading = false;

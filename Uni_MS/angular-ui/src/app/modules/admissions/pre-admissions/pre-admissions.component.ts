@@ -64,7 +64,11 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
               @if (selectedItem.status === 'ADMIT_CARD_GENERATED' || selectedItem.status === 'MERIT_PROCESSED' || selectedItem.status === 'ALLOCATED') {
                 <button class="btn btn-primary" (click)="downloadAdmitCard(selectedItem)">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M3 6l4 4 4-4M1 10v2h12v-2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Download Admit Card
+                  View Admit Card
+                </button>
+                <button class="btn btn-outline-primary" (click)="downloadAdmitCardPdf(selectedItem)">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v8M3 6l4 4 4-4M1 10v2h12v-2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Download PDF
                 </button>
               }
             </div>
@@ -99,6 +103,8 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; }
     .btn-success { background: #10b981; color: #fff; }
     .btn-danger { background: #ef4444; color: #fff; }
+    .btn-outline-primary { background: #fff; color: #2563eb; border: 1px solid #2563eb; }
+    .btn-outline-primary:hover { background: #eff6ff; }
     .status-badge { padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
     .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #1d4ed8; }
     .status-badge[data-status="ADMIT_CARD_GENERATED"] { background: #d1fae5; color: #065f46; }
@@ -179,6 +185,21 @@ export class PreAdmissionsComponent implements OnInit {
         }
       },
       error: () => this.toastService.error('Failed to download admit card')
+    });
+  }
+
+  downloadAdmitCardPdf(item: any) {
+    this.service.getAdmitCardPdf(item.id).subscribe({
+      next: (blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `admit-card-${item.registrationNumber}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.toastService.success('PDF downloaded successfully');
+      },
+      error: () => this.toastService.error('Failed to download PDF')
     });
   }
 }

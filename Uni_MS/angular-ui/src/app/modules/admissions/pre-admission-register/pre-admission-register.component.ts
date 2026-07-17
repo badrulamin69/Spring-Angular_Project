@@ -66,6 +66,40 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
 
             <p class="warning-text">Please save your password. You will need it to login and download your admit card after approval.</p>
 
+            <div class="next-steps">
+              <h3>What Happens Next?</h3>
+              <div class="steps-list">
+                <div class="step-item">
+                  <div class="step-num">1</div>
+                  <div class="step-content">
+                    <strong>Application Review</strong>
+                    <p>Our admissions team will review your application and academic credentials.</p>
+                  </div>
+                </div>
+                <div class="step-item">
+                  <div class="step-num">2</div>
+                  <div class="step-content">
+                    <strong>Admit Card Generation</strong>
+                    <p>Once approved, your admit card will be generated. You can download it from the student portal.</p>
+                  </div>
+                </div>
+                <div class="step-item">
+                  <div class="step-num">3</div>
+                  <div class="step-content">
+                    <strong>Online Admission Test</strong>
+                    <p>You will take an online MCQ admission test from the portal. It covers academic topics based on your program preferences.</p>
+                  </div>
+                </div>
+                <div class="step-item">
+                  <div class="step-num">4</div>
+                  <div class="step-content">
+                    <strong>Merit Processing & Allocation</strong>
+                    <p>Your test score and academic GPA will be combined for merit ranking. Based on your rank, you will be allocated to a department.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="success-actions">
               <a routerLink="/login" class="btn btn-primary btn-lg">Login to Portal</a>
               <a routerLink="/pre-admission/status" class="btn btn-outline">Check Status</a>
@@ -84,29 +118,25 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
             <h3>Personal Information</h3>
             <div class="form-row">
               <div class="form-group">
-                <label>First Name *</label>
-                <input type="text" [(ngModel)]="formData.firstName" name="firstName" required maxlength="100" placeholder="Enter first name">
+                <label>Full Name *</label>
+                <input type="text" [(ngModel)]="formData.fullName" name="fullName" required maxlength="200" placeholder="Enter your full name">
               </div>
-              <div class="form-group">
-                <label>Last Name *</label>
-                <input type="text" [(ngModel)]="formData.lastName" name="lastName" required maxlength="100" placeholder="Enter last name">
-              </div>
-            </div>
-            <div class="form-row">
               <div class="form-group">
                 <label>Email *</label>
                 <input type="email" [(ngModel)]="formData.email" name="email" required email placeholder="your@email.com">
               </div>
+            </div>
+            <div class="form-row">
               <div class="form-group">
                 <label>Phone</label>
                 <input type="text" [(ngModel)]="formData.phone" name="phone" maxlength="20" placeholder="+880XXXXXXXXXX">
               </div>
-            </div>
-            <div class="form-row">
               <div class="form-group">
                 <label>Date of Birth *</label>
                 <input type="date" [(ngModel)]="formData.dateOfBirth" name="dateOfBirth" required>
               </div>
+            </div>
+            <div class="form-row">
               <div class="form-group">
                 <label>Gender</label>
                 <select [(ngModel)]="formData.gender" name="gender">
@@ -114,6 +144,20 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
                   <option value="MALE">Male</option>
                   <option value="FEMALE">Female</option>
                   <option value="OTHER">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Blood Group</label>
+                <select [(ngModel)]="formData.bloodGroup" name="bloodGroup">
+                  <option value="">Select</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
                 </select>
               </div>
             </div>
@@ -143,12 +187,26 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
                 <input type="number" [(ngModel)]="formData.sscGpa" name="sscGpa" required min="0" max="5" step="0.01" placeholder="0.00 - 5.00">
               </div>
               <div class="form-group">
-                <label>SSC Year</label>
-                <input type="number" [(ngModel)]="formData.sscYear" name="sscYear" min="2000" max="2030" placeholder="e.g. 2023">
+                <label>SSC Passing Year *</label>
+                <div class="searchable-select">
+                  <input type="text" class="searchable-input" [value]="sscYearSearch" (input)="filterSscYear($event)" (focus)="openDropdown('sscYear')" (blur)="closeDropdown('sscYear')" placeholder="Select SSC Passing Year" autocomplete="off" required name="sscYearSearch">
+                  <div class="dropdown-list" *ngIf="dropdowns.sscYear">
+                    <div class="dropdown-item" *ngFor="let y of filteredSscYears" (mousedown)="selectSscYear(y)">{{ y }}</div>
+                    <div class="dropdown-item no-results" *ngIf="filteredSscYears.length === 0">No results found</div>
+                  </div>
+                </div>
+                <input type="hidden" [(ngModel)]="formData.sscYear" name="sscYear">
               </div>
               <div class="form-group">
-                <label>SSC Board</label>
-                <input type="text" [(ngModel)]="formData.sscBoard" name="sscBoard" maxlength="100" placeholder="e.g. Dhaka Board">
+                <label>SSC Board *</label>
+                <div class="searchable-select">
+                  <input type="text" class="searchable-input" [value]="sscBoardSearch" (input)="filterSscBoard($event)" (focus)="openDropdown('sscBoard')" (blur)="closeDropdown('sscBoard')" placeholder="Select Education Board" autocomplete="off" required name="sscBoardSearch">
+                  <div class="dropdown-list" *ngIf="dropdowns.sscBoard">
+                    <div class="dropdown-item" *ngFor="let b of filteredSscBoards" (mousedown)="selectSscBoard(b)">{{ b }}</div>
+                    <div class="dropdown-item no-results" *ngIf="filteredSscBoards.length === 0">No results found</div>
+                  </div>
+                </div>
+                <input type="hidden" [(ngModel)]="formData.sscBoard" name="sscBoard">
               </div>
             </div>
             <div class="form-row">
@@ -157,28 +215,56 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
                 <input type="number" [(ngModel)]="formData.hscGpa" name="hscGpa" required min="0" max="5" step="0.01" placeholder="0.00 - 5.00">
               </div>
               <div class="form-group">
-                <label>HSC Year</label>
-                <input type="number" [(ngModel)]="formData.hscYear" name="hscYear" min="2000" max="2030" placeholder="e.g. 2025">
+                <label>HSC Passing Year *</label>
+                <div class="searchable-select">
+                  <input type="text" class="searchable-input" [value]="hscYearSearch" (input)="filterHscYear($event)" (focus)="openDropdown('hscYear')" (blur)="closeDropdown('hscYear')" placeholder="Select HSC Passing Year" autocomplete="off" required name="hscYearSearch">
+                  <div class="dropdown-list" *ngIf="dropdowns.hscYear">
+                    <div class="dropdown-item" *ngFor="let y of filteredHscYears" (mousedown)="selectHscYear(y)">{{ y }}</div>
+                    <div class="dropdown-item no-results" *ngIf="filteredHscYears.length === 0">No results found</div>
+                  </div>
+                </div>
+                <input type="hidden" [(ngModel)]="formData.hscYear" name="hscYear">
               </div>
               <div class="form-group">
-                <label>HSC Board</label>
-                <input type="text" [(ngModel)]="formData.hscBoard" name="hscBoard" maxlength="100" placeholder="e.g. Dhaka Board">
+                <label>HSC Board *</label>
+                <div class="searchable-select">
+                  <input type="text" class="searchable-input" [value]="hscBoardSearch" (input)="filterHscBoard($event)" (focus)="openDropdown('hscBoard')" (blur)="closeDropdown('hscBoard')" placeholder="Select Education Board" autocomplete="off" required name="hscBoardSearch">
+                  <div class="dropdown-list" *ngIf="dropdowns.hscBoard">
+                    <div class="dropdown-item" *ngFor="let b of filteredHscBoards" (mousedown)="selectHscBoard(b)">{{ b }}</div>
+                    <div class="dropdown-item no-results" *ngIf="filteredHscBoards.length === 0">No results found</div>
+                  </div>
+                </div>
+                <input type="hidden" [(ngModel)]="formData.hscBoard" name="hscBoard">
               </div>
             </div>
 
-            <h3>Program Preferences</h3>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Preference 1 *</label>
-                <input type="text" [(ngModel)]="formData.programPreference1" name="programPreference1" required maxlength="100" placeholder="e.g. B.Sc. in CSE">
+            <h3>Photo & Signature</h3>
+            <div class="upload-row">
+              <div class="upload-col">
+                <label>Photo *</label>
+                <div class="photo-preview" *ngIf="photoPreview">
+                  <img [src]="photoPreview" alt="Photo preview">
+                  <button type="button" class="photo-remove" (click)="removePhoto()">×</button>
+                </div>
+                <div class="photo-dropzone compact" *ngIf="!photoPreview" (click)="photoInput.click()" (dragover)="$event.preventDefault()" (drop)="onPhotoDrop($event)">
+                  <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#f1f5f9"/><path d="M20 12v16M12 20h16" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/></svg>
+                  <p>Click or drag photo</p>
+                  <span>JPG, PNG — max 2MB</span>
+                </div>
+                <input type="file" #photoInput accept="image/jpeg,image/png" (change)="onPhotoSelect($event)" style="display:none">
               </div>
-              <div class="form-group">
-                <label>Preference 2</label>
-                <input type="text" [(ngModel)]="formData.programPreference2" name="programPreference2" maxlength="100" placeholder="e.g. B.Sc. in EEE">
-              </div>
-              <div class="form-group">
-                <label>Preference 3</label>
-                <input type="text" [(ngModel)]="formData.programPreference3" name="programPreference3" maxlength="100" placeholder="e.g. B.Sc. in BBA">
+              <div class="upload-col">
+                <label>Signature *</label>
+                <div class="signature-preview" *ngIf="signaturePreview">
+                  <img [src]="signaturePreview" alt="Signature preview">
+                  <button type="button" class="photo-remove" (click)="removeSignature()">×</button>
+                </div>
+                <div class="photo-dropzone compact signature-dropzone" *ngIf="!signaturePreview" (click)="signatureInput.click()" (dragover)="$event.preventDefault()" (drop)="onSignatureDrop($event)">
+                  <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#f1f5f9"/><path d="M10 28c3-8 6-12 10-12s4 6 7 6 3-4 5-4" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+                  <p>Click or drag signature</p>
+                  <span>JPG, PNG — max 1MB</span>
+                </div>
+                <input type="file" #signatureInput accept="image/jpeg,image/png" (change)="onSignatureSelect($event)" style="display:none">
               </div>
             </div>
 
@@ -207,6 +293,26 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .form-group label { display: block; margin-bottom: 4px; font-size: 0.875rem; font-weight: 500; color: #374151; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.875rem; transition: border-color 0.15s; box-sizing: border-box; }
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .searchable-select { position: relative; }
+    .searchable-input { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.875rem; transition: border-color 0.15s; box-sizing: border-box; background: #fff; }
+    .searchable-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .dropdown-list { position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; margin-top: 4px; }
+    .dropdown-item { padding: 8px 12px; font-size: 0.875rem; cursor: pointer; color: #374151; }
+    .dropdown-item:hover { background: #f0f4ff; color: #2563eb; }
+    .dropdown-item.no-results { color: #9ca3af; cursor: default; font-style: italic; }
+    .dropdown-item.no-results:hover { background: transparent; color: #9ca3af; }
+    .upload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.5rem; }
+    .upload-col label { display: block; margin-bottom: 6px; font-size: 0.875rem; font-weight: 500; color: #374151; }
+    .photo-preview { position: relative; width: 100%; height: 100px; border-radius: 8px; overflow: hidden; border: 2px solid #e2e8f0; background: #fff; }
+    .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-remove { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: #ef4444; color: #fff; border: none; cursor: pointer; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; line-height: 1; }
+    .photo-dropzone.compact { border: 2px dashed #d1d5db; border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .photo-dropzone.compact:hover { border-color: #2563eb; background: #f0f4ff; }
+    .photo-dropzone.compact p { margin: 0.25rem 0 2px; font-size: 0.8125rem; color: #374151; font-weight: 500; }
+    .photo-dropzone.compact span { font-size: 0.6875rem; color: #94a3af; }
+    .signature-preview { position: relative; width: 100%; height: 100px; border-radius: 8px; overflow: hidden; border: 2px solid #e2e8f0; background: #fff; }
+    .signature-preview img { width: 100%; height: 100%; object-fit: contain; }
+    .signature-dropzone { min-height: 100px; }
     .form-actions { margin-top: 1.5rem; display: flex; gap: 1rem; align-items: center; }
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.15s; text-decoration: none; display: inline-flex; align-items: center; }
     .btn-primary { background: #2563eb; color: #fff; }
@@ -239,29 +345,96 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .info-row span { color: #64748b; }
     .status-submitted { color: #1d4ed8; background: #dbeafe; padding: 2px 8px; border-radius: 4px; }
     .warning-text { font-size: 0.8125rem; color: #b45309; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px 14px; margin-bottom: 1.5rem; text-align: left; }
+    .next-steps { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left; }
+    .next-steps h3 { margin: 0 0 1rem; font-size: 1rem; color: #1e293b; border: none; padding: 0; }
+    .steps-list { display: flex; flex-direction: column; gap: 12px; }
+    .step-item { display: flex; gap: 12px; align-items: flex-start; }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+    .step-content strong { font-size: 0.875rem; color: #1e293b; display: block; margin-bottom: 2px; }
+    .step-content p { margin: 0; font-size: 0.8125rem; color: #64748b; line-height: 1.4; }
     .success-actions { display: flex; gap: 12px; justify-content: center; }
-    @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } .upload-row { grid-template-columns: 1fr; } }
   `]
 })
 export class PreAdmissionRegisterComponent {
   formData: any = {
-    firstName: '', lastName: '', email: '', phone: '', dateOfBirth: '',
-    gender: '', address: '', fatherName: '', motherName: '', guardianPhone: '',
+    fullName: '', email: '', phone: '', dateOfBirth: '',
+    gender: '', bloodGroup: '', address: '', fatherName: '', motherName: '', guardianPhone: '',
     sscGpa: null, sscYear: null, sscBoard: '',
     hscGpa: null, hscYear: null, hscBoard: '',
-    programPreference1: '', programPreference2: '', programPreference3: ''
+    photoUrl: '',
+    signatureUrl: ''
   };
   submitting = false;
   registrationResult: any = null;
   errorMessage = '';
   showPassword = false;
+  photoPreview: string | null = null;
+  signaturePreview: string | null = null;
 
-  constructor(private service: PreAdmissionService) {}
+  currentYear = new Date().getFullYear();
+  sscYears: number[] = [];
+  hscYears: number[] = [];
+  filteredSscYears: number[] = [];
+  filteredHscYears: number[] = [];
+  boards = [
+    'Dhaka', 'Rajshahi', 'Cumilla', 'Jashore', 'Chattogram',
+    'Barishal', 'Sylhet', 'Dinajpur', 'Mymensingh',
+    'Bangladesh Madrasah Education Board', 'Bangladesh Technical Education Board'
+  ];
+  filteredSscBoards: string[] = [...this.boards];
+  filteredHscBoards: string[] = [...this.boards];
+  sscYearSearch = '';
+  sscBoardSearch = '';
+  hscYearSearch = '';
+  hscBoardSearch = '';
+  dropdowns: any = { sscYear: false, sscBoard: false, hscYear: false, hscBoard: false };
+
+  constructor(private service: PreAdmissionService) {
+    this.sscYears = [];
+    for (let y = 2020; y <= this.currentYear; y++) this.sscYears.push(y);
+    this.filteredSscYears = [...this.sscYears];
+    this.hscYears = [];
+    for (let y = 2022; y <= this.currentYear + 2; y++) this.hscYears.push(y);
+    this.filteredHscYears = [...this.hscYears];
+  }
+
+  openDropdown(name: string) { this.dropdowns[name] = true; }
+  closeDropdown(name: string) { setTimeout(() => { this.dropdowns[name] = false; }, 150); }
+
+  filterSscYear(e: Event) {
+    const v = (e.target as HTMLInputElement).value.toLowerCase();
+    this.filteredSscYears = this.sscYears.filter(y => y.toString().includes(v));
+  }
+  filterHscYear(e: Event) {
+    const v = (e.target as HTMLInputElement).value.toLowerCase();
+    this.filteredHscYears = this.hscYears.filter(y => y.toString().includes(v));
+  }
+  filterSscBoard(e: Event) {
+    const v = (e.target as HTMLInputElement).value.toLowerCase();
+    this.filteredSscBoards = this.boards.filter(b => b.toLowerCase().includes(v));
+  }
+  filterHscBoard(e: Event) {
+    const v = (e.target as HTMLInputElement).value.toLowerCase();
+    this.filteredHscBoards = this.boards.filter(b => b.toLowerCase().includes(v));
+  }
+
+  selectSscYear(y: number) { this.formData.sscYear = y; this.sscYearSearch = y.toString(); }
+  selectHscYear(y: number) { this.formData.hscYear = y; this.hscYearSearch = y.toString(); }
+  selectSscBoard(b: string) { this.formData.sscBoard = b; this.sscBoardSearch = b; }
+  selectHscBoard(b: string) { this.formData.hscBoard = b; this.hscBoardSearch = b; }
 
   onSubmit() {
     this.submitting = true;
     this.errorMessage = '';
-    this.service.register(this.formData).subscribe({
+    const parts = this.formData.fullName.trim().split(/\s+/);
+    const payload = {
+      ...this.formData,
+      firstName: parts[0] || '',
+      lastName: parts.slice(1).join(' ') || parts[0] || ''
+    };
+    delete payload.fullName;
+    this.service.register(payload).subscribe({
       next: (res) => {
         this.submitting = false;
         this.registrationResult = res;
@@ -271,6 +444,72 @@ export class PreAdmissionRegisterComponent {
         this.errorMessage = err.error?.message || err.error?.error || err.message || 'Registration failed. Please try again.';
       }
     });
+  }
+
+  onPhotoSelect(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) this.processPhoto(file);
+  }
+
+  onPhotoDrop(event: DragEvent) {
+    event.preventDefault();
+    const file = event.dataTransfer?.files?.[0];
+    if (file) this.processPhoto(file);
+  }
+
+  processPhoto(file: File) {
+    if (file.size > 2 * 1024 * 1024) {
+      this.errorMessage = 'Photo must be less than 2MB';
+      return;
+    }
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      this.errorMessage = 'Only JPG and PNG files are allowed';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.photoPreview = reader.result as string;
+      this.formData.photoUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  removePhoto() {
+    this.photoPreview = null;
+    this.formData.photoUrl = '';
+  }
+
+  onSignatureSelect(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) this.processSignature(file);
+  }
+
+  onSignatureDrop(event: DragEvent) {
+    event.preventDefault();
+    const file = event.dataTransfer?.files?.[0];
+    if (file) this.processSignature(file);
+  }
+
+  processSignature(file: File) {
+    if (file.size > 1 * 1024 * 1024) {
+      this.errorMessage = 'Signature must be less than 1MB';
+      return;
+    }
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      this.errorMessage = 'Only JPG and PNG files are allowed';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.signaturePreview = reader.result as string;
+      this.formData.signatureUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  removeSignature() {
+    this.signaturePreview = null;
+    this.formData.signatureUrl = '';
   }
 
   togglePassword() {

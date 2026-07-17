@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Invoice } from '../models/invoice';
@@ -20,16 +20,36 @@ export class InvoiceService {
     return this.http.get<PagedResponse<Invoice>>(this.apiUrl, { params: httpParams });
   }
 
+  search(search: string, status: string, params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<Invoice>> {
+    let httpParams = new HttpParams()
+      .set('page', params.page.toString())
+      .set('size', params.size.toString())
+      .set('sortBy', params.sortBy)
+      .set('sortDir', params.sortDir);
+    if (search) httpParams = httpParams.set('search', search);
+    if (status) httpParams = httpParams.set('status', status);
+    return this.http.get<PagedResponse<Invoice>>(`${this.apiUrl}/search`, { params: httpParams });
+  }
+
   findById(id: number): Observable<Invoice> {
     return this.http.get<Invoice>(`${this.apiUrl}/${id}`);
   }
 
-  save(invoice: Invoice): Observable<Invoice> {
-    return this.http.post<Invoice>(this.apiUrl, invoice);
+  findByStudentId(studentId: number, params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<Invoice>> {
+    let httpParams = new HttpParams()
+      .set('page', params.page.toString())
+      .set('size', params.size.toString())
+      .set('sortBy', params.sortBy)
+      .set('sortDir', params.sortDir);
+    return this.http.get<PagedResponse<Invoice>>(`${this.apiUrl}/student/${studentId}`, { params: httpParams });
   }
 
-  update(id: number, invoice: Invoice): Observable<Invoice> {
-    return this.http.put<Invoice>(`${this.apiUrl}/${id}`, invoice);
+  generateInvoice(studentId: number, semesterId: number, academicYear: string): Observable<Invoice> {
+    return this.http.post<Invoice>(`${this.apiUrl}/generate`, { studentId, semesterId, academicYear });
+  }
+
+  updateStatus(id: number, status: string): Observable<Invoice> {
+    return this.http.put<Invoice>(`${this.apiUrl}/${id}/status`, { status });
   }
 
   delete(id: number): Observable<void> {

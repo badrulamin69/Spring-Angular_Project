@@ -1,12 +1,11 @@
 export interface FeeType {
   id?: number;
-  uniqueCode?: string;
   name: string;
   code: string;
+  category: string;
   description?: string;
-  amount: number;
-  isMandatory?: boolean;
-  frequency?: string;
+  defaultAmount?: number;
+  isActive?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }

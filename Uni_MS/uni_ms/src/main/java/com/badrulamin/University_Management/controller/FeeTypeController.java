@@ -12,7 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/fee-types")
@@ -41,19 +42,31 @@ public class FeeTypeController {
         return ResponseEntity.ok(feeTypeService.findById(id));
     }
 
-    @PreAuthorize("hasAuthority('FEE_TYPE_MANAGE')")
+    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @GetMapping("/active")
+    public ResponseEntity<List<FeeType>> findActive() {
+        return ResponseEntity.ok(feeTypeService.findActive());
+    }
+
+    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<FeeType>> findByCategory(@PathVariable String category) {
+        return ResponseEntity.ok(feeTypeService.findByCategory(category));
+    }
+
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PostMapping
     public ResponseEntity<FeeType> save(@Valid @RequestBody FeeType feeType) {
         return ResponseEntity.ok(feeTypeService.save(feeType));
     }
 
-    @PreAuthorize("hasAuthority('FEE_TYPE_MANAGE')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PutMapping("/{id}")
     public ResponseEntity<FeeType> update(@PathVariable Long id, @Valid @RequestBody FeeType feeType) {
         return ResponseEntity.ok(feeTypeService.update(id, feeType));
     }
 
-    @PreAuthorize("hasAuthority('FEE_TYPE_MANAGE')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         feeTypeService.delete(id);

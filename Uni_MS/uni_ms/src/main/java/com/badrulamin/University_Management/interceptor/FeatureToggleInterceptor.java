@@ -24,7 +24,7 @@ public class FeatureToggleInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String path = request.getRequestURI();
 
-        if (path.startsWith("/api/auth/") || path.startsWith("/api/features")) {
+        if (path.startsWith("/api/auth/") || path.startsWith("/api/features") || path.startsWith("/api/pre-admission/")) {
             return true;
         }
 

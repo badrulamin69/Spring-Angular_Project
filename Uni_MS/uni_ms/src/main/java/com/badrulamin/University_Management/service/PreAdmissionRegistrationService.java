@@ -25,7 +25,6 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +38,6 @@ public class PreAdmissionRegistrationService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ProgramRepository programRepository;
-    private static final AtomicLong counter = new AtomicLong(1);
     private static final SecureRandom secureRandom = new SecureRandom();
 
     public Page<PreAdmissionRegistration> findAll(Pageable pageable) {
@@ -58,8 +56,19 @@ public class PreAdmissionRegistrationService {
 
     @Transactional
     public Map<String, Object> saveWithUserAccount(PreAdmissionRegistration registration) {
+        if (registration.getEmail() != null && existsByEmail(registration.getEmail())) {
+            throw new IllegalArgumentException("An application with this email already exists. Please use a different email or check your existing application status.");
+        }
+        if (registration.getEmail() != null && userRepository.existsByEmail(registration.getEmail())) {
+            throw new IllegalArgumentException("A user account with this email already exists. Please use a different email.");
+        }
+        if (registration.getEmail() != null && userRepository.existsByUsername(registration.getEmail())) {
+            throw new IllegalArgumentException("A user account with this username already exists. Please use a different email.");
+        }
         if (registration.getRegistrationNumber() == null) {
-            registration.setRegistrationNumber("PRE-ADM-" + Year.now().getValue() + "-" + String.format("%05d", counter.getAndIncrement()));
+            String prefix = "PRE-ADM-" + Year.now().getValue() + "-";
+            long nextNum = repository.findMaxSequenceByRegistrationNumberPrefix(prefix) + 1;
+            registration.setRegistrationNumber(prefix + String.format("%05d", nextNum));
         }
         if (registration.getStatus() == null) {
             registration.setStatus("SUBMITTED");
@@ -165,6 +174,7 @@ public class PreAdmissionRegistrationService {
 
         int rank = 1;
         int allocationsCreated = 0;
+        Map<String, Integer> departmentWise = new LinkedHashMap<>();
         for (Map.Entry<Long, Double> entry : sorted) {
             PreAdmissionRegistration reg = repository.findById(entry.getKey()).orElse(null);
             if (reg == null) continue;
@@ -172,7 +182,8 @@ public class PreAdmissionRegistrationService {
             Optional<DepartmentAllocation> existing = allocationRepository.findByRegistration_Id(reg.getId());
             DepartmentAllocation allocation = existing.orElse(new DepartmentAllocation());
             if (!existing.isPresent()) {
-                allocation.setAllocationNumber("ALLOC-" + Year.now().getValue() + "-" + String.format("%05d", counter.getAndIncrement()));
+                long allocNum = allocationRepository.count() + 1;
+                allocation.setAllocationNumber("ALLOC-" + Year.now().getValue() + "-" + String.format("%05d", allocNum));
                 allocation.setAllocatedAt(LocalDateTime.now());
             }
             allocation.setRegistration(reg);
@@ -180,6 +191,7 @@ public class PreAdmissionRegistrationService {
             allocation.setMeritRank(rank++);
             allocation.setStatus("ALLOCATED");
 
+            String deptName = "Unassigned";
             if (reg.getProgramPreference1() != null) {
                 String pref = reg.getProgramPreference1().trim();
                 programRepository.findByCode(pref)
@@ -202,12 +214,56 @@ public class PreAdmissionRegistrationService {
             reg.setStatus("MERIT_PROCESSED");
             repository.save(reg);
             allocationsCreated++;
+
+            if (allocation.getAllocatedDepartment() != null) {
+                deptName = allocation.getAllocatedDepartment().getName();
+            }
+            departmentWise.merge(deptName, 1, Integer::sum);
         }
 
         return Map.of(
                 "totalProcessed", registrations.size(),
                 "allocationsCreated", allocationsCreated,
+                "departmentWise", departmentWise,
                 "message", "Merit processing completed. " + allocationsCreated + " allocations created."
+        );
+    }
+
+    public Map<String, Object> getMeritPreview() {
+        List<PreAdmissionRegistration> eligible = repository.findByStatusIn(
+                List.of("ADMIT_CARD_GENERATED", "TEST_COMPLETED"));
+
+        long submittedCount = repository.countByStatus("SUBMITTED");
+        long admitCardCount = repository.countByStatus("ADMIT_CARD_GENERATED");
+        long testCompletedCount = repository.countByStatus("TEST_COMPLETED");
+        long meritProcessedCount = repository.countByStatus("MERIT_PROCESSED");
+        long allocatedCount = repository.countByStatus("ALLOCATED");
+
+        double totalSsc = 0;
+        double totalHsc = 0;
+        int withTest = 0;
+        for (PreAdmissionRegistration reg : eligible) {
+            if (reg.getSscGpa() != null) totalSsc += reg.getSscGpa();
+            if (reg.getHscGpa() != null) totalHsc += reg.getHscGpa();
+            if (testResultRepository.findByRegistration_Id(reg.getId()).isPresent()) withTest++;
+        }
+
+        double avgSsc = eligible.isEmpty() ? 0 : totalSsc / eligible.size();
+        double avgHsc = eligible.isEmpty() ? 0 : totalHsc / eligible.size();
+
+        return Map.of(
+                "totalEligible", eligible.size(),
+                "withTestResults", withTest,
+                "withoutTestResults", eligible.size() - withTest,
+                "avgSscGpa", Math.round(avgSsc * 100.0) / 100.0,
+                "avgHscGpa", Math.round(avgHsc * 100.0) / 100.0,
+                "statusBreakdown", Map.of(
+                        "SUBMITTED", submittedCount,
+                        "ADMIT_CARD_GENERATED", admitCardCount,
+                        "TEST_COMPLETED", testCompletedCount,
+                        "MERIT_PROCESSED", meritProcessedCount,
+                        "ALLOCATED", allocatedCount
+                )
         );
     }
 }

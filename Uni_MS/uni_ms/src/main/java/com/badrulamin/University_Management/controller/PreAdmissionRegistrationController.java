@@ -2,6 +2,7 @@ package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
 import com.badrulamin.University_Management.service.PreAdmissionRegistrationService;
+import com.badrulamin.University_Management.service.AdmitCardPdfService;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ import java.util.Map;
 public class PreAdmissionRegistrationController {
 
     private final PreAdmissionRegistrationService service;
+    private final AdmitCardPdfService admitCardPdfService;
 
     @PostMapping("/pre-admission/register")
     public ResponseEntity<Map<String, Object>> register(@Valid @RequestBody PreAdmissionRegistration registration) {
@@ -96,6 +100,24 @@ public class PreAdmissionRegistrationController {
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
     public ResponseEntity<Map<String, Object>> processMerit() {
         return ResponseEntity.ok(service.processMerit());
+    }
+
+    @GetMapping("/pre-admissions/{id}/admit-card/pdf")
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_VIEW')")
+    public ResponseEntity<byte[]> getAdmitCardPdf(@PathVariable Long id) {
+        PreAdmissionRegistration reg = service.findById(id);
+        byte[] pdf = admitCardPdfService.generateAdmitCardPdf(reg);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=admit-card-" + reg.getRegistrationNumber() + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(pdf.length)
+                .body(pdf);
+    }
+
+    @GetMapping("/pre-admissions/merit-preview")
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
+    public ResponseEntity<Map<String, Object>> meritPreview() {
+        return ResponseEntity.ok(service.getMeritPreview());
     }
 
     private String generateAdmitCardHtml(PreAdmissionRegistration reg) {

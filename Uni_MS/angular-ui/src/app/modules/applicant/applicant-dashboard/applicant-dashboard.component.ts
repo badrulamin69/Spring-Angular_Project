@@ -60,6 +60,35 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
           </div>
         }
 
+        @if (allocation?.status === 'CONFIRMED' && !allocation?.isEnrolled) {
+          <div class="info-card enrollment-card">
+            <h3>Enrollment</h3>
+            <p class="enrollment-text">Your allocation has been confirmed. Click below to complete your enrollment and become a student.</p>
+            <button class="btn btn-enroll" (click)="enrollNow()" [disabled]="enrolling">
+              @if (enrolling) {
+                <span class="spinner-sm"></span> Enrolling...
+              } @else {
+                Enroll Now
+              }
+            </button>
+            @if (enrollmentResult) {
+              <div class="enrollment-result">
+                <div class="info-row"><span>Student Code:</span><strong>{{ enrollmentResult.studentCode }}</strong></div>
+                <div class="info-row"><span>Enrollment No:</span><strong>{{ enrollmentResult.enrollmentNumber }}</strong></div>
+                <div class="info-row"><span>ID Card:</span><strong>{{ enrollmentResult.idCardNumber }}</strong></div>
+                <div class="info-row"><span>Department:</span><strong>{{ enrollmentResult.department }}</strong></div>
+              </div>
+            }
+          </div>
+        }
+
+        @if (allocation?.isEnrolled) {
+          <div class="info-card enrollment-complete">
+            <h3>Enrollment Complete</h3>
+            <p class="enrollment-success-text">You are now a student!</p>
+          </div>
+        }
+
         @if (testResult) {
           <div class="info-card">
             <h3>Test Results</h3>
@@ -103,6 +132,11 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .btn-success:hover { background: #16a34a; }
     .btn-danger { background: #ef4444; color: #fff; }
     .btn-danger:hover { background: #dc2626; }
+    .btn-enroll { background: #8b5cf6; color: #fff; padding: 10px 20px; font-size: 0.9375rem; }
+    .btn-enroll:hover { background: #7c3aed; }
+    .btn-enroll:disabled { opacity: 0.6; cursor: not-allowed; }
+    .spinner-sm { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; margin-right: 4px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .info-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .info-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem; }
     .info-card h3 { margin: 0 0 12px; font-size: 1rem; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; }
@@ -115,6 +149,13 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .status-badge[data-status="GRADED"] { background: #dbeafe; color: #1d4ed8; }
     .status-badge[data-status="IN_PROGRESS"] { background: #e0e7ff; color: #3730a3; }
     .alloc-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .enrollment-card { border-color: #8b5cf6; background: #faf5ff; }
+    .enrollment-card h3 { color: #7c3aed; border-color: #e9d5ff; }
+    .enrollment-text { font-size: 0.875rem; color: #6b7280; margin-bottom: 12px; }
+    .enrollment-result { margin-top: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px; }
+    .enrollment-complete { border-color: #22c55e; background: #f0fdf4; text-align: center; padding: 2rem; }
+    .enrollment-complete h3 { border: none; color: #16a34a; }
+    .enrollment-success-text { font-size: 1rem; color: #16a34a; font-weight: 600; margin: 0; }
     .no-data { color: #94a3b8; font-size: 0.875rem; font-style: italic; }
     .error-banner { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; padding: 10px 16px; border-radius: 8px; margin-top: 1rem; font-size: 0.875rem; }
     @media (max-width: 640px) { .info-cards { grid-template-columns: 1fr; } }
@@ -127,6 +168,8 @@ export class ApplicantDashboardComponent implements OnInit {
   error = '';
   currentStep = '';
   steps: any[] = [];
+  enrolling = false;
+  enrollmentResult: any = null;
 
   constructor(
     private applicantService: ApplicantPortalService,
@@ -142,10 +185,10 @@ export class ApplicantDashboardComponent implements OnInit {
       next: (reg) => {
         this.registration = reg;
         this.buildSteps();
-        if (['ADMIT_CARD_GENERATED', 'TEST_COMPLETED', 'MERIT_PROCESSED', 'ALLOCATED'].includes(reg.status)) {
+        if (['ADMIT_CARD_GENERATED', 'TEST_COMPLETED', 'MERIT_PROCESSED', 'ALLOCATED', 'ENROLLED'].includes(reg.status)) {
           this.loadTestResults();
         }
-        if (['MERIT_PROCESSED', 'ALLOCATED'].includes(reg.status)) {
+        if (['MERIT_PROCESSED', 'ALLOCATED', 'ENROLLED'].includes(reg.status)) {
           this.loadAllocation();
         }
       },
@@ -177,6 +220,7 @@ export class ApplicantDashboardComponent implements OnInit {
       { num: '3', key: 'TEST_COMPLETED', title: 'Admission Test', desc: 'Take the online MCQ admission test', completed: this.isCompleted('TEST_COMPLETED'), actionLabel: s === 'ADMIT_CARD_GENERATED' ? 'Take Test' : null, actionClass: 'btn-primary', actionFn: () => window.open('/applicant/test', '_blank') },
       { num: '4', key: 'MERIT_PROCESSED', title: 'Merit Processing', desc: 'Your results are being processed', completed: this.isCompleted('MERIT_PROCESSED') },
       { num: '5', key: 'ALLOCATED', title: 'Department Allocation', desc: 'Your department allocation is ready', completed: this.isCompleted('ALLOCATED'), actionLabel: s === 'ALLOCATED' && this.allocation?.status === 'ALLOCATED' ? 'Review Allocation' : null, actionClass: 'btn-success', actionFn: () => {} },
+      { num: '6', key: 'ENROLLED', title: 'Enrollment Complete', desc: 'You are now officially a student', completed: this.isCompleted('ENROLLED') },
     ];
     const order = ['DRAFT','SUBMITTED','ADMIT_CARD_GENERATED','TEST_COMPLETED','MERIT_PROCESSED','ALLOCATED','ENROLLED','REJECTED'];
     this.currentStep = this.steps.find(t => t.key === s)?.key || s;
@@ -217,5 +261,20 @@ export class ApplicantDashboardComponent implements OnInit {
         error: () => { this.error = 'Failed to decline allocation'; }
       });
     }
+  }
+
+  enrollNow() {
+    this.enrolling = true;
+    this.applicantService.enrollSelf().subscribe({
+      next: (result) => {
+        this.enrolling = false;
+        this.enrollmentResult = result;
+        this.loadData();
+      },
+      error: (err) => {
+        this.enrolling = false;
+        this.error = err.error?.error || 'Enrollment failed. Please try again.';
+      }
+    });
   }
 }

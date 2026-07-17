@@ -1,4 +1,4 @@
-﻿import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeeTypeService } from '../../../services/fee-type.service';
@@ -81,10 +81,20 @@ export class FeeTypesComponent implements OnInit {
     { key: 'id', label: 'ID', sortable: true },
     { key: 'name', label: 'Name', sortable: true, type: 'text', required: true, placeholder: 'Fee type name' },
     { key: 'code', label: 'Code', sortable: true, type: 'text', required: true, placeholder: 'FEE001' },
+    { key: 'category', label: 'Category', sortable: true, type: 'select', required: true, options: [
+      { label: 'Academic', value: 'ACADEMIC' },
+      { label: 'Admission', value: 'ADMISSION' },
+      { label: 'Hostel', value: 'HOSTEL' },
+      { label: 'Transport', value: 'TRANSPORT' },
+      { label: 'Fine', value: 'FINE' },
+      { label: 'Miscellaneous', value: 'MISCELLANEOUS' }
+    ]},
     { key: 'description', label: 'Description', type: 'textarea', placeholder: 'Description' },
-    { key: 'amount', label: 'Amount', sortable: true, type: 'number', required: true, placeholder: '5000' },
-    { key: 'isMandatory', label: 'Mandatory', type: 'checkbox' },
-    { key: 'frequency', label: 'Frequency', type: 'text', placeholder: 'Monthly/Quarterly/Yearly' }
+    { key: 'defaultAmount', label: 'Default Amount', sortable: true, type: 'number', placeholder: '5000' },
+    { key: 'isActive', label: 'Active', type: 'select', options: [
+      { label: 'Yes', value: true },
+      { label: 'No', value: false }
+    ]}
   ];
 
   showForm = false;

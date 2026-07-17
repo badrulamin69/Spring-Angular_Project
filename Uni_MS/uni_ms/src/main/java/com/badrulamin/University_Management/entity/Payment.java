@@ -2,13 +2,14 @@ package com.badrulamin.University_Management.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,45 +20,51 @@ import java.time.LocalDateTime;
 @Table(name = "payments")
 public class Payment extends BaseEntity {
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @NotBlank
+    @Size(max = 30)
+    @Column(name = "payment_number", unique = true, nullable = false)
+    private String paymentNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "invoice_id")
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "invoice_id", nullable = false)
     private Invoice invoice;
 
     @NotNull
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal amount;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
     @NotNull
-    @Column(name = "payment_date", nullable = false)
-    private LocalDateTime paymentDate;
+    @Column(nullable = false)
+    private Double amount;
 
+    @Size(max = 30)
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "transaction_reference")
-    private String transactionReference;
+    @Size(max = 20)
+    @Column(name = "payment_status")
+    private String paymentStatus = "PENDING";
 
-    private String status;
+    @Size(max = 100)
+    @Column(name = "transaction_id")
+    private String transactionId;
 
+    @Column(name = "gateway_response", columnDefinition = "TEXT")
+    private String gatewayResponse;
+
+    private LocalDateTime paymentDate;
+
+    @Size(max = 100)
+    private String createdBy;
+
+    @Column(columnDefinition = "TEXT")
     private String notes;
 
-    @JsonProperty("studentId")
-    public void setStudentId(Long id) {
-        if (id != null) {
-            this.student = new Student();
-            this.student.setId(id);
-        }
-    }
-
-    @JsonProperty
-    public Long getStudentId() {
-        return this.student != null ? this.student.getId() : null;
-    }
+    @Size(max = 500)
+    @Column(name = "receipt_url")
+    private String receiptUrl;
 
     @JsonProperty("invoiceId")
     public void setInvoiceId(Long id) {
@@ -70,5 +77,18 @@ public class Payment extends BaseEntity {
     @JsonProperty
     public Long getInvoiceId() {
         return this.invoice != null ? this.invoice.getId() : null;
+    }
+
+    @JsonProperty("studentId")
+    public void setStudentId(Long id) {
+        if (id != null) {
+            this.student = new Student();
+            this.student.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getStudentId() {
+        return this.student != null ? this.student.getId() : null;
     }
 }

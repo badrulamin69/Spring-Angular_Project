@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FeeType } from '../models/fee-type';
@@ -24,15 +24,23 @@ export class FeeTypeService {
     return this.http.get<FeeType>(`${this.apiUrl}/${id}`);
   }
 
-  save(feeType: FeeType): Observable<FeeType> {
-    return this.http.post<FeeType>(this.apiUrl, feeType);
+  save(data: FeeType): Observable<FeeType> {
+    return this.http.post<FeeType>(this.apiUrl, data);
   }
 
-  update(id: number, feeType: FeeType): Observable<FeeType> {
-    return this.http.put<FeeType>(`${this.apiUrl}/${id}`, feeType);
+  update(id: number, data: FeeType): Observable<FeeType> {
+    return this.http.put<FeeType>(`${this.apiUrl}/${id}`, data);
   }
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  findActive(): Observable<FeeType[]> {
+    return this.http.get<FeeType[]>(`${this.apiUrl}/active`);
+  }
+
+  findByCategory(category: string): Observable<FeeType[]> {
+    return this.http.get<FeeType[]>(`${this.apiUrl}/category/${category}`);
   }
 }

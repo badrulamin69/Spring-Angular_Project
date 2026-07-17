@@ -8,6 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
+
 @Service
 @RequiredArgsConstructor
 public class AdmissionTestResultService {
@@ -48,5 +53,32 @@ public class AdmissionTestResultService {
 
     public long countByStatus(String status) {
         return repository.countByStatus(status);
+    }
+
+    public Map<String, Object> saveBulk(List<AdmissionTestResult> results) {
+        int successCount = 0;
+        int errorCount = 0;
+        List<String> errors = new ArrayList<>();
+
+        for (int i = 0; i < results.size(); i++) {
+            try {
+                AdmissionTestResult result = results.get(i);
+                if (result.getStatus() == null) {
+                    result.setStatus("SCORED");
+                }
+                repository.save(result);
+                successCount++;
+            } catch (Exception e) {
+                errorCount++;
+                errors.add("Row " + (i + 1) + ": " + e.getMessage());
+            }
+        }
+
+        return Map.of(
+                "successCount", successCount,
+                "errorCount", errorCount,
+                "errors", errors,
+                "message", successCount + " results saved" + (errorCount > 0 ? ", " + errorCount + " failed" : "")
+        );
     }
 }

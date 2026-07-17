@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/admission-test-results")
 @RequiredArgsConstructor
@@ -43,6 +46,19 @@ public class AdmissionTestResultController {
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
     public ResponseEntity<AdmissionTestResult> save(@Valid @RequestBody AdmissionTestResult result) {
         return ResponseEntity.ok(service.save(result));
+    }
+
+    @PostMapping("/bulk")
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
+    public ResponseEntity<Map<String, Object>> saveBulk(@Valid @RequestBody List<AdmissionTestResult> results) {
+        if (results.size() > 100) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "message", "Maximum 100 results per bulk upload",
+                    "successCount", 0,
+                    "errorCount", results.size()
+            ));
+        }
+        return ResponseEntity.ok(service.saveBulk(results));
     }
 
     @PutMapping("/{id}")

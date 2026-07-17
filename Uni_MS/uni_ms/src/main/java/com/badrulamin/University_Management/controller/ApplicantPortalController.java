@@ -4,6 +4,7 @@ import com.badrulamin.University_Management.entity.*;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.repository.*;
 import com.badrulamin.University_Management.service.AdmissionTestAttemptService;
+import com.badrulamin.University_Management.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +25,7 @@ public class ApplicantPortalController {
     private final AdmissionTestResultRepository testResultRepository;
     private final DepartmentAllocationRepository allocationRepository;
     private final AdmissionTestQuestionRepository questionRepository;
+    private final EnrollmentService enrollmentService;
 
     @GetMapping("/my-registration")
     public ResponseEntity<?> myRegistration(@AuthenticationPrincipal UserDetails userDetails) {
@@ -149,6 +151,7 @@ public class ApplicantPortalController {
             result.put("allocatedSection", a.getAllocatedSection());
             result.put("allocatedAt", a.getAllocatedAt());
             result.put("confirmedAt", a.getConfirmedAt());
+            result.put("isEnrolled", "ENROLLED".equals(reg.getStatus()));
         }
         return ResponseEntity.ok(result);
     }
@@ -180,6 +183,17 @@ public class ApplicantPortalController {
         allocation.setStatus("CANCELLED");
         allocationRepository.save(allocation);
         return ResponseEntity.ok(Map.of("message", "Allocation declined", "status", "CANCELLED"));
+    }
+
+    @PostMapping("/my-enroll")
+    public ResponseEntity<?> enrollSelf(@AuthenticationPrincipal UserDetails userDetails) {
+        PreAdmissionRegistration reg = findRegistration(userDetails);
+        try {
+            Map<String, Object> result = enrollmentService.enrollSelf(reg.getId(), reg.getEmail());
+            return ResponseEntity.ok(result);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     private PreAdmissionRegistration findRegistration(UserDetails userDetails) {

@@ -44,4 +44,8 @@ export class ApplicantPortalService {
   declineAllocation(id: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/my-allocation/${id}/decline`, {});
   }
+
+  enrollSelf(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/my-enroll`, {});
+  }
 }

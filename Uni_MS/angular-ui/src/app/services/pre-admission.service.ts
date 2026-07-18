@@ -12,12 +12,15 @@ export class PreAdmissionService {
 
   constructor(private http: HttpClient) {}
 
-  findAll(params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<PreAdmissionRegistration>> {
+  findAll(params: PageParams = DEFAULT_PAGE_PARAMS, search: string = ''): Observable<PagedResponse<PreAdmissionRegistration>> {
     let httpParams = new HttpParams()
       .set('page', params.page.toString())
       .set('size', params.size.toString())
       .set('sortBy', params.sortBy)
       .set('sortDir', params.sortDir);
+    if (search) {
+      httpParams = httpParams.set('search', search);
+    }
     return this.http.get<PagedResponse<PreAdmissionRegistration>>(this.apiUrl, { params: httpParams });
   }
 
@@ -25,8 +28,8 @@ export class PreAdmissionService {
     return this.http.get<PreAdmissionRegistration>(`${this.apiUrl}/${id}`);
   }
 
-  register(data: PreAdmissionRegistration): Observable<PreAdmissionRegistration> {
-    return this.http.post<PreAdmissionRegistration>(`${this.publicUrl}/register`, data);
+  register(data: PreAdmissionRegistration): Observable<any> {
+    return this.http.post<any>(`${this.publicUrl}/register`, data);
   }
 
   checkStatus(registrationNumber: string): Observable<any> {
@@ -63,5 +66,13 @@ export class PreAdmissionService {
 
   getAdmitCardPdf(id: number): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/${id}/admit-card/pdf`, { responseType: 'blob' });
+  }
+
+  getRegistrationPdf(registrationNumber: string): Observable<Blob> {
+    return this.http.get(`${this.publicUrl}/register/${registrationNumber}/pdf`, { responseType: 'blob' });
+  }
+
+  getRegistrationQrCode(registrationNumber: string): Observable<Blob> {
+    return this.http.get(`${this.publicUrl}/register/${registrationNumber}/qr-code`, { responseType: 'blob' });
   }
 }

@@ -26,7 +26,7 @@ public class AdmissionTestQuestionService {
     }
 
     public List<AdmissionTestQuestion> findByTestId(Long testId) {
-        return repository.findByTestIdOrderByCreatedAtAsc(testId);
+        return repository.findByTest_IdOrderByCreatedAtAsc(testId);
     }
 
     public AdmissionTestQuestion save(AdmissionTestQuestion question) {
@@ -52,6 +52,6 @@ public class AdmissionTestQuestionService {
     }
 
     public long countByTestId(Long testId) {
-        return repository.countByTestId(testId);
+        return repository.countByTest_Id(testId);
     }
 }

@@ -57,7 +57,7 @@ public class AdmissionTestAttemptService {
         attempt.setStatus("IN_PROGRESS");
         attempt.setStartedAt(LocalDateTime.now());
 
-        List<AdmissionTestQuestion> questions = questionRepository.findByTestIdOrderByCreatedAtAsc(testId);
+        List<AdmissionTestQuestion> questions = questionRepository.findByTest_IdOrderByCreatedAtAsc(testId);
         attempt.setTotalQuestions(questions.size());
 
         return repository.save(attempt);
@@ -71,7 +71,7 @@ public class AdmissionTestAttemptService {
             throw new RuntimeException("This test attempt is not in progress");
         }
 
-        List<AdmissionTestQuestion> questions = questionRepository.findByTestIdOrderByCreatedAtAsc(attempt.getTest().getId());
+        List<AdmissionTestQuestion> questions = questionRepository.findByTest_IdOrderByCreatedAtAsc(attempt.getTest().getId());
 
         int correct = 0;
         double totalScore = 0;

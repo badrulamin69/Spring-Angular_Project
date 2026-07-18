@@ -11,15 +11,22 @@ export class AdmissionTestQuestionService {
 
   constructor(private http: HttpClient) {}
 
-  findAll(params: PageParams = DEFAULT_PAGE_PARAMS, testId?: number): Observable<PagedResponse<AdmissionTestQuestion> | AdmissionTestQuestion[]> {
+  findAll(params: PageParams = DEFAULT_PAGE_PARAMS, testId?: number, search: string = ''): Observable<PagedResponse<AdmissionTestQuestion> | AdmissionTestQuestion[]> {
     if (testId) {
-      return this.http.get<AdmissionTestQuestion[]>(this.apiUrl, { params: new HttpParams().set('testId', testId.toString()) });
+      let httpParams = new HttpParams().set('testId', testId.toString());
+      if (search) {
+        httpParams = httpParams.set('search', search);
+      }
+      return this.http.get<AdmissionTestQuestion[]>(this.apiUrl, { params: httpParams });
     }
     let httpParams = new HttpParams()
       .set('page', params.page.toString())
       .set('size', params.size.toString())
       .set('sortBy', params.sortBy)
       .set('sortDir', params.sortDir);
+    if (search) {
+      httpParams = httpParams.set('search', search);
+    }
     return this.http.get<PagedResponse<AdmissionTestQuestion>>(this.apiUrl, { params: httpParams });
   }
 

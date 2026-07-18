@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Announcement } from '../models/announcement';
@@ -12,12 +12,15 @@ export class AnnouncementService {
 
   constructor(private http: HttpClient) {}
 
-  findAll(params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<Announcement>> {
+  findAll(params: PageParams = DEFAULT_PAGE_PARAMS, search: string = ''): Observable<PagedResponse<Announcement>> {
     let httpParams = new HttpParams()
       .set('page', params.page.toString())
       .set('size', params.size.toString())
       .set('sortBy', params.sortBy)
       .set('sortDir', params.sortDir);
+    if (search) {
+      httpParams = httpParams.set('search', search);
+    }
     return this.http.get<PagedResponse<Announcement>>(this.apiUrl, { params: httpParams });
   }
 

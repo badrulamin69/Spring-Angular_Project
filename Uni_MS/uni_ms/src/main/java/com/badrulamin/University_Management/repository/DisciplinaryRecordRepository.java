@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DisciplinaryRecordRepository extends JpaRepository<DisciplinaryRecord, Long> {
-    Page<DisciplinaryRecord> findByStudentId(Long studentId, Pageable pageable);
+    Page<DisciplinaryRecord> findByStudent_Id(Long studentId, Pageable pageable);
     long countByStatus(String status);
     long countBySeverity(String severity);
 }

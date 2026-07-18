@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../models/paged-response';
@@ -133,25 +133,28 @@ export interface TableColumn {
     </div>
   `,
   styles: [`
-    .table-wrapper { background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; }
+    :host { display: block; width: 100%; max-width: 100%; min-width: 0; }
+    .table-wrapper { background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; width: 100%; max-width: 100%; }
     .table-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border-color); gap: 12px; flex-wrap: wrap; }
-    .toolbar-left { display: flex; align-items: center; gap: 12px; }
-    .toolbar-right { display: flex; align-items: center; gap: 8px; }
-    .search-box { display: flex; align-items: center; gap: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 6px 12px; }
-    .search-box input { border: none; background: transparent; color: var(--text-primary); font-size: 0.875rem; outline: none; width: 200px; }
+    .toolbar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex: 1; min-width: 0; }
+    .toolbar-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+    .search-box { display: flex; align-items: center; gap: 8px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 6px 12px; min-width: 0; flex: 1; max-width: 320px; }
+    .search-box input { border: none; background: transparent; color: var(--text-primary); font-size: 0.875rem; outline: none; width: 100%; min-width: 0; }
     .search-box input::placeholder { color: var(--text-muted); }
     .search-box svg { color: var(--text-muted); flex-shrink: 0; }
     .selected-count { font-size: 0.8125rem; color: var(--brand-color); font-weight: 500; }
-    .btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
+    .btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8125rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; white-space: nowrap; }
     .btn-sm { padding: 5px 10px; font-size: 0.8125rem; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
     .btn-outline:hover { background: var(--bg-hover); color: var(--text-primary); }
     .btn-danger { background: #ef4444; color: #fff; }
     .btn-danger:hover { background: #dc2626; }
-    .table-scroll { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border-color); color: var(--text-primary); white-space: nowrap; }
-    th { background: var(--bg-tertiary); font-weight: 600; color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; z-index: 1; }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .table-scroll::-webkit-scrollbar { height: 6px; }
+    .table-scroll::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+    table { width: 100%; border-collapse: collapse; min-width: 0; }
+    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+    th { background: var(--bg-tertiary); font-weight: 600; color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; z-index: 1; white-space: nowrap; }
     th.sortable { cursor: pointer; user-select: none; }
     th.sortable:hover { color: var(--text-primary); }
     .col-check { width: 40px; text-align: center; }
@@ -171,7 +174,7 @@ export interface TableColumn {
     .badge-success { background: #dcfce7; color: #166534; }
     .pagination { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border-top: 1px solid var(--border-color); flex-wrap: wrap; gap: 8px; }
     .pagination-info { font-size: 0.8125rem; color: var(--text-muted); }
-    .pagination-controls { display: flex; gap: 3px; align-items: center; }
+    .pagination-controls { display: flex; gap: 3px; align-items: center; flex-wrap: wrap; }
     .pagination-controls button { padding: 4px 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); border-radius: 4px; cursor: pointer; font-size: 0.8125rem; display: inline-flex; align-items: center; justify-content: center; min-width: 28px; transition: all 0.15s; }
     .pagination-controls button:hover:not(:disabled) { background: var(--bg-hover); }
     .pagination-controls button.active { background: var(--brand-color); color: #fff; border-color: var(--brand-color); }
@@ -191,8 +194,9 @@ export interface TableColumn {
       .toolbar-right {
         justify-content: flex-start;
       }
-      .search-box input {
-        width: 140px;
+      .search-box {
+        max-width: 100%;
+        flex: 1 1 100%;
       }
       .pagination {
         flex-direction: column;
@@ -216,9 +220,6 @@ export interface TableColumn {
       .btn-sm {
         padding: 4px 8px;
         font-size: 0.75rem;
-      }
-      .search-box input {
-        width: 120px;
       }
       .pagination-controls button {
         min-width: 24px;

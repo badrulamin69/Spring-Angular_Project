@@ -86,7 +86,7 @@ export class StudentsListComponent implements OnInit {
     { key: 'lastName', label: 'Last Name', sortable: true, type: 'text', required: true, placeholder: 'Enter last name' },
     { key: 'email', label: 'Email', sortable: true, type: 'email', placeholder: 'student@example.com' },
     { key: 'phone', label: 'Phone', type: 'text', placeholder: '+1 234 567 890' },
-    { key: 'studentCode', label: 'Student Code', sortable: true, type: 'text', required: true, placeholder: 'STU001' }
+    { key: 'studentCode', label: 'Code', sortable: true, type: 'text', required: true, placeholder: 'STU001' }
   ];
 
   showForm = false;
@@ -106,7 +106,7 @@ export class StudentsListComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.findAll(this.params).subscribe({
+    this.service.findAll(this.params, this.searchTerm).subscribe({
       next: (data) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load students'); }
     });

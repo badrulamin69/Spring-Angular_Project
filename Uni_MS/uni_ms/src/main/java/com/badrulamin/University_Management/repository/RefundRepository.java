@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface RefundRepository extends JpaRepository<Refund, Long> {
     Optional<Refund> findByRefundNumber(String refundNumber);
-    List<Refund> findByStudentId(Long studentId);
+    List<Refund> findByStudent_Id(Long studentId);
     List<Refund> findByStatus(String status);
     Page<Refund> findByStatus(String status, Pageable pageable);
     long countByStatus(String status);

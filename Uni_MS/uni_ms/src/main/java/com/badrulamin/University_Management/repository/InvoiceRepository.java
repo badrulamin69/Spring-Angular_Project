@@ -14,8 +14,8 @@ import java.util.Optional;
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     Optional<Invoice> findByInvoiceNumber(String invoiceNumber);
-    List<Invoice> findByStudentId(Long studentId);
-    Page<Invoice> findByStudentId(Long studentId, Pageable pageable);
+    List<Invoice> findByStudent_Id(Long studentId);
+    Page<Invoice> findByStudent_Id(Long studentId, Pageable pageable);
     List<Invoice> findByStatus(String status);
     Page<Invoice> findByStatus(String status, Pageable pageable);
     long countByStatus(String status);

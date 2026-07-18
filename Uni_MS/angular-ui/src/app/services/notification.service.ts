@@ -1,4 +1,4 @@
-﻿import { Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -12,9 +12,13 @@ export class NotificationService {
   private unreadCountSubject = new BehaviorSubject<number>(0);
   unreadCount$ = this.unreadCountSubject.asObservable();
 
-  findAll(params?: PageParams): Observable<any> {
+  findAll(params?: PageParams, search: string = ''): Observable<any> {
     const p = params || { page: 0, size: 10 };
-    return this.http.get<any>(`${this.apiUrl}?page=${p.page}&size=${p.size}`);
+    let url = `${this.apiUrl}?page=${p.page}&size=${p.size}`;
+    if (search) {
+      url += `&search=${encodeURIComponent(search)}`;
+    }
+    return this.http.get<any>(url);
   }
 
   getNotifications(page = 0, size = 10): Observable<any> {

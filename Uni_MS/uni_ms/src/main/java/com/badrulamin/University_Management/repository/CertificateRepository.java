@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
-    Page<Certificate> findByStudentId(Long studentId, Pageable pageable);
+    Page<Certificate> findByStudent_Id(Long studentId, Pageable pageable);
     Optional<Certificate> findByCertificateNumber(String certificateNumber);
     long countByStatus(String status);
     long countByCertificateType(String certificateType);

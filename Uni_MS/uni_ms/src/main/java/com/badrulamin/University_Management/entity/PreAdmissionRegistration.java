@@ -20,6 +20,9 @@ public class PreAdmissionRegistration extends BaseEntity {
     @Column(name = "registration_number", unique = true, nullable = false)
     private String registrationNumber;
 
+    @Column(name = "tracking_number", unique = true)
+    private String trackingNumber;
+
     @NotBlank
     @Size(max = 100)
     @Column(name = "first_name", nullable = false)
@@ -51,12 +54,10 @@ public class PreAdmissionRegistration extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String address;
 
-    @Size(max = 500)
-    @Column(name = "photo_url")
+    @Column(name = "photo_url", columnDefinition = "TEXT")
     private String photoUrl;
 
-    @Size(max = 500)
-    @Column(name = "signature_url")
+    @Column(name = "signature_url", columnDefinition = "TEXT")
     private String signatureUrl;
 
     @Size(max = 100)
@@ -91,9 +92,8 @@ public class PreAdmissionRegistration extends BaseEntity {
     @Column(name = "hsc_board")
     private String hscBoard;
 
-    @NotBlank
     @Size(max = 100)
-    @Column(name = "program_preference1", nullable = false)
+    @Column(name = "program_preference1")
     private String programPreference1;
 
     @Size(max = 100)

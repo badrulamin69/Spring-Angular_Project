@@ -51,11 +51,11 @@ public class PaymentService {
     }
 
     public Page<Payment> findByStudentId(Long studentId, Pageable pageable) {
-        return paymentRepository.findByStudentId(studentId, pageable);
+        return paymentRepository.findByStudent_Id(studentId, pageable);
     }
 
     public List<Payment> findByInvoiceId(Long invoiceId) {
-        return paymentRepository.findByInvoiceId(invoiceId);
+        return paymentRepository.findByInvoice_Id(invoiceId);
     }
 
     public Payment initiatePayment(Long invoiceId, Long studentId, Double amount, String paymentMethod, String notes) {

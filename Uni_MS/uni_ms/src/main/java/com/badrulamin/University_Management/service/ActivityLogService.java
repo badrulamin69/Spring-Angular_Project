@@ -42,7 +42,7 @@ public class ActivityLogService {
     }
 
     public Page<ActivityLog> findByUserId(Long userId, Pageable pageable) {
-        return activityLogRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
+        return activityLogRepository.findByUser_IdOrderByCreatedAtDesc(userId, pageable);
     }
 
     public Page<ActivityLog> findByModule(String module, Pageable pageable) {

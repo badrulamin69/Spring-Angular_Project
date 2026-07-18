@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -34,6 +35,7 @@ public class Department extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "administration_division_id")
+    @JsonIgnore
     private AdministrationDivision administrationDivision;
 
     @JsonProperty("administrationDivisionId")
@@ -51,6 +53,7 @@ public class Department extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
+    @JsonIgnore
     private Faculty faculty;
 
     @JsonProperty("facultyId")

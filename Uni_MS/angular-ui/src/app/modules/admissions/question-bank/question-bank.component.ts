@@ -200,7 +200,7 @@ export class QuestionBankComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    const req = this.questionService.findAll(this.params, this.selectedTestId || undefined);
+    const req = this.questionService.findAll(this.params, this.selectedTestId || undefined, '');
     req.subscribe({
       next: (res: any) => {
         this.pagedData = res.content ? res : { content: res, pageNumber: 0, pageSize: 20, totalElements: res.length, totalPages: 1, first: true, last: true };

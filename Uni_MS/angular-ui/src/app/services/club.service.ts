@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Club } from '../models/club';
@@ -12,12 +12,15 @@ export class ClubService {
 
   constructor(private http: HttpClient) {}
 
-  findAll(params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<Club>> {
+  findAll(params: PageParams = DEFAULT_PAGE_PARAMS, search: string = ''): Observable<PagedResponse<Club>> {
     let httpParams = new HttpParams()
       .set('page', params.page.toString())
       .set('size', params.size.toString())
       .set('sortBy', params.sortBy)
       .set('sortDir', params.sortDir);
+    if (search) {
+      httpParams = httpParams.set('search', search);
+    }
     return this.http.get<PagedResponse<Club>>(this.apiUrl, { params: httpParams });
   }
 

@@ -28,11 +28,11 @@ public class DiscountService {
     }
 
     public List<Discount> findByStudentId(Long studentId) {
-        return discountRepository.findByStudentId(studentId);
+        return discountRepository.findByStudent_Id(studentId);
     }
 
     public List<Discount> findByFeeTypeId(Long feeTypeId) {
-        return discountRepository.findByFeeTypeIdAndIsActiveTrue(feeTypeId);
+        return discountRepository.findByFeeType_IdAndIsActiveTrue(feeTypeId);
     }
 
     @Transactional
@@ -63,7 +63,7 @@ public class DiscountService {
     }
 
     public Double calculateDiscount(Long studentId, Long feeTypeId, Double originalAmount) {
-        List<Discount> discounts = discountRepository.findByStudentIdAndIsActiveTrue(studentId);
+        List<Discount> discounts = discountRepository.findByStudent_IdAndIsActiveTrue(studentId);
         LocalDate today = LocalDate.now();
 
         double totalDiscount = 0.0;

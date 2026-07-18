@@ -37,7 +37,7 @@ public class FineService {
     }
 
     public List<Fine> findByStudentId(Long studentId) {
-        return fineRepository.findByStudentId(studentId);
+        return fineRepository.findByStudent_Id(studentId);
     }
 
     public List<Fine> findByStatus(String status) {

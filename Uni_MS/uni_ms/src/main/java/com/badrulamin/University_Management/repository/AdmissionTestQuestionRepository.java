@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface AdmissionTestQuestionRepository extends JpaRepository<AdmissionTestQuestion, Long> {
-    List<AdmissionTestQuestion> findByTestIdOrderByCreatedAtAsc(Long testId);
-    long countByTestId(Long testId);
-    Page<AdmissionTestQuestion> findByTestId(Long testId, Pageable pageable);
+    List<AdmissionTestQuestion> findByTest_IdOrderByCreatedAtAsc(Long testId);
+    long countByTest_Id(Long testId);
+    Page<AdmissionTestQuestion> findByTest_Id(Long testId, Pageable pageable);
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface LoginHistoryRepository extends JpaRepository<LoginHistory, Long> {
-    Page<LoginHistory> findByUserId(Long userId, Pageable pageable);
+    Page<LoginHistory> findByUser_Id(Long userId, Pageable pageable);
     List<LoginHistory> findTop10ByOrderByLoginTimestampDesc();
     long countBySuccessTrue();
     long countBySuccessFalse();

@@ -185,7 +185,7 @@ export class EnrollmentsComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.enrollmentService.findAll(this.params).subscribe({
+    this.enrollmentService.findAll(this.params, this.searchTerm).subscribe({
       next: (data) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load enrollments'); }
     });

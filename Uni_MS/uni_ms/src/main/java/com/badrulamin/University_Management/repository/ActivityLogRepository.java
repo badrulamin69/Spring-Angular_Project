@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ActivityLogRepository extends JpaRepository<ActivityLog, Long> {
 
-    Page<ActivityLog> findByUserIdOrderByCreatedAtDesc(Long userId, Pageable pageable);
+    Page<ActivityLog> findByUser_IdOrderByCreatedAtDesc(Long userId, Pageable pageable);
 
     Page<ActivityLog> findByModuleOrderByCreatedAtDesc(String module, Pageable pageable);
 

@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AdmissionTest } from '../models/admission-test';
@@ -12,12 +12,15 @@ export class AdmissionTestService {
 
   constructor(private http: HttpClient) {}
 
-  findAll(params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<AdmissionTest>> {
+  findAll(params: PageParams = DEFAULT_PAGE_PARAMS, search: string = ''): Observable<PagedResponse<AdmissionTest>> {
     let httpParams = new HttpParams()
       .set('page', params.page.toString())
       .set('size', params.size.toString())
       .set('sortBy', params.sortBy)
       .set('sortDir', params.sortDir);
+    if (search) {
+      httpParams = httpParams.set('search', search);
+    }
     return this.http.get<PagedResponse<AdmissionTest>>(this.apiUrl, { params: httpParams });
   }
 

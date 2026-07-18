@@ -82,6 +82,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/test/**").permitAll()
                 .requestMatchers("/api/pre-admission/register").permitAll()
+                .requestMatchers("/api/pre-admission/register/*/pdf").permitAll()
+                .requestMatchers("/api/pre-admission/register/*/qr-code").permitAll()
                 .requestMatchers("/api/pre-admission/status/**").permitAll()
                 .anyRequest().authenticated()
             );

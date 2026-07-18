@@ -1,4 +1,4 @@
-﻿import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdmissionCircularService } from '../../../services/admission-circular.service';
@@ -40,7 +40,7 @@ export class CircularsComponent implements OnInit {
 
   constructor(private service: AdmissionCircularService, private toastService: ToastService) {}
   ngOnInit() { this.loadData(); }
-  loadData() { this.loading = true; this.service.findAll(this.params).subscribe({ next: (data) => { this.pagedData = data; this.loading = false; }, error: () => { this.loading = false; this.toastService.error('Failed to load circulars'); } }); }
+  loadData() { this.loading = true; this.service.findAll(this.params, this.searchTerm).subscribe({ next: (data) => { this.pagedData = data; this.loading = false; }, error: () => { this.loading = false; this.toastService.error('Failed to load circulars'); } }); }
   onPageChange(params: PageParams) { this.params = params; this.loadData(); }
   onSearch(term: string) { this.searchTerm = term; this.params = { ...DEFAULT_PAGE_PARAMS }; this.loadData(); }
   openForm(item?: any) { this.editingItem = item ? { ...item } : null; this.formError = ''; this.showForm = true; }

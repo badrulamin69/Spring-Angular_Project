@@ -4,8 +4,11 @@ import com.badrulamin.University_Management.entity.*;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.repository.*;
 import com.badrulamin.University_Management.service.AdmissionTestAttemptService;
+import com.badrulamin.University_Management.service.AdmitCardPdfService;
 import com.badrulamin.University_Management.service.EnrollmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +29,7 @@ public class ApplicantPortalController {
     private final DepartmentAllocationRepository allocationRepository;
     private final AdmissionTestQuestionRepository questionRepository;
     private final EnrollmentService enrollmentService;
+    private final AdmitCardPdfService admitCardPdfService;
 
     @GetMapping("/my-registration")
     public ResponseEntity<?> myRegistration(@AuthenticationPrincipal UserDetails userDetails) {
@@ -73,7 +77,7 @@ public class ApplicantPortalController {
     @GetMapping("/my-test/{testId}/questions")
     public ResponseEntity<?> getTestQuestions(@PathVariable Long testId, @AuthenticationPrincipal UserDetails userDetails) {
         PreAdmissionRegistration reg = findRegistration(userDetails);
-        List<AdmissionTestQuestion> questions = questionRepository.findByTestIdOrderByCreatedAtAsc(testId);
+        List<AdmissionTestQuestion> questions = questionRepository.findByTest_IdOrderByCreatedAtAsc(testId);
         List<Map<String, Object>> safeQuestions = new ArrayList<>();
         for (AdmissionTestQuestion q : questions) {
             Map<String, Object> qMap = new LinkedHashMap<>();
@@ -194,6 +198,17 @@ public class ApplicantPortalController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
+    }
+
+    @GetMapping("/my-admit-card/pdf")
+    public ResponseEntity<byte[]> downloadAdmitCardPdf(@AuthenticationPrincipal UserDetails userDetails) {
+        PreAdmissionRegistration reg = findRegistration(userDetails);
+        byte[] pdf = admitCardPdfService.generateAdmitCardPdf(reg);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=admit-card-" + reg.getRegistrationNumber() + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(pdf.length)
+                .body(pdf);
     }
 
     private PreAdmissionRegistration findRegistration(UserDetails userDetails) {

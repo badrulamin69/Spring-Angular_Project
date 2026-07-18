@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DiscountRepository extends JpaRepository<Discount, Long> {
-    List<Discount> findByStudentIdAndIsActiveTrue(Long studentId);
-    List<Discount> findByStudentId(Long studentId);
-    List<Discount> findByFeeTypeIdAndIsActiveTrue(Long feeTypeId);
+    List<Discount> findByStudent_IdAndIsActiveTrue(Long studentId);
+    List<Discount> findByStudent_Id(Long studentId);
+    List<Discount> findByFeeType_IdAndIsActiveTrue(Long feeTypeId);
 }

@@ -48,7 +48,7 @@ public class WorkflowService {
     }
 
     public List<WorkflowStep> getSteps(Long workflowId) {
-        return workflowStepRepository.findByWorkflowIdOrderByStepOrderAsc(workflowId);
+        return workflowStepRepository.findByWorkflow_IdOrderByStepOrderAsc(workflowId);
     }
 
     public WorkflowStep addStep(Long workflowId, WorkflowStep step) {
@@ -134,7 +134,7 @@ public class WorkflowService {
                 return workflowRepository.save(w);
             });
 
-        List<WorkflowStep> steps = workflowStepRepository.findByWorkflowIdOrderByStepOrderAsc(workflow.getId());
+        List<WorkflowStep> steps = workflowStepRepository.findByWorkflow_IdOrderByStepOrderAsc(workflow.getId());
         if (!steps.isEmpty()) {
             return steps.get(0).getId();
         }

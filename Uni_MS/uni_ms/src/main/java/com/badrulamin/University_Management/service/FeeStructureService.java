@@ -30,15 +30,15 @@ public class FeeStructureService {
     }
 
     public List<FeeStructure> findBySemesterAndProgram(Long semesterId, Long programId) {
-        return feeStructureRepository.findBySemesterIdAndProgramIdAndIsActiveTrue(semesterId, programId);
+        return feeStructureRepository.findBySemester_IdAndProgram_IdAndIsActiveTrue(semesterId, programId);
     }
 
     public List<FeeStructure> findByProgramAndAcademicYear(Long programId, String academicYear) {
-        return feeStructureRepository.findByProgramIdAndAcademicYearAndIsActiveTrue(programId, academicYear);
+        return feeStructureRepository.findByProgram_IdAndAcademicYearAndIsActiveTrue(programId, academicYear);
     }
 
     public List<FeeStructure> findByFeeType(Long feeTypeId) {
-        return feeStructureRepository.findByFeeTypeIdAndIsActiveTrue(feeTypeId);
+        return feeStructureRepository.findByFeeType_IdAndIsActiveTrue(feeTypeId);
     }
 
     public List<FeeStructure> findActive() {

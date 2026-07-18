@@ -254,7 +254,7 @@ export class InvoicesComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.findAll(this.params).subscribe({
+    this.service.findAll(this.params, this.searchTerm).subscribe({
       next: (data) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load invoices'); }
     });

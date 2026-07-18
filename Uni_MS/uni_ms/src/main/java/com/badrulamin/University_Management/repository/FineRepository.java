@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface FineRepository extends JpaRepository<Fine, Long> {
-    List<Fine> findByStudentId(Long studentId);
+    List<Fine> findByStudent_Id(Long studentId);
     List<Fine> findByStatus(String status);
     long countByStatus(String status);
-    List<Fine> findByStudentIdAndStatus(Long studentId, String status);
+    List<Fine> findByStudent_IdAndStatus(Long studentId, String status);
 }

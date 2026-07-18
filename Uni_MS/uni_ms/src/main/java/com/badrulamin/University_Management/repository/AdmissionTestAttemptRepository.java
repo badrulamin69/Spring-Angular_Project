@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface AdmissionTestAttemptRepository extends JpaRepository<AdmissionTestAttempt, Long> {
     Optional<AdmissionTestAttempt> findByRegistration_IdAndTest_Id(Long registrationId, Long testId);
     List<AdmissionTestAttempt> findByRegistration_Id(Long registrationId);
-    Page<AdmissionTestAttempt> findByTestId(Long testId, Pageable pageable);
+    Page<AdmissionTestAttempt> findByTest_Id(Long testId, Pageable pageable);
     boolean existsByRegistration_IdAndTest_IdAndStatusIn(Long registrationId, Long testId, List<String> statuses);
 }

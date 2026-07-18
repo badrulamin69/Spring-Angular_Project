@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WorkflowApprovalRepository extends JpaRepository<WorkflowApproval, Long> {
-    List<WorkflowApproval> findByEntityTypeAndEntityIdAndWorkflowStepIdOrderByActedAtDesc(
+    List<WorkflowApproval> findByEntityTypeAndEntityIdAndWorkflowStep_IdOrderByActedAtDesc(
         String entityType, Long entityId, Long workflowStepId);
     List<WorkflowApproval> findByEntityTypeAndEntityIdOrderByActedAtDesc(
         String entityType, Long entityId);

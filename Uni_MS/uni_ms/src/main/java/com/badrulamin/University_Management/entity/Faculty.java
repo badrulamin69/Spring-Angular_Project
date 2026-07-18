@@ -31,16 +31,12 @@ public class Faculty extends BaseEntity {
 
     private String description;
 
-    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String employeeCode;
 
-    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     private String phone;
@@ -69,4 +65,30 @@ public class Faculty extends BaseEntity {
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Department> departments;
+
+    @JsonProperty("userId")
+    public void setUserId(Long id) {
+        if (id != null) {
+            this.user = new User();
+            this.user.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getUserId() {
+        return this.user != null ? this.user.getId() : null;
+    }
+
+    @JsonProperty("departmentId")
+    public void setDepartmentId(Long id) {
+        if (id != null) {
+            this.department = new Department();
+            this.department.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getDepartmentId() {
+        return this.department != null ? this.department.getId() : null;
+    }
 }

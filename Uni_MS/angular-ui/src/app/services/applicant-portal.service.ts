@@ -48,4 +48,8 @@ export class ApplicantPortalService {
   enrollSelf(): Observable<any> {
     return this.http.post(`${this.apiUrl}/my-enroll`, {});
   }
+
+  getAdmitCardPdf(): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/my-admit-card/pdf`, { responseType: 'blob' });
+  }
 }

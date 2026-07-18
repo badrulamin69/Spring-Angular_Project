@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface AcademicCalendarRepository extends JpaRepository<AcademicCalendar, Long> {
-    List<AcademicCalendar> findBySemester_id(Long semesterId);
+    List<AcademicCalendar> findBySemester_Id(Long semesterId);
     List<AcademicCalendar> findByEventType(String eventType);
     List<AcademicCalendar> findByIsHoliday(boolean isHoliday);
     List<AcademicCalendar> findByStartDateBetween(LocalDate start, LocalDate end);

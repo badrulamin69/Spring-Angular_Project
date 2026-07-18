@@ -38,6 +38,10 @@ export const routes: Routes = [
     loadComponent: () => import('./modules/admissions/pre-admission-status/pre-admission-status.component').then(m => m.PreAdmissionStatusComponent)
   },
   {
+    path: 'pre-admission/registration-success',
+    loadComponent: () => import('./modules/admissions/registration-success/registration-success.component').then(m => m.RegistrationSuccessComponent)
+  },
+  {
     path: 'applicant/dashboard',
     loadComponent: () => import('./modules/applicant/applicant-dashboard/applicant-dashboard.component').then(m => m.ApplicantDashboardComponent),
     canActivate: [authGuard]

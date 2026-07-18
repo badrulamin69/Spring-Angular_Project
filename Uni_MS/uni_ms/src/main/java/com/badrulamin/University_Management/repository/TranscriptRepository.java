@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface TranscriptRepository extends JpaRepository<Transcript, Long> {
-    Page<Transcript> findByStudentId(Long studentId, Pageable pageable);
+    Page<Transcript> findByStudent_Id(Long studentId, Pageable pageable);
     Optional<Transcript> findByTranscriptNumber(String transcriptNumber);
     long countByStatus(String status);
 }

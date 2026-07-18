@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SemesterRegistrationRepository extends JpaRepository<SemesterRegistration, Long> {
-    Page<SemesterRegistration> findByStudentId(Long studentId, Pageable pageable);
+    Page<SemesterRegistration> findByStudent_Id(Long studentId, Pageable pageable);
     long countByStatus(String status);
 }

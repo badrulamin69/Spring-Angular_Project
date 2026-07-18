@@ -1,4 +1,4 @@
-﻿import { Injectable, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -9,9 +9,13 @@ export class WorkflowService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/workflows`;
 
-  findAll(params?: PageParams): Observable<any> {
+  findAll(params?: PageParams, search: string = ''): Observable<any> {
     const p = params || { page: 0, size: 10 };
-    return this.http.get<any>(`${this.apiUrl}?page=${p.page}&size=${p.size}`);
+    let url = `${this.apiUrl}?page=${p.page}&size=${p.size}`;
+    if (search) {
+      url += `&search=${encodeURIComponent(search)}`;
+    }
+    return this.http.get<any>(url);
   }
 
   findById(id: number): Observable<any> {

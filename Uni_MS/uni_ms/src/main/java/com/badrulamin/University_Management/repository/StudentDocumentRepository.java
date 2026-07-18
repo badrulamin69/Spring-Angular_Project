@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentDocumentRepository extends JpaRepository<StudentDocument, Long> {
-    Page<StudentDocument> findByStudentId(Long studentId, Pageable pageable);
+    Page<StudentDocument> findByStudent_Id(Long studentId, Pageable pageable);
     long countByStatus(String status);
     long countByDocumentType(String documentType);
 }

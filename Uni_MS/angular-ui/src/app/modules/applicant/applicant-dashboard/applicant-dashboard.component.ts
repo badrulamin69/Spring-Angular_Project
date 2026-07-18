@@ -35,6 +35,11 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
                   <button class="btn btn-sm" [class]="step.actionClass || 'btn-primary'" (click)="step.actionFn()">
                     {{ step.actionLabel }}
                   </button>
+                  @if (step.extraActionLabel) {
+                    <button class="btn btn-sm btn-download-pdf" (click)="step.extraActionFn()">
+                      {{ step.extraActionLabel }}
+                    </button>
+                  }
                 }
               </div>
             </div>
@@ -128,6 +133,8 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .btn-sm { padding: 6px 14px; font-size: 0.8125rem; }
     .btn-primary { background: #3b82f6; color: #fff; }
     .btn-primary:hover { background: #2563eb; }
+    .btn-download-pdf { background: #059669; color: #fff; margin-left: 6px; }
+    .btn-download-pdf:hover { background: #047857; }
     .btn-success { background: #22c55e; color: #fff; }
     .btn-success:hover { background: #16a34a; }
     .btn-danger { background: #ef4444; color: #fff; }
@@ -216,7 +223,7 @@ export class ApplicantDashboardComponent implements OnInit {
     const s = this.registration.status;
     this.steps = [
       { num: '1', key: 'SUBMITTED', title: 'Registration Submitted', desc: 'Your application has been received', completed: this.isCompleted('SUBMITTED') },
-      { num: '2', key: 'ADMIT_CARD_GENERATED', title: 'Admit Card Generated', desc: 'Download your admit card for the admission test', completed: this.isCompleted('ADMIT_CARD_GENERATED'), actionLabel: s === 'ADMIT_CARD_GENERATED' ? 'Download Admit Card' : null, actionClass: 'btn-primary', actionFn: () => this.downloadAdmitCard() },
+      { num: '2', key: 'ADMIT_CARD_GENERATED', title: 'Admit Card Generated', desc: 'Download your admit card for the admission test', completed: this.isCompleted('ADMIT_CARD_GENERATED'), actionLabel: s === 'ADMIT_CARD_GENERATED' ? 'Download Admit Card' : null, actionClass: 'btn-primary', actionFn: () => this.downloadAdmitCard(), extraActionLabel: s === 'ADMIT_CARD_GENERATED' ? 'Download PDF' : null, extraActionFn: () => this.downloadAdmitCardPdf() },
       { num: '3', key: 'TEST_COMPLETED', title: 'Admission Test', desc: 'Take the online MCQ admission test', completed: this.isCompleted('TEST_COMPLETED'), actionLabel: s === 'ADMIT_CARD_GENERATED' ? 'Take Test' : null, actionClass: 'btn-primary', actionFn: () => window.open('/applicant/test', '_blank') },
       { num: '4', key: 'MERIT_PROCESSED', title: 'Merit Processing', desc: 'Your results are being processed', completed: this.isCompleted('MERIT_PROCESSED') },
       { num: '5', key: 'ALLOCATED', title: 'Department Allocation', desc: 'Your department allocation is ready', completed: this.isCompleted('ALLOCATED'), actionLabel: s === 'ALLOCATED' && this.allocation?.status === 'ALLOCATED' ? 'Review Allocation' : null, actionClass: 'btn-success', actionFn: () => {} },
@@ -242,6 +249,20 @@ export class ApplicantDashboardComponent implements OnInit {
         if (w) { w.onload = () => w.print(); }
       },
       error: () => { this.error = 'Failed to download admit card'; }
+    });
+  }
+
+  downloadAdmitCardPdf() {
+    this.applicantService.getAdmitCardPdf().subscribe({
+      next: (blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `admit-card-${this.registration?.registrationNumber}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      error: () => { this.error = 'Failed to download admit card PDF'; }
     });
   }
 

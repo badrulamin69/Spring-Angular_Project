@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { PreAdmissionService } from '../../../services/pre-admission.service';
 
 @Component({
@@ -32,77 +32,9 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
               </svg>
             </div>
             <h2>Registration Successful!</h2>
-
-            <div class="credentials-box">
-              <h3>Your Login Credentials</h3>
-              <p class="cred-note">Use these credentials to login to the student portal</p>
-              <div class="cred-row">
-                <span class="cred-label">Email:</span>
-                <span class="cred-value">{{ registrationResult.loginEmail }}</span>
-                <button class="copy-btn" (click)="copyToClipboard(registrationResult.loginEmail)">Copy</button>
-              </div>
-              <div class="cred-row">
-                <span class="cred-label">Password:</span>
-                <span class="cred-value password-val">{{ showPassword ? registrationResult.tempPassword : '••••••••••' }}</span>
-                <button class="copy-btn" (click)="togglePassword()">{{ showPassword ? 'Hide' : 'Show' }}</button>
-                <button class="copy-btn" (click)="copyToClipboard(registrationResult.tempPassword)">Copy</button>
-              </div>
-            </div>
-
-            <div class="reg-info">
-              <div class="info-row">
-                <span>Registration No:</span>
-                <strong>{{ registrationResult.registrationNumber }}</strong>
-              </div>
-              <div class="info-row">
-                <span>Name:</span>
-                <strong>{{ registrationResult.firstName }} {{ registrationResult.lastName }}</strong>
-              </div>
-              <div class="info-row">
-                <span>Status:</span>
-                <strong class="status-submitted">SUBMITTED</strong>
-              </div>
-            </div>
-
-            <p class="warning-text">Please save your password. You will need it to login and download your admit card after approval.</p>
-
-            <div class="next-steps">
-              <h3>What Happens Next?</h3>
-              <div class="steps-list">
-                <div class="step-item">
-                  <div class="step-num">1</div>
-                  <div class="step-content">
-                    <strong>Application Review</strong>
-                    <p>Our admissions team will review your application and academic credentials.</p>
-                  </div>
-                </div>
-                <div class="step-item">
-                  <div class="step-num">2</div>
-                  <div class="step-content">
-                    <strong>Admit Card Generation</strong>
-                    <p>Once approved, your admit card will be generated. You can download it from the student portal.</p>
-                  </div>
-                </div>
-                <div class="step-item">
-                  <div class="step-num">3</div>
-                  <div class="step-content">
-                    <strong>Online Admission Test</strong>
-                    <p>You will take an online MCQ admission test from the portal. It covers academic topics based on your program preferences.</p>
-                  </div>
-                </div>
-                <div class="step-item">
-                  <div class="step-num">4</div>
-                  <div class="step-content">
-                    <strong>Merit Processing & Allocation</strong>
-                    <p>Your test score and academic GPA will be combined for merit ranking. Based on your rank, you will be allocated to a department.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="success-actions">
-              <a routerLink="/login" class="btn btn-primary btn-lg">Login to Portal</a>
-              <a routerLink="/pre-admission/status" class="btn btn-outline">Check Status</a>
+            <p>Redirecting to your registration details...</p>
+            <div class="spinner-section">
+              <div class="spinner-lg"></div>
             </div>
           </div>
         }
@@ -329,30 +261,12 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .alert p { margin: 2px 0; }
     .success-panel { text-align: center; }
     .success-icon { margin-bottom: 1rem; }
-    .success-panel h2 { margin: 0 0 1.5rem; font-size: 1.5rem; color: #065f46; }
-    .credentials-box { background: #f0fdf4; border: 2px solid #86efac; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left; }
-    .credentials-box h3 { margin: 0 0 4px; font-size: 1rem; color: #065f46; border: none; padding: 0; }
-    .cred-note { font-size: 0.8125rem; color: #059669; margin: 0 0 12px; }
-    .cred-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #d1fae5; }
-    .cred-row:last-child { border-bottom: none; }
-    .cred-label { font-size: 0.875rem; color: #374151; font-weight: 500; min-width: 80px; }
-    .cred-value { font-size: 0.875rem; color: #1e293b; font-family: 'SF Mono', monospace; flex: 1; }
-    .password-val { letter-spacing: 2px; }
-    .copy-btn { padding: 4px 10px; border: 1px solid #d1fae5; background: #fff; color: #059669; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 500; }
-    .copy-btn:hover { background: #ecfdf5; }
-    .reg-info { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; text-align: left; }
-    .info-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.875rem; }
-    .info-row span { color: #64748b; }
-    .status-submitted { color: #1d4ed8; background: #dbeafe; padding: 2px 8px; border-radius: 4px; }
-    .warning-text { font-size: 0.8125rem; color: #b45309; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px 14px; margin-bottom: 1.5rem; text-align: left; }
-    .next-steps { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: left; }
-    .next-steps h3 { margin: 0 0 1rem; font-size: 1rem; color: #1e293b; border: none; padding: 0; }
-    .steps-list { display: flex; flex-direction: column; gap: 12px; }
-    .step-item { display: flex; gap: 12px; align-items: flex-start; }
-    .step-num { width: 28px; height: 28px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
-    .step-content strong { font-size: 0.875rem; color: #1e293b; display: block; margin-bottom: 2px; }
-    .step-content p { margin: 0; font-size: 0.8125rem; color: #64748b; line-height: 1.4; }
-    .success-actions { display: flex; gap: 12px; justify-content: center; }
+    .success-panel h2 { margin: 0 0 8px; font-size: 1.5rem; color: #065f46; }
+    .success-panel p { margin: 0; color: #64748b; font-size: 0.9375rem; }
+    .spinner-section { margin: 1.5rem 0; }
+    .spinner-lg { width: 32px; height: 32px; border: 3px solid #e2e8f0; border-top-color: #059669; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+    .spinner-sm { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
     @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } .upload-row { grid-template-columns: 1fr; } }
   `]
 })
@@ -369,6 +283,7 @@ export class PreAdmissionRegisterComponent {
   registrationResult: any = null;
   errorMessage = '';
   showPassword = false;
+  downloadingPdf = false;
   photoPreview: string | null = null;
   signaturePreview: string | null = null;
 
@@ -390,7 +305,7 @@ export class PreAdmissionRegisterComponent {
   hscBoardSearch = '';
   dropdowns: any = { sscYear: false, sscBoard: false, hscYear: false, hscBoard: false };
 
-  constructor(private service: PreAdmissionService) {
+  constructor(private service: PreAdmissionService, private router: Router) {
     this.sscYears = [];
     for (let y = 2020; y <= this.currentYear; y++) this.sscYears.push(y);
     this.filteredSscYears = [...this.sscYears];
@@ -438,12 +353,98 @@ export class PreAdmissionRegisterComponent {
       next: (res) => {
         this.submitting = false;
         this.registrationResult = res;
+        this.router.navigate(['/pre-admission/registration-success'], {
+          queryParams: {
+            id: res.id,
+            reg: res.registrationNumber,
+            tracking: res.trackingNumber,
+            firstName: res.firstName,
+            lastName: res.lastName,
+            email: res.email,
+            phone: res.phone || '',
+            loginEmail: res.loginEmail,
+            password: res.tempPassword,
+            status: res.status || 'SUBMITTED'
+          }
+        });
       },
       error: (err) => {
         this.submitting = false;
-        this.errorMessage = err.error?.message || err.error?.error || err.message || 'Registration failed. Please try again.';
+        this.errorMessage = this.parseError(err);
       }
     });
+  }
+
+  private parseError(err: any): string {
+    if (err.status === 0 || !err.status) {
+      return 'Network error. Please check your connection and try again.';
+    }
+    if (err.status === 503 || err.status === 502) {
+      return 'Server unavailable. Please try again later.';
+    }
+    if (err.status === 500) {
+      const msg = (err.error?.message || '').toLowerCase();
+      if (msg.includes('database') || msg.includes('connection') || msg.includes('datasource')) {
+        return 'Database connection failed. Please try again later.';
+      }
+      return 'Server error. Please try again later.';
+    }
+    if (err.status === 403) {
+      const msg = (err.error?.message || '').toLowerCase();
+      if (msg.includes('feature') || msg.includes('disabled') || msg.includes('closed')) {
+        return 'Application is currently closed. Please try again later.';
+      }
+      return err.error?.message || 'Access denied.';
+    }
+    if (err.status === 404) {
+      return err.error?.message || 'Resource not found.';
+    }
+    const body = err.error;
+    if (body?.errors && typeof body.errors === 'object') {
+      const fieldErrors: string[] = [];
+      const fieldLabels: Record<string, string> = {
+        firstName: 'First name', lastName: 'Last name', email: 'Email',
+        phone: 'Phone', dateOfBirth: 'Date of birth', gender: 'Gender',
+        photoUrl: 'Photo', signatureUrl: 'Signature'
+      };
+      for (const [field, msg] of Object.entries(body.errors)) {
+        const label = fieldLabels[field] || field;
+        fieldErrors.push(`${label}: ${msg}`);
+      }
+      return fieldErrors.length > 0 ? fieldErrors.join('. ') + '.' : 'Validation failed. Please check your input.';
+    }
+    const msg = (body?.message || '').toLowerCase();
+    if (msg.includes('email already exists') || msg.includes('application with this email')) {
+      return 'An application with this email already exists. Please use a different email or check your existing application status.';
+    }
+    if (msg.includes('user account with this email')) {
+      return 'A user account with this email already exists. Please use a different email.';
+    }
+    if (msg.includes('user account with this username')) {
+      return 'A user account with this username already exists. Please use a different email.';
+    }
+    if (msg.includes('phone') && msg.includes('exist')) {
+      return 'An application with this phone number already exists.';
+    }
+    if (msg.includes('validation')) {
+      return 'Validation failed. Please check all required fields.';
+    }
+    if (body?.message) {
+      return body.message;
+    }
+    if (body?.error) {
+      return body.error;
+    }
+    if (err.message) {
+      if (err.message.includes('HttpErrorResponse')) {
+        return 'Network error. Please check your connection and try again.';
+      }
+      if (err.message.includes('timeout')) {
+        return 'Request timed out. Please try again.';
+      }
+      return err.message;
+    }
+    return 'Registration failed. Please try again.';
   }
 
   onPhotoSelect(event: Event) {
@@ -519,6 +520,26 @@ export class PreAdmissionRegisterComponent {
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
       alert('Copied to clipboard!');
+    });
+  }
+
+  downloadRegistrationPdf() {
+    if (!this.registrationResult?.registrationNumber) return;
+    this.downloadingPdf = true;
+    this.service.getRegistrationPdf(this.registrationResult.registrationNumber).subscribe({
+      next: (blob) => {
+        this.downloadingPdf = false;
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `registration-${this.registrationResult.registrationNumber}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      },
+      error: () => {
+        this.downloadingPdf = false;
+        this.errorMessage = 'Failed to generate PDF. Please try again.';
+      }
     });
   }
 }

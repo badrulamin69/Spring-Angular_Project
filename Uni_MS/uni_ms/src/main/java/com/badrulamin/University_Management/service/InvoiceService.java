@@ -53,7 +53,7 @@ public class InvoiceService {
     }
 
     public Page<Invoice> findByStudentId(Long studentId, Pageable pageable) {
-        return invoiceRepository.findByStudentId(studentId, pageable);
+        return invoiceRepository.findByStudent_Id(studentId, pageable);
     }
 
     public Invoice generateInvoice(Long studentId, Long semesterId, String academicYear) {
@@ -64,7 +64,7 @@ public class InvoiceService {
                 .orElseThrow(() -> new ResourceNotFoundException("Semester", "id", semesterId));
 
         List<FeeStructure> feeStructures = feeStructureRepository
-                .findBySemesterIdAndProgramIdAndIsActiveTrue(semesterId, null);
+                .findBySemester_IdAndProgram_IdAndIsActiveTrue(semesterId, null);
 
         if (feeStructures.isEmpty()) {
             throw new BusinessException("No active fee structures found for the given semester");

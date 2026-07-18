@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface FeeStructureRepository extends JpaRepository<FeeStructure, Long> {
-    List<FeeStructure> findBySemesterIdAndProgramIdAndIsActiveTrue(Long semesterId, Long programId);
-    List<FeeStructure> findByProgramIdAndAcademicYearAndIsActiveTrue(Long programId, String academicYear);
-    List<FeeStructure> findByFeeTypeIdAndIsActiveTrue(Long feeTypeId);
+    List<FeeStructure> findBySemester_IdAndProgram_IdAndIsActiveTrue(Long semesterId, Long programId);
+    List<FeeStructure> findByProgram_IdAndAcademicYearAndIsActiveTrue(Long programId, String academicYear);
+    List<FeeStructure> findByFeeType_IdAndIsActiveTrue(Long feeTypeId);
     List<FeeStructure> findByIsActiveTrue();
 }

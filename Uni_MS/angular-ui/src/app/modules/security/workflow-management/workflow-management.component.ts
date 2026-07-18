@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkflowService } from '../../../services/workflow.service';
@@ -176,6 +176,7 @@ export class WorkflowManagementComponent implements OnInit {
   loading = true;
   saving = false;
   params: PageParams = { ...DEFAULT_PAGE_PARAMS };
+  searchTerm = '';
   columns: TableColumn[] = [
     { key: 'id', label: 'ID', sortable: true },
     { key: 'name', label: 'Name', sortable: true, type: 'text', required: true, placeholder: 'Workflow name' },
@@ -210,7 +211,7 @@ export class WorkflowManagementComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.findAll(this.params).subscribe({
+    this.service.findAll(this.params, this.searchTerm).subscribe({
       next: (data: any) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load workflows'); }
     });
@@ -222,6 +223,7 @@ export class WorkflowManagementComponent implements OnInit {
   }
 
   onSearch(term: string) {
+    this.searchTerm = term;
     this.params = { ...DEFAULT_PAGE_PARAMS };
     this.loadData();
   }

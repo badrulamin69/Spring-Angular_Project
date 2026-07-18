@@ -1,4 +1,4 @@
-﻿import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HostelAllocationService } from '../../../services/hostel-allocation.service';
@@ -104,7 +104,7 @@ export class HostelAllocationsComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.findAll(this.params).subscribe({
+    this.service.findAll(this.params, this.searchTerm).subscribe({
       next: (data) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load hostel allocations'); }
     });

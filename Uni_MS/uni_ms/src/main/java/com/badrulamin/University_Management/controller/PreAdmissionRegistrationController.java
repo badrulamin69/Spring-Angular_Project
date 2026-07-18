@@ -3,6 +3,8 @@ package com.badrulamin.University_Management.controller;
 import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
 import com.badrulamin.University_Management.service.PreAdmissionRegistrationService;
 import com.badrulamin.University_Management.service.AdmitCardPdfService;
+import com.badrulamin.University_Management.service.RegistrationPdfService;
+import com.badrulamin.University_Management.service.QrCodeService;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +27,32 @@ public class PreAdmissionRegistrationController {
 
     private final PreAdmissionRegistrationService service;
     private final AdmitCardPdfService admitCardPdfService;
+    private final RegistrationPdfService registrationPdfService;
+    private final QrCodeService qrCodeService;
 
     @PostMapping("/pre-admission/register")
     public ResponseEntity<Map<String, Object>> register(@Valid @RequestBody PreAdmissionRegistration registration) {
         return ResponseEntity.ok(service.saveWithUserAccount(registration));
+    }
+
+    @GetMapping("/pre-admission/register/{registrationNumber}/pdf")
+    public ResponseEntity<byte[]> downloadRegistrationPdf(@PathVariable String registrationNumber) {
+        PreAdmissionRegistration reg = service.findByRegistrationNumber(registrationNumber);
+        byte[] pdf = registrationPdfService.generateRegistrationReceiptPdf(reg);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=registration-" + registrationNumber + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .contentLength(pdf.length)
+                .body(pdf);
+    }
+
+    @GetMapping("/pre-admission/register/{registrationNumber}/qr-code")
+    public ResponseEntity<byte[]> downloadRegistrationQrCode(@PathVariable String registrationNumber) {
+        byte[] qrCode = qrCodeService.generateRegistrationQrCode(registrationNumber);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=qr-" + registrationNumber + ".png")
+                .contentType(MediaType.IMAGE_PNG)
+                .body(qrCode);
     }
 
     @GetMapping("/pre-admission/status/{registrationNumber}")

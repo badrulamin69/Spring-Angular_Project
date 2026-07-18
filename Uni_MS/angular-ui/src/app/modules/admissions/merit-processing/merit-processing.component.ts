@@ -165,6 +165,7 @@ export class MeritProcessingComponent implements OnInit {
   loadingPreview = false;
   processing = false;
   params: PageParams = { ...DEFAULT_PAGE_PARAMS };
+  searchTerm = '';
   preview: any = null;
   processingResult: any = null;
   showConfirm = false;
@@ -184,7 +185,7 @@ export class MeritProcessingComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.findAll(this.params).subscribe({
+    this.service.findAll(this.params, this.searchTerm).subscribe({
       next: (data) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load'); }
     });
@@ -199,7 +200,7 @@ export class MeritProcessingComponent implements OnInit {
   }
 
   onPageChange(params: PageParams) { this.params = params; this.loadData(); }
-  onSearch(term: string) { this.params = { ...DEFAULT_PAGE_PARAMS }; this.loadData(); }
+  onSearch(term: string) { this.searchTerm = term; this.params = { ...DEFAULT_PAGE_PARAMS }; this.loadData(); }
 
   confirmProcessMerit() {
     this.showConfirm = true;

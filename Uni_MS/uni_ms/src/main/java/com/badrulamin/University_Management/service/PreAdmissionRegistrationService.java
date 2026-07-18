@@ -38,6 +38,7 @@ public class PreAdmissionRegistrationService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ProgramRepository programRepository;
+    private final QrCodeService qrCodeService;
     private static final SecureRandom secureRandom = new SecureRandom();
 
     public Page<PreAdmissionRegistration> findAll(Pageable pageable) {
@@ -70,7 +71,10 @@ public class PreAdmissionRegistrationService {
             long nextNum = repository.findMaxSequenceByRegistrationNumberPrefix(prefix) + 1;
             registration.setRegistrationNumber(prefix + String.format("%05d", nextNum));
         }
-        if (registration.getStatus() == null) {
+        if (registration.getTrackingNumber() == null) {
+            registration.setTrackingNumber(generateTrackingNumber());
+        }
+        if (registration.getStatus() == null || "DRAFT".equals(registration.getStatus())) {
             registration.setStatus("SUBMITTED");
         }
         PreAdmissionRegistration saved = repository.save(registration);
@@ -92,15 +96,19 @@ public class PreAdmissionRegistrationService {
 
         userRepository.save(user);
 
+        String qrCodeBase64 = qrCodeService.generateRegistrationQrCodeBase64(saved.getRegistrationNumber());
+
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("id", saved.getId());
         result.put("registrationNumber", saved.getRegistrationNumber());
+        result.put("trackingNumber", saved.getTrackingNumber());
         result.put("firstName", saved.getFirstName());
         result.put("lastName", saved.getLastName());
         result.put("email", saved.getEmail());
         result.put("status", saved.getStatus());
         result.put("loginEmail", username);
         result.put("tempPassword", tempPassword);
+        result.put("qrCode", qrCodeBase64);
         result.put("message", "Registration successful. Use the email and temporary password above to login.");
         return result;
     }
@@ -112,6 +120,15 @@ public class PreAdmissionRegistrationService {
             sb.append(chars.charAt(secureRandom.nextInt(chars.length())));
         }
         return sb.toString();
+    }
+
+    private String generateTrackingNumber() {
+        String chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        StringBuilder sb = new StringBuilder(8);
+        for (int i = 0; i < 8; i++) {
+            sb.append(chars.charAt(secureRandom.nextInt(chars.length())));
+        }
+        return "TRK-" + Year.now().getValue() + "-" + sb.toString();
     }
 
     public PreAdmissionRegistration update(Long id, PreAdmissionRegistration registration) {

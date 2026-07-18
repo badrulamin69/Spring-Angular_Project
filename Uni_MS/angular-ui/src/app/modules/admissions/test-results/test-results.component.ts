@@ -201,6 +201,7 @@ export class TestResultsComponent implements OnInit {
   loading = true;
   saving = false;
   params: PageParams = { ...DEFAULT_PAGE_PARAMS };
+  searchTerm = '';
   columns: TableColumn[] = [
     { key: 'id', label: 'ID', sortable: true },
     { key: 'registrationId', label: 'Registration ID', type: 'number', required: true },
@@ -229,14 +230,14 @@ export class TestResultsComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.findAll(this.params).subscribe({
+    this.service.findAll(this.params, this.searchTerm).subscribe({
       next: (data) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load test results'); }
     });
   }
 
   onPageChange(params: PageParams) { this.params = params; this.loadData(); }
-  onSearch(term: string) { this.params = { ...DEFAULT_PAGE_PARAMS }; this.loadData(); }
+  onSearch(term: string) { this.searchTerm = term; this.params = { ...DEFAULT_PAGE_PARAMS }; this.loadData(); }
 
   openForm(item?: any) {
     this.editingItem = item ? { ...item } : null;

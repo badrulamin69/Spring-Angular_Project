@@ -1,18 +1,29 @@
 export interface AdmissionMeritList {
   id?: number;
-  uniqueCode?: string;
   name: string;
   description?: string;
-  sessionId: number;
-  programId: number;
-  campusId?: number;
+  academicYear?: string;
+  sessionId?: number;
+  session?: any;
+  facultyId?: number;
+  faculty?: any;
+  departmentId?: number;
+  department?: any;
+  programId?: number;
+  program?: any;
+  shift?: string;
+  quotaType?: string;
+  testId?: number;
+  test?: any;
   status: string;
-  publishedAt?: string;
   totalSeats?: number;
-  filledSeats?: number;
+  totalApplicants?: number;
+  selectedCount?: number;
   waitingCount?: number;
   cutoffScore?: number;
-  approvedById?: number;
+  publishedAt?: string;
+  publishedBy?: string;
+  remarks?: string;
   createdAt?: string;
   updatedAt?: string;
 }

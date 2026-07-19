@@ -41,19 +41,19 @@ public class HostelAllocationController {
         return ResponseEntity.ok(hostelAllocationService.findById(id));
     }
 
-    @PreAuthorize("hasAuthority('HOSTEL_VIEW')")
+    @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
     @PostMapping
     public ResponseEntity<HostelAllocation> save(@Valid @RequestBody HostelAllocation hostelAllocation) {
         return ResponseEntity.ok(hostelAllocationService.save(hostelAllocation));
     }
 
-    @PreAuthorize("hasAuthority('HOSTEL_VIEW')")
+    @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
     @PutMapping("/{id}")
     public ResponseEntity<HostelAllocation> update(@PathVariable Long id, @Valid @RequestBody HostelAllocation hostelAllocation) {
         return ResponseEntity.ok(hostelAllocationService.update(id, hostelAllocation));
     }
 
-    @PreAuthorize("hasAuthority('HOSTEL_VIEW')")
+    @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         hostelAllocationService.delete(id);

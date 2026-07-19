@@ -1,18 +1,30 @@
 export interface AdmissionMeritListEntry {
   id?: number;
-  uniqueCode?: string;
-  meritListId: number;
-  applicationId: number;
+  meritListId?: number;
+  meritList?: any;
+  registrationId?: number;
+  registration?: any;
   rank: number;
+  rollNumber?: string;
+  applicationNumber?: string;
+  applicantName?: string;
+  facultyName?: string;
+  departmentName?: string;
+  programName?: string;
+  shift?: string;
+  testMarks?: number;
+  testMaxMarks?: number;
   score?: number;
-  testScore?: number;
   academicScore?: number;
-  interviewScore?: number;
   totalWeightedScore?: number;
+  sscGpa?: number;
+  hscGpa?: number;
+  quotaType?: string;
   status?: string;
   isOffered?: boolean;
   isEnrolled?: boolean;
   remarks?: string;
+  submittedAt?: string;
   createdAt?: string;
   updatedAt?: string;
 }

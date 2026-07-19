@@ -1,8 +1,12 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.*;
+import com.badrulamin.University_Management.entity.AdmissionMeritListEntry;
+import com.badrulamin.University_Management.entity.AdmissionWaitingListEntry;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.repository.*;
+import com.badrulamin.University_Management.repository.AdmissionMeritListEntryRepository;
+import com.badrulamin.University_Management.repository.AdmissionWaitingListEntryRepository;
 import com.badrulamin.University_Management.service.AdmissionTestAttemptService;
 import com.badrulamin.University_Management.service.AdmitCardPdfService;
 import com.badrulamin.University_Management.service.EnrollmentService;
@@ -30,6 +34,9 @@ public class ApplicantPortalController {
     private final AdmissionTestQuestionRepository questionRepository;
     private final EnrollmentService enrollmentService;
     private final AdmitCardPdfService admitCardPdfService;
+    private final AdmitCardRepository admitCardRepository;
+    private final AdmissionMeritListEntryRepository meritListEntryRepository;
+    private final AdmissionWaitingListEntryRepository waitingListEntryRepository;
 
     @GetMapping("/my-registration")
     public ResponseEntity<?> myRegistration(@AuthenticationPrincipal UserDetails userDetails) {
@@ -203,7 +210,9 @@ public class ApplicantPortalController {
     @GetMapping("/my-admit-card/pdf")
     public ResponseEntity<byte[]> downloadAdmitCardPdf(@AuthenticationPrincipal UserDetails userDetails) {
         PreAdmissionRegistration reg = findRegistration(userDetails);
-        byte[] pdf = admitCardPdfService.generateAdmitCardPdf(reg);
+        AdmitCard admitCard = admitCardRepository.findByRegistrationId(reg.getId()).stream().findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("AdmitCard", "registrationId", reg.getId()));
+        byte[] pdf = admitCardPdfService.generateAdmitCardPdf(admitCard);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=admit-card-" + reg.getRegistrationNumber() + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
@@ -217,5 +226,53 @@ public class ApplicantPortalController {
         List<PreAdmissionRegistration> all = registrationRepository.findAll();
         return all.stream().filter(r -> r.getEmail().equals(user.getEmail())).findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Registration", "email", user.getEmail()));
+    }
+
+    @GetMapping("/my-merit")
+    public ResponseEntity<?> getMyMeritPosition(@AuthenticationPrincipal UserDetails userDetails) {
+        PreAdmissionRegistration reg = findRegistration(userDetails);
+        List<AdmissionMeritListEntry> entries = meritListEntryRepository.findByRegistration_Id(reg.getId());
+        if (entries.isEmpty()) {
+            return ResponseEntity.ok(Map.of("found", false, "message", "No merit list entry found"));
+        }
+        AdmissionMeritListEntry bestEntry = entries.stream()
+                .filter(e -> "SELECTED".equals(e.getStatus()) || "WAITING".equals(e.getStatus()))
+                .min((a, b) -> Integer.compare(a.getRank(), b.getRank()))
+                .orElse(entries.get(0));
+        Map<String, Object> result = new java.util.HashMap<>();
+        result.put("found", true);
+        result.put("rank", bestEntry.getRank());
+        result.put("score", bestEntry.getTotalWeightedScore());
+        result.put("testMarks", bestEntry.getTestMarks());
+        result.put("status", bestEntry.getStatus());
+        result.put("meritListName", bestEntry.getMeritList().getName());
+        result.put("meritListId", bestEntry.getMeritList().getId());
+        result.put("listStatus", bestEntry.getMeritList().getStatus());
+        result.put("applicantName", bestEntry.getApplicantName());
+        result.put("rollNumber", bestEntry.getRollNumber());
+        result.put("programName", bestEntry.getProgramName());
+        result.put("totalApplicants", bestEntry.getMeritList().getTotalApplicants());
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/my-waiting-position")
+    public ResponseEntity<?> getMyWaitingPosition(@AuthenticationPrincipal UserDetails userDetails) {
+        PreAdmissionRegistration reg = findRegistration(userDetails);
+        List<AdmissionWaitingListEntry> entries = waitingListEntryRepository.findByRegistration_Id(reg.getId());
+        if (entries.isEmpty()) {
+            return ResponseEntity.ok(Map.of("found", false, "message", "No waiting list entry found"));
+        }
+        AdmissionWaitingListEntry bestEntry = entries.stream()
+                .min((a, b) -> Integer.compare(a.getRank(), b.getRank()))
+                .orElse(entries.get(0));
+        Map<String, Object> result = new java.util.HashMap<>();
+        result.put("found", true);
+        result.put("rank", bestEntry.getRank());
+        result.put("score", bestEntry.getTotalWeightedScore());
+        result.put("status", bestEntry.getStatus());
+        result.put("waitingListName", bestEntry.getWaitingList().getName());
+        result.put("applicantName", bestEntry.getApplicantName());
+        result.put("rollNumber", bestEntry.getRollNumber());
+        return ResponseEntity.ok(result);
     }
 }

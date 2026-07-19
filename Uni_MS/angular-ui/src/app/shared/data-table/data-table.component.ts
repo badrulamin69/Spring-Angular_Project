@@ -14,6 +14,15 @@ export interface TableColumn {
   hidden?: boolean;
 }
 
+export interface RowAction {
+  label: string;
+  icon?: string;
+  class?: string;
+  title?: string;
+  condition?: (item: any) => boolean;
+  onClick: (item: any) => void;
+}
+
 @Component({
   selector: 'app-data-table',
   standalone: true,
@@ -79,12 +88,23 @@ export interface TableColumn {
                     </td>
                   }
                   <td class="col-actions">
-                    <button class="btn-icon" (click)="onEdit.emit(item)" title="Edit">
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 2.5l3 3M1 13l.7-2.6L10 1.7l3 3L4.7 13.3 1 13z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                    <button class="btn-icon btn-icon-danger" (click)="onDelete.emit(item)" title="Delete">
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M5 4V2.5A.5.5 0 015.5 2h3a.5.5 0 01.5.5V4M11 4v7.5a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 013 11.5V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
+                    @if (rowActions.length > 0) {
+                      @for (action of rowActions; track action.label) {
+                        @if (!action.condition || action.condition(item)) {
+                          <button class="btn-icon" [ngClass]="action.class || ''" [title]="action.title || action.label" (click)="action.onClick(item)">
+                            {{ action.icon || '' }}
+                          </button>
+                        }
+                      }
+                    }
+                    @if (showDefaultActions) {
+                      <button class="btn-icon" (click)="onEdit.emit(item)" title="Edit">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 2.5l3 3M1 13l.7-2.6L10 1.7l3 3L4.7 13.3 1 13z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <button class="btn-icon btn-icon-danger" (click)="onDelete.emit(item)" title="Delete">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M5 4V2.5A.5.5 0 015.5 2h3a.5.5 0 01.5.5V4M11 4v7.5a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 013 11.5V4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                    }
                   </td>
                 </tr>
               } @empty {
@@ -158,7 +178,7 @@ export interface TableColumn {
     th.sortable { cursor: pointer; user-select: none; }
     th.sortable:hover { color: var(--text-primary); }
     .col-check { width: 40px; text-align: center; }
-    .col-actions { width: 80px; text-align: center; }
+    .col-actions { min-width: 80px; text-align: center; }
     .sort-icon { font-size: 0.65rem; margin-left: 4px; }
     tr.selected { background: rgba(99, 102, 241, 0.08); }
     tr:hover { background: var(--bg-hover); }
@@ -235,6 +255,8 @@ export class DataTableComponent implements OnChanges {
   @Input() pagedData: PagedResponse<any> | null = null;
   @Input() loading = false;
   @Input() params: PageParams = { ...DEFAULT_PAGE_PARAMS };
+  @Input() rowActions: RowAction[] = [];
+  @Input() showDefaultActions = true;
 
   @Output() pageChange = new EventEmitter<PageParams>();
   @Output() onEdit = new EventEmitter<any>();

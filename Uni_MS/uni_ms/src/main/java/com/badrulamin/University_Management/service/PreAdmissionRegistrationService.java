@@ -20,7 +20,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.Year;
@@ -39,6 +41,7 @@ public class PreAdmissionRegistrationService {
     private final PasswordEncoder passwordEncoder;
     private final ProgramRepository programRepository;
     private final QrCodeService qrCodeService;
+    private final FileUploadService fileUploadService;
     private static final SecureRandom secureRandom = new SecureRandom();
 
     public Page<PreAdmissionRegistration> findAll(Pageable pageable) {
@@ -56,7 +59,7 @@ public class PreAdmissionRegistrationService {
     }
 
     @Transactional
-    public Map<String, Object> saveWithUserAccount(PreAdmissionRegistration registration) {
+    public Map<String, Object> saveWithUserAccount(PreAdmissionRegistration registration, MultipartFile photo, MultipartFile signature) {
         if (registration.getEmail() != null && existsByEmail(registration.getEmail())) {
             throw new IllegalArgumentException("An application with this email already exists. Please use a different email or check your existing application status.");
         }
@@ -77,6 +80,20 @@ public class PreAdmissionRegistrationService {
         if (registration.getStatus() == null || "DRAFT".equals(registration.getStatus())) {
             registration.setStatus("SUBMITTED");
         }
+
+        try {
+            if (photo != null && !photo.isEmpty()) {
+                String photoUrl = fileUploadService.uploadFile(photo, "admission/photo");
+                registration.setPhotoUrl(photoUrl);
+            }
+            if (signature != null && !signature.isEmpty()) {
+                String signatureUrl = fileUploadService.uploadFile(signature, "admission/signature");
+                registration.setSignatureUrl(signatureUrl);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to upload files: " + e.getMessage(), e);
+        }
+
         PreAdmissionRegistration saved = repository.save(registration);
 
         String tempPassword = generateTempPassword();

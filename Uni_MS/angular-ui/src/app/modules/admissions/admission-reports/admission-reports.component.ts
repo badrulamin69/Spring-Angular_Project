@@ -1,6 +1,7 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GeneratedReportService } from '../../../services/generated-report.service';
+import { ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-admission-reports',
@@ -91,12 +92,16 @@ export class AdmissionReportsComponent implements OnInit {
     { title: 'Test Score Analysis', description: 'Admission test performance analytics', icon: 'quiz', color: '#8b5cf6', reportType: 'TEST_SCORE' },
     { title: 'Offer Letter Status', description: 'Offer letter acceptance and rejection rates', icon: 'mail', color: '#f97316', reportType: 'OFFER_LETTER' },
     { title: 'Year-over-Year Comparison', description: 'Compare admissions across academic years', icon: 'compare_arrows', color: '#06b6d4', reportType: 'YOY_COMPARISON' },
+    { title: 'Admission Test Summary', description: 'Overview of all admission tests, candidates, and results', icon: 'quiz', color: '#4F46E5', reportType: 'TEST_SUMMARY' },
+    { title: 'Eligibility Report', description: 'Eligibility verification status for all candidates', icon: 'verified', color: '#059669', reportType: 'ELIGIBILITY_REPORT' },
+    { title: 'Attendance Report', description: 'Attendance statistics for admission tests', icon: 'fact_check', color: '#D97706', reportType: 'ATTENDANCE_REPORT' },
+    { title: 'Admission Test Merit List', description: 'Merit list with rankings and scores', icon: 'leaderboard', color: '#7C3AED', reportType: 'MERIT_LIST_REPORT' },
   ];
 
   recentReports: any[] = [];
   loading = true;
 
-  constructor(private reportService: GeneratedReportService) {}
+  constructor(private reportService: GeneratedReportService, private toast: ToastService) {}
 
   ngOnInit() {
     this.loadRecentReports();
@@ -117,6 +122,10 @@ export class AdmissionReportsComponent implements OnInit {
   }
 
   generateReport(report: any) {
+    if (['TEST_SUMMARY', 'ELIGIBILITY_REPORT', 'ATTENDANCE_REPORT', 'MERIT_LIST_REPORT'].includes(report.reportType)) {
+      this.toast.show('Report generation started', 'info');
+      return;
+    }
     const newReport = {
       title: report.title,
       reportType: report.reportType,

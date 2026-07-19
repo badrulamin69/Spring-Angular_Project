@@ -27,27 +27,50 @@ public class AdmissionWaitingList {
     @Column(length = 2000)
     private String description;
 
+    @Column(name = "academic_year", length = 20)
+    private String academicYear;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "session_id")
     private AcademicSession session;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "program_id")
     private Program program;
 
-    @Column(nullable = false)
-    private String status;
-
-    private Integer totalSlots;
-
-    @Column(name = "`rank`")
-    private Integer rank;
-
-    private Integer position;
+    @Column(name = "shift", length = 20)
+    private String shift;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "application_id")
-    private AdmissionApplication application;
+    @JoinColumn(name = "test_id")
+    private AdmissionTest test;
+
+    @Column(nullable = false, length = 30)
+    private String status = "DRAFT";
+
+    @Column(name = "total_slots")
+    private Integer totalSlots;
+
+    @Column(name = "total_applicants")
+    private Integer totalApplicants;
+
+    @Column(name = "cutoff_score")
+    private Double cutoffScore;
+
+    @Column(name = "published_at")
+    private LocalDateTime publishedAt;
+
+    @Column(name = "version")
+    @Version
+    private Long version;
 
     @Column(length = 1000)
     private String remarks;
@@ -60,44 +83,37 @@ public class AdmissionWaitingList {
     private LocalDateTime updatedAt;
 
     @JsonProperty("sessionId")
-    public Long getSessionId() {
-        return session != null ? session.getId() : null;
-    }
-
+    public Long getSessionId() { return session != null ? session.getId() : null; }
     @JsonProperty("sessionId")
     public void setSessionId(Long sessionId) {
-        if (sessionId != null) {
-            AcademicSession s = new AcademicSession();
-            s.setId(sessionId);
-            this.session = s;
-        }
+        if (sessionId != null) { AcademicSession s = new AcademicSession(); s.setId(sessionId); this.session = s; }
+    }
+
+    @JsonProperty("facultyId")
+    public Long getFacultyId() { return faculty != null ? faculty.getId() : null; }
+    @JsonProperty("facultyId")
+    public void setFacultyId(Long facultyId) {
+        if (facultyId != null) { Faculty f = new Faculty(); f.setId(facultyId); this.faculty = f; }
+    }
+
+    @JsonProperty("departmentId")
+    public Long getDepartmentId() { return department != null ? department.getId() : null; }
+    @JsonProperty("departmentId")
+    public void setDepartmentId(Long departmentId) {
+        if (departmentId != null) { Department d = new Department(); d.setId(departmentId); this.department = d; }
     }
 
     @JsonProperty("programId")
-    public Long getProgramId() {
-        return program != null ? program.getId() : null;
-    }
-
+    public Long getProgramId() { return program != null ? program.getId() : null; }
     @JsonProperty("programId")
     public void setProgramId(Long programId) {
-        if (programId != null) {
-            Program p = new Program();
-            p.setId(programId);
-            this.program = p;
-        }
+        if (programId != null) { Program p = new Program(); p.setId(programId); this.program = p; }
     }
 
-    @JsonProperty("applicationId")
-    public Long getApplicationId() {
-        return application != null ? application.getId() : null;
-    }
-
-    @JsonProperty("applicationId")
-    public void setApplicationId(Long applicationId) {
-        if (applicationId != null) {
-            AdmissionApplication a = new AdmissionApplication();
-            a.setId(applicationId);
-            this.application = a;
-        }
+    @JsonProperty("testId")
+    public Long getTestId() { return test != null ? test.getId() : null; }
+    @JsonProperty("testId")
+    public void setTestId(Long testId) {
+        if (testId != null) { AdmissionTest t = new AdmissionTest(); t.setId(testId); this.test = t; }
     }
 }

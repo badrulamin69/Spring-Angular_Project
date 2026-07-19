@@ -1,15 +1,25 @@
 export interface AdmissionWaitingList {
   id?: number;
-  uniqueCode?: string;
   name: string;
   description?: string;
-  sessionId: number;
-  programId: number;
-  campusId?: number;
+  academicYear?: string;
+  sessionId?: number;
+  session?: any;
+  facultyId?: number;
+  faculty?: any;
+  departmentId?: number;
+  department?: any;
+  programId?: number;
+  program?: any;
+  shift?: string;
+  testId?: number;
+  test?: any;
   status: string;
   totalSlots?: number;
-  filledSlots?: number;
-  approvedById?: number;
+  totalApplicants?: number;
+  cutoffScore?: number;
+  publishedAt?: string;
+  remarks?: string;
   createdAt?: string;
   updatedAt?: string;
 }

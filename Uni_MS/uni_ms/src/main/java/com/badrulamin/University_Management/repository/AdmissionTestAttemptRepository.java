@@ -15,4 +15,8 @@ public interface AdmissionTestAttemptRepository extends JpaRepository<AdmissionT
     List<AdmissionTestAttempt> findByRegistration_Id(Long registrationId);
     Page<AdmissionTestAttempt> findByTest_Id(Long testId, Pageable pageable);
     boolean existsByRegistration_IdAndTest_IdAndStatusIn(Long registrationId, Long testId, List<String> statuses);
+    long countByStatus(String status);
+    long countByTestId(Long testId);
+    long countByTestIdAndStatus(Long testId, String status);
+    List<AdmissionTestAttempt> findByTestIdAndStatusOrderByScoreDesc(Long testId, String status);
 }

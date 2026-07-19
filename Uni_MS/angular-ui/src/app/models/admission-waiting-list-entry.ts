@@ -1,10 +1,16 @@
 export interface AdmissionWaitingListEntry {
   id?: number;
-  uniqueCode?: string;
-  waitingListId: number;
-  applicationId: number;
+  waitingListId?: number;
+  waitingList?: any;
+  registrationId?: number;
+  registration?: any;
   rank: number;
+  rollNumber?: string;
+  applicationNumber?: string;
+  applicantName?: string;
   score?: number;
+  testMarks?: number;
+  totalWeightedScore?: number;
   status?: string;
   isPromoted?: boolean;
   isOffered?: boolean;

@@ -45,19 +45,19 @@ public class BookReturnController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('LIBRARY_VIEW')")
+    @PreAuthorize("hasAuthority('BOOK_MANAGE')")
     public ResponseEntity<BookReturn> save(@Valid @RequestBody BookReturn bookReturn) {
         return ResponseEntity.ok(bookReturnService.save(bookReturn));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('LIBRARY_VIEW')")
+    @PreAuthorize("hasAuthority('BOOK_MANAGE')")
     public ResponseEntity<BookReturn> update(@PathVariable Long id, @Valid @RequestBody BookReturn bookReturn) {
         return ResponseEntity.ok(bookReturnService.update(id, bookReturn));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('LIBRARY_VIEW')")
+    @PreAuthorize("hasAuthority('BOOK_MANAGE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         bookReturnService.delete(id);
         return ResponseEntity.noContent().build();

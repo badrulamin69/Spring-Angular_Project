@@ -43,19 +43,19 @@ public class TransactionController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     public ResponseEntity<Transaction> save(@Valid @RequestBody Transaction transaction) {
         return ResponseEntity.ok(transactionService.save(transaction));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     public ResponseEntity<Transaction> update(@PathVariable Long id, @Valid @RequestBody Transaction transaction) {
         return ResponseEntity.ok(transactionService.update(id, transaction));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         transactionService.delete(id);
         return ResponseEntity.noContent().build();

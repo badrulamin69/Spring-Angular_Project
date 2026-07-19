@@ -20,6 +20,10 @@ public class AdmissionTestQuestionService {
         return repository.findAll(pageable);
     }
 
+    public Page<AdmissionTestQuestion> findByFilters(Long testId, String subject, String difficulty, String search, Pageable pageable) {
+        return repository.findByFilters(testId, subject, difficulty, search, pageable);
+    }
+
     public AdmissionTestQuestion findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTestQuestion", "id", id));
@@ -40,8 +44,15 @@ public class AdmissionTestQuestionService {
         existing.setOptionB(question.getOptionB());
         existing.setOptionC(question.getOptionC());
         existing.setOptionD(question.getOptionD());
+        existing.setOptionE(question.getOptionE());
         existing.setCorrectOption(question.getCorrectOption());
         existing.setMarks(question.getMarks());
+        existing.setNegativeMarks(question.getNegativeMarks());
+        existing.setSubject(question.getSubject());
+        existing.setDifficulty(question.getDifficulty());
+        existing.setQuestionType(question.getQuestionType());
+        existing.setExplanation(question.getExplanation());
+        existing.setIsActive(question.getIsActive());
         existing.setTest(question.getTest());
         return repository.save(existing);
     }
@@ -53,5 +64,9 @@ public class AdmissionTestQuestionService {
 
     public long countByTestId(Long testId) {
         return repository.countByTest_Id(testId);
+    }
+
+    public List<String> findDistinctSubjects() {
+        return repository.findDistinctSubjects();
     }
 }

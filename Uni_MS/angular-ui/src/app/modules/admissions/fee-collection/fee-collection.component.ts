@@ -1,4 +1,4 @@
-﻿import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -44,7 +44,7 @@ export class FeeCollectionComponent implements OnInit {
 
   constructor(private http: HttpClient, private toastService: ToastService) {}
   ngOnInit() { this.loadData(); }
-  loadData() { this.loading = true; const p = this.params; this.http.get<PagedResponse<any>>(this.api, { params: { page: p.page, size: p.size, sort: p.sortBy, direction: p.sortDir } }).subscribe({ next: (data) => { this.pagedData = data; this.loading = false; }, error: () => { this.pagedData = { content: [], page: 0, size: 20, totalElements: 0, totalPages: 0, first: true, last: true, empty: true }; this.loading = false; } }); }
+  loadData() { this.loading = true; const p = this.params; const params: any = { page: p.page, size: p.size, sort: p.sortBy, direction: p.sortDir }; if (this.searchTerm) { params.search = this.searchTerm; } this.http.get<PagedResponse<any>>(this.api, { params }).subscribe({ next: (data) => { this.pagedData = data; this.loading = false; }, error: () => { this.pagedData = { content: [], page: 0, size: 20, totalElements: 0, totalPages: 0, first: true, last: true, empty: true }; this.loading = false; } }); }
   onPageChange(params: PageParams) { this.params = params; this.loadData(); }
   onSearch(term: string) { this.searchTerm = term; this.params = { ...DEFAULT_PAGE_PARAMS }; this.loadData(); }
   openForm(item?: any) { this.editingItem = item ? { ...item } : null; this.formError = ''; this.showForm = true; }

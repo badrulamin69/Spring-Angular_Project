@@ -28,8 +28,8 @@ export class PreAdmissionService {
     return this.http.get<PreAdmissionRegistration>(`${this.apiUrl}/${id}`);
   }
 
-  register(data: PreAdmissionRegistration): Observable<any> {
-    return this.http.post<any>(`${this.publicUrl}/register`, data);
+  register(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.publicUrl}/register`, formData);
   }
 
   checkStatus(registrationNumber: string): Observable<any> {

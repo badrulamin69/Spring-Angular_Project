@@ -43,19 +43,19 @@ public class TransportAllocationController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('TRANSPORT_VIEW')")
+    @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
     public ResponseEntity<TransportAllocation> save(@Valid @RequestBody TransportAllocation transportAllocation) {
         return ResponseEntity.ok(transportAllocationService.save(transportAllocation));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('TRANSPORT_VIEW')")
+    @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
     public ResponseEntity<TransportAllocation> update(@PathVariable Long id, @Valid @RequestBody TransportAllocation transportAllocation) {
         return ResponseEntity.ok(transportAllocationService.update(id, transportAllocation));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('TRANSPORT_VIEW')")
+    @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         transportAllocationService.delete(id);
         return ResponseEntity.noContent().build();

@@ -404,6 +404,7 @@ public class AuthController {
     }
 
     @GetMapping("/roles")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getAllowedRoles() {
         List<Map<String, String>> roles = new ArrayList<>();
         for (String roleCode : ALLOWED_LOGIN_ROLES) {

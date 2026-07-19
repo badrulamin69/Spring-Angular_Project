@@ -1,6 +1,9 @@
 package com.badrulamin.University_Management.controller;
 
+import com.badrulamin.University_Management.entity.AdmitCard;
 import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import com.badrulamin.University_Management.repository.AdmitCardRepository;
 import com.badrulamin.University_Management.service.PreAdmissionRegistrationService;
 import com.badrulamin.University_Management.service.AdmitCardPdfService;
 import com.badrulamin.University_Management.service.RegistrationPdfService;
@@ -12,12 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -29,10 +35,56 @@ public class PreAdmissionRegistrationController {
     private final AdmitCardPdfService admitCardPdfService;
     private final RegistrationPdfService registrationPdfService;
     private final QrCodeService qrCodeService;
+    private final AdmitCardRepository admitCardRepository;
 
-    @PostMapping("/pre-admission/register")
-    public ResponseEntity<Map<String, Object>> register(@Valid @RequestBody PreAdmissionRegistration registration) {
-        return ResponseEntity.ok(service.saveWithUserAccount(registration));
+    @PostMapping(value = "/pre-admission/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map<String, Object>> register(
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("email") String email,
+            @RequestParam("dateOfBirth") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateOfBirth,
+            @RequestParam("sscGpa") Double sscGpa,
+            @RequestParam("sscYear") Integer sscYear,
+            @RequestParam("sscBoard") String sscBoard,
+            @RequestParam("hscGpa") Double hscGpa,
+            @RequestParam("hscYear") Integer hscYear,
+            @RequestParam("hscBoard") String hscBoard,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "gender", required = false) String gender,
+            @RequestParam(value = "bloodGroup", required = false) String bloodGroup,
+            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "fatherName", required = false) String fatherName,
+            @RequestParam(value = "motherName", required = false) String motherName,
+            @RequestParam(value = "guardianPhone", required = false) String guardianPhone,
+            @RequestParam(value = "programPreference1", required = false) String programPreference1,
+            @RequestParam(value = "programPreference2", required = false) String programPreference2,
+            @RequestParam(value = "programPreference3", required = false) String programPreference3,
+            @RequestPart(value = "photo", required = false) MultipartFile photo,
+            @RequestPart(value = "signature", required = false) MultipartFile signature
+    ) {
+        PreAdmissionRegistration registration = new PreAdmissionRegistration();
+        registration.setFirstName(firstName);
+        registration.setLastName(lastName);
+        registration.setEmail(email);
+        registration.setDateOfBirth(dateOfBirth);
+        registration.setSscGpa(sscGpa);
+        registration.setSscYear(sscYear);
+        registration.setSscBoard(sscBoard);
+        registration.setHscGpa(hscGpa);
+        registration.setHscYear(hscYear);
+        registration.setHscBoard(hscBoard);
+        if (phone != null) registration.setPhone(phone);
+        if (gender != null) registration.setGender(gender);
+        if (bloodGroup != null) registration.setBloodGroup(bloodGroup);
+        if (address != null) registration.setAddress(address);
+        if (fatherName != null) registration.setFatherName(fatherName);
+        if (motherName != null) registration.setMotherName(motherName);
+        if (guardianPhone != null) registration.setGuardianPhone(guardianPhone);
+        if (programPreference1 != null) registration.setProgramPreference1(programPreference1);
+        if (programPreference2 != null) registration.setProgramPreference2(programPreference2);
+        if (programPreference3 != null) registration.setProgramPreference3(programPreference3);
+
+        return ResponseEntity.ok(service.saveWithUserAccount(registration, photo, signature));
     }
 
     @GetMapping("/pre-admission/register/{registrationNumber}/pdf")
@@ -130,7 +182,9 @@ public class PreAdmissionRegistrationController {
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_VIEW')")
     public ResponseEntity<byte[]> getAdmitCardPdf(@PathVariable Long id) {
         PreAdmissionRegistration reg = service.findById(id);
-        byte[] pdf = admitCardPdfService.generateAdmitCardPdf(reg);
+        AdmitCard admitCard = admitCardRepository.findByRegistrationId(reg.getId()).stream().findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("AdmitCard", "registrationId", reg.getId()));
+        byte[] pdf = admitCardPdfService.generateAdmitCardPdf(admitCard);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=admit-card-" + reg.getRegistrationNumber() + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)

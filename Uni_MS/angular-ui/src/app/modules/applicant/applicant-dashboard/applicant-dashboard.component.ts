@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ApplicantPortalService } from '../../../services/applicant-portal.service';
 import { PreAdmissionService } from '../../../services/pre-admission.service';
 
@@ -111,6 +112,23 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
         }
       </div>
 
+      @if (isCompleted('TEST_COMPLETED')) {
+        <div class="merit-link-card">
+          <div class="merit-link-content">
+            <h3>Merit & Waiting List Position</h3>
+            <p>Check your merit rank and waiting list position for the admission test.</p>
+          </div>
+          <button class="btn btn-primary" (click)="router.navigate(['/applicant/merit-view'])">View Merit Position</button>
+        </div>
+        <div class="merit-link-card" style="margin-top: 0.75rem; background: linear-gradient(135deg, #ecfdf5, #f0fdf4); border-color: #86efac;">
+          <div class="merit-link-content">
+            <h3 style="color: #166534;">Department / Program Choice Filling</h3>
+            <p>Select and prioritize your preferred departments and programs for admission.</p>
+          </div>
+          <button class="btn btn-primary" style="background: #22c55e;" (click)="router.navigate(['/applicant/choice-filling'])">Fill Choices</button>
+        </div>
+      }
+
       <div class="error-banner" *ngIf="error">{{ error }}</div>
     </div>
   `,
@@ -164,6 +182,9 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .enrollment-complete h3 { border: none; color: #16a34a; }
     .enrollment-success-text { font-size: 1rem; color: #16a34a; font-weight: 600; margin: 0; }
     .no-data { color: #94a3b8; font-size: 0.875rem; font-style: italic; }
+    .merit-link-card { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #ede9fe, #f5f3ff); border: 1px solid #c4b5fd; border-radius: 12px; padding: 1.25rem; margin-top: 1.5rem; }
+    .merit-link-content h3 { margin: 0 0 4px; font-size: 1rem; color: #5b21b6; }
+    .merit-link-content p { margin: 0; font-size: 0.8125rem; color: #6b7280; }
     .error-banner { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; padding: 10px 16px; border-radius: 8px; margin-top: 1rem; font-size: 0.875rem; }
     @media (max-width: 640px) { .info-cards { grid-template-columns: 1fr; } }
   `]
@@ -180,7 +201,8 @@ export class ApplicantDashboardComponent implements OnInit {
 
   constructor(
     private applicantService: ApplicantPortalService,
-    private preAdmissionService: PreAdmissionService
+    private preAdmissionService: PreAdmissionService,
+    public router: Router
   ) {}
 
   ngOnInit() {

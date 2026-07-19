@@ -2,13 +2,14 @@ package com.badrulamin.University_Management.service;
 
 import com.badrulamin.University_Management.entity.AdmissionTest;
 import com.badrulamin.University_Management.repository.AdmissionTestRepository;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
-import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,10 @@ public class AdmissionTestService {
 
     public Page<AdmissionTest> findAll(Pageable pageable) {
         return admissionTestRepository.findAll(pageable);
+    }
+
+    public Page<AdmissionTest> findByFilters(String search, String status, Long facultyId, Long departmentId, LocalDate testDate, Pageable pageable) {
+        return admissionTestRepository.findByFilters(search, status, facultyId, departmentId, testDate, pageable);
     }
 
     public AdmissionTest findById(Long id) {
@@ -38,5 +43,33 @@ public class AdmissionTestService {
     public void delete(Long id) {
         findById(id);
         admissionTestRepository.deleteById(id);
+    }
+
+    public AdmissionTest publish(Long id) {
+        AdmissionTest test = findById(id);
+        test.setStatus("PUBLISHED");
+        return admissionTestRepository.save(test);
+    }
+
+    public AdmissionTest close(Long id) {
+        AdmissionTest test = findById(id);
+        test.setStatus("CLOSED");
+        return admissionTestRepository.save(test);
+    }
+
+    public List<AdmissionTest> findByStatus(String status) {
+        return admissionTestRepository.findByStatus(status);
+    }
+
+    public long countByStatus(String status) {
+        return admissionTestRepository.countByStatus(status);
+    }
+
+    public long countByFacultyId(Long facultyId) {
+        return admissionTestRepository.countByFacultyId(facultyId);
+    }
+
+    public long countByDepartmentId(Long departmentId) {
+        return admissionTestRepository.countByDepartmentId(departmentId);
     }
 }

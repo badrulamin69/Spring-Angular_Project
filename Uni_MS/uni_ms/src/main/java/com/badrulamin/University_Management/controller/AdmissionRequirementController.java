@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -21,6 +22,7 @@ public class AdmissionRequirementController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<?> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -37,21 +39,25 @@ public class AdmissionRequirementController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<AdmissionRequirement> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     public ResponseEntity<AdmissionRequirement> create(@RequestBody AdmissionRequirement entity) {
         return ResponseEntity.ok(service.create(entity));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     public ResponseEntity<AdmissionRequirement> update(@PathVariable Long id, @RequestBody AdmissionRequirement entity) {
         return ResponseEntity.ok(service.update(id, entity));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();

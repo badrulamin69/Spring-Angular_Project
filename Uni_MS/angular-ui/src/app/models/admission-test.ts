@@ -1,11 +1,32 @@
 export interface AdmissionTest {
   id?: number;
-  uniqueCode?: string;
   name: string;
+  academicYear?: string;
+  sessionId?: number;
+  session?: any;
+  facultyId?: number;
+  faculty?: any;
+  departmentId?: number;
+  department?: any;
+  programId?: number;
+  program?: any;
+  shift?: string;
+  testType?: string;
   testDate: string;
+  startTime?: string;
+  endTime?: string;
+  durationMinutes?: number;
   totalMarks: number;
   passingMarks: number;
+  negativeMarking?: boolean;
+  negativeMarkValue?: number;
+  examCenter?: string;
+  building?: string;
+  room?: string;
+  seatCapacity?: number;
+  instructions?: string;
   description?: string;
+  status?: string;
   createdAt?: string;
   updatedAt?: string;
 }

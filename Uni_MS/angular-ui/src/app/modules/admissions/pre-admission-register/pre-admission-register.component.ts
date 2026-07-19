@@ -276,9 +276,10 @@ export class PreAdmissionRegisterComponent {
     gender: '', bloodGroup: '', address: '', fatherName: '', motherName: '', guardianPhone: '',
     sscGpa: null, sscYear: null, sscBoard: '',
     hscGpa: null, hscYear: null, hscBoard: '',
-    photoUrl: '',
-    signatureUrl: ''
+    programPreference1: '', programPreference2: '', programPreference3: ''
   };
+  photoFile: File | null = null;
+  signatureFile: File | null = null;
   submitting = false;
   registrationResult: any = null;
   errorMessage = '';
@@ -343,13 +344,32 @@ export class PreAdmissionRegisterComponent {
     this.submitting = true;
     this.errorMessage = '';
     const parts = this.formData.fullName.trim().split(/\s+/);
-    const payload = {
-      ...this.formData,
-      firstName: parts[0] || '',
-      lastName: parts.slice(1).join(' ') || parts[0] || ''
-    };
-    delete payload.fullName;
-    this.service.register(payload).subscribe({
+
+    const fd = new FormData();
+    fd.append('firstName', parts[0] || '');
+    fd.append('lastName', parts.slice(1).join(' ') || parts[0] || '');
+    fd.append('email', this.formData.email);
+    fd.append('dateOfBirth', this.formData.dateOfBirth);
+    fd.append('sscGpa', this.formData.sscGpa);
+    fd.append('sscYear', this.formData.sscYear);
+    fd.append('sscBoard', this.formData.sscBoard);
+    fd.append('hscGpa', this.formData.hscGpa);
+    fd.append('hscYear', this.formData.hscYear);
+    fd.append('hscBoard', this.formData.hscBoard);
+    if (this.formData.phone) fd.append('phone', this.formData.phone);
+    if (this.formData.gender) fd.append('gender', this.formData.gender);
+    if (this.formData.bloodGroup) fd.append('bloodGroup', this.formData.bloodGroup);
+    if (this.formData.address) fd.append('address', this.formData.address);
+    if (this.formData.fatherName) fd.append('fatherName', this.formData.fatherName);
+    if (this.formData.motherName) fd.append('motherName', this.formData.motherName);
+    if (this.formData.guardianPhone) fd.append('guardianPhone', this.formData.guardianPhone);
+    if (this.formData.programPreference1) fd.append('programPreference1', this.formData.programPreference1);
+    if (this.formData.programPreference2) fd.append('programPreference2', this.formData.programPreference2);
+    if (this.formData.programPreference3) fd.append('programPreference3', this.formData.programPreference3);
+    if (this.photoFile) fd.append('photo', this.photoFile);
+    if (this.signatureFile) fd.append('signature', this.signatureFile);
+
+    this.service.register(fd).subscribe({
       next: (res) => {
         this.submitting = false;
         this.registrationResult = res;
@@ -405,7 +425,7 @@ export class PreAdmissionRegisterComponent {
       const fieldLabels: Record<string, string> = {
         firstName: 'First name', lastName: 'Last name', email: 'Email',
         phone: 'Phone', dateOfBirth: 'Date of birth', gender: 'Gender',
-        photoUrl: 'Photo', signatureUrl: 'Signature'
+        photo: 'Photo', signature: 'Signature'
       };
       for (const [field, msg] of Object.entries(body.errors)) {
         const label = fieldLabels[field] || field;
@@ -467,17 +487,14 @@ export class PreAdmissionRegisterComponent {
       this.errorMessage = 'Only JPG and PNG files are allowed';
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.photoPreview = reader.result as string;
-      this.formData.photoUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+    this.photoFile = file;
+    this.photoPreview = URL.createObjectURL(file);
   }
 
   removePhoto() {
+    if (this.photoPreview) URL.revokeObjectURL(this.photoPreview);
     this.photoPreview = null;
-    this.formData.photoUrl = '';
+    this.photoFile = null;
   }
 
   onSignatureSelect(event: Event) {
@@ -500,17 +517,14 @@ export class PreAdmissionRegisterComponent {
       this.errorMessage = 'Only JPG and PNG files are allowed';
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.signaturePreview = reader.result as string;
-      this.formData.signatureUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+    this.signatureFile = file;
+    this.signaturePreview = URL.createObjectURL(file);
   }
 
   removeSignature() {
+    if (this.signaturePreview) URL.revokeObjectURL(this.signaturePreview);
     this.signaturePreview = null;
-    this.formData.signatureUrl = '';
+    this.signatureFile = null;
   }
 
   togglePassword() {

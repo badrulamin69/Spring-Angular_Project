@@ -46,19 +46,19 @@ public class TeacherController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('TEACHER_VIEW')")
+    @PreAuthorize("hasAuthority('TEACHER_MANAGE')")
     public ResponseEntity<Teacher> save(@Valid @RequestBody Teacher teacher) {
         return ResponseEntity.ok(teacherService.save(teacher));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('TEACHER_VIEW')")
+    @PreAuthorize("hasAuthority('TEACHER_MANAGE')")
     public ResponseEntity<Teacher> update(@PathVariable Long id, @Valid @RequestBody Teacher teacher) {
         return ResponseEntity.ok(teacherService.update(id, teacher));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('TEACHER_VIEW')")
+    @PreAuthorize("hasAuthority('TEACHER_MANAGE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         teacherService.delete(id);
         return ResponseEntity.noContent().build();

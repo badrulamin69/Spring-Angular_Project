@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -21,6 +22,7 @@ public class AdmissionFeeCollectionController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<?> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -37,21 +39,25 @@ public class AdmissionFeeCollectionController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<AdmissionFeeCollection> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     public ResponseEntity<AdmissionFeeCollection> create(@RequestBody AdmissionFeeCollection entity) {
         return ResponseEntity.ok(service.create(entity));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     public ResponseEntity<AdmissionFeeCollection> update(@PathVariable Long id, @RequestBody AdmissionFeeCollection entity) {
         return ResponseEntity.ok(service.update(id, entity));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();

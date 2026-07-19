@@ -52,4 +52,12 @@ export class ApplicantPortalService {
   getAdmitCardPdf(): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/my-admit-card/pdf`, { responseType: 'blob' });
   }
+
+  getMyMerit(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/my-merit`);
+  }
+
+  getMyWaitingPosition(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/my-waiting-position`);
+  }
 }

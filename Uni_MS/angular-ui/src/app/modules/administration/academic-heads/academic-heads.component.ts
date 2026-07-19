@@ -1,4 +1,4 @@
-﻿import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
+import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../../services/employee.service';
@@ -106,7 +106,7 @@ export class AcademicHeadsComponent implements OnInit {
 
   loadData() {
     this.loading = true;
-    this.service.findAll(this.params, 'Dean OR Chairman OR Director OR Professor OR Associate Professor').subscribe({
+    this.service.findAll(this.params, this.searchTerm).subscribe({
       next: (data) => { this.pagedData = data; this.loading = false; },
       error: () => { this.loading = false; this.toastService.error('Failed to load academic heads'); }
     });

@@ -55,6 +55,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         perms.put("SECTION_MANAGE", createPerm("Manage Sections", "SECTION_MANAGE", "Academic", "MANAGE"));
         perms.put("SUBJECT_MANAGE", createPerm("Manage Subjects", "SUBJECT_MANAGE", "Academic", "MANAGE"));
         perms.put("TEACHER_VIEW", createPerm("View Teachers", "TEACHER_VIEW", "Academic", "VIEW"));
+        perms.put("TEACHER_MANAGE", createPerm("Manage Teachers", "TEACHER_MANAGE", "Academic", "MANAGE"));
 
         // Students
         perms.put("STUDENT_VIEW", createPerm("View Students", "STUDENT_VIEW", "Students", "VIEW"));
@@ -74,6 +75,13 @@ public class DatabaseSeeder implements CommandLineRunner {
         perms.put("PRE_ADMISSION_MANAGE", createPerm("Manage Pre-Admissions", "PRE_ADMISSION_MANAGE", "Admissions", "MANAGE"));
         perms.put("QUESTION_MANAGE", createPerm("Manage Questions", "QUESTION_MANAGE", "Admissions", "MANAGE"));
         perms.put("QUESTION_VIEW", createPerm("View Questions", "QUESTION_VIEW", "Admissions", "VIEW"));
+        perms.put("ADMISSION_TEST_MANAGE", createPerm("Manage Admission Tests", "ADMISSION_TEST_MANAGE", "Admissions", "MANAGE"));
+        perms.put("ADMISSION_TEST_VIEW", createPerm("View Admission Tests", "ADMISSION_TEST_VIEW", "Admissions", "VIEW"));
+        perms.put("SEAT_PLAN_MANAGE", createPerm("Manage Seat Plans", "SEAT_PLAN_MANAGE", "Admissions", "MANAGE"));
+        perms.put("ADMIT_CARD_MANAGE", createPerm("Manage Admit Cards", "ADMIT_CARD_MANAGE", "Admissions", "MANAGE"));
+        perms.put("ATTENDANCE_MANAGE", createPerm("Manage Attendance", "ATTENDANCE_MANAGE", "Admissions", "MANAGE"));
+        perms.put("CHOICE_FILLING_VIEW", createPerm("View Choice Filling", "CHOICE_FILLING_VIEW", "Admissions", "VIEW"));
+        perms.put("CHOICE_FILLING_MANAGE", createPerm("Manage Choice Filling", "CHOICE_FILLING_MANAGE", "Admissions", "MANAGE"));
 
         // HRM
         perms.put("HRM_VIEW", createPerm("View HRM", "HRM_VIEW", "HRM", "VIEW"));
@@ -165,6 +173,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         deptHeadPerms.add(perms.get("REPORT_GENERATE"));
         deptHeadPerms.add(perms.get("COMMUNICATION_VIEW"));
         deptHeadPerms.add(perms.get("TEACHER_VIEW"));
+        deptHeadPerms.add(perms.get("TEACHER_MANAGE"));
         Role departmentHead = createRole("Department Head", "ROLE_DEPT_HEAD", "Department head access", deptHeadPerms, 2, universityAdmin);
 
         // Level 3: Faculty Member (child of Department Head)
@@ -210,6 +219,11 @@ public class DatabaseSeeder implements CommandLineRunner {
         admissionPerms.add(perms.get("PRE_ADMISSION_MANAGE"));
         admissionPerms.add(perms.get("QUESTION_VIEW"));
         admissionPerms.add(perms.get("QUESTION_MANAGE"));
+        admissionPerms.add(perms.get("ADMISSION_TEST_MANAGE"));
+        admissionPerms.add(perms.get("ADMISSION_TEST_VIEW"));
+        admissionPerms.add(perms.get("SEAT_PLAN_MANAGE"));
+        admissionPerms.add(perms.get("ADMIT_CARD_MANAGE"));
+        admissionPerms.add(perms.get("ATTENDANCE_MANAGE"));
         Role admissionOfficer = createRole("Admission Officer", "ROLE_ADMISSION_OFFICER", "Admission management access", admissionPerms, 2, universityAdmin);
 
         // Level 2: Accounts Officer (child of University Admin)
@@ -470,6 +484,14 @@ public class DatabaseSeeder implements CommandLineRunner {
         saveMenu(repo, "Merit Processing", null, "/admissions/merit-processing", admissions, 18, "PRE_ADMISSION_MANAGE", "Admissions");
         saveMenu(repo, "Department Allocations", null, "/admissions/allocations", admissions, 19, "PRE_ADMISSION_VIEW", "Admissions");
         saveMenu(repo, "Question Bank", null, "/admissions/question-bank", admissions, 20, "QUESTION_MANAGE", "Admissions");
+        saveMenu(repo, "Eligibility Verification", null, "/admissions/eligibility-verification", admissions, 21, "ADMISSION_VIEW", "Admissions");
+        saveMenu(repo, "Test Dashboard", null, "/admissions/test-dashboard", admissions, 22, "ADMISSION_TEST_MANAGE", "Admissions");
+        saveMenu(repo, "Exam Centers", null, "/admissions/exam-centers", admissions, 23, "ADMISSION_TEST_MANAGE", "Admissions");
+        saveMenu(repo, "Seat Plan", null, "/admissions/seat-plan", admissions, 24, "SEAT_PLAN_MANAGE", "Admissions");
+        saveMenu(repo, "Admit Cards", null, "/admissions/admit-cards", admissions, 25, "ADMIT_CARD_MANAGE", "Admissions");
+        saveMenu(repo, "Test Attendance", null, "/admissions/test-attendance", admissions, 26, "ATTENDANCE_MANAGE", "Admissions");
+        saveMenu(repo, "Choice Filling Config", null, "/admissions/choice-filling-config", admissions, 27, "CHOICE_FILLING_MANAGE", "Admissions");
+        saveMenu(repo, "Choice Submissions", null, "/admissions/choice-submissions", admissions, 28, "CHOICE_FILLING_VIEW", "Admissions");
 
         // Students
         Menu students = saveMenu(repo, "Students", "person", null, null, 4, "STUDENT_VIEW", "Students");

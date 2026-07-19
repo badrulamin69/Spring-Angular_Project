@@ -63,6 +63,20 @@ import { environment } from '../../../../environments/environment';
                 }
               </select>
             </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Subject</label>
+                <input type="text" [(ngModel)]="formData.subject" name="subject" placeholder="e.g. Mathematics">
+              </div>
+              <div class="form-group">
+                <label>Difficulty</label>
+                <select [(ngModel)]="formData.difficulty" name="difficulty">
+                  <option value="EASY">Easy</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="HARD">Hard</option>
+                </select>
+              </div>
+            </div>
             <div class="form-group">
               <label>Question Text *</label>
               <textarea [(ngModel)]="formData.questionText" name="questionText" required rows="3" placeholder="Enter the question"></textarea>
@@ -87,6 +101,10 @@ import { environment } from '../../../../environments/environment';
                 <input type="text" [(ngModel)]="formData.optionD" name="optionD" required>
               </div>
             </div>
+            <div class="form-group">
+              <label>Option E (Optional)</label>
+              <input type="text" [(ngModel)]="formData.optionE" name="optionE" placeholder="Optional 5th option">
+            </div>
             <div class="form-row-2">
               <div class="form-group">
                 <label>Correct Option *</label>
@@ -96,12 +114,31 @@ import { environment } from '../../../../environments/environment';
                   <option value="B">B</option>
                   <option value="C">C</option>
                   <option value="D">D</option>
+                  <option value="E">E</option>
                 </select>
               </div>
               <div class="form-group">
                 <label>Marks *</label>
                 <input type="number" [(ngModel)]="formData.marks" name="marks" required min="1" step="1">
               </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label>Negative Marks</label>
+                <input type="number" [(ngModel)]="formData.negativeMarks" name="negativeMarks" min="0" step="0.25" placeholder="0">
+              </div>
+              <div class="form-group">
+                <label>Question Type</label>
+                <select [(ngModel)]="formData.questionType" name="questionType">
+                  <option value="MCQ">MCQ</option>
+                  <option value="TRUE_FALSE">True/False</option>
+                  <option value="SHORT_ANSWER">Short Answer</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Explanation</label>
+              <textarea [(ngModel)]="formData.explanation" name="explanation" rows="2" placeholder="Answer explanation (optional)"></textarea>
             </div>
             <div class="form-actions">
               <button type="button" class="btn btn-secondary" (click)="showForm = false">Cancel</button>
@@ -163,19 +200,19 @@ export class QuestionBankComponent implements OnInit {
   tests: any[] = [];
 
   formData: any = {
-    questionText: '', optionA: '', optionB: '', optionC: '', optionD: '',
-    correctOption: '', marks: 1, testId: null
+    questionText: '', optionA: '', optionB: '', optionC: '', optionD: '', optionE: '',
+    correctOption: '', marks: 1, negativeMarks: 0, testId: null,
+    subject: '', difficulty: 'MEDIUM', explanation: '', questionType: 'MCQ'
   };
 
   columns: TableColumn[] = [
     { key: 'id', label: 'ID' },
     { key: 'questionText', label: 'Question' },
-    { key: 'optionA', label: 'A' },
-    { key: 'optionB', label: 'B' },
-    { key: 'optionC', label: 'C' },
-    { key: 'optionD', label: 'D' },
+    { key: 'subject', label: 'Subject' },
+    { key: 'difficulty', label: 'Difficulty' },
     { key: 'correctOption', label: 'Answer' },
-    { key: 'marks', label: 'Marks' }
+    { key: 'marks', label: 'Marks' },
+    { key: 'negativeMarks', label: 'Neg. Marks' }
   ];
 
   constructor(
@@ -217,7 +254,11 @@ export class QuestionBankComponent implements OnInit {
 
   openForm() {
     this.editMode = false;
-    this.formData = { questionText: '', optionA: '', optionB: '', optionC: '', optionD: '', correctOption: '', marks: 1, testId: this.selectedTestId };
+    this.formData = {
+      questionText: '', optionA: '', optionB: '', optionC: '', optionD: '', optionE: '',
+      correctOption: '', marks: 1, negativeMarks: 0, testId: this.selectedTestId,
+      subject: '', difficulty: 'MEDIUM', explanation: '', questionType: 'MCQ'
+    };
     this.showForm = true;
   }
 
@@ -226,8 +267,11 @@ export class QuestionBankComponent implements OnInit {
     this.selectedItem = q;
     this.formData = {
       questionText: q.questionText, optionA: q.optionA, optionB: q.optionB,
-      optionC: q.optionC, optionD: q.optionD, correctOption: q.correctOption,
-      marks: q.marks, testId: q.testId || q.test?.id || null
+      optionC: q.optionC, optionD: q.optionD, optionE: q.optionE || '',
+      correctOption: q.correctOption, marks: q.marks, negativeMarks: q.negativeMarks || 0,
+      testId: q.testId || q.test?.id || null,
+      subject: q.subject || '', difficulty: q.difficulty || 'MEDIUM',
+      explanation: q.explanation || '', questionType: q.questionType || 'MCQ'
     };
     this.showForm = true;
   }

@@ -43,19 +43,19 @@ public class StudentFeeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     public ResponseEntity<StudentFee> save(@Valid @RequestBody StudentFee studentFee) {
         return ResponseEntity.ok(studentFeeService.save(studentFee));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     public ResponseEntity<StudentFee> update(@PathVariable Long id, @Valid @RequestBody StudentFee studentFee) {
         return ResponseEntity.ok(studentFeeService.update(id, studentFee));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('FINANCE_VIEW')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         studentFeeService.delete(id);
         return ResponseEntity.noContent().build();

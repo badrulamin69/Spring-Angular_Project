@@ -37,4 +37,6 @@ public interface ApplicantChoiceSubmissionRepository extends JpaRepository<Appli
     long countByConfig_Id(Long configId);
 
     List<ApplicantChoiceSubmission> findByConfig_IdAndStatus(Long configId, String status);
+
+    List<ApplicantChoiceSubmission> findByConfig_Id(Long configId);
 }

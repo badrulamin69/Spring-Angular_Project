@@ -20,6 +20,45 @@ public class DepartmentAllocation extends BaseEntity {
     @Column(name = "allocation_number", unique = true, nullable = false)
     private String allocationNumber;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "config_id")
+    private SeatAllocationConfig config;
+
+    @JsonProperty("configId")
+    public Long getConfigId() { return config != null ? config.getId() : null; }
+    @JsonProperty("configId")
+    public void setConfigId(Long configId) {
+        if (configId != null) {
+            SeatAllocationConfig c = new SeatAllocationConfig();
+            c.setId(configId);
+            this.config = c;
+        }
+    }
+
+    @Column(name = "allocation_round")
+    private Integer allocationRound = 1;
+
+    @Column(name = "choice_number")
+    private Integer choiceNumber;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "allocated_faculty_id")
+    private Faculty allocatedFaculty;
+
+    @JsonProperty("allocatedFacultyId")
+    public Long getAllocatedFacultyId() { return allocatedFaculty != null ? allocatedFaculty.getId() : null; }
+    @JsonProperty("allocatedFacultyId")
+    public void setAllocatedFacultyId(Long facultyId) {
+        if (facultyId != null) {
+            Faculty f = new Faculty();
+            f.setId(facultyId);
+            this.allocatedFaculty = f;
+        }
+    }
+
+    @Column(name = "shift", length = 20)
+    private String shift;
+
     @Column(name = "merit_rank")
     private Integer meritRank;
 
@@ -34,8 +73,23 @@ public class DepartmentAllocation extends BaseEntity {
     @Column(name = "allocated_at")
     private LocalDateTime allocatedAt;
 
+    @Column(name = "accepted_at")
+    private LocalDateTime acceptedAt;
+
+    @Column(name = "declined_at")
+    private LocalDateTime declinedAt;
+
+    @Column(name = "deadline")
+    private LocalDateTime deadline;
+
     @Column(name = "confirmed_at")
     private LocalDateTime confirmedAt;
+
+    @Column(name = "is_waiting", nullable = false)
+    private Boolean isWaiting = false;
+
+    @Column(name = "waiting_rank")
+    private Integer waitingRank;
 
     @Size(max = 2000)
     private String remarks;

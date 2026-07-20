@@ -127,6 +127,14 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
           </div>
           <button class="btn btn-primary" style="background: #22c55e;" (click)="router.navigate(['/applicant/choice-filling'])">Fill Choices</button>
         </div>
+
+        <div class="merit-link-card" style="margin-top: 12px;">
+          <div class="merit-link-content">
+            <h3 style="color: #7c3aed;">Seat Allocation Status</h3>
+            <p>View your allocated program, accept or decline your seat, and check waiting list position.</p>
+          </div>
+          <button class="btn btn-primary" style="background: #7c3aed;" (click)="router.navigate(['/applicant/allocation'])">View Allocation</button>
+        </div>
       }
 
       <div class="error-banner" *ngIf="error">{{ error }}</div>

@@ -81,6 +81,7 @@ public class AuthController {
     @Autowired PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
                                                HttpServletRequest request) {
         String ipAddress = getClientIp(request);
@@ -250,6 +251,7 @@ public class AuthController {
 
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public ResponseEntity<?> getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) {

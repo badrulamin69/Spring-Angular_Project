@@ -62,6 +62,16 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'applicant/allocation',
+    loadComponent: () => import('./modules/applicant/applicant-allocation-view/applicant-allocation-view.component').then(m => m.ApplicantAllocationViewComponent),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'applicant/confirmation',
+    loadComponent: () => import('./modules/applicant/applicant-confirmation/applicant-confirmation.component').then(m => m.ApplicantConfirmationComponent),
+    canActivate: [authGuard]
+  },
+  {
     path: '',
     component: LayoutComponent,
     canActivate: [authGuard],
@@ -151,6 +161,10 @@ export const routes: Routes = [
       { path: 'admissions/test-attendance', loadComponent: () => import('./modules/admissions/test-attendance/test-attendance.component').then(m => m.TestAttendanceComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
       { path: 'admissions/choice-filling-config', loadComponent: () => import('./modules/admissions/choice-filling-config/choice-filling-config.component').then(m => m.ChoiceFillingConfigComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
       { path: 'admissions/choice-submissions', loadComponent: () => import('./modules/admissions/choice-submissions/choice-submissions.component').then(m => m.ChoiceSubmissionsComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
+      { path: 'admissions/seat-allocation-config', loadComponent: () => import('./modules/admissions/seat-allocation-config/seat-allocation-config.component').then(m => m.SeatAllocationConfigComponent), canActivate: [permissionGuard], data: { permission: 'SEAT_ALLOCATION_VIEW' } },
+      { path: 'admissions/program-seat-config', loadComponent: () => import('./modules/admissions/program-seat-config/program-seat-config.component').then(m => m.ProgramSeatConfigComponent), canActivate: [permissionGuard], data: { permission: 'SEAT_ALLOCATION_VIEW' } },
+      { path: 'admissions/seat-allocations', loadComponent: () => import('./modules/admissions/seat-allocations/seat-allocations.component').then(m => m.SeatAllocationsComponent), canActivate: [permissionGuard], data: { permission: 'SEAT_ALLOCATION_VIEW' } },
+      { path: 'admissions/admission-confirmations', loadComponent: () => import('./modules/admissions/admission-confirmations/admission-confirmations.component').then(m => m.AdmissionConfirmationsComponent), canActivate: [permissionGuard], data: { permission: 'ADMISSION_VIEW' } },
 
       // Students
       { path: 'students/list', loadComponent: () => import('./modules/students/list/list.component').then(m => m.StudentsListComponent), canActivate: [permissionGuard], data: { permission: 'STUDENT_VIEW' } },

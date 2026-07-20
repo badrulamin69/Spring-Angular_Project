@@ -25,7 +25,7 @@ public class AdmissionEnrollment {
     private String enrollmentNumber;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "application_id", nullable = false)
+    @JoinColumn(name = "application_id")
     private AdmissionApplication application;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -82,6 +82,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         perms.put("ATTENDANCE_MANAGE", createPerm("Manage Attendance", "ATTENDANCE_MANAGE", "Admissions", "MANAGE"));
         perms.put("CHOICE_FILLING_VIEW", createPerm("View Choice Filling", "CHOICE_FILLING_VIEW", "Admissions", "VIEW"));
         perms.put("CHOICE_FILLING_MANAGE", createPerm("Manage Choice Filling", "CHOICE_FILLING_MANAGE", "Admissions", "MANAGE"));
+        perms.put("SEAT_ALLOCATION_VIEW", createPerm("View Seat Allocation", "SEAT_ALLOCATION_VIEW", "Admissions", "VIEW"));
+        perms.put("SEAT_ALLOCATION_MANAGE", createPerm("Manage Seat Allocation", "SEAT_ALLOCATION_MANAGE", "Admissions", "MANAGE"));
 
         // HRM
         perms.put("HRM_VIEW", createPerm("View HRM", "HRM_VIEW", "HRM", "VIEW"));
@@ -224,6 +226,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         admissionPerms.add(perms.get("SEAT_PLAN_MANAGE"));
         admissionPerms.add(perms.get("ADMIT_CARD_MANAGE"));
         admissionPerms.add(perms.get("ATTENDANCE_MANAGE"));
+        admissionPerms.add(perms.get("CHOICE_FILLING_VIEW"));
+        admissionPerms.add(perms.get("CHOICE_FILLING_MANAGE"));
+        admissionPerms.add(perms.get("SEAT_ALLOCATION_VIEW"));
+        admissionPerms.add(perms.get("SEAT_ALLOCATION_MANAGE"));
         Role admissionOfficer = createRole("Admission Officer", "ROLE_ADMISSION_OFFICER", "Admission management access", admissionPerms, 2, universityAdmin);
 
         // Level 2: Accounts Officer (child of University Admin)
@@ -286,6 +292,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         applicantPerms.add(perms.get("ADMISSION_VIEW"));
         applicantPerms.add(perms.get("ACADEMIC_VIEW"));
         applicantPerms.add(perms.get("COMMUNICATION_VIEW"));
+        applicantPerms.add(perms.get("SEAT_ALLOCATION_VIEW"));
         Role applicant = createRole("Applicant", "ROLE_APPLICANT", "Admission applicant access", applicantPerms, 2, universityAdmin);
 
         // Level 2: Student (child of University Admin)
@@ -492,6 +499,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         saveMenu(repo, "Test Attendance", null, "/admissions/test-attendance", admissions, 26, "ATTENDANCE_MANAGE", "Admissions");
         saveMenu(repo, "Choice Filling Config", null, "/admissions/choice-filling-config", admissions, 27, "CHOICE_FILLING_MANAGE", "Admissions");
         saveMenu(repo, "Choice Submissions", null, "/admissions/choice-submissions", admissions, 28, "CHOICE_FILLING_VIEW", "Admissions");
+        saveMenu(repo, "Seat Allocation Config", null, "/admissions/seat-allocation-config", admissions, 29, "SEAT_ALLOCATION_MANAGE", "Admissions");
+        saveMenu(repo, "Program Seat Config", null, "/admissions/program-seat-config", admissions, 30, "SEAT_ALLOCATION_MANAGE", "Admissions");
+        saveMenu(repo, "Seat Allocations", null, "/admissions/seat-allocations", admissions, 31, "SEAT_ALLOCATION_VIEW", "Admissions");
+        saveMenu(repo, "Admission Confirmations", null, "/admissions/admission-confirmations", admissions, 32, "ADMISSION_VIEW", "Admissions");
 
         // Students
         Menu students = saveMenu(repo, "Students", "person", null, null, 4, "STUDENT_VIEW", "Students");

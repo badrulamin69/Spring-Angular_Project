@@ -66,10 +66,10 @@ public class AdmissionTestService {
     }
 
     public long countByFacultyId(Long facultyId) {
-        return admissionTestRepository.countByFacultyId(facultyId);
+        return admissionTestRepository.countByFaculty_Id(facultyId);
     }
 
     public long countByDepartmentId(Long departmentId) {
-        return admissionTestRepository.countByDepartmentId(departmentId);
+        return admissionTestRepository.countByDepartment_Id(departmentId);
     }
 }

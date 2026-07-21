@@ -60,5 +60,5 @@ public class ChoiceFillingConfig extends BaseEntity {
     private String remarks;
 
     @Column(nullable = false)
-    private boolean isActive = true;
+    private boolean active = true;
 }

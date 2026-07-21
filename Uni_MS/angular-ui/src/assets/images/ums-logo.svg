@@ -90,6 +90,6 @@
   <line x1="260" y1="388" x2="335" y2="395" stroke="white" stroke-width="1" opacity="0.25"/>
   <line x1="260" y1="398" x2="335" y2="405" stroke="white" stroke-width="1" opacity="0.25"/>
 
-  <!-- University Management System text -->
-  <text x="250" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="26" font-weight="500" fill="#0B1D3A" letter-spacing="2">University Management System</text>
+  <!-- Smart University text -->
+  <text x="250" y="460" text-anchor="middle" font-family="'Segoe UI', Arial, Helvetica, sans-serif" font-size="26" font-weight="500" fill="#0B1D3A" letter-spacing="2">Smart University</text>
 </svg>

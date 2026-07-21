@@ -18,8 +18,6 @@ public interface SeatAllocationConfigRepository extends JpaRepository<SeatAlloca
 
     List<SeatAllocationConfig> findBySession_Id(Long sessionId);
 
-    Optional<SeatAllocationConfig> findByStatusAndIsActive(String status, boolean isActive);
-
     @Query("SELECT c FROM SeatAllocationConfig c WHERE " +
            "(:search IS NULL OR LOWER(c.session.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
            "OR LOWER(c.academicYear) LIKE LOWER(CONCAT('%', :search, '%'))) " +

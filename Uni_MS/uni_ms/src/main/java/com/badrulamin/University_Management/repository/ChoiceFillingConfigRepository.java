@@ -14,11 +14,11 @@ import java.util.Optional;
 @Repository
 public interface ChoiceFillingConfigRepository extends JpaRepository<ChoiceFillingConfig, Long> {
 
-    Optional<ChoiceFillingConfig> findBySession_IdAndIsActive(Long sessionId, boolean isActive);
+    Optional<ChoiceFillingConfig> findBySession_IdAndActive(Long sessionId, boolean active);
 
     List<ChoiceFillingConfig> findBySession_Id(Long sessionId);
 
-    Optional<ChoiceFillingConfig> findByStatusAndIsActive(String status, boolean isActive);
+    Optional<ChoiceFillingConfig> findByStatusAndActive(String status, boolean active);
 
     @Query("SELECT c FROM ChoiceFillingConfig c WHERE " +
            "(:search IS NULL OR LOWER(c.session.name) LIKE LOWER(CONCAT('%', :search, '%'))) " +

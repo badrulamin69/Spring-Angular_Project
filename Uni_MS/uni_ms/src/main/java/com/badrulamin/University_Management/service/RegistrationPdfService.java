@@ -70,7 +70,7 @@ public class RegistrationPdfService {
         Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 22, Color.WHITE);
         Font subtitleFont = FontFactory.getFont(FontFactory.HELVETICA, 11, new Color(191, 219, 254));
 
-        Paragraph logoText = new Paragraph("UNIVERSITY OF EXCELLENCE", logoFont);
+        Paragraph logoText = new Paragraph("SMART UNIVERSITY", logoFont);
         logoText.setAlignment(Element.ALIGN_CENTER);
         logoText.setSpacingAfter(6);
         headerCell.addElement(logoText);

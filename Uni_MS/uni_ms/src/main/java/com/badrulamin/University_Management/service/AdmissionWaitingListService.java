@@ -75,10 +75,10 @@ public class AdmissionWaitingListService {
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTest", "id", testId));
 
         List<AdmissionTestAttempt> gradedAttempts = attemptRepository
-                .findByTestIdAndStatusOrderByScoreDesc(testId, "GRADED");
+                .findByTest_IdAndStatusOrderByScoreDesc(testId, "GRADED");
 
         int meritCutoff = 0;
-        List<AdmissionMeritList> existingLists = meritListRepository.findByTestId(testId);
+        List<AdmissionMeritList> existingLists = meritListRepository.findByTest_Id(testId);
         for (AdmissionMeritList ml : existingLists) {
             if (ml.getTotalSeats() != null && ml.getTotalSeats() > meritCutoff) {
                 meritCutoff = ml.getTotalSeats();

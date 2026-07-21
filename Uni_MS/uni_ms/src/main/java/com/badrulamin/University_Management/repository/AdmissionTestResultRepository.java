@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface AdmissionTestResultRepository extends JpaRepository<AdmissionTestResult, Long> {
     Optional<AdmissionTestResult> findByRegistration_Id(Long registrationId);
     long countByStatus(String status);
-    List<AdmissionTestResult> findByTestIdOrderByTotalWeightedScoreDesc(Long testId);
-    List<AdmissionTestResult> findByTestIdAndStatus(Long testId, String status);
-    boolean existsByTestIdAndRegistrationId(Long testId, Long registrationId);
-    long countByTestId(Long testId);
+    List<AdmissionTestResult> findByTest_IdOrderByTotalWeightedScoreDesc(Long testId);
+    List<AdmissionTestResult> findByTest_IdAndStatus(Long testId, String status);
+    boolean existsByTest_IdAndRegistration_Id(Long testId, Long registrationId);
+    long countByTest_Id(Long testId);
 }

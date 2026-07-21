@@ -1,4 +1,3 @@
-import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +12,7 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-tests',
   standalone: true,
-  imports: [CommonModule, FormsModule, DataTableComponent, DynamicFormComponent, ToastComponent, ConfirmDialogComponent],
+  imports: [CommonModule, FormsModule, DataTableComponent, ToastComponent, ConfirmDialogComponent],
   template: `
     <app-toast></app-toast>
     <div class="page-header">

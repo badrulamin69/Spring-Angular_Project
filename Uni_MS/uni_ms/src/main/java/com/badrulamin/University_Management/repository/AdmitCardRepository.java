@@ -12,12 +12,12 @@ import java.util.Optional;
 @Repository
 public interface AdmitCardRepository extends JpaRepository<AdmitCard, Long> {
     Optional<AdmitCard> findByAdmitCardNumber(String admitCardNumber);
-    Optional<AdmitCard> findByTestIdAndRegistrationId(Long testId, Long registrationId);
-    List<AdmitCard> findByTestId(Long testId);
-    List<AdmitCard> findByRegistrationId(Long registrationId);
+    Optional<AdmitCard> findByTest_IdAndRegistration_Id(Long testId, Long registrationId);
+    List<AdmitCard> findByTest_Id(Long testId);
+    List<AdmitCard> findByRegistration_Id(Long registrationId);
     boolean existsByAdmitCardNumber(String admitCardNumber);
-    long countByTestId(Long testId);
-    long countByTestIdAndStatus(Long testId, String status);
+    long countByTest_Id(Long testId);
+    long countByTest_IdAndStatus(Long testId, String status);
 
     @Query("SELECT COALESCE(MAX(CAST(SUBSTRING(ac.admitCardNumber, LENGTH(ac.admitCardNumber) - 5) AS long)), 0) FROM AdmitCard ac WHERE ac.test.id = :testId")
     Long findMaxAdmitCardSequence(@Param("testId") Long testId);

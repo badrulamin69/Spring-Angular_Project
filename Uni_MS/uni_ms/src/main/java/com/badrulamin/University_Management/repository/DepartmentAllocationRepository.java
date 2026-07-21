@@ -42,7 +42,8 @@ public interface DepartmentAllocationRepository extends JpaRepository<Department
 
     List<DepartmentAllocation> findByConfig_IdAndAllocatedProgram_IdAndIsWaitingTrueOrderByWaitingRankAsc(Long configId, Long programId);
 
-    List<DepartmentAllocation> findByConfig_IdAndStatusIn(List<String> statuses);
+    @Query("SELECT d FROM DepartmentAllocation d WHERE d.config.id = :configId AND d.status IN :statuses")
+    List<DepartmentAllocation> findByConfigIdAndStatusIn(@Param("configId") Long configId, @Param("statuses") List<String> statuses);
 
     @Query("SELECT d FROM DepartmentAllocation d WHERE d.config.id = :configId " +
            "AND (:search IS NULL OR LOWER(d.registration.firstName) LIKE LOWER(CONCAT('%', :search, '%')) " +

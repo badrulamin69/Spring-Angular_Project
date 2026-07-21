@@ -10,10 +10,10 @@
         <relativePath/>
     </parent>
     <groupId>com.badrulamin</groupId>
-    <artifactId>University_Management</artifactId>
+    <artifactId>UMS-ERP</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>University Management</name>
-    <description>Complete Academy ERP System</description>
+    <name>UMS-ERP</name>
+    <description>Intelligent Campus Management System</description>
     <properties>
         <java.version>21</java.version>
     </properties>

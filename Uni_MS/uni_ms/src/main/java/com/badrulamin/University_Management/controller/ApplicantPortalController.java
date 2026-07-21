@@ -210,7 +210,7 @@ public class ApplicantPortalController {
     @GetMapping("/my-admit-card/pdf")
     public ResponseEntity<byte[]> downloadAdmitCardPdf(@AuthenticationPrincipal UserDetails userDetails) {
         PreAdmissionRegistration reg = findRegistration(userDetails);
-        AdmitCard admitCard = admitCardRepository.findByRegistrationId(reg.getId()).stream().findFirst()
+        AdmitCard admitCard = admitCardRepository.findByRegistration_Id(reg.getId()).stream().findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("AdmitCard", "registrationId", reg.getId()));
         byte[] pdf = admitCardPdfService.generateAdmitCardPdf(admitCard);
         return ResponseEntity.ok()

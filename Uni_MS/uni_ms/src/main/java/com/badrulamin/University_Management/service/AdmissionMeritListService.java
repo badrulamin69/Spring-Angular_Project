@@ -78,7 +78,7 @@ public class AdmissionMeritListService {
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTest", "id", testId));
 
         List<AdmissionTestAttempt> gradedAttempts = attemptRepository
-                .findByTestIdAndStatusOrderByScoreDesc(testId, "GRADED");
+                .findByTest_IdAndStatusOrderByScoreDesc(testId, "GRADED");
 
         AdmissionMeritList meritList = AdmissionMeritList.builder()
                 .name(listName != null ? listName : test.getName() + " - Merit List")

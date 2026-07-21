@@ -37,7 +37,7 @@ public class AdmitCardPdfService {
             document.add(title);
 
             Font subFont = FontFactory.getFont(FontFactory.HELVETICA, 10, Color.GRAY);
-            Paragraph subtitle = new Paragraph("University Management System", subFont);
+            Paragraph subtitle = new Paragraph("Smart University | UMS-ERP", subFont);
             subtitle.setAlignment(Element.ALIGN_CENTER);
             subtitle.setSpacingAfter(15);
             document.add(subtitle);

@@ -17,7 +17,7 @@ public interface AdmissionMeritListRepository extends JpaRepository<AdmissionMer
     List<AdmissionMeritList> findByProgram_Id(Long programId);
     List<AdmissionMeritList> findByFaculty_Id(Long facultyId);
     List<AdmissionMeritList> findByDepartment_Id(Long departmentId);
-    List<AdmissionMeritList> findByTestId(Long testId);
+    List<AdmissionMeritList> findByTest_Id(Long testId);
     long countByStatus(String status);
     long countBySession_Id(Long sessionId);
 

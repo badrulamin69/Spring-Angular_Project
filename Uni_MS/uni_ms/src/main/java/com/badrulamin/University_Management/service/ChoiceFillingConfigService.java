@@ -35,12 +35,12 @@ public class ChoiceFillingConfigService {
     }
 
     public ChoiceFillingConfig findActiveBySession(Long sessionId) {
-        return configRepository.findBySession_IdAndIsActive(sessionId, true)
+        return configRepository.findBySession_IdAndActive(sessionId, true)
                 .orElseThrow(() -> new BusinessException("No active choice filling configuration found for this session"));
     }
 
     public ChoiceFillingConfig findActiveConfig() {
-        return configRepository.findByStatusAndIsActive("ACTIVE", true)
+        return configRepository.findByStatusAndActive("ACTIVE", true)
                 .orElseThrow(() -> new BusinessException("No active choice filling configuration found"));
     }
 

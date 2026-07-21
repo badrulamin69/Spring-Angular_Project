@@ -11,14 +11,14 @@ import java.util.Optional;
 
 @Repository
 public interface SeatAllocationRepository extends JpaRepository<SeatAllocation, Long> {
-    List<SeatAllocation> findByTestId(Long testId);
-    Optional<SeatAllocation> findByTestIdAndRegistrationId(Long testId, Long registrationId);
+    List<SeatAllocation> findByTest_Id(Long testId);
+    Optional<SeatAllocation> findByTest_IdAndRegistration_Id(Long testId, Long registrationId);
     Optional<SeatAllocation> findByRollNumber(String rollNumber);
-    Optional<SeatAllocation> findByTestIdAndSeatNumber(Long testId, String seatNumber);
-    boolean existsByTestIdAndSeatNumber(Long testId, String seatNumber);
-    boolean existsByTestIdAndRollNumber(Long testId, String rollNumber);
-    long countByTestId(Long testId);
-    long countByTestIdAndStatus(Long testId, String status);
+    Optional<SeatAllocation> findByTest_IdAndSeatNumber(Long testId, String seatNumber);
+    boolean existsByTest_IdAndSeatNumber(Long testId, String seatNumber);
+    boolean existsByTest_IdAndRollNumber(Long testId, String rollNumber);
+    long countByTest_Id(Long testId);
+    long countByTest_IdAndStatus(Long testId, String status);
 
     @Query("SELECT COALESCE(MAX(CAST(SUBSTRING(sa.rollNumber, LENGTH(sa.rollNumber) - 4) AS long)), 0) FROM SeatAllocation sa WHERE sa.test.id = :testId")
     Long findMaxRollSequence(@Param("testId") Long testId);

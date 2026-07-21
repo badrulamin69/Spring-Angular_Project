@@ -204,7 +204,7 @@ INSERT IGNORE INTO permissions (name, code, module, action, description) VALUES
 
 -- Seed System Settings
 INSERT IGNORE INTO system_settings (setting_key, setting_value, setting_type, module, description, is_public) VALUES
-('app.name', 'University ERP', 'STRING', 'System', 'Application name', true),
+('app.name', 'UMS-ERP', 'STRING', 'System', 'Application name', true),
 ('app.version', '1.0.0', 'STRING', 'System', 'Application version', true),
 ('academic.currentSemester', '1', 'NUMBER', 'Academic', 'Current semester', true),
 ('academic.currentYear', '2026', 'NUMBER', 'Academic', 'Academic year', false),

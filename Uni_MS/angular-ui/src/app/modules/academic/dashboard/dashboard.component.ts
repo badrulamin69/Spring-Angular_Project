@@ -528,7 +528,7 @@ export class AcademicDashboardComponent implements OnInit {
       next: (data) => {
         this.recentEvents = Array.isArray(data) ? data.slice(0, 10) : (data?.content || []).slice(0, 10);
       },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 }

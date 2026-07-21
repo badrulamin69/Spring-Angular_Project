@@ -223,8 +223,7 @@ public class ApplicantPortalController {
     private PreAdmissionRegistration findRegistration(UserDetails userDetails) {
         User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", userDetails.getUsername()));
-        List<PreAdmissionRegistration> all = registrationRepository.findAll();
-        return all.stream().filter(r -> r.getEmail().equals(user.getEmail())).findFirst()
+        return registrationRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("Registration", "email", user.getEmail()));
     }
 

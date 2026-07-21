@@ -200,7 +200,7 @@ export class PaymentsComponent implements OnInit {
   loadStats() {
     this.service.getStats().subscribe({
       next: (data) => this.stats = data,
-      error: () => {}
+      error: () => { this.toastService.error('Failed to load payment statistics'); }
     });
   }
 

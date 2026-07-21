@@ -7,11 +7,12 @@ import { SystemSettingService } from '../../../services/system-setting.service';
 import { Permission } from '../../../models/permission';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-permissions',
   standalone: true,
-  imports: [CommonModule, FormsModule, DataTableComponent, DynamicFormComponent],
+  imports: [CommonModule, FormsModule, DataTableComponent, DynamicFormComponent, ToastComponent],
   templateUrl: './permissions.component.html'
 })
 export class PermissionsComponent implements OnInit {
@@ -46,7 +47,7 @@ export class PermissionsComponent implements OnInit {
       this.loadData();
     };
     const handleError = (err: any) => {
-      alert('Error saving record: ' + (err.error?.message || err.message || 'Validation failed'));
+      this.toastService.error('Error saving record: ' + (err.error?.message || err.message || 'Validation failed'));
     };
 
     if (this.editingItem && this.editingItem.id) {
@@ -62,7 +63,7 @@ export class PermissionsComponent implements OnInit {
     }
   }
 
-  constructor(private service: PermissionService, private systemSettingService: SystemSettingService) {}
+  constructor(private service: PermissionService, private systemSettingService: SystemSettingService, private toastService: ToastService) {}
 
   ngOnInit() {
     this.loadData();

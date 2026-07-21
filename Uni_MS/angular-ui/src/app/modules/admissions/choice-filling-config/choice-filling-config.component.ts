@@ -234,7 +234,7 @@ export class ChoiceFillingConfigComponent implements OnInit {
   loadStats() {
     this.configService.getStats().subscribe({
       next: (data) => { this.stats = data; },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 

@@ -13,42 +13,42 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FacultyNameServiceImp implements FacultyNameService {
 
-    private final FacultyNameRepository fcacultyNameRepository;
+    private final FacultyNameRepository facultyNameRepository;
 
     @Override
     public FacultyName save(FacultyName facultyName) {
-        return fcacultyNameRepository.save(facultyName);
+        return facultyNameRepository.save(facultyName);
     }
 
     @Override
     public FacultyName update(Long id, FacultyName faculty) {
-        FacultyName existing = fcacultyNameRepository.findById(id)
+        FacultyName existing = facultyNameRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("FacultyName", "id", id));
 
         existing.setFacultyName(faculty.getFacultyName());
         existing.setDescription(faculty.getDescription());
         existing.setActive(faculty.getActive());
 
-        return fcacultyNameRepository.save(existing);
+        return facultyNameRepository.save(existing);
     }
 
     @Override
     public List<FacultyName> findAll() {
-        return fcacultyNameRepository.findAll();
+        return facultyNameRepository.findAll();
     }
 
     @Override
     public Optional<FacultyName> findById(Long id) {
-        return fcacultyNameRepository.findById(id);
+        return facultyNameRepository.findById(id);
     }
 
     @Override
     public void delete(Long id) {
-        fcacultyNameRepository.deleteById(id);
+        facultyNameRepository.deleteById(id);
     }
 
     @Override
     public boolean existsById(Long id) {
-        return fcacultyNameRepository.existsById(id);
+        return facultyNameRepository.existsById(id);
     }
 }

@@ -375,7 +375,7 @@ export class SeatAllocationsComponent implements OnInit {
   loadPrograms() {
     this.allocationService.findAll(this.selectedConfigId!, { ...DEFAULT_PAGE_PARAMS, size: 1 }, {}).subscribe({
       next: () => {},
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 
@@ -399,7 +399,7 @@ export class SeatAllocationsComponent implements OnInit {
     if (!this.selectedConfigId) return;
     this.allocationService.getStats(this.selectedConfigId).subscribe({
       next: (data) => { this.stats = data; },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 

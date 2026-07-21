@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   errorMessage = '';
   sessionExpired = false;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -47,6 +48,10 @@ export class LoginComponent implements OnInit {
 
   fillDemo(username: string, password: string): void {
     this.loginForm.patchValue({ username, password });
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit(): void {

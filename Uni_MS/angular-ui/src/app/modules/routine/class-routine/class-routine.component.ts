@@ -353,8 +353,8 @@ export class ClassRoutineComponent implements OnInit {
   }
 
   loadDropdowns() {
-    this.service.getTimeslots().subscribe({ next: (d) => this.timeSlots = d, error: () => {} });
-    this.service.getClassrooms().subscribe({ next: (d) => this.classrooms = d, error: () => {} });
+    this.service.getTimeslots().subscribe({ next: (d) => this.timeSlots = d, error: () => this.toastService.error('Operation failed. Please try again.') });
+    this.service.getClassrooms().subscribe({ next: (d) => this.classrooms = d, error: () => this.toastService.error('Operation failed. Please try again.') });
   }
 
   loadData() {

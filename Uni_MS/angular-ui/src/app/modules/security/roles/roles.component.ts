@@ -8,11 +8,12 @@ import { Role } from '../../../models/role';
 import { Permission } from '../../../models/permission';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-roles',
   standalone: true,
-  imports: [CommonModule, FormsModule, DataTableComponent, DynamicFormComponent],
+  imports: [CommonModule, FormsModule, DataTableComponent, DynamicFormComponent, ToastComponent],
   templateUrl: './roles.component.html'
 })
 export class RolesComponent implements OnInit {
@@ -46,7 +47,7 @@ export class RolesComponent implements OnInit {
       this.loadData();
     };
     const handleError = (err: any) => {
-      alert('Error saving record: ' + (err.error?.message || err.message || 'Validation failed'));
+      this.toastService.error('Error saving record: ' + (err.error?.message || err.message || 'Validation failed'));
     };
 
     if (this.editingItem && this.editingItem.id) {
@@ -62,7 +63,7 @@ export class RolesComponent implements OnInit {
     }
   }
 
-  constructor(private roleService: RoleService, private permissionService: PermissionService) {}
+  constructor(private roleService: RoleService, private permissionService: PermissionService, private toastService: ToastService) {}
 
   ngOnInit() {
     this.loadData();

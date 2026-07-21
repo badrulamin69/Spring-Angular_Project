@@ -8,11 +8,12 @@ import { User } from '../../../models/user';
 import { Role } from '../../../models/role';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, DataTableComponent, DynamicFormComponent],
+  imports: [CommonModule, FormsModule, DataTableComponent, DynamicFormComponent, ToastComponent],
   templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
@@ -47,7 +48,7 @@ export class UsersComponent implements OnInit {
       this.loadData();
     };
     const handleError = (err: any) => {
-      alert('Error saving record: ' + (err.error?.message || err.message || 'Validation failed'));
+      this.toastService.error('Error saving record: ' + (err.error?.message || err.message || 'Validation failed'));
     };
 
     if (this.editingItem && this.editingItem.id) {
@@ -63,7 +64,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  constructor(private userService: UserService, private roleService: RoleService) {}
+  constructor(private userService: UserService, private roleService: RoleService, private toastService: ToastService) {}
 
   ngOnInit() {
     this.loadData();

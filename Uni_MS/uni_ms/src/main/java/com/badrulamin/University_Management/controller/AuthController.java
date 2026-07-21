@@ -81,7 +81,6 @@ public class AuthController {
     @Autowired PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
                                                HttpServletRequest request) {
         String ipAddress = getClientIp(request);

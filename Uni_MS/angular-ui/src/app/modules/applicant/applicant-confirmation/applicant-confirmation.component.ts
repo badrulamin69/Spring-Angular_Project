@@ -288,7 +288,7 @@ export class ApplicantConfirmationComponent implements OnInit {
     if (!this.confirmation) return;
     this.service.getDocuments(this.confirmation.id).subscribe({
       next: (docs) => this.documents = docs,
-      error: () => {}
+      error: () => this.toast.error('Operation failed. Please try again.')
     });
   }
 

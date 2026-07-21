@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdmitCardService } from '../../../services/admit-card.service';
+import { AdmissionTestService } from '../../../services/admission-test.service';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastService } from '../../../shared/toast/toast.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admit-cards',
@@ -78,13 +77,13 @@ export class AdmitCardsComponent implements OnInit {
     { key: 'issuedAt', label: 'Issued At', type: 'text' }
   ];
 
-  constructor(private admitService: AdmitCardService, private toast: ToastService, private http: HttpClient) {}
+  constructor(private admitService: AdmitCardService, private testService: AdmissionTestService, private toast: ToastService) {}
 
   ngOnInit() { this.loadTests(); this.loadData(); }
 
   loadTests() {
-    this.http.get<any>(`${environment.apiUrl}/admission-tests?page=0&size=100`).subscribe({
-      next: (res) => { this.tests = res.content || res || []; },
+    this.testService.getForDropdown().subscribe({
+      next: (tests) => { this.tests = tests; },
       error: () => { this.tests = []; }
     });
   }
@@ -101,7 +100,7 @@ export class AdmitCardsComponent implements OnInit {
   onSearch(term: string) { this.params = { ...DEFAULT_PAGE_PARAMS }; this.loadData(); }
 
   downloadPdf(item: any) {
-    const url = `${environment.apiUrl}/admit-cards/${item.id}/pdf`;
+    const url = this.admitService.getPdfUrl(item.id);
     window.open(url, '_blank');
   }
 

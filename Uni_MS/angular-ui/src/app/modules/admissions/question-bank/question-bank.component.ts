@@ -2,13 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdmissionTestQuestionService } from '../../../services/admission-test-question.service';
+import { AdmissionTestService } from '../../../services/admission-test.service';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { AdmissionTestQuestion } from '../../../models/admission-test-question';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-question-bank',
@@ -217,8 +216,8 @@ export class QuestionBankComponent implements OnInit {
 
   constructor(
     private questionService: AdmissionTestQuestionService,
-    private toast: ToastService,
-    private http: HttpClient
+    private testService: AdmissionTestService,
+    private toast: ToastService
   ) {}
 
   ngOnInit() {
@@ -227,10 +226,8 @@ export class QuestionBankComponent implements OnInit {
   }
 
   loadTests() {
-    this.http.get<any>(`${environment.apiUrl}/admission-tests?page=0&size=100`).subscribe({
-      next: (res) => {
-        this.tests = res.content || res || [];
-      },
+    this.testService.getForDropdown().subscribe({
+      next: (tests) => { this.tests = tests; },
       error: () => { this.tests = []; }
     });
   }

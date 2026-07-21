@@ -13,6 +13,7 @@ import com.badrulamin.University_Management.repository.InvoiceRepository;
 import com.badrulamin.University_Management.repository.SemesterRepository;
 import com.badrulamin.University_Management.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
@@ -123,23 +123,18 @@ public class InvoiceService {
 
     private String generateInvoiceNumber() {
         String prefix = "INV-" + Year.now().getValue() + "-";
-        List<Invoice> allInvoices = invoiceRepository.findAll();
+        Optional<Invoice> latest = invoiceRepository.findTopByInvoiceNumberStartingWithOrderByInvoiceNumberDesc(prefix);
 
-        AtomicLong maxSeq = new AtomicLong(0);
-        allInvoices.forEach(inv -> {
-            if (inv.getInvoiceNumber() != null && inv.getInvoiceNumber().startsWith(prefix)) {
-                try {
-                    String seqPart = inv.getInvoiceNumber().substring(prefix.length());
-                    long seq = Long.parseLong(seqPart);
-                    if (seq > maxSeq.get()) {
-                        maxSeq.set(seq);
-                    }
-                } catch (NumberFormatException ignored) {
-                }
+        long maxSeq = 0;
+        if (latest.isPresent() && latest.get().getInvoiceNumber() != null) {
+            try {
+                String seqPart = latest.get().getInvoiceNumber().substring(prefix.length());
+                maxSeq = Long.parseLong(seqPart);
+            } catch (NumberFormatException ignored) {
             }
-        });
+        }
 
-        long nextSeq = maxSeq.get() + 1;
+        long nextSeq = maxSeq + 1;
         return prefix + String.format("%06d", nextSeq);
     }
 }

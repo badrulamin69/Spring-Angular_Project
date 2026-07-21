@@ -27,4 +27,6 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
            "LOWER(i.student.lastName) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
            "(:status IS NULL OR :status = '' OR i.status = :status)")
     Page<Invoice> search(@Param("search") String search, @Param("status") String status, Pageable pageable);
+
+    Optional<Invoice> findTopByInvoiceNumberStartingWithOrderByInvoiceNumberDesc(String prefix);
 }

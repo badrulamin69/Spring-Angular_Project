@@ -22,4 +22,5 @@ export class AdmitCardService {
   update(id: number, data: AdmitCard): Observable<AdmitCard> { return this.http.put<AdmitCard>(`${this.apiUrl}/${id}`, data); }
   delete(id: number): Observable<void> { return this.http.delete<void>(`${this.apiUrl}/${id}`); }
   generate(testId: number): Observable<any> { return this.http.post(`${this.apiUrl}/generate/${testId}`, {}); }
+  getPdfUrl(id: number): string { return `${this.apiUrl}/${id}/pdf`; }
 }

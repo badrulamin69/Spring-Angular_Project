@@ -352,7 +352,7 @@ export class AdmissionConfirmationsComponent implements OnInit {
   loadStats() {
     this.service.getStats().subscribe({
       next: (res) => this.stats = res,
-      error: () => {}
+      error: () => this.toast.error('Operation failed. Please try again.')
     });
   }
 

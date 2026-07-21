@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdmissionTestService } from '../../../services/admission-test.service';
+import { FacultyService } from '../../../services/faculty.service';
+import { DepartmentService } from '../../../services/department.service';
+import { ProgramService } from '../../../services/program.service';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-tests',
@@ -293,7 +294,13 @@ export class TestsComponent implements OnInit {
   confirmMessage = '';
   deleteTarget: any = null;
 
-  constructor(private service: AdmissionTestService, private toastService: ToastService, private http: HttpClient) {}
+  constructor(
+    private service: AdmissionTestService,
+    private facultyService: FacultyService,
+    private departmentService: DepartmentService,
+    private programService: ProgramService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.initForm();
@@ -313,16 +320,16 @@ export class TestsComponent implements OnInit {
   }
 
   loadFilters() {
-    this.http.get<any>(`${environment.apiUrl}/faculties?page=0&size=100`).subscribe({
-      next: (res) => { this.faculties = res.content || res || []; },
+    this.facultyService.getForDropdown().subscribe({
+      next: (data) => { this.faculties = data; },
       error: () => { this.faculties = []; }
     });
-    this.http.get<any>(`${environment.apiUrl}/departments?page=0&size=100`).subscribe({
-      next: (res) => { this.departments = res.content || res || []; },
+    this.departmentService.getForDropdown().subscribe({
+      next: (data) => { this.departments = data; },
       error: () => { this.departments = []; }
     });
-    this.http.get<any>(`${environment.apiUrl}/programs?page=0&size=100`).subscribe({
-      next: (res) => { this.programs = res.content || res || []; },
+    this.programService.getForDropdown().subscribe({
+      next: (data) => { this.programs = data; },
       error: () => { this.programs = []; }
     });
   }

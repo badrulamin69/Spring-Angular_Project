@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-admission-analytics',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ToastComponent],
   template: `
+    <app-toast></app-toast>
     <div class="page-header">
       <div><h2>Admission Analytics</h2><p class="page-sub">Comprehensive admission statistics and insights</p></div>
     </div>
@@ -182,7 +184,7 @@ export class AdmissionAnalyticsComponent implements OnInit {
   loading = true;
   error = false;
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private toastService: ToastService) {
     this.http = http;
   }
 
@@ -209,7 +211,7 @@ export class AdmissionAnalyticsComponent implements OnInit {
         this.enrollmentRate = this.approvedCount > 0 ? Math.round((this.enrolledCount / this.approvedCount) * 100) : 0;
         this.yieldRate = this.totalApplications > 0 ? Math.round((this.enrolledCount / this.totalApplications) * 100) : 0;
       },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
 
     this.http.get<any[]>(trendUrl).subscribe({
@@ -217,7 +219,7 @@ export class AdmissionAnalyticsComponent implements OnInit {
         this.monthlyData = data.map(d => d.count || 0);
         this.buildChart();
       },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
 
     this.http.get<any[]>(breakdownUrl).subscribe({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Department } from '../models/department';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../models/paged-response';
 import { environment } from '../../environments/environment';
@@ -37,5 +37,12 @@ export class DepartmentService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getForDropdown(): Observable<any[]> {
+    const params = new HttpParams().set('page', '0').set('size', '100');
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      map(res => res.content || res || [])
+    );
   }
 }

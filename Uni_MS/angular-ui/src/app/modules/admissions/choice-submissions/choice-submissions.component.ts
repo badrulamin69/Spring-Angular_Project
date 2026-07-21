@@ -181,7 +181,7 @@ export class ChoiceSubmissionsComponent implements OnInit {
   loadStats(configId: number) {
     this.choiceService.getStats(configId).subscribe({
       next: (data) => { this.stats = data; },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 

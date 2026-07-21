@@ -284,7 +284,7 @@ export class ClassroomComponent implements OnInit {
   loadBuildings() {
     this.service.getBuildings().subscribe({
       next: (data) => this.buildings = data,
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 

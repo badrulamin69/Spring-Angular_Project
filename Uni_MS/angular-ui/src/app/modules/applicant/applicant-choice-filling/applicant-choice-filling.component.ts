@@ -290,7 +290,7 @@ export class ApplicantChoiceFillingComponent implements OnInit {
         this.availablePrograms = programs;
         this.faculties = [...new Set(programs.map(p => p.facultyName || '').filter(f => f.length > 0))];
       },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 

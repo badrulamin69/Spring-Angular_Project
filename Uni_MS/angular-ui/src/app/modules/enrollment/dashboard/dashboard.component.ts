@@ -362,7 +362,7 @@ export class DashboardComponent implements OnInit {
   loadSemesters() {
     this.semesterService.findAll({ page: 0, size: 100, sortBy: 'id', sortDir: 'desc' }).subscribe({
       next: (data) => { this.semesters = data.content || []; },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 

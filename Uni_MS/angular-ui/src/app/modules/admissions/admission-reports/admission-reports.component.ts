@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GeneratedReportService } from '../../../services/generated-report.service';
-import { ToastService } from '../../../shared/toast/toast.component';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-admission-reports',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ToastComponent],
   template: `
+    <app-toast></app-toast>
     <div class="page-header">
       <div><h2>Admission Reports</h2><p class="page-sub">Generate and view admission-related reports</p></div>
     </div>
@@ -134,7 +135,7 @@ export class AdmissionReportsComponent implements OnInit {
     };
     this.reportService.save(newReport).subscribe({
       next: () => this.loadRecentReports(),
-      error: () => {}
+      error: () => this.toast.error('Operation failed. Please try again.')
     });
   }
 

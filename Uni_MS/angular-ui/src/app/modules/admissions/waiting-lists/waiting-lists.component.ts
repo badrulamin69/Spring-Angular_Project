@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdmissionWaitingListService } from '../../../services/admission-waiting-list.service';
+import { AdmissionTestService } from '../../../services/admission-test.service';
+import { FacultyService } from '../../../services/faculty.service';
+import { ProgramService } from '../../../services/program.service';
 import { DataTableComponent, TableColumn, RowAction } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-waiting-lists',
@@ -186,9 +187,11 @@ export class WaitingListsComponent implements OnInit {
 
   constructor(
     private service: AdmissionWaitingListService,
+    private testService: AdmissionTestService,
+    private facultyService: FacultyService,
+    private programService: ProgramService,
     private toastService: ToastService,
-    private router: Router,
-    private http: HttpClient
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -198,16 +201,16 @@ export class WaitingListsComponent implements OnInit {
   }
 
   loadDropdowns() {
-    this.http.get<any>(`${environment.apiUrl}/admission-tests?page=0&size=100`).subscribe({
-      next: (res) => { this.tests = res.content || res || []; },
+    this.testService.getForDropdown().subscribe({
+      next: (data) => { this.tests = data; },
       error: () => { this.tests = []; }
     });
-    this.http.get<any>(`${environment.apiUrl}/faculties?page=0&size=100`).subscribe({
-      next: (res) => { this.faculties = res.content || res || []; },
+    this.facultyService.getForDropdown().subscribe({
+      next: (data) => { this.faculties = data; },
       error: () => { this.faculties = []; }
     });
-    this.http.get<any>(`${environment.apiUrl}/programs?page=0&size=100`).subscribe({
-      next: (res) => { this.programs = res.content || res || []; },
+    this.programService.getForDropdown().subscribe({
+      next: (data) => { this.programs = data; },
       error: () => { this.programs = []; }
     });
   }
@@ -215,7 +218,7 @@ export class WaitingListsComponent implements OnInit {
   loadStats() {
     this.service.getStats().subscribe({
       next: (data) => { this.stats = data; },
-      error: () => {}
+      error: () => this.toastService.error('Operation failed. Please try again.')
     });
   }
 

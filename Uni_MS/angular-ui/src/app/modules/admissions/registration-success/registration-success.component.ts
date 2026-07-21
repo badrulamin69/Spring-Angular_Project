@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { PreAdmissionService } from '../../../services/pre-admission.service';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-registration-success',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ToastComponent],
   template: `
+    <app-toast></app-toast>
     <div class="public-page">
       <div class="success-card">
 
@@ -241,7 +243,8 @@ export class RegistrationSuccessComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: PreAdmissionService
+    private service: PreAdmissionService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -274,7 +277,7 @@ export class RegistrationSuccessComponent implements OnInit {
           };
           reader.readAsDataURL(blob);
         },
-        error: () => {}
+        error: () => this.toastService.error('Operation failed. Please try again.')
       });
     }
   }
@@ -294,7 +297,7 @@ export class RegistrationSuccessComponent implements OnInit {
       },
       error: () => {
         this.downloadingPdf = false;
-        alert('Failed to generate PDF. Please try again.');
+        this.toastService.error('Failed to generate PDF. Please try again.');
       }
     });
   }
@@ -309,7 +312,7 @@ export class RegistrationSuccessComponent implements OnInit {
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
-      alert('Copied to clipboard!');
+      this.toastService.success('Copied to clipboard!');
     });
   }
 }

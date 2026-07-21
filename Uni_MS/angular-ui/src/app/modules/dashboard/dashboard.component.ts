@@ -452,7 +452,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return user?.firstName || user?.username || 'User';
   });
 
-  roleCode = computed(() => this.currentUserService.roleCode() || 'ROLE_SUPER_ADMIN');
+  roleCode = computed(() => this.currentUserService.roleCode() || 'ROLE_USER');
 
   roleSectionTitle = computed(() => {
     const role = this.roleCode();
@@ -787,7 +787,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           time: log.createdAt ? this.timeAgo(log.createdAt) : 'Just now',
         }));
       },
-      error: () => {}
+      error: () => { this.toastService.error('Failed to load recent activities'); }
     });
   }
 
@@ -803,7 +803,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           }));
         }
       },
-      error: () => {}
+      error: () => { this.toastService.error('Failed to load notifications'); }
     });
   }
 

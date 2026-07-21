@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AdmissionTest } from '../models/admission-test';
 import { environment } from '../../environments/environment';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../models/paged-response';
@@ -46,6 +46,13 @@ export class AdmissionTestService {
 
   close(id: number): Observable<AdmissionTest> {
     return this.http.put<AdmissionTest>(`${this.apiUrl}/${id}/close`, {});
+  }
+
+  getForDropdown(): Observable<any[]> {
+    const params = new HttpParams().set('page', '0').set('size', '100');
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      map(res => res.content || res || [])
+    );
   }
 
   getStats(): Observable<any> {

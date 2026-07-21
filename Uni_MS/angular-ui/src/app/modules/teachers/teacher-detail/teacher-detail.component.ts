@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TeacherService } from '../../../services/teacher.service';
 import { Teacher } from '../../../models/teacher';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-teacher-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ToastComponent],
   template: `
+    <app-toast></app-toast>
     <div class="detail-container">
       @if (teacher) {
         <div class="page-header">
@@ -78,14 +80,14 @@ import { Teacher } from '../../../models/teacher';
 export class TeacherDetailComponent implements OnInit {
   teacher: Teacher | null = null;
 
-  constructor(private route: ActivatedRoute, private teacherService: TeacherService) {}
+  constructor(private route: ActivatedRoute, private teacherService: TeacherService, private toastService: ToastService) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.teacherService.findById(id).subscribe({
         next: (data) => this.teacher = data,
-        error: () => {}
+        error: () => this.toastService.error('Operation failed. Please try again.')
       });
     }
   }

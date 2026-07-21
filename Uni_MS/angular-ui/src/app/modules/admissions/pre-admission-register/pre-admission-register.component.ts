@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { PreAdmissionService } from '../../../services/pre-admission.service';
+import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-pre-admission-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, ToastComponent],
   template: `
+    <app-toast></app-toast>
     <div class="public-page">
       <div class="register-card">
         <div class="card-header">
@@ -306,7 +308,7 @@ export class PreAdmissionRegisterComponent {
   hscBoardSearch = '';
   dropdowns: any = { sscYear: false, sscBoard: false, hscYear: false, hscBoard: false };
 
-  constructor(private service: PreAdmissionService, private router: Router) {
+  constructor(private service: PreAdmissionService, private router: Router, private toastService: ToastService) {
     this.sscYears = [];
     for (let y = 2020; y <= this.currentYear; y++) this.sscYears.push(y);
     this.filteredSscYears = [...this.sscYears];
@@ -533,7 +535,7 @@ export class PreAdmissionRegisterComponent {
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
-      alert('Copied to clipboard!');
+      this.toastService.success('Copied to clipboard!');
     });
   }
 

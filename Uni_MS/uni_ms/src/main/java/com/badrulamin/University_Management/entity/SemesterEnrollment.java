@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,11 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SemesterEnrollment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class SemesterEnrollment extends BaseEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -184,16 +178,6 @@ public class SemesterEnrollment {
 
     @Column(name = "is_late_enrollment", nullable = false)
     private Boolean isLateEnrollment = false;
-
-    @Column(nullable = false)
-    private Boolean deleted = false;
-
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 
     public boolean canBeCancelled() {
         return "APPROVED".equals(this.status) || "PENDING".equals(this.status) || "DRAFT".equals(this.status);

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -14,11 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkflowApproval {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class WorkflowApproval extends BaseEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +39,6 @@ public class WorkflowApproval {
     @Column(name = "rejection_reason")
     private String rejectionReason;
 
-    @CreationTimestamp
-    @Column(name = "acted_at", updatable = false)
+    @Column(name = "acted_at")
     private LocalDateTime actedAt;
 }

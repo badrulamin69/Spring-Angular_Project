@@ -162,7 +162,6 @@ public class SemesterEnrollmentService {
                 .isLateEnrollment(isLate)
                 .enrollmentType(isLate ? "LATE" : "NORMAL")
                 .remarks(request.getRemarks())
-                .deleted(false)
                 .build();
 
         SemesterEnrollment saved = semesterEnrollmentRepository.save(enrollment);
@@ -341,7 +340,6 @@ public class SemesterEnrollmentService {
                 .isLateEnrollment(false)
                 .enrollmentType("FORCE")
                 .remarks(request.getRemarks())
-                .deleted(false)
                 .build();
 
         SemesterEnrollment saved = semesterEnrollmentRepository.save(enrollment);

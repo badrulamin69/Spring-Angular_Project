@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
@@ -14,11 +16,11 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
-    @Id
+    @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Version
+    @jakarta.persistence.Version
     @Column(nullable = false)
     private Long version = 0L;
 
@@ -30,7 +32,30 @@ public abstract class BaseEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @CreatedBy
+    @Column(name = "created_by", updatable = false)
+    private String createdBy;
 
+    @LastModifiedBy
+    @Column(name = "updated_by")
+    private String updatedBy;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
+    @Column(name = "deleted_by")
+    private String deletedBy;
+
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean deleted = false;
+
+    @PreRemove
+    public void preRemove() {
+        this.deleted = true;
+        this.deletedAt = LocalDateTime.now();
+    }
+
+    public boolean isSoftDeleted() {
+        return Boolean.TRUE.equals(this.deleted);
+    }
 }

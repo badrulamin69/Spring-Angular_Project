@@ -53,15 +53,15 @@ public class EligibilityVerificationService {
     }
 
     public List<EligibilityVerification> findByTestId(Long testId) {
-        return eligibilityVerificationRepository.findByTestId(testId);
+        return eligibilityVerificationRepository.findByTest_Id(testId);
     }
 
     public List<EligibilityVerification> findByRegistrationId(Long registrationId) {
-        return eligibilityVerificationRepository.findByRegistrationId(registrationId);
+        return eligibilityVerificationRepository.findByRegistration_Id(registrationId);
     }
 
     public List<EligibilityVerification> findByTestIdAndStatus(Long testId, String status) {
-        return eligibilityVerificationRepository.findByTestIdAndStatus(testId, status);
+        return eligibilityVerificationRepository.findByTest_IdAndStatus(testId, status);
     }
 
     @Transactional
@@ -71,7 +71,7 @@ public class EligibilityVerificationService {
         PreAdmissionRegistration registration = preAdmissionRegistrationRepository.findById(registrationId)
                 .orElseThrow(() -> new ResourceNotFoundException("PreAdmissionRegistration", "id", registrationId));
 
-        Optional<EligibilityVerification> existing = eligibilityVerificationRepository.findByTestIdAndRegistrationId(testId, registrationId);
+        Optional<EligibilityVerification> existing = eligibilityVerificationRepository.findByTest_IdAndRegistration_Id(testId, registrationId);
 
         EligibilityVerification verification;
         if (existing.isPresent()) {
@@ -100,13 +100,13 @@ public class EligibilityVerificationService {
         AdmissionTest test = admissionTestRepository.findById(testId)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTest", "id", testId));
 
-        List<SeatAllocation> seatAllocations = seatAllocationRepository.findByTestId(testId);
+        List<SeatAllocation> seatAllocations = seatAllocationRepository.findByTest_Id(testId);
         List<EligibilityVerification> verifications = new ArrayList<>();
 
         for (SeatAllocation allocation : seatAllocations) {
             PreAdmissionRegistration registration = allocation.getRegistration();
 
-            Optional<EligibilityVerification> existing = eligibilityVerificationRepository.findByTestIdAndRegistrationId(testId, registration.getId());
+            Optional<EligibilityVerification> existing = eligibilityVerificationRepository.findByTest_IdAndRegistration_Id(testId, registration.getId());
 
             EligibilityVerification verification;
             if (existing.isPresent()) {
@@ -145,10 +145,10 @@ public class EligibilityVerificationService {
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTest", "id", testId));
 
         Map<String, Object> stats = new LinkedHashMap<>();
-        stats.put("total", eligibilityVerificationRepository.countByTestId(testId));
-        stats.put("eligible", eligibilityVerificationRepository.countByTestIdAndStatus(testId, "ELIGIBLE"));
-        stats.put("ineligible", eligibilityVerificationRepository.countByTestIdAndStatus(testId, "INELIGIBLE"));
-        stats.put("pending", eligibilityVerificationRepository.countByTestIdAndStatus(testId, "PENDING"));
+        stats.put("total", eligibilityVerificationRepository.countByTest_Id(testId));
+        stats.put("eligible", eligibilityVerificationRepository.countByTest_IdAndStatus(testId, "ELIGIBLE"));
+        stats.put("ineligible", eligibilityVerificationRepository.countByTest_IdAndStatus(testId, "INELIGIBLE"));
+        stats.put("pending", eligibilityVerificationRepository.countByTest_IdAndStatus(testId, "PENDING"));
         return stats;
     }
 }

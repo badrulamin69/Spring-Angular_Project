@@ -44,15 +44,15 @@ public class AdmissionAttendanceService {
     }
 
     public List<AdmissionAttendance> findByTestId(Long testId) {
-        return admissionAttendanceRepository.findByTestId(testId);
+        return admissionAttendanceRepository.findByTest_Id(testId);
     }
 
     public Optional<AdmissionAttendance> findByTestIdAndRegistrationId(Long testId, Long registrationId) {
-        return admissionAttendanceRepository.findByTestIdAndRegistrationId(testId, registrationId);
+        return admissionAttendanceRepository.findByTest_IdAndRegistration_Id(testId, registrationId);
     }
 
     public long countByTestIdAndStatus(Long testId, String status) {
-        return admissionAttendanceRepository.countByTestIdAndStatus(testId, status);
+        return admissionAttendanceRepository.countByTest_IdAndStatus(testId, status);
     }
 
     public long countPresentByTestId(Long testId) {
@@ -69,7 +69,7 @@ public class AdmissionAttendanceService {
 
     @Transactional
     public AdmissionAttendance markAttendance(Long testId, Long registrationId, String status, Long markedById) {
-        Optional<AdmissionAttendance> existing = admissionAttendanceRepository.findByTestIdAndRegistrationId(testId, registrationId);
+        Optional<AdmissionAttendance> existing = admissionAttendanceRepository.findByTest_IdAndRegistration_Id(testId, registrationId);
 
         AdmissionAttendance attendance;
         if (existing.isPresent()) {

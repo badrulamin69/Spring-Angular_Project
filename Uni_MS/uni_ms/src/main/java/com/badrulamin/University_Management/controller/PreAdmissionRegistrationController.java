@@ -182,7 +182,7 @@ public class PreAdmissionRegistrationController {
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_VIEW')")
     public ResponseEntity<byte[]> getAdmitCardPdf(@PathVariable Long id) {
         PreAdmissionRegistration reg = service.findById(id);
-        AdmitCard admitCard = admitCardRepository.findByRegistrationId(reg.getId()).stream().findFirst()
+        AdmitCard admitCard = admitCardRepository.findByRegistration_Id(reg.getId()).stream().findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("AdmitCard", "registrationId", reg.getId()));
         byte[] pdf = admitCardPdfService.generateAdmitCardPdf(admitCard);
         return ResponseEntity.ok()

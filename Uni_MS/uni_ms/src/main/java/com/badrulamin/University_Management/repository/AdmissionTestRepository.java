@@ -30,6 +30,6 @@ public interface AdmissionTestRepository extends JpaRepository<AdmissionTest, Lo
     List<AdmissionTest> findByStatus(String status);
     List<AdmissionTest> findByTestDate(LocalDate testDate);
     long countByStatus(String status);
-    long countByFacultyId(Long facultyId);
-    long countByDepartmentId(Long departmentId);
+    long countByFaculty_Id(Long facultyId);
+    long countByDepartment_Id(Long departmentId);
 }

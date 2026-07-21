@@ -79,7 +79,7 @@ public class AdmissionTestDashboardService {
         for (var faculty : facultyRepository.findAll()) {
             Map<String, Object> item = new LinkedHashMap<>();
             item.put("faculty", faculty.getName());
-            item.put("count", testRepository.countByFacultyId(faculty.getId()));
+            item.put("count", testRepository.countByFaculty_Id(faculty.getId()));
             facultyWise.add(item);
         }
         charts.put("applicantsByFaculty", facultyWise);
@@ -88,7 +88,7 @@ public class AdmissionTestDashboardService {
         for (var dept : departmentRepository.findAll()) {
             Map<String, Object> item = new LinkedHashMap<>();
             item.put("department", dept.getName());
-            item.put("count", testRepository.countByDepartmentId(dept.getId()));
+            item.put("count", testRepository.countByDepartment_Id(dept.getId()));
             departmentWise.add(item);
         }
         charts.put("applicantsByDepartment", departmentWise);

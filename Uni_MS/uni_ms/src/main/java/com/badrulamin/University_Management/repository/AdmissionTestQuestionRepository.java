@@ -27,10 +27,9 @@ public interface AdmissionTestQuestionRepository extends JpaRepository<Admission
                                                @Param("search") String search,
                                                Pageable pageable);
 
-    List<AdmissionTestQuestion> findByTestIdAndIsActiveTrue(Long testId);
-    long countByTestId(Long testId);
-    long countByTestIdAndIsActiveTrue(Long testId);
-    long countByTestIdAndSubject(Long testId, String subject);
+    List<AdmissionTestQuestion> findByTest_IdAndIsActiveTrue(Long testId);
+    long countByTest_IdAndIsActiveTrue(Long testId);
+    long countByTest_IdAndSubject(Long testId, String subject);
     List<AdmissionTestQuestion> findBySubject(String subject);
 
     @Query("SELECT DISTINCT q.subject FROM AdmissionTestQuestion q WHERE q.subject IS NOT NULL ORDER BY q.subject")

@@ -9,11 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface EligibilityVerificationRepository extends JpaRepository<EligibilityVerification, Long> {
-    List<EligibilityVerification> findByTestId(Long testId);
-    List<EligibilityVerification> findByRegistrationId(Long registrationId);
-    Optional<EligibilityVerification> findByTestIdAndRegistrationId(Long testId, Long registrationId);
-    List<EligibilityVerification> findByTestIdAndStatus(Long testId, String status);
-    long countByTestId(Long testId);
-    long countByTestIdAndStatus(Long testId, String status);
-    boolean existsByTestIdAndRegistrationId(Long testId, Long registrationId);
+    List<EligibilityVerification> findByTest_Id(Long testId);
+    List<EligibilityVerification> findByRegistration_Id(Long registrationId);
+    Optional<EligibilityVerification> findByTest_IdAndRegistration_Id(Long testId, Long registrationId);
+    List<EligibilityVerification> findByTest_IdAndStatus(Long testId, String status);
+    long countByTest_Id(Long testId);
+    long countByTest_IdAndStatus(Long testId, String status);
+    boolean existsByTest_IdAndRegistration_Id(Long testId, Long registrationId);
 }

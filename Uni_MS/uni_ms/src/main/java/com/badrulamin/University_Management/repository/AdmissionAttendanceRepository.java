@@ -11,10 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface AdmissionAttendanceRepository extends JpaRepository<AdmissionAttendance, Long> {
-    List<AdmissionAttendance> findByTestId(Long testId);
-    Optional<AdmissionAttendance> findByTestIdAndRegistrationId(Long testId, Long registrationId);
-    long countByTestId(Long testId);
-    long countByTestIdAndStatus(Long testId, String status);
+    List<AdmissionAttendance> findByTest_Id(Long testId);
+    Optional<AdmissionAttendance> findByTest_IdAndRegistration_Id(Long testId, Long registrationId);
+    long countByTest_Id(Long testId);
+    long countByTest_IdAndStatus(Long testId, String status);
 
     @Query("SELECT COUNT(aa) FROM AdmissionAttendance aa WHERE aa.test.id = :testId AND aa.status = 'PRESENT'")
     long countPresentByTestId(@Param("testId") Long testId);

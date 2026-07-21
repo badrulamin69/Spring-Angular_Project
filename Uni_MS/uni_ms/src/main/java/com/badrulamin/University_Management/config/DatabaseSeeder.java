@@ -146,6 +146,10 @@ public class DatabaseSeeder implements CommandLineRunner {
         perms.put("SEMESTER_ENROLLMENT_MANAGE", createPerm("Manage Semester Enrollment", "SEMESTER_ENROLLMENT_MANAGE", "SemesterEnrollment", "MANAGE"));
         perms.put("SEMESTER_ENROLLMENT_APPROVE", createPerm("Approve Semester Enrollment", "SEMESTER_ENROLLMENT_APPROVE", "SemesterEnrollment", "APPROVE"));
 
+        // Class Routine & Academic Calendar
+        perms.put("ROUTINE_VIEW", createPerm("View Routine", "ROUTINE_VIEW", "Routine", "VIEW"));
+        perms.put("ROUTINE_MANAGE", createPerm("Manage Routine", "ROUTINE_MANAGE", "Routine", "MANAGE"));
+
         // Settings
         perms.put("SETTINGS_VIEW", createPerm("View Settings", "SETTINGS_VIEW", "Settings", "VIEW"));
         perms.put("SETTINGS_MANAGE", createPerm("Manage Settings", "SETTINGS_MANAGE", "Settings", "MANAGE"));
@@ -186,6 +190,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         deptHeadPerms.add(perms.get("COMMUNICATION_VIEW"));
         deptHeadPerms.add(perms.get("TEACHER_VIEW"));
         deptHeadPerms.add(perms.get("TEACHER_MANAGE"));
+        deptHeadPerms.add(perms.get("ROUTINE_VIEW"));
+        deptHeadPerms.add(perms.get("ROUTINE_MANAGE"));
         Role departmentHead = createRole("Department Head", "ROLE_DEPT_HEAD", "Department head access", deptHeadPerms, 2, universityAdmin);
 
         // Level 3: Faculty Member (child of Department Head)
@@ -202,6 +208,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         facultyPerms.add(perms.get("REPORT_VIEW"));
         facultyPerms.add(perms.get("COMMUNICATION_VIEW"));
         facultyPerms.add(perms.get("TEACHER_VIEW"));
+        facultyPerms.add(perms.get("ROUTINE_VIEW"));
         Role facultyMember = createRole("Faculty Member", "ROLE_FACULTY", "Faculty member access", facultyPerms, 3, departmentHead);
 
         // Level 3: Advisor (child of Department Head)
@@ -215,6 +222,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         advisorPerms.add(perms.get("REGISTRATION_VIEW"));
         advisorPerms.add(perms.get("REGISTRATION_MANAGE"));
         advisorPerms.add(perms.get("REGISTRATION_APPROVE"));
+        advisorPerms.add(perms.get("ROUTINE_VIEW"));
+        advisorPerms.add(perms.get("ROUTINE_MANAGE"));
         Role advisor = createRole("Advisor", "ROLE_ADVISOR", "Academic advisor access", advisorPerms, 3, departmentHead);
 
         // Level 2: Admission Officer (child of University Admin)
@@ -555,6 +564,16 @@ public class DatabaseSeeder implements CommandLineRunner {
         saveMenu(repo, "Admin Management", null, "/enrollment/admin-management", semesterEnrollment, 4, "SEMESTER_ENROLLMENT_MANAGE", "SemesterEnrollment");
         saveMenu(repo, "Enrollment Dashboard", null, "/enrollment/dashboard", semesterEnrollment, 5, "SEMESTER_ENROLLMENT_VIEW", "SemesterEnrollment");
         saveMenu(repo, "Enrollment Reports", null, "/enrollment/reports", semesterEnrollment, 6, "SEMESTER_ENROLLMENT_VIEW", "SemesterEnrollment");
+
+        // Class Routine & Academic Calendar Module
+        Menu routine = saveMenu(repo, "Class Routine", "schedule", null, null, 7, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Class Routines", null, "/routine/class-routines", routine, 1, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Semester Routines", null, "/routine/semester-routines", routine, 2, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Academic Calendars", null, "/routine/academic-calendars", routine, 3, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Calendar Events", null, "/routine/calendar-events", routine, 4, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Buildings", null, "/routine/buildings", routine, 5, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Classrooms", null, "/routine/classrooms", routine, 6, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Time Slots", null, "/routine/time-slots", routine, 7, "ROUTINE_VIEW", "Routine");
 
         // Administration
         Menu administration = saveMenu(repo, "Administration", "person_add", null, null, 5, "ADMINISTRATION_VIEW", "administration");

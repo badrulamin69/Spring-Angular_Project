@@ -17,7 +17,7 @@ public interface AdmissionWaitingListRepository extends JpaRepository<AdmissionW
     List<AdmissionWaitingList> findByProgram_Id(Long programId);
     List<AdmissionWaitingList> findByFaculty_Id(Long facultyId);
     List<AdmissionWaitingList> findByDepartment_Id(Long departmentId);
-    List<AdmissionWaitingList> findByTestId(Long testId);
+    List<AdmissionWaitingList> findByTest_Id(Long testId);
     long countByStatus(String status);
 
     @Query("SELECT w FROM AdmissionWaitingList w WHERE " +

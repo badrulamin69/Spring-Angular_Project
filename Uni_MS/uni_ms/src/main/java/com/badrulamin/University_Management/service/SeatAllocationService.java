@@ -51,11 +51,11 @@ public class SeatAllocationService {
     }
 
     public List<SeatAllocation> findByTestId(Long testId) {
-        return seatAllocationRepository.findByTestId(testId);
+        return seatAllocationRepository.findByTest_Id(testId);
     }
 
     public Optional<SeatAllocation> findByTestIdAndRegistrationId(Long testId, Long registrationId) {
-        return seatAllocationRepository.findByTestIdAndRegistrationId(testId, registrationId);
+        return seatAllocationRepository.findByTest_IdAndRegistration_Id(testId, registrationId);
     }
 
     public Optional<SeatAllocation> findByRollNumber(String rollNumber) {
@@ -63,11 +63,11 @@ public class SeatAllocationService {
     }
 
     public long countByTestId(Long testId) {
-        return seatAllocationRepository.countByTestId(testId);
+        return seatAllocationRepository.countByTest_Id(testId);
     }
 
     public long countByTestIdAndStatus(Long testId, String status) {
-        return seatAllocationRepository.countByTestIdAndStatus(testId, status);
+        return seatAllocationRepository.countByTest_IdAndStatus(testId, status);
     }
 
     @Transactional
@@ -85,7 +85,7 @@ public class SeatAllocationService {
         int year = Year.now().getValue();
 
         for (PreAdmissionRegistration registration : registrations) {
-            Optional<SeatAllocation> existing = seatAllocationRepository.findByTestIdAndRegistrationId(testId, registration.getId());
+            Optional<SeatAllocation> existing = seatAllocationRepository.findByTest_IdAndRegistration_Id(testId, registration.getId());
             if (existing.isPresent()) {
                 continue;
             }

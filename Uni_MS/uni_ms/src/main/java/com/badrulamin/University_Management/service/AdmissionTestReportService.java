@@ -29,29 +29,29 @@ public class AdmissionTestReportService {
         summary.put("testDate", test.getTestDate());
         summary.put("totalMarks", test.getTotalMarks());
         summary.put("passingMarks", test.getPassingMarks());
-        summary.put("totalQuestions", questionRepository.countByTestId(testId));
-        summary.put("totalAttempts", attemptRepository.countByTestId(testId));
-        summary.put("gradedAttempts", attemptRepository.countByTestIdAndStatus(testId, "GRADED"));
-        summary.put("totalSeats", seatAllocationRepository.countByTestId(testId));
-        summary.put("totalAdmitCards", admitCardRepository.countByTestId(testId));
+        summary.put("totalQuestions", questionRepository.countByTest_Id(testId));
+        summary.put("totalAttempts", attemptRepository.countByTest_Id(testId));
+        summary.put("gradedAttempts", attemptRepository.countByTest_IdAndStatus(testId, "GRADED"));
+        summary.put("totalSeats", seatAllocationRepository.countByTest_Id(testId));
+        summary.put("totalAdmitCards", admitCardRepository.countByTest_Id(testId));
         return summary;
     }
 
     public Map<String, Object> getEligibilityReport(Long testId) {
         Map<String, Object> report = new HashMap<>();
         report.put("testId", testId);
-        report.put("totalRegistered", seatAllocationRepository.countByTestId(testId));
-        report.put("totalAdmitCards", admitCardRepository.countByTestId(testId));
-        report.put("totalAttempts", attemptRepository.countByTestId(testId));
+        report.put("totalRegistered", seatAllocationRepository.countByTest_Id(testId));
+        report.put("totalAdmitCards", admitCardRepository.countByTest_Id(testId));
+        report.put("totalAttempts", attemptRepository.countByTest_Id(testId));
         return report;
     }
 
     public Map<String, Object> getAttendanceReport(Long testId) {
         Map<String, Object> report = new HashMap<>();
         report.put("testId", testId);
-        report.put("totalAllocated", seatAllocationRepository.countByTestId(testId));
-        report.put("totalAdmitCards", admitCardRepository.countByTestId(testId));
-        report.put("totalAttempts", attemptRepository.countByTestId(testId));
+        report.put("totalAllocated", seatAllocationRepository.countByTest_Id(testId));
+        report.put("totalAdmitCards", admitCardRepository.countByTest_Id(testId));
+        report.put("totalAttempts", attemptRepository.countByTest_Id(testId));
         return report;
     }
 }

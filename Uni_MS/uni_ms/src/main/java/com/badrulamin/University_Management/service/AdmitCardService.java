@@ -53,15 +53,15 @@ public class AdmitCardService {
     }
 
     public List<AdmitCard> findByTestId(Long testId) {
-        return admitCardRepository.findByTestId(testId);
+        return admitCardRepository.findByTest_Id(testId);
     }
 
     public List<AdmitCard> findByRegistrationId(Long registrationId) {
-        return admitCardRepository.findByRegistrationId(registrationId);
+        return admitCardRepository.findByRegistration_Id(registrationId);
     }
 
     public Optional<AdmitCard> findByTestIdAndRegistrationId(Long testId, Long registrationId) {
-        return admitCardRepository.findByTestIdAndRegistrationId(testId, registrationId);
+        return admitCardRepository.findByTest_IdAndRegistration_Id(testId, registrationId);
     }
 
     public Optional<AdmitCard> findByAdmitCardNumber(String admitCardNumber) {
@@ -69,11 +69,11 @@ public class AdmitCardService {
     }
 
     public long countByTestId(Long testId) {
-        return admitCardRepository.countByTestId(testId);
+        return admitCardRepository.countByTest_Id(testId);
     }
 
     public long countByTestIdAndStatus(Long testId, String status) {
-        return admitCardRepository.countByTestIdAndStatus(testId, status);
+        return admitCardRepository.countByTest_IdAndStatus(testId, status);
     }
 
     @Transactional
@@ -81,7 +81,7 @@ public class AdmitCardService {
         AdmissionTest test = admissionTestRepository.findById(testId)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTest", "id", testId));
 
-        List<SeatAllocation> seatAllocations = seatAllocationRepository.findByTestId(testId);
+        List<SeatAllocation> seatAllocations = seatAllocationRepository.findByTest_Id(testId);
         List<AdmitCard> admitCards = new ArrayList<>();
         int year = Year.now().getValue();
 
@@ -89,7 +89,7 @@ public class AdmitCardService {
         int sequence = (maxSequence != null ? maxSequence.intValue() : 0) + 1;
 
         for (SeatAllocation allocation : seatAllocations) {
-            Optional<AdmitCard> existing = admitCardRepository.findByTestIdAndRegistrationId(testId, allocation.getRegistration().getId());
+            Optional<AdmitCard> existing = admitCardRepository.findByTest_IdAndRegistration_Id(testId, allocation.getRegistration().getId());
             if (existing.isPresent()) {
                 continue;
             }

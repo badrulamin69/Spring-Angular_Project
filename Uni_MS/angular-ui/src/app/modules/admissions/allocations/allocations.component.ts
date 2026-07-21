@@ -135,8 +135,8 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     tr:hover { background: var(--bg-hover); }
     .btn-icon { background: none; border: none; cursor: pointer; padding: 4px 6px; border-radius: 4px; color: var(--text-muted); display: inline-flex; }
     .btn-icon:hover { background: var(--bg-hover); color: var(--text-primary); }
-    .btn-icon-success:hover { background: #dcfce7; color: #16a34a; }
-    .btn-icon-danger:hover { background: #fef2f2; color: #ef4444; }
+    .btn-icon-success:hover { background: #dcfce7; color: #1e7e34; }
+    .btn-icon-danger:hover { background: #fef2f2; color: #dc3545; }
     .status-badge { padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 500; }
     .status-badge[data-status="ALLOCATED"] { background: #fef3c7; color: #92400e; }
     .status-badge[data-status="CONFIRMED"] { background: #d1fae5; color: #065f46; }

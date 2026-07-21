@@ -83,7 +83,7 @@ import { AdmissionTestDashboardService } from '../../../services/admission-test-
           <span>Seat Plan</span>
         </a>
         <a routerLink="/admissions/admit-cards" class="action-card">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" stroke="#D97706" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" stroke="#b38600" stroke-width="2" stroke-linecap="round"/></svg>
           <span>Admit Cards</span>
         </a>
         <a routerLink="/admissions/test-attendance" class="action-card">
@@ -91,7 +91,7 @@ import { AdmissionTestDashboardService } from '../../../services/admission-test-
           <span>Attendance</span>
         </a>
         <a routerLink="/admissions/question-bank" class="action-card">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" stroke="#bd2130" stroke-width="2" stroke-linecap="round"/></svg>
           <span>Question Bank</span>
         </a>
         <a routerLink="/admissions/exam-centers" class="action-card">
@@ -119,8 +119,8 @@ import { AdmissionTestDashboardService } from '../../../services/admission-test-
     .bar-track { flex: 1; height: 24px; background: #f1f5f9; border-radius: 6px; overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; min-width: 2px; }
     .bar-fill.present { background: #059669; }
-    .bar-fill.absent { background: #EF4444; }
-    .bar-fill.late { background: #D97706; }
+    .bar-fill.absent { background: #dc3545; }
+    .bar-fill.late { background: #b38600; }
     .bar-value { width: 40px; text-align: right; font-weight: 600; font-size: 0.875rem; color: var(--text-primary, #1e293b); }
     .quick-actions { margin-bottom: 1.5rem; }
     .quick-actions h3 { margin: 0 0 1rem; font-size: 1rem; color: var(--text-primary, #1e293b); }
@@ -150,11 +150,11 @@ export class AdmissionTestDashboardComponent implements OnInit {
         this.statCards = [
           { label: 'Total Tests', value: data.totalTests || 0, color: '#4F46E5', bg: 'rgba(79,70,229,0.1)', icon: '&#128203;' },
           { label: 'Total Applicants', value: data.totalApplicants || 0, color: '#0891B2', bg: 'rgba(8,145,178,0.1)', icon: '&#128101;' },
-          { label: 'Admit Cards', value: data.admitCardsGenerated || 0, color: '#D97706', bg: 'rgba(217,119,6,0.1)', icon: '&#127915;' },
+          { label: 'Admit Cards', value: data.admitCardsGenerated || 0, color: '#b38600', bg: 'rgba(217,119,6,0.1)', icon: '&#127915;' },
           { label: 'Present', value: data.presentCandidates || 0, color: '#059669', bg: 'rgba(5,150,105,0.1)', icon: '&#9989;' },
-          { label: 'Absent', value: data.absentCandidates || 0, color: '#EF4444', bg: 'rgba(239,68,68,0.1)', icon: '&#10060;' },
+          { label: 'Absent', value: data.absentCandidates || 0, color: '#dc3545', bg: 'rgba(239,68,68,0.1)', icon: '&#10060;' },
           { label: 'Passed', value: data.passedCandidates || 0, color: '#059669', bg: 'rgba(5,150,105,0.1)', icon: '&#127942;' },
-          { label: 'Failed', value: data.failedCandidates || 0, color: '#DC2626', bg: 'rgba(220,38,38,0.1)', icon: '&#10060;' },
+          { label: 'Failed', value: data.failedCandidates || 0, color: '#bd2130', bg: 'rgba(220,38,38,0.1)', icon: '&#10060;' },
           { label: 'Pending Results', value: data.pendingResults || 0, color: '#7C3AED', bg: 'rgba(124,58,237,0.1)', icon: '&#9203;' }
         ];
       }

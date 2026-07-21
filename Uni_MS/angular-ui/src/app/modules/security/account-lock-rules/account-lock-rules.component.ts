@@ -1,4 +1,4 @@
-ï»¿import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -47,12 +47,12 @@ import { environment } from '../../../../environments/environment';
               <div class="form-group">
                 <label for="max_login_attempts">Max Login Attempts</label>
                 <input type="number" id="max_login_attempts" [(ngModel)]="settings.max_login_attempts" name="max_login_attempts" class="form-control" min="3" max="20">
-                <span class="form-hint">Number of failed attempts before lockout (3Î“Ã‡Ã´20)</span>
+                <span class="form-hint">Number of failed attempts before lockout (3GÇô20)</span>
               </div>
               <div class="form-group">
                 <label for="lockout_duration_minutes">Lockout Duration (Minutes)</label>
                 <input type="number" id="lockout_duration_minutes" [(ngModel)]="settings.lockout_duration_minutes" name="lockout_duration_minutes" class="form-control" min="5" max="1440">
-                <span class="form-hint">How long the account stays locked (5Î“Ã‡Ã´1440 min)</span>
+                <span class="form-hint">How long the account stays locked (5GÇô1440 min)</span>
               </div>
               <div class="form-group">
                 <label for="reset_attempts_after_minutes">Reset Attempts After (Minutes)</label>
@@ -240,8 +240,8 @@ import { environment } from '../../../../environments/environment';
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
     .btn-primary { background: var(--brand-color); color: #fff; }
     .btn-primary:hover { filter: brightness(0.9); }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-danger:hover { background: #dc2626; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-danger:hover { background: #bd2130; }
     .btn-sm { padding: 5px 10px; font-size: 0.8125rem; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }

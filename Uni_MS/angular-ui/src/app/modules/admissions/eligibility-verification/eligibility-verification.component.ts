@@ -129,9 +129,9 @@ import { environment } from '../../../../environments/environment';
     .stat-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.25rem; }
     .stat-card .stat-value { font-size: 1.5rem; font-weight: 700; color: #1e293b; }
     .stat-card .stat-label { font-size: 0.8125rem; color: #64748b; }
-    .stat-success { border-left: 3px solid #22c55e; }
-    .stat-danger { border-left: 3px solid #ef4444; }
-    .stat-warning { border-left: 3px solid #f59e0b; }
+    .stat-success { border-left: 3px solid #28a745; }
+    .stat-danger { border-left: 3px solid #dc3545; }
+    .stat-warning { border-left: 3px solid #e6a817; }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: white; border-radius: 12px; padding: 1.5rem; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }

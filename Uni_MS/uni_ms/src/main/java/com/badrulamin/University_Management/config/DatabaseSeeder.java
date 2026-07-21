@@ -136,6 +136,20 @@ public class DatabaseSeeder implements CommandLineRunner {
         perms.put("REPORT_VIEW", createPerm("View Reports", "REPORT_VIEW", "Reports", "VIEW"));
         perms.put("REPORT_GENERATE", createPerm("Generate Reports", "REPORT_GENERATE", "Reports", "CREATE"));
 
+        // Course Registration
+        perms.put("REGISTRATION_VIEW", createPerm("View Registration", "REGISTRATION_VIEW", "Registration", "VIEW"));
+        perms.put("REGISTRATION_MANAGE", createPerm("Manage Registration", "REGISTRATION_MANAGE", "Registration", "MANAGE"));
+        perms.put("REGISTRATION_APPROVE", createPerm("Approve Registration", "REGISTRATION_APPROVE", "Registration", "APPROVE"));
+
+        // Semester Enrollment
+        perms.put("SEMESTER_ENROLLMENT_VIEW", createPerm("View Semester Enrollment", "SEMESTER_ENROLLMENT_VIEW", "SemesterEnrollment", "VIEW"));
+        perms.put("SEMESTER_ENROLLMENT_MANAGE", createPerm("Manage Semester Enrollment", "SEMESTER_ENROLLMENT_MANAGE", "SemesterEnrollment", "MANAGE"));
+        perms.put("SEMESTER_ENROLLMENT_APPROVE", createPerm("Approve Semester Enrollment", "SEMESTER_ENROLLMENT_APPROVE", "SemesterEnrollment", "APPROVE"));
+
+        // Class Routine & Academic Calendar
+        perms.put("ROUTINE_VIEW", createPerm("View Routine", "ROUTINE_VIEW", "Routine", "VIEW"));
+        perms.put("ROUTINE_MANAGE", createPerm("Manage Routine", "ROUTINE_MANAGE", "Routine", "MANAGE"));
+
         // Settings
         perms.put("SETTINGS_VIEW", createPerm("View Settings", "SETTINGS_VIEW", "Settings", "VIEW"));
         perms.put("SETTINGS_MANAGE", createPerm("Manage Settings", "SETTINGS_MANAGE", "Settings", "MANAGE"));
@@ -176,6 +190,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         deptHeadPerms.add(perms.get("COMMUNICATION_VIEW"));
         deptHeadPerms.add(perms.get("TEACHER_VIEW"));
         deptHeadPerms.add(perms.get("TEACHER_MANAGE"));
+        deptHeadPerms.add(perms.get("ROUTINE_VIEW"));
+        deptHeadPerms.add(perms.get("ROUTINE_MANAGE"));
         Role departmentHead = createRole("Department Head", "ROLE_DEPT_HEAD", "Department head access", deptHeadPerms, 2, universityAdmin);
 
         // Level 3: Faculty Member (child of Department Head)
@@ -192,6 +208,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         facultyPerms.add(perms.get("REPORT_VIEW"));
         facultyPerms.add(perms.get("COMMUNICATION_VIEW"));
         facultyPerms.add(perms.get("TEACHER_VIEW"));
+        facultyPerms.add(perms.get("ROUTINE_VIEW"));
         Role facultyMember = createRole("Faculty Member", "ROLE_FACULTY", "Faculty member access", facultyPerms, 3, departmentHead);
 
         // Level 3: Advisor (child of Department Head)
@@ -202,6 +219,11 @@ public class DatabaseSeeder implements CommandLineRunner {
         advisorPerms.add(perms.get("STUDENT_MANAGE"));
         advisorPerms.add(perms.get("BATCH_MANAGE"));
         advisorPerms.add(perms.get("SECTION_MANAGE"));
+        advisorPerms.add(perms.get("REGISTRATION_VIEW"));
+        advisorPerms.add(perms.get("REGISTRATION_MANAGE"));
+        advisorPerms.add(perms.get("REGISTRATION_APPROVE"));
+        advisorPerms.add(perms.get("ROUTINE_VIEW"));
+        advisorPerms.add(perms.get("ROUTINE_MANAGE"));
         Role advisor = createRole("Advisor", "ROLE_ADVISOR", "Academic advisor access", advisorPerms, 3, departmentHead);
 
         // Level 2: Admission Officer (child of University Admin)
@@ -309,6 +331,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         studentPerms.add(perms.get("ACTIVITY_VIEW"));
         studentPerms.add(perms.get("FINANCE_VIEW"));
         studentPerms.add(perms.get("TEACHER_VIEW"));
+        studentPerms.add(perms.get("REGISTRATION_VIEW"));
+        studentPerms.add(perms.get("REGISTRATION_MANAGE"));
         Role student = createRole("Student", "ROLE_STUDENT", "Student access", studentPerms, 2, universityAdmin);
 
         // Level 2: Registrar (child of University Admin)
@@ -523,6 +547,33 @@ public class DatabaseSeeder implements CommandLineRunner {
         saveMenu(repo, "Documents", null, "/students/documents", students, 15, "STUDENT_VIEW", "Students");
         saveMenu(repo, "Student Promotions", null, "/students/promotions", students, 16, "STUDENT_VIEW", "Students");
         saveMenu(repo, "Alumni", null, "/students/alumni", students, 17, "STUDENT_VIEW", "Students");
+
+        // Registration Module
+        Menu registration = saveMenu(repo, "Registration", "app_registration", null, null, 5, "REGISTRATION_VIEW", "Registration");
+        saveMenu(repo, "Registration Config", null, "/registration/config", registration, 1, "REGISTRATION_MANAGE", "Registration");
+        saveMenu(repo, "Course Selection", null, "/registration/course-selection", registration, 2, "REGISTRATION_VIEW", "Registration");
+        saveMenu(repo, "Advisor Approval", null, "/registration/advisor-approval", registration, 3, "REGISTRATION_APPROVE", "Registration");
+        saveMenu(repo, "Admin Management", null, "/registration/admin-management", registration, 4, "REGISTRATION_MANAGE", "Registration");
+        saveMenu(repo, "Registration Reports", null, "/registration/reports", registration, 5, "REGISTRATION_VIEW", "Registration");
+
+        // Semester Enrollment Module
+        Menu semesterEnrollment = saveMenu(repo, "Semester Enrollment", "how_to_reg", null, null, 6, "SEMESTER_ENROLLMENT_VIEW", "SemesterEnrollment");
+        saveMenu(repo, "Enrollment Config", null, "/enrollment/config", semesterEnrollment, 1, "SEMESTER_ENROLLMENT_MANAGE", "SemesterEnrollment");
+        saveMenu(repo, "Student Enrollment", null, "/enrollment/enrollment", semesterEnrollment, 2, "SEMESTER_ENROLLMENT_VIEW", "SemesterEnrollment");
+        saveMenu(repo, "Advisor Approval", null, "/enrollment/advisor-approval", semesterEnrollment, 3, "SEMESTER_ENROLLMENT_APPROVE", "SemesterEnrollment");
+        saveMenu(repo, "Admin Management", null, "/enrollment/admin-management", semesterEnrollment, 4, "SEMESTER_ENROLLMENT_MANAGE", "SemesterEnrollment");
+        saveMenu(repo, "Enrollment Dashboard", null, "/enrollment/dashboard", semesterEnrollment, 5, "SEMESTER_ENROLLMENT_VIEW", "SemesterEnrollment");
+        saveMenu(repo, "Enrollment Reports", null, "/enrollment/reports", semesterEnrollment, 6, "SEMESTER_ENROLLMENT_VIEW", "SemesterEnrollment");
+
+        // Class Routine & Academic Calendar Module
+        Menu routine = saveMenu(repo, "Class Routine", "schedule", null, null, 7, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Class Routines", null, "/routine/class-routines", routine, 1, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Semester Routines", null, "/routine/semester-routines", routine, 2, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Academic Calendars", null, "/routine/academic-calendars", routine, 3, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Calendar Events", null, "/routine/calendar-events", routine, 4, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Buildings", null, "/routine/buildings", routine, 5, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Classrooms", null, "/routine/classrooms", routine, 6, "ROUTINE_VIEW", "Routine");
+        saveMenu(repo, "Time Slots", null, "/routine/time-slots", routine, 7, "ROUTINE_VIEW", "Routine");
 
         // Administration
         Menu administration = saveMenu(repo, "Administration", "person_add", null, null, 5, "ADMINISTRATION_VIEW", "administration");

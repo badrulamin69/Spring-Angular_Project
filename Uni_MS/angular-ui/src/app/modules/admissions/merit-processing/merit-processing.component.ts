@@ -139,7 +139,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .breakdown-grid { display: flex; gap: 12px; flex-wrap: wrap; }
     .breakdown-item { display: flex; align-items: center; gap: 8px; }
     .breakdown-badge { padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 500; }
-    .breakdown-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #1d4ed8; }
+    .breakdown-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #002d5f; }
     .breakdown-badge[data-status="ADMIT_CARD_GENERATED"] { background: #d1fae5; color: #065f46; }
     .breakdown-badge[data-status="TEST_COMPLETED"] { background: #e0e7ff; color: #3730a3; }
     .breakdown-badge[data-status="MERIT_PROCESSED"] { background: #fef3c7; color: #92400e; }

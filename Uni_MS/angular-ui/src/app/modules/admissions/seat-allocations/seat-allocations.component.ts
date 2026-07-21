@@ -215,28 +215,28 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .header-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .btn-primary { background: #2563eb; color: #fff; }
-    .btn-primary:hover:not(:disabled) { background: #1d4ed8; }
+    .btn-primary { background: #004080; color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: #002d5f; }
     .btn-secondary { background: #e2e8f0; color: #475569; }
     .btn-outline { background: white; color: #475569; border: 1px solid #d1d5db; }
     .btn-outline:hover:not(:disabled) { background: #f8fafc; }
     .btn-sm { padding: 6px 12px; font-size: 0.8125rem; }
-    .btn-success { background: #22c55e; color: #fff; }
-    .btn-success:hover:not(:disabled) { background: #16a34a; }
-    .btn-warning { background: #f59e0b; color: #fff; }
-    .btn-warning:hover:not(:disabled) { background: #d97706; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-danger:hover:not(:disabled) { background: #dc2626; }
-    .btn-danger-text { color: #ef4444; border-color: #fca5a5; }
-    .btn-danger-text:hover:not(:disabled) { background: #fef2f2; color: #dc2626; }
-    :host ::ng-deep .btn-icon-success { color: #22c55e; }
-    :host ::ng-deep .btn-icon-success:hover { background: #f0fdf4; color: #16a34a; }
-    :host ::ng-deep .btn-icon-warning { color: #f59e0b; }
-    :host ::ng-deep .btn-icon-warning:hover { background: #fffbeb; color: #d97706; }
-    :host ::ng-deep .btn-icon-info { color: #3b82f6; }
-    :host ::ng-deep .btn-icon-info:hover { background: #eff6ff; color: #2563eb; }
-    :host ::ng-deep .btn-icon-danger { color: #ef4444; }
-    :host ::ng-deep .btn-icon-danger:hover { background: #fef2f2; color: #dc2626; }
+    .btn-success { background: #28a745; color: #fff; }
+    .btn-success:hover:not(:disabled) { background: #1e7e34; }
+    .btn-warning { background: #e6a817; color: #fff; }
+    .btn-warning:hover:not(:disabled) { background: #b38600; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-danger:hover:not(:disabled) { background: #bd2130; }
+    .btn-danger-text { color: #dc3545; border-color: #fca5a5; }
+    .btn-danger-text:hover:not(:disabled) { background: #fef2f2; color: #bd2130; }
+    :host ::ng-deep .btn-icon-success { color: #28a745; }
+    :host ::ng-deep .btn-icon-success:hover { background: #f0fdf4; color: #1e7e34; }
+    :host ::ng-deep .btn-icon-warning { color: #e6a817; }
+    :host ::ng-deep .btn-icon-warning:hover { background: #fffbeb; color: #b38600; }
+    :host ::ng-deep .btn-icon-info { color: #0056b3; }
+    :host ::ng-deep .btn-icon-info:hover { background: #eff6ff; color: #004080; }
+    :host ::ng-deep .btn-icon-danger { color: #dc3545; }
+    :host ::ng-deep .btn-icon-danger:hover { background: #fef2f2; color: #bd2130; }
     .config-selector { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; padding: 0.75rem 1rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
     .config-selector label { font-weight: 600; font-size: 0.875rem; color: #374151; white-space: nowrap; }
     .config-selector select { flex: 1; padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.875rem; background: white; max-width: 500px; }
@@ -244,13 +244,13 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .stat-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.875rem 0.5rem; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
     .stat-card .stat-val { display: block; font-size: 1.5rem; font-weight: 700; color: #1e293b; }
     .stat-card .stat-lbl { font-size: 0.75rem; color: #64748b; }
-    .stat-card.allocated .stat-val { color: #3b82f6; }
-    .stat-card.confirmed .stat-val { color: #22c55e; }
-    .stat-card.waiting .stat-val { color: #f59e0b; }
-    .stat-card.declined .stat-val { color: #ef4444; }
+    .stat-card.allocated .stat-val { color: #0056b3; }
+    .stat-card.confirmed .stat-val { color: #28a745; }
+    .stat-card.waiting .stat-val { color: #e6a817; }
+    .stat-card.declined .stat-val { color: #dc3545; }
     .stat-card.expired .stat-val { color: #94a3b8; }
-    .stat-card.remaining .stat-val { color: #8b5cf6; }
-    .stat-card.utilization .stat-val { color: #2563eb; }
+    .stat-card.remaining .stat-val { color: #5a3e8e; }
+    .stat-card.utilization .stat-val { color: #004080; }
     .filter-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; padding: 0.75rem 1rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; flex-wrap: wrap; }
     .filter-bar input, .filter-bar select { padding: 0.375rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.875rem; background: white; }
     .filter-bar input[type="text"] { flex: 1; min-width: 250px; }
@@ -271,10 +271,10 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; margin-bottom: 0.375rem; font-weight: 600; color: #374151; font-size: 0.8125rem; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.875rem; box-sizing: border-box; font-family: inherit; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #004080; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
     .form-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; }
     .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
-    .status-badge[data-status="ALLOCATED"] { background: #dbeafe; color: #1d4ed8; }
+    .status-badge[data-status="ALLOCATED"] { background: #dbeafe; color: #002d5f; }
     .status-badge[data-status="CONFIRMED"] { background: #d1fae5; color: #065f46; }
     .status-badge[data-status="DECLINED"] { background: #fee2e2; color: #991b1b; }
     .status-badge[data-status="CANCELLED"] { background: #f3f4f6; color: #374151; }

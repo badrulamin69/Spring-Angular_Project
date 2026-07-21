@@ -14,7 +14,7 @@
 .sidebar {
   width: 260px;
   background: var(--bg-sidebar);
-  color: #b0bfd4;
+  color: #a8b8cc;
   display: flex;
   flex-direction: column;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -113,8 +113,8 @@
   }
 
   &.active {
-    background: rgba(13, 148, 136, 0.15);
-    color: #2dd4bf;
+    background: rgba(0, 45, 95, 0.2);
+    color: #6da5d9;
 
     .nav-icon-wrapper {
       opacity: 1;
@@ -201,8 +201,8 @@
   }
 
   &.active {
-    background: rgba(13, 148, 136, 0.12);
-    color: #2dd4bf;
+    background: rgba(0, 45, 95, 0.18);
+    color: #6da5d9;
     font-weight: 500;
 
     .child-dot {
@@ -359,7 +359,7 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #0b1d3a, #1b3a5f);
+  background: linear-gradient(135deg, #001a3a, #002d5f);
   display: flex;
   align-items: center;
   justify-content: center;

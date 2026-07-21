@@ -1,4 +1,4 @@
-﻿import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -57,7 +57,7 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .form-group label { font-size: 0.8125rem; color: var(--text-secondary); font-weight: 500; }
     .form-control { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-primary); font-size: 0.875rem; transition: border-color 0.2s, box-shadow 0.2s; }
     .form-control:focus { outline: none; border-color: var(--brand-color); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
-    .error-message { color: #ef4444; font-size: 0.8125rem; margin-bottom: 12px; }
+    .error-message { color: #dc3545; font-size: 0.8125rem; margin-bottom: 12px; }
     .actions-bar { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
     .btn-primary { background: var(--brand-color); color: #fff; }

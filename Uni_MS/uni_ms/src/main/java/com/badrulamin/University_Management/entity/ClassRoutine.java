@@ -105,8 +105,48 @@ public class ClassRoutine extends BaseEntity {
 
     private String building;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "time_slot_id")
+    private TimeSlot timeSlot;
+
+    @JsonProperty("timeSlotId")
+    public void setTimeSlotId(Long id) {
+        if (id != null) {
+            this.timeSlot = new TimeSlot();
+            this.timeSlot.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getTimeSlotId() {
+        return this.timeSlot != null ? this.timeSlot.getId() : null;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "classroom_id")
+    private Classroom classroom;
+
+    @JsonProperty("classroomId")
+    public void setClassroomId(Long id) {
+        if (id != null) {
+            this.classroom = new Classroom();
+            this.classroom.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getClassroomId() {
+        return this.classroom != null ? this.classroom.getId() : null;
+    }
+
     @Column(name = "class_type")
     private String classType = "Lecture";
+
+    @Column(name = "shift")
+    private String shift;
+
+    @Column(name = "publish_status")
+    private String publishStatus = "DRAFT";
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive = true;

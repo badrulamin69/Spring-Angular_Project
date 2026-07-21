@@ -55,7 +55,7 @@ import { ApplicantChoiceSubmission, ApplicantChoice, AvailableProgram } from '..
       } @else if (submission && submission.status === 'SUBMITTED') {
         <div class="submitted-view">
           <div class="success-header">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#dbeafe"/><path d="M16 24l6 6 10-12" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#dbeafe"/><path d="M16 24l6 6 10-12" stroke="#002d5f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <div>
               <h2>Choices Submitted</h2>
               <p>Your choices have been submitted. You can still edit until the deadline.</p>
@@ -186,7 +186,7 @@ import { ApplicantChoiceSubmission, ApplicantChoice, AvailableProgram } from '..
     .btn-primary:hover { filter: brightness(0.9); }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-sm { padding: 4px 10px; font-size: 0.8125rem; }
-    .btn-add { background: #22c55e; color: #fff; }
+    .btn-add { background: #28a745; color: #fff; }
     .btn-add:disabled { background: #e2e8f0; color: #94a3b8; cursor: not-allowed; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .available-programs, .my-choices { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem; }
@@ -211,7 +211,7 @@ import { ApplicantChoiceSubmission, ApplicantChoice, AvailableProgram } from '..
     .btn-icon-sm { width: 28px; height: 28px; border: 1px solid #d1d5db; border-radius: 4px; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #475569; }
     .btn-icon-sm:hover:not(:disabled) { background: #f1f5f9; }
     .btn-icon-sm:disabled { opacity: 0.3; cursor: not-allowed; }
-    .btn-remove { color: #ef4444; border-color: #fca5a5; }
+    .btn-remove { color: #dc3545; border-color: #fca5a5; }
     .btn-remove:hover { background: #fef2f2; }
     .empty-choices { text-align: center; padding: 2rem; color: #94a3b8; font-style: italic; }
     .validation-msg { background: #fef3c7; color: #92400e; padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.8125rem; margin-top: 0.75rem; }
@@ -225,7 +225,7 @@ import { ApplicantChoiceSubmission, ApplicantChoice, AvailableProgram } from '..
     .info-row strong { color: #1e293b; }
     .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
     .status-badge.locked { background: #d1fae5; color: #065f46; }
-    .status-badge.submitted { background: #dbeafe; color: #1d4ed8; }
+    .status-badge.submitted { background: #dbeafe; color: #002d5f; }
     .choices-section { margin-bottom: 1.5rem; }
     .choices-section h3 { margin: 0 0 1rem; color: #1e293b; }
     .action-bar { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; }

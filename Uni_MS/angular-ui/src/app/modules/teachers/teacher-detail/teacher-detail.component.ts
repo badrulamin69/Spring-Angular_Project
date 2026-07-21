@@ -69,8 +69,8 @@ import { Teacher } from '../../../models/teacher';
     .info-row:last-child { border-bottom: none; }
     .label { font-size: 0.8125rem; color: var(--text-muted); font-weight: 500; }
     .badge { padding: 2px 8px; border-radius: 10px; font-size: 0.6875rem; font-weight: 600; }
-    .badge-success { background: rgba(34,197,94,0.1); color: #22c55e; }
-    .badge-danger { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .badge-success { background: rgba(34,197,94,0.1); color: #28a745; }
+    .badge-danger { background: rgba(239,68,68,0.1); color: #dc3545; }
     .loading { text-align: center; padding: 4rem; color: var(--text-muted); }
     @media (max-width: 768px) { .info-grid { grid-template-columns: 1fr; } }
   `]

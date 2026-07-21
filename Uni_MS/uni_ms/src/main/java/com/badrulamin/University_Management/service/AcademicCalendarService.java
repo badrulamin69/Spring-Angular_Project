@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AcademicCalendarService {
@@ -36,5 +38,21 @@ public class AcademicCalendarService {
     public void delete(Long id) {
         findById(id);
         academicCalendarRepository.deleteById(id);
+    }
+
+    public List<AcademicCalendar> findBySemester(Long semesterId) {
+        return academicCalendarRepository.findBySemester_Id(semesterId);
+    }
+
+    public List<AcademicCalendar> findHolidays(Long semesterId) {
+        return academicCalendarRepository.findBySemester_IdAndIsHolidayTrue(semesterId);
+    }
+
+    public List<AcademicCalendar> findPublished(Long semesterId) {
+        return academicCalendarRepository.findBySemester_IdAndIsPublishedTrue(semesterId);
+    }
+
+    private AcademicCalendar toResponse(AcademicCalendar academicCalendar) {
+        return academicCalendar;
     }
 }

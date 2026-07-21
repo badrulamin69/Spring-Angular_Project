@@ -183,8 +183,8 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .page-header h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin: 0; }
     .page-sub { font-size: 0.875rem; color: var(--text-muted); margin: 4px 0 0; }
     .loading-state { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 60px; color: var(--text-muted); }
-    .spinner { width: 24px; height: 24px; border: 3px solid var(--border-color); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    .spinner-sm { width: 14px; height: 14px; border: 2px solid var(--border-color); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+    .spinner { width: 24px; height: 24px; border: 3px solid var(--border-color); border-top-color: #0056b3; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .spinner-sm { width: 14px; height: 14px; border: 2px solid var(--border-color); border-top-color: #0056b3; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .confirmation-card { background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; }
     .card-header { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--border-color); }
@@ -192,12 +192,12 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .progress-steps { display: flex; align-items: center; justify-content: center; padding: 32px 20px; gap: 0; }
     .step { display: flex; flex-direction: column; align-items: center; gap: 8px; }
     .step-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: 600; background: var(--bg-tertiary); color: var(--text-muted); border: 2px solid var(--border-color); transition: all 0.3s; }
-    .step.active .step-icon { background: #dbeafe; color: #2563eb; border-color: #3b82f6; }
-    .step.completed .step-icon { background: #dcfce7; color: #166534; border-color: #10b981; }
+    .step.active .step-icon { background: #dbeafe; color: #004080; border-color: #0056b3; }
+    .step.completed .step-icon { background: #dcfce7; color: #166534; border-color: #28a745; }
     .step-label { font-size: 0.7rem; color: var(--text-muted); text-align: center; max-width: 80px; }
     .step.active .step-label, .step.completed .step-label { color: var(--text-primary); }
     .step-line { width: 40px; height: 2px; background: var(--border-color); margin-bottom: 20px; }
-    .step-line.active { background: #10b981; }
+    .step-line.active { background: #28a745; }
     .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; padding: 20px; }
     .detail-item label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
     .detail-item span { font-size: 0.875rem; color: var(--text-primary); }
@@ -221,21 +221,21 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); }
     .btn-outline:hover { background: var(--bg-hover); }
-    .btn-primary { background: #3b82f6; color: #fff; }
-    .btn-primary:hover { background: #2563eb; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-danger:hover { background: #dc2626; }
+    .btn-primary { background: #0056b3; color: #fff; }
+    .btn-primary:hover { background: #004080; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-danger:hover { background: #bd2130; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
     .status-badge[data-status="PENDING"] { background: #fef3c7; color: #92400e; }
-    .status-badge[data-status="ALLOCATED"] { background: #dbeafe; color: #1d4ed8; }
+    .status-badge[data-status="ALLOCATED"] { background: #dbeafe; color: #002d5f; }
     .status-badge[data-status="DOCUMENTS_SUBMITTED"] { background: #e0e7ff; color: #3730a3; }
     .status-badge[data-status="DOCUMENTS_VERIFIED"] { background: #d1fae5; color: #065f46; }
     .status-badge[data-status="DOCUMENTS_REJECTED"] { background: #fee2e2; color: #991b1b; }
     .status-badge[data-status="FEE_PAID"] { background: #d1fae5; color: #065f46; }
     .status-badge[data-status="CONFIRMED"] { background: #dcfce7; color: #166534; }
     .status-badge[data-status="ENROLLED"] { background: #dcfce7; color: #166534; }
-    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #1d4ed8; }
+    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #002d5f; }
     .status-badge[data-status="VERIFIED"] { background: #d1fae5; color: #065f46; }
     .status-badge[data-status="REJECTED"] { background: #fee2e2; color: #991b1b; }
     .empty-state { text-align: center; padding: 60px 20px; background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); }

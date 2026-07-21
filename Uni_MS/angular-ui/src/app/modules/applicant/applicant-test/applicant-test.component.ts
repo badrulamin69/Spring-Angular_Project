@@ -39,7 +39,7 @@ import { ApplicantPortalService } from '../../../services/applicant-portal.servi
           </div>
           <p class="test-desc">{{ testInfo.description }}</p>
           <div class="start-warning">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v10M8 14v1" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/></svg>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v10M8 14v1" stroke="#e6a817" stroke-width="2" stroke-linecap="round"/></svg>
             <span>Once you start, the timer cannot be paused. Make sure you have a stable internet connection.</span>
           </div>
           <button class="btn btn-primary btn-lg" (click)="startTest()">Start Test</button>
@@ -115,7 +115,7 @@ import { ApplicantPortalService } from '../../../services/applicant-portal.servi
   styles: [`
     .test-page { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
     .loading, .no-test, .start-panel, .result-panel { text-align: center; padding: 3rem 1rem; }
-    .spinner { width: 32px; height: 32px; border: 3px solid #e2e8f0; border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    .spinner { width: 32px; height: 32px; border: 3px solid #e2e8f0; border-top-color: #0056b3; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .test-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 1.5rem 0; }
     .info-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; }
@@ -124,38 +124,38 @@ import { ApplicantPortalService } from '../../../services/applicant-portal.servi
     .test-desc { color: #64748b; font-size: 0.875rem; margin: 1rem 0; }
     .start-warning { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; margin: 1.5rem 0; font-size: 0.8125rem; color: #92400e; }
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 600; }
-    .btn-primary { background: #3b82f6; color: #fff; }
-    .btn-success { background: #22c55e; color: #fff; }
+    .btn-primary { background: #0056b3; color: #fff; }
+    .btn-success { background: #28a745; color: #fff; }
     .btn-outline { background: #fff; color: #374151; border: 1px solid #d1d5db; }
     .btn-lg { padding: 12px 28px; font-size: 1rem; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .test-topbar { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px 16px; margin-bottom: 1rem; position: sticky; top: 0; z-index: 10; }
     .timer { display: flex; align-items: center; gap: 6px; font-size: 1.125rem; font-weight: 700; color: #1e293b; font-variant-numeric: tabular-nums; }
-    .timer.warning { color: #ef4444; }
+    .timer.warning { color: #dc3545; }
     .progress-text { font-size: 0.875rem; color: #64748b; }
     .test-body { display: grid; grid-template-columns: 60px 1fr; gap: 1rem; }
     .question-nav { display: flex; flex-direction: column; gap: 4px; }
     .q-btn { width: 36px; height: 36px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.8125rem; font-weight: 600; color: #64748b; }
-    .q-btn.active { border-color: #3b82f6; background: #eff6ff; color: #3b82f6; }
-    .q-btn.answered { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+    .q-btn.active { border-color: #0056b3; background: #eff6ff; color: #0056b3; }
+    .q-btn.answered { background: #0056b3; color: #fff; border-color: #0056b3; }
     .question-panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; }
     .q-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
     .q-num { font-size: 0.8125rem; color: #64748b; font-weight: 500; }
-    .q-marks { font-size: 0.8125rem; color: #3b82f6; font-weight: 600; }
+    .q-marks { font-size: 0.8125rem; color: #0056b3; font-weight: 600; }
     .q-text { font-size: 1.0625rem; color: #1e293b; line-height: 1.6; margin-bottom: 1.5rem; }
     .options { display: flex; flex-direction: column; gap: 10px; }
     .option { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 10px; background: #fff; cursor: pointer; text-align: left; transition: all 0.15s; }
     .option:hover { border-color: #93c5fd; background: #f0f9ff; }
-    .option.selected { border-color: #3b82f6; background: #eff6ff; }
+    .option.selected { border-color: #0056b3; background: #eff6ff; }
     .opt-letter { width: 32px; height: 32px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #475569; font-size: 0.875rem; flex-shrink: 0; }
-    .option.selected .opt-letter { background: #3b82f6; color: #fff; }
+    .option.selected .opt-letter { background: #0056b3; color: #fff; }
     .opt-text { font-size: 0.9375rem; color: #1e293b; }
     .q-nav-buttons { display: flex; justify-content: space-between; margin-top: 1.5rem; }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
     .modal-content { background: #fff; border-radius: 16px; padding: 2rem; max-width: 400px; width: 100%; text-align: center; }
     .modal-content h3 { margin: 0 0 8px; color: #1e293b; }
     .modal-content p { margin: 4px 0; font-size: 0.875rem; color: #64748b; }
-    .warning { color: #ef4444 !important; font-weight: 600; }
+    .warning { color: #dc3545 !important; font-weight: 600; }
     .modal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 1.5rem; }
     .result-panel h2 { margin: 1rem 0; color: #065f46; }
     .result-stats { display: flex; gap: 2rem; justify-content: center; margin: 2rem 0; }

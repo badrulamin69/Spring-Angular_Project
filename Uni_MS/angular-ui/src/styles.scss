@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+@use 'styles/theme' as *;
 
 *, *::before, *::after {
   margin: 0;
@@ -10,28 +9,30 @@
 html { scroll-behavior: smooth; }
 
 :root {
-  --bg-primary: #f0f5fa;
-  --bg-secondary: #ffffff;
-  --bg-sidebar: #0b1d3a;
-  --bg-tertiary: #f8fafc;
-  --bg-hover: rgba(255, 255, 255, 0.08);
+  --bg-primary: #{$nsu-bg-page};
+  --bg-secondary: #{$nsu-bg-surface};
+  --bg-sidebar: #{$nsu-bg-sidebar};
+  --bg-tertiary: #{$nsu-bg-tertiary};
+  --bg-hover: #{$nsu-bg-hover-dark};
   --bg-hover-light: rgba(255, 255, 255, 0.04);
-  --bg-hover-strong: rgba(255, 255, 255, 0.12);
-  --border-color: rgba(255, 255, 255, 0.08);
-  --text-primary: #0b1d3a;
-  --text-secondary: #4a5e78;
-  --text-muted: #7a8da6;
+  --bg-hover-strong: #{$nsu-bg-hover-dark-strong};
+  --border-color: #{$nsu-border-light};
+  --text-primary: #{$nsu-text-primary};
+  --text-secondary: #{$nsu-text-secondary};
+  --text-muted: #{$nsu-text-muted};
   --topbar-bg: rgba(255, 255, 255, 0.95);
-  --brand-color: #0d9488;
-  --brand-hover: #0f766e;
-  --accent-color: #1b3a5f;
-  --shadow-sm: 0 1px 3px 0 rgba(11, 29, 58, 0.06);
-  --shadow-md: 0 4px 8px -1px rgba(11, 29, 58, 0.08), 0 2px 4px -1px rgba(11, 29, 58, 0.04);
-  --shadow-lg: 0 12px 20px -4px rgba(11, 29, 58, 0.1), 0 4px 8px -2px rgba(11, 29, 58, 0.04);
-  --danger-color: #ef4444;
-  --danger-bg: #fef2f2;
-  --success-color: #0d9488;
-  --warning-color: #f59e0b;
+  --brand-color: #{$nsu-primary};
+  --brand-hover: #{$nsu-primary-light};
+  --accent-color: #{$nsu-accent};
+  --shadow-sm: #{$nsu-shadow-sm};
+  --shadow-md: #{$nsu-shadow-md};
+  --shadow-lg: #{$nsu-shadow-lg};
+  --danger-color: #{$nsu-danger};
+  --danger-bg: #{$nsu-danger-light};
+  --success-color: #{$nsu-success};
+  --warning-color: #{$nsu-warning};
+  --info-color: #{$nsu-info};
+  --info-bg: #{$nsu-info-light};
 }
 
 body.dark-theme {
@@ -47,16 +48,18 @@ body.dark-theme {
   --text-secondary: #b0bfd4;
   --text-muted: #6b82a0;
   --topbar-bg: rgba(6, 14, 26, 0.95);
-  --brand-color: #2dd4bf;
-  --brand-hover: #14b8a6;
+  --brand-color: #5b9bd5;
+  --brand-hover: #4a8bc4;
   --accent-color: #3b82f6;
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 12px 20px -4px rgba(0, 0, 0, 0.6), 0 4px 8px -2px rgba(0, 0, 0, 0.3);
   --danger-color: #f87171;
   --danger-bg: rgba(239, 68, 68, 0.15);
-  --success-color: #2dd4bf;
+  --success-color: #4ade80;
   --warning-color: #fbbf24;
+  --info-color: #60a5fa;
+  --info-bg: rgba(59, 130, 246, 0.15);
 }
 
 body {
@@ -73,7 +76,7 @@ body {
 }
 
 body.landing-body {
-  background: #030014;
+  background: #{$nsu-bg-sidebar};
   overflow-x: hidden;
 }
 
@@ -120,4 +123,3 @@ body.landing-body {
     justify-content: center;
   }
 }
-

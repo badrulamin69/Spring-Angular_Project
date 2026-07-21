@@ -54,6 +54,42 @@ public class CourseRegistration {
     @JoinColumn(name = "approved_by")
     private User approvedBy;
 
+    @Column(name = "registration_type", length = 20)
+    private String registrationType;
+
+    @Column(name = "advisor_status", length = 20)
+    private String advisorStatus;
+
+    @Column(name = "advisor_comments", length = 500)
+    private String advisorComments;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "advisor_id")
+    private Faculty advisor;
+
+    @JsonProperty("advisorId")
+    public Long getAdvisorId() { return advisor != null ? advisor.getId() : null; }
+    @JsonProperty("advisorId")
+    public void setAdvisorId(Long v) { if (v != null) { Faculty f = new Faculty(); f.setId(v); this.advisor = f; } }
+
+    @Column(name = "advisor_approved_at")
+    private LocalDateTime advisorApprovedAt;
+
+    @Column(name = "payment_status", length = 20)
+    private String paymentStatus;
+
+    @Column(name = "payment_reference", length = 100)
+    private String paymentReference;
+
+    @Column(name = "payment_amount")
+    private Double paymentAmount;
+
+    @Column(name = "finalized", nullable = false)
+    private Boolean finalized = false;
+
+    @Column(name = "finalized_at")
+    private LocalDateTime finalizedAt;
+
     @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;

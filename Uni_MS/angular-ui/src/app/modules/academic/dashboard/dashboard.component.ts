@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AcademicDashboardService } from '../../../services/academic-dashboard.service';
@@ -288,11 +288,11 @@ import { ToastService } from '../../../shared/toast/toast.component';
       height: 32px;
       border-radius: 8px;
       background: rgba(99, 102, 241, 0.12);
-      color: #6366f1;
+      color: #002d5f;
     }
     .section-icon.icon-ops {
       background: rgba(139, 92, 246, 0.12);
-      color: #8b5cf6;
+      color: #5a3e8e;
     }
     .section-header h3 {
       font-size: 0.75rem;
@@ -362,14 +362,14 @@ import { ToastService } from '../../../shared/toast/toast.component';
         inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
-    .icon-purple { background: linear-gradient(135deg, #6366f1, #818cf8); color: #fff; }
-    .icon-teal { background: linear-gradient(135deg, #14b8a6, #2dd4bf); color: #fff; }
-    .icon-green { background: linear-gradient(135deg, #22c55e, #4ade80); color: #fff; }
-    .icon-amber { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #fff; }
-    .icon-blue { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: #fff; }
-    .icon-pink { background: linear-gradient(135deg, #ec4899, #f472b6); color: #fff; }
-    .icon-indigo { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: #fff; }
-    .icon-emerald { background: linear-gradient(135deg, #10b981, #34d399); color: #fff; }
+    .icon-purple { background: linear-gradient(135deg, #002d5f, #004080); color: #fff; }
+    .icon-teal { background: linear-gradient(135deg, #3388cc, #5b9bd5); color: #fff; }
+    .icon-green { background: linear-gradient(135deg, #28a745, #4ade80); color: #fff; }
+    .icon-amber { background: linear-gradient(135deg, #e6a817, #fbbf24); color: #fff; }
+    .icon-blue { background: linear-gradient(135deg, #0056b3, #60a5fa); color: #fff; }
+    .icon-pink { background: linear-gradient(135deg, #c8102e, #f472b6); color: #fff; }
+    .icon-indigo { background: linear-gradient(135deg, #5a3e8e, #a78bfa); color: #fff; }
+    .icon-emerald { background: linear-gradient(135deg, #28a745, #34d399); color: #fff; }
 
     .stat-content { flex: 1; min-width: 0; }
     .stat-top {
@@ -388,7 +388,7 @@ import { ToastService } from '../../../shared/toast/toast.component';
     .live-badge {
       font-size: 0.625rem;
       font-weight: 600;
-      color: #22c55e;
+      color: #28a745;
       background: rgba(34, 197, 94, 0.1);
       padding: 2px 8px;
       border-radius: 20px;
@@ -449,7 +449,7 @@ import { ToastService } from '../../../shared/toast/toast.component';
       font-size: 0.6875rem;
       font-weight: 600;
       background: rgba(99, 102, 241, 0.1);
-      color: #6366f1;
+      color: #002d5f;
     }
 
     .quick-links {
@@ -478,7 +478,7 @@ import { ToastService } from '../../../shared/toast/toast.component';
       color: var(--brand-color);
       background: var(--bg-secondary);
       transform: translateX(4px);
-      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 45, 95, 0.1);
     }
     .quick-link svg { flex-shrink: 0; opacity: 0.6; }
     .quick-link:hover svg { opacity: 1; }

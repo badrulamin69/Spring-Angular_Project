@@ -108,21 +108,21 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .btn-primary { background: var(--brand-color); color: #fff; }
     .btn-primary:hover { filter: brightness(0.9); }
     .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
-    .btn-success { background: #16a34a; color: #fff; }
+    .btn-success { background: #1e7e34; color: #fff; }
     .btn-success:hover { background: #15803d; }
-    .btn-warning { background: #f59e0b; color: #fff; }
-    .btn-warning:hover { background: #d97706; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-danger:hover { background: #dc2626; }
-    .btn-info { background: #3b82f6; color: #fff; }
-    .btn-info:hover { background: #2563eb; }
+    .btn-warning { background: #e6a817; color: #fff; }
+    .btn-warning:hover { background: #b38600; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-danger:hover { background: #bd2130; }
+    .btn-info { background: #0056b3; color: #fff; }
+    .btn-info:hover { background: #004080; }
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 1.25rem; }
     .stat-card { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; }
     .stat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .stat-total { background: #ede9fe; color: #7c3aed; }
-    .stat-approved { background: #dcfce7; color: #16a34a; }
-    .stat-pending { background: #fef3c7; color: #d97706; }
-    .stat-total-amount { background: #dbeafe; color: #2563eb; }
+    .stat-approved { background: #dcfce7; color: #1e7e34; }
+    .stat-pending { background: #fef3c7; color: #b38600; }
+    .stat-total-amount { background: #dbeafe; color: #004080; }
     .stat-info { display: flex; flex-direction: column; }
     .stat-value { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
     .stat-label { font-size: 0.75rem; color: var(--text-muted); }
@@ -130,9 +130,9 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .badge[data-status="PENDING"] { background: #fef3c7; color: #92400e; }
     .badge[data-status="APPROVED"] { background: #dcfce7; color: #166534; }
     .badge[data-status="COMPLETED"] { background: #dcfce7; color: #166534; }
-    .badge[data-status="REJECTED"] { background: #fee2e2; color: #dc2626; }
-    .badge[data-status="FAILED"] { background: #fee2e2; color: #dc2626; }
-    .badge[data-status="REFUNDED"] { background: #dbeafe; color: #1d4ed8; }
+    .badge[data-status="REJECTED"] { background: #fee2e2; color: #bd2130; }
+    .badge[data-status="FAILED"] { background: #fee2e2; color: #bd2130; }
+    .badge[data-status="REFUNDED"] { background: #dbeafe; color: #002d5f; }
     .action-buttons { display: flex; gap: 4px; flex-wrap: nowrap; }
     @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
   `]

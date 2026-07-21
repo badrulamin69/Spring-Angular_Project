@@ -76,25 +76,25 @@ import { ToastService } from '../../../shared/toast/toast.component';
     .history-name { display: block; font-size: 13px; font-weight: 500; color: var(--text-primary); }
     .history-date { font-size: 11px; color: var(--text-muted); }
     .history-status { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; }
-    .status-ready { background: #dcfce7; color: #22c55e; }
-    .status-pending { background: #fef3c7; color: #d97706; }
+    .status-ready { background: #dcfce7; color: #28a745; }
+    .status-pending { background: #fef3c7; color: #b38600; }
     .loading-text, .empty-text { font-size: 0.875rem; color: var(--text-muted); padding: 16px 0; text-align: center; }
   `]
 })
 export class AdmissionReportsComponent implements OnInit {
   reports = [
-    { title: 'Application Summary', description: 'Total applications by status and program', icon: 'summarize', color: '#6366f1', reportType: 'APPLICATION_SUMMARY' },
-    { title: 'Merit List Report', description: 'Rank-wise merit list with scores', icon: 'leaderboard', color: '#22c55e', reportType: 'MERIT_LIST' },
-    { title: 'Enrollment Report', description: 'Enrollment statistics by department', icon: 'how_to_reg', color: '#3b82f6', reportType: 'ENROLLMENT' },
-    { title: 'Fee Collection Report', description: 'Payment status and collection summary', icon: 'receipt_long', color: '#f59e0b', reportType: 'FEE_COLLECTION' },
-    { title: 'Gender Distribution', description: 'Gender-wise admission breakdown', icon: 'groups', color: '#ec4899', reportType: 'GENDER_DISTRIBUTION' },
-    { title: 'Geographic Distribution', description: 'Region-wise applicant distribution', icon: 'public', color: '#14b8a6', reportType: 'GEOGRAPHIC' },
-    { title: 'Test Score Analysis', description: 'Admission test performance analytics', icon: 'quiz', color: '#8b5cf6', reportType: 'TEST_SCORE' },
+    { title: 'Application Summary', description: 'Total applications by status and program', icon: 'summarize', color: '#002d5f', reportType: 'APPLICATION_SUMMARY' },
+    { title: 'Merit List Report', description: 'Rank-wise merit list with scores', icon: 'leaderboard', color: '#28a745', reportType: 'MERIT_LIST' },
+    { title: 'Enrollment Report', description: 'Enrollment statistics by department', icon: 'how_to_reg', color: '#0056b3', reportType: 'ENROLLMENT' },
+    { title: 'Fee Collection Report', description: 'Payment status and collection summary', icon: 'receipt_long', color: '#e6a817', reportType: 'FEE_COLLECTION' },
+    { title: 'Gender Distribution', description: 'Gender-wise admission breakdown', icon: 'groups', color: '#c8102e', reportType: 'GENDER_DISTRIBUTION' },
+    { title: 'Geographic Distribution', description: 'Region-wise applicant distribution', icon: 'public', color: '#3388cc', reportType: 'GEOGRAPHIC' },
+    { title: 'Test Score Analysis', description: 'Admission test performance analytics', icon: 'quiz', color: '#5a3e8e', reportType: 'TEST_SCORE' },
     { title: 'Offer Letter Status', description: 'Offer letter acceptance and rejection rates', icon: 'mail', color: '#f97316', reportType: 'OFFER_LETTER' },
-    { title: 'Year-over-Year Comparison', description: 'Compare admissions across academic years', icon: 'compare_arrows', color: '#06b6d4', reportType: 'YOY_COMPARISON' },
+    { title: 'Year-over-Year Comparison', description: 'Compare admissions across academic years', icon: 'compare_arrows', color: '#17a2b8', reportType: 'YOY_COMPARISON' },
     { title: 'Admission Test Summary', description: 'Overview of all admission tests, candidates, and results', icon: 'quiz', color: '#4F46E5', reportType: 'TEST_SUMMARY' },
     { title: 'Eligibility Report', description: 'Eligibility verification status for all candidates', icon: 'verified', color: '#059669', reportType: 'ELIGIBILITY_REPORT' },
-    { title: 'Attendance Report', description: 'Attendance statistics for admission tests', icon: 'fact_check', color: '#D97706', reportType: 'ATTENDANCE_REPORT' },
+    { title: 'Attendance Report', description: 'Attendance statistics for admission tests', icon: 'fact_check', color: '#b38600', reportType: 'ATTENDANCE_REPORT' },
     { title: 'Admission Test Merit List', description: 'Merit list with rankings and scores', icon: 'leaderboard', color: '#7C3AED', reportType: 'MERIT_LIST_REPORT' },
   ];
 
@@ -140,7 +140,7 @@ export class AdmissionReportsComponent implements OnInit {
 
   getReportColor(type: string): string {
     const found = this.reports.find(r => r.reportType === type);
-    return found?.color || '#6366f1';
+    return found?.color || '#002d5f';
   }
 
   getReportIcon(type: string): string {

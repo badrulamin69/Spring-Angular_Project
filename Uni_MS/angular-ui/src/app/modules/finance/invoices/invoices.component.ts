@@ -187,7 +187,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px; }
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; margin-bottom: 5px; font-weight: 500; color: var(--text-secondary); font-size: 0.8125rem; }
-    .required { color: #ef4444; }
+    .required { color: #dc3545; }
     .form-control { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-primary); font-size: 0.875rem; box-sizing: border-box; }
     .form-control:focus { outline: none; border-color: var(--brand-color); }
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
@@ -197,8 +197,8 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .badge { padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 500; display: inline-block; width: fit-content; }
     .badge[data-status="PENDING"] { background: #fef3c7; color: #92400e; }
     .badge[data-status="PAID"] { background: #dcfce7; color: #166534; }
-    .badge[data-status="PARTIAL"] { background: #dbeafe; color: #1d4ed8; }
-    .badge[data-status="OVERDUE"] { background: #fee2e2; color: #dc2626; }
+    .badge[data-status="PARTIAL"] { background: #dbeafe; color: #002d5f; }
+    .badge[data-status="OVERDUE"] { background: #fee2e2; color: #bd2130; }
     .badge[data-status="CANCELLED"] { background: #f3f4f6; color: #6b7280; }
     .section-title { font-size: 0.9375rem; color: var(--text-primary); font-weight: 600; margin: 0 0 10px; }
     .detail-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }

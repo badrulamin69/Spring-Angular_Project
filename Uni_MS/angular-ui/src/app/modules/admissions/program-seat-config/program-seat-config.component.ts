@@ -152,7 +152,7 @@ import { environment } from '../../../../environments/environment';
     .data-table tr:hover { background: #f9fafb; }
     .empty-state { text-align: center; padding: 40px; color: #6b7280; }
     .btn-sm { padding: 4px 10px; font-size: 12px; margin-right: 4px; }
-    .btn-danger { background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .btn-danger { background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; }
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
     .modal-content { background: white; border-radius: 12px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 24px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -164,7 +164,7 @@ import { environment } from '../../../../environments/environment';
     .form-control { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
     .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
     .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px; font-weight: 500; }
-    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary { background: #004080; color: white; }
     .btn-secondary { background: #e5e7eb; color: #374151; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   `]

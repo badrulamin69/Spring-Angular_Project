@@ -262,6 +262,30 @@ export const routes: Routes = [
       { path: 'activities/events', loadComponent: () => import('./modules/activities/events/events.component').then(m => m.EventsComponent), canActivate: [permissionGuard], data: { permission: 'ACTIVITY_VIEW' } },
       { path: 'activities/registrations', loadComponent: () => import('./modules/activities/registrations/registrations.component').then(m => m.RegistrationsComponent), canActivate: [permissionGuard], data: { permission: 'ACTIVITY_VIEW' } },
 
+      // Registration Module
+      { path: 'registration/config', loadComponent: () => import('./modules/registration/config/config.component').then(m => m.RegistrationConfigComponent), canActivate: [permissionGuard], data: { permission: 'REGISTRATION_VIEW' } },
+      { path: 'registration/course-selection', loadComponent: () => import('./modules/registration/course-selection/course-selection.component').then(m => m.CourseSelectionComponent), canActivate: [permissionGuard], data: { permission: 'REGISTRATION_VIEW' } },
+      { path: 'registration/advisor-approval', loadComponent: () => import('./modules/registration/advisor-approval/advisor-approval.component').then(m => m.AdvisorApprovalComponent), canActivate: [permissionGuard], data: { permission: 'REGISTRATION_VIEW' } },
+      { path: 'registration/admin-management', loadComponent: () => import('./modules/registration/admin-management/admin-management.component').then(m => m.AdminManagementComponent), canActivate: [permissionGuard], data: { permission: 'REGISTRATION_VIEW' } },
+      { path: 'registration/reports', loadComponent: () => import('./modules/registration/reports/reports.component').then(m => m.RegistrationReportsComponent), canActivate: [permissionGuard], data: { permission: 'REGISTRATION_VIEW' } },
+
+      // Routine & Academic Calendar Module
+      { path: 'routine/time-slots', loadComponent: () => import('./modules/routine/time-slot/time-slot.component').then(m => m.TimeSlotComponent), canActivate: [permissionGuard], data: { permission: 'ACADEMIC_VIEW' } },
+      { path: 'routine/buildings', loadComponent: () => import('./modules/routine/building/building.component').then(m => m.BuildingComponent), canActivate: [permissionGuard], data: { permission: 'ACADEMIC_VIEW' } },
+      { path: 'routine/classrooms', loadComponent: () => import('./modules/routine/classroom/classroom.component').then(m => m.ClassroomComponent), canActivate: [permissionGuard], data: { permission: 'ACADEMIC_VIEW' } },
+      { path: 'routine/class-routines', loadComponent: () => import('./modules/routine/class-routine/class-routine.component').then(m => m.ClassRoutineComponent), canActivate: [permissionGuard], data: { permission: 'ACADEMIC_VIEW' } },
+      { path: 'routine/semester-routines', loadComponent: () => import('./modules/routine/semester-routine/semester-routine.component').then(m => m.SemesterRoutineComponent), canActivate: [permissionGuard], data: { permission: 'ACADEMIC_VIEW' } },
+      { path: 'routine/calendar-events', loadComponent: () => import('./modules/routine/calendar-event/calendar-event.component').then(m => m.CalendarEventComponent), canActivate: [permissionGuard], data: { permission: 'ACADEMIC_VIEW' } },
+      { path: 'routine/academic-calendars', loadComponent: () => import('./modules/routine/academic-calendar/academic-calendar.component').then(m => m.AcademicCalendarComponent), canActivate: [permissionGuard], data: { permission: 'ACADEMIC_VIEW' } },
+
+      // Semester Enrollment Module
+      { path: 'enrollment/config', loadComponent: () => import('./modules/enrollment/config/config.component').then(m => m.EnrollmentConfigComponent), canActivate: [permissionGuard], data: { permission: 'SEMESTER_ENROLLMENT_VIEW' } },
+      { path: 'enrollment/enrollment', loadComponent: () => import('./modules/enrollment/enrollment/enrollment.component').then(m => m.EnrollmentComponent), canActivate: [permissionGuard], data: { permission: 'SEMESTER_ENROLLMENT_VIEW' } },
+      { path: 'enrollment/advisor-approval', loadComponent: () => import('./modules/enrollment/advisor-approval/advisor-approval.component').then(m => m.AdvisorApprovalComponent), canActivate: [permissionGuard], data: { permission: 'SEMESTER_ENROLLMENT_APPROVE' } },
+      { path: 'enrollment/admin-management', loadComponent: () => import('./modules/enrollment/admin-management/admin-management.component').then(m => m.AdminManagementComponent), canActivate: [permissionGuard], data: { permission: 'SEMESTER_ENROLLMENT_MANAGE' } },
+      { path: 'enrollment/dashboard', loadComponent: () => import('./modules/enrollment/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [permissionGuard], data: { permission: 'SEMESTER_ENROLLMENT_VIEW' } },
+      { path: 'enrollment/reports', loadComponent: () => import('./modules/enrollment/reports/reports.component').then(m => m.ReportsComponent), canActivate: [permissionGuard], data: { permission: 'SEMESTER_ENROLLMENT_VIEW' } },
+
       // Reports
       { path: 'reports/templates', loadComponent: () => import('./modules/reports/templates/templates.component').then(m => m.TemplatesComponent), canActivate: [permissionGuard], data: { permission: 'REPORT_VIEW' } },
       { path: 'reports/generated', loadComponent: () => import('./modules/reports/generated/generated.component').then(m => m.GeneratedComponent), canActivate: [permissionGuard], data: { permission: 'REPORT_VIEW' } },

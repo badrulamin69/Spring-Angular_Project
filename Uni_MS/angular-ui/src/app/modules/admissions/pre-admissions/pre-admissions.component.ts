@@ -101,12 +101,12 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .detail-item strong { color: #374151; }
     .detail-actions { margin-top: 16px; display: flex; gap: 8px; }
     .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; }
-    .btn-success { background: #10b981; color: #fff; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-outline-primary { background: #fff; color: #2563eb; border: 1px solid #2563eb; }
+    .btn-success { background: #28a745; color: #fff; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-outline-primary { background: #fff; color: #004080; border: 1px solid #004080; }
     .btn-outline-primary:hover { background: #eff6ff; }
     .status-badge { padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
-    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #1d4ed8; }
+    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #002d5f; }
     .status-badge[data-status="ADMIT_CARD_GENERATED"] { background: #d1fae5; color: #065f46; }
     .status-badge[data-status="REJECTED"] { background: #fee2e2; color: #991b1b; }
     .status-badge[data-status="ALLOCATED"] { background: #fef3c7; color: #92400e; }

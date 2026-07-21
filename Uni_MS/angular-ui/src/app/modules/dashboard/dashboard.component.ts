@@ -225,7 +225,7 @@ interface StatCard {
     }
     .loader {
       width: 36px; height: 36px;
-      border: 3px solid var(--border-color); border-top-color: var(--brand-color, #0d9488);
+      border: 3px solid var(--border-color); border-top-color: var(--brand-color, #002d5f);
       border-radius: 50%; animation: spin 0.8s linear infinite;
     }
 
@@ -234,10 +234,10 @@ interface StatCard {
       color: var(--text-muted); font-size: 0.875rem;
       display: flex; flex-direction: column; align-items: center; gap: 1rem;
     }
-    .error-state svg { color: #ef4444; opacity: 0.6; }
+    .error-state svg { color: #dc3545; opacity: 0.6; }
     .retry-btn {
       padding: 0.5rem 1.25rem; border-radius: 8px;
-      background: var(--brand-color, #0d9488); color: #fff;
+      background: var(--brand-color, #002d5f); color: #fff;
       border: none; font-size: 0.8125rem; font-weight: 600; cursor: pointer;
       transition: opacity 0.2s;
     }
@@ -251,8 +251,8 @@ interface StatCard {
       display: flex; align-items: center; justify-content: center;
       width: 32px; height: 32px; border-radius: 8px;
     }
-    .section-icon.icon-overview { background: rgba(13, 148, 136, 0.12); color: #0d9488; }
-    .section-icon.icon-secondary { background: rgba(99, 102, 241, 0.12); color: #6366f1; }
+    .section-icon.icon-overview { background: rgba(0, 45, 95, 0.1); color: #002d5f; }
+    .section-icon.icon-secondary { background: rgba(23, 162, 184, 0.1); color: #17a2b8; }
     .section-header h3 {
       font-size: 0.75rem; font-weight: 700; color: var(--text-muted);
       letter-spacing: 0.08em; text-transform: uppercase;
@@ -297,15 +297,15 @@ interface StatCard {
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
-    .icon-purple { background: linear-gradient(135deg, #6366f1, #818cf8); color: #fff; }
-    .icon-teal { background: linear-gradient(135deg, #14b8a6, #2dd4bf); color: #fff; }
-    .icon-green { background: linear-gradient(135deg, #22c55e, #4ade80); color: #fff; }
-    .icon-amber { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #fff; }
-    .icon-blue { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: #fff; }
-    .icon-pink { background: linear-gradient(135deg, #ec4899, #f472b6); color: #fff; }
-    .icon-indigo { background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: #fff; }
-    .icon-emerald { background: linear-gradient(135deg, #10b981, #34d399); color: #fff; }
-    .icon-red { background: linear-gradient(135deg, #ef4444, #f87171); color: #fff; }
+    .icon-purple { background: linear-gradient(135deg, #002d5f, #004080); color: #fff; }
+    .icon-teal { background: linear-gradient(135deg, #17a2b8, #20c9d8); color: #fff; }
+    .icon-green { background: linear-gradient(135deg, #28a745, #48c764); color: #fff; }
+    .icon-amber { background: linear-gradient(135deg, #e6a817, #f0c040); color: #fff; }
+    .icon-blue { background: linear-gradient(135deg, #0056b3, #3388cc); color: #fff; }
+    .icon-pink { background: linear-gradient(135deg, #c8102e, #e8304e); color: #fff; }
+    .icon-indigo { background: linear-gradient(135deg, #5a3e8e, #7a5eae); color: #fff; }
+    .icon-emerald { background: linear-gradient(135deg, #28a745, #56c472); color: #fff; }
+    .icon-red { background: linear-gradient(135deg, #dc3545, #f06070); color: #fff; }
 
     .stat-content { flex: 1; min-width: 0; }
     .stat-top {
@@ -316,8 +316,8 @@ interface StatCard {
       line-height: 1.1; letter-spacing: -0.03em;
     }
     .live-badge {
-      font-size: 0.625rem; font-weight: 600; color: #22c55e;
-      background: rgba(34, 197, 94, 0.1); padding: 2px 8px;
+      font-size: 0.625rem; font-weight: 600; color: #28a745;
+      background: rgba(40, 167, 69, 0.1); padding: 2px 8px;
       border-radius: 20px; letter-spacing: 0.04em;
       text-transform: uppercase; flex-shrink: 0;
     }
@@ -349,7 +349,7 @@ interface StatCard {
       background: var(--bg-tertiary, #f3f4f6); color: var(--text-secondary);
       font-size: 0.6875rem; font-weight: 600; padding: 2px 8px; border-radius: 10px;
     }
-    .badge.warning { background: #fef3c7; color: #d97706; }
+    .badge.warning { background: #fff3cd; color: #856404; }
     .panel-body { padding: 0.75rem 1.25rem; max-height: 380px; overflow-y: auto; }
     .empty-state { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8125rem; }
 
@@ -381,9 +381,9 @@ interface StatCard {
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
     .quick-link:hover {
-      border-color: var(--brand-color, #0d9488); color: var(--brand-color, #0d9488);
+      border-color: var(--brand-color, #002d5f); color: var(--brand-color, #002d5f);
       background: var(--bg-secondary); transform: translateX(4px);
-      box-shadow: 0 2px 8px rgba(13, 148, 136, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 45, 95, 0.1);
     }
     .quick-link-icon { display: flex; flex-shrink: 0; }
 
@@ -396,14 +396,14 @@ interface StatCard {
       flex-shrink: 0; width: 28px; height: 28px; border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
     }
-    .notif-warning { border-left: 3px solid #f59e0b; padding-left: 0.625rem; margin-left: -0.625rem; }
-    .notif-warning .notif-icon { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
-    .notif-danger { border-left: 3px solid #ef4444; padding-left: 0.625rem; margin-left: -0.625rem; }
-    .notif-danger .notif-icon { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-    .notif-info { border-left: 3px solid #3b82f6; padding-left: 0.625rem; margin-left: -0.625rem; }
-    .notif-info .notif-icon { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-    .notif-success { border-left: 3px solid #22c55e; padding-left: 0.625rem; margin-left: -0.625rem; }
-    .notif-success .notif-icon { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    .notif-warning { border-left: 3px solid #e6a817; padding-left: 0.625rem; margin-left: -0.625rem; }
+    .notif-warning .notif-icon { background: rgba(230, 168, 23, 0.1); color: #e6a817; }
+    .notif-danger { border-left: 3px solid #dc3545; padding-left: 0.625rem; margin-left: -0.625rem; }
+    .notif-danger .notif-icon { background: rgba(220, 53, 69, 0.1); color: #dc3545; }
+    .notif-info { border-left: 3px solid #17a2b8; padding-left: 0.625rem; margin-left: -0.625rem; }
+    .notif-info .notif-icon { background: rgba(23, 162, 184, 0.1); color: #17a2b8; }
+    .notif-success { border-left: 3px solid #28a745; padding-left: 0.625rem; margin-left: -0.625rem; }
+    .notif-success .notif-icon { background: rgba(40, 167, 69, 0.1); color: #28a745; }
     .notif-content { flex: 1; min-width: 0; }
     .notif-title { font-size: 0.8125rem; font-weight: 600; color: var(--text-primary); }
     .notif-msg { font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px; }
@@ -644,98 +644,98 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     if (role.includes('SUPER_ADMIN')) {
       return [
-        { label: 'Users', route: '/security/users', icon: iconPaths.users, color: '#6366f1' },
-        { label: 'Roles', route: '/security/roles', icon: iconPaths.bell, color: '#3b82f6' },
-        { label: 'Permissions', route: '/security/permissions', icon: iconPaths.check, color: '#22c55e' },
-        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#f59e0b' },
+        { label: 'Users', route: '/security/users', icon: iconPaths.users, color: '#002d5f' },
+        { label: 'Roles', route: '/security/roles', icon: iconPaths.bell, color: '#0056b3' },
+        { label: 'Permissions', route: '/security/permissions', icon: iconPaths.check, color: '#28a745' },
+        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#e6a817' },
       ];
     }
 
     if (role.includes('UNIVERSITY_ADMIN') || role.includes('HALL_PROVOST') || role.includes('TRANSPORT_MANAGER') || role.includes('GENERAL_STAFF')) {
       return [
-        { label: 'Faculties', route: '/academic/faculty', icon: iconPaths.users, color: '#6366f1' },
-        { label: 'Departments', route: '/academic/departments', icon: iconPaths.book, color: '#3b82f6' },
-        { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#22c55e' },
-        { label: 'Courses', route: '/academic/courses', icon: iconPaths.book, color: '#f59e0b' },
-        { label: 'Employees', route: '/hrm/employees', icon: iconPaths.users, color: '#ec4899' },
-        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#8b5cf6' },
+        { label: 'Faculties', route: '/academic/faculty', icon: iconPaths.users, color: '#002d5f' },
+        { label: 'Departments', route: '/academic/departments', icon: iconPaths.book, color: '#0056b3' },
+        { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#28a745' },
+        { label: 'Courses', route: '/academic/courses', icon: iconPaths.book, color: '#e6a817' },
+        { label: 'Employees', route: '/hrm/employees', icon: iconPaths.users, color: '#c8102e' },
+        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#5a3e8e' },
       ];
     }
 
     if (role.includes('FACULTY') || role.includes('ADVISOR')) {
       return [
-        { label: 'My Courses', route: '/academic/courses', icon: iconPaths.book, color: '#3b82f6' },
-        { label: 'Attendance', route: '/students/attendance', icon: iconPaths.check, color: '#22c55e' },
-        { label: 'Assignments', route: '/lms/assignments', icon: iconPaths.users, color: '#6366f1' },
-        { label: 'Results', route: '/examination/results', icon: iconPaths.chart, color: '#f59e0b' },
-        { label: 'Notices', route: '/communication/notices', icon: iconPaths.bell, color: '#ec4899' },
-        { label: 'Schedule', route: '/academic/class-routines', icon: iconPaths.calendar, color: '#8b5cf6' },
+        { label: 'My Courses', route: '/academic/courses', icon: iconPaths.book, color: '#0056b3' },
+        { label: 'Attendance', route: '/students/attendance', icon: iconPaths.check, color: '#28a745' },
+        { label: 'Assignments', route: '/lms/assignments', icon: iconPaths.users, color: '#002d5f' },
+        { label: 'Results', route: '/examination/results', icon: iconPaths.chart, color: '#e6a817' },
+        { label: 'Notices', route: '/communication/notices', icon: iconPaths.bell, color: '#c8102e' },
+        { label: 'Schedule', route: '/academic/class-routines', icon: iconPaths.calendar, color: '#5a3e8e' },
       ];
     }
 
     if (role.includes('STUDENT')) {
       return [
-        { label: 'My Courses', route: '/students/enrollments', icon: iconPaths.book, color: '#3b82f6' },
-        { label: 'Schedule', route: '/academic/class-routines', icon: iconPaths.calendar, color: '#6366f1' },
-        { label: 'Exams', route: '/examination/exams', icon: iconPaths.check, color: '#f59e0b' },
-        { label: 'Library', route: '/library/books', icon: iconPaths.book, color: '#22c55e' },
-        { label: 'Notices', route: '/communication/notices', icon: iconPaths.bell, color: '#ec4899' },
-        { label: 'LMS', route: '/lms/assignments', icon: iconPaths.monitor, color: '#8b5cf6' },
+        { label: 'My Courses', route: '/students/enrollments', icon: iconPaths.book, color: '#0056b3' },
+        { label: 'Schedule', route: '/academic/class-routines', icon: iconPaths.calendar, color: '#002d5f' },
+        { label: 'Exams', route: '/examination/exams', icon: iconPaths.check, color: '#e6a817' },
+        { label: 'Library', route: '/library/books', icon: iconPaths.book, color: '#28a745' },
+        { label: 'Notices', route: '/communication/notices', icon: iconPaths.bell, color: '#c8102e' },
+        { label: 'LMS', route: '/lms/assignments', icon: iconPaths.monitor, color: '#5a3e8e' },
       ];
     }
 
     if (role.includes('ADMISSION_OFFICER')) {
       return [
-        { label: 'Applications', route: '/admissions/candidates', icon: iconPaths.users, color: '#6366f1' },
-        { label: 'Merit Lists', route: '/admissions/merit-lists', icon: iconPaths.chart, color: '#f59e0b' },
-        { label: 'Interviews', route: '/admissions/interviews', icon: iconPaths.check, color: '#22c55e' },
-        { label: 'Offer Letters', route: '/admissions/offer-letters', icon: iconPaths.book, color: '#3b82f6' },
+        { label: 'Applications', route: '/admissions/candidates', icon: iconPaths.users, color: '#002d5f' },
+        { label: 'Merit Lists', route: '/admissions/merit-lists', icon: iconPaths.chart, color: '#e6a817' },
+        { label: 'Interviews', route: '/admissions/interviews', icon: iconPaths.check, color: '#28a745' },
+        { label: 'Offer Letters', route: '/admissions/offer-letters', icon: iconPaths.book, color: '#0056b3' },
       ];
     }
 
     if (role.includes('ACCOUNTS_OFFICER')) {
       return [
-        { label: 'Payments', route: '/finance/payments', icon: iconPaths.credit, color: '#22c55e' },
-        { label: 'Invoices', route: '/finance/invoices', icon: iconPaths.book, color: '#3b82f6' },
-        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#8b5cf6' },
-        { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#6366f1' },
+        { label: 'Payments', route: '/finance/payments', icon: iconPaths.credit, color: '#28a745' },
+        { label: 'Invoices', route: '/finance/invoices', icon: iconPaths.book, color: '#0056b3' },
+        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#5a3e8e' },
+        { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#002d5f' },
       ];
     }
 
     if (role.includes('LIBRARIAN')) {
       return [
-        { label: 'Books', route: '/library/books', icon: iconPaths.book, color: '#3b82f6' },
-        { label: 'Issue/Return', route: '/library/issues', icon: iconPaths.check, color: '#22c55e' },
-        { label: 'Categories', route: '/library/categories', icon: iconPaths.users, color: '#6366f1' },
-         { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#8b5cf6' },
+        { label: 'Books', route: '/library/books', icon: iconPaths.book, color: '#0056b3' },
+        { label: 'Issue/Return', route: '/library/issues', icon: iconPaths.check, color: '#28a745' },
+        { label: 'Categories', route: '/library/categories', icon: iconPaths.users, color: '#002d5f' },
+         { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#5a3e8e' },
       ];
     }
 
     if (role.includes('REGISTRAR')) {
       return [
-        { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#6366f1' },
-        { label: 'Admissions', route: '/admissions/applications', icon: iconPaths.check, color: '#22c55e' },
-        { label: 'Courses', route: '/academic/courses', icon: iconPaths.book, color: '#3b82f6' },
-        { label: 'Exams', route: '/examination/exams', icon: iconPaths.calendar, color: '#f59e0b' },
-        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#8b5cf6' },
-        { label: 'Notices', route: '/communication/notices', icon: iconPaths.bell, color: '#ec4899' },
+        { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#002d5f' },
+        { label: 'Admissions', route: '/admissions/applications', icon: iconPaths.check, color: '#28a745' },
+        { label: 'Courses', route: '/academic/courses', icon: iconPaths.book, color: '#0056b3' },
+        { label: 'Exams', route: '/examination/exams', icon: iconPaths.calendar, color: '#e6a817' },
+        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#5a3e8e' },
+        { label: 'Notices', route: '/communication/notices', icon: iconPaths.bell, color: '#c8102e' },
       ];
     }
 
     if (role.includes('HR_MANAGER')) {
       return [
-        { label: 'Employees', route: '/hrm/employees', icon: iconPaths.users, color: '#6366f1' },
-        { label: 'Attendance', route: '/hrm/attendance', icon: iconPaths.check, color: '#22c55e' },
-        { label: 'Leave Requests', route: '/hrm/leave-requests', icon: iconPaths.bell, color: '#3b82f6' },
-        { label: 'Payrolls', route: '/hrm/payrolls', icon: iconPaths.credit, color: '#f59e0b' },
-        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#8b5cf6' },
-        { label: 'Notices', route: '/communication/notices', icon: iconPaths.calendar, color: '#ec4899' },
+        { label: 'Employees', route: '/hrm/employees', icon: iconPaths.users, color: '#002d5f' },
+        { label: 'Attendance', route: '/hrm/attendance', icon: iconPaths.check, color: '#28a745' },
+        { label: 'Leave Requests', route: '/hrm/leave-requests', icon: iconPaths.bell, color: '#0056b3' },
+        { label: 'Payrolls', route: '/hrm/payrolls', icon: iconPaths.credit, color: '#e6a817' },
+        { label: 'Reports', route: '/reports/generated', icon: iconPaths.chart, color: '#5a3e8e' },
+        { label: 'Notices', route: '/communication/notices', icon: iconPaths.calendar, color: '#c8102e' },
       ];
     }
 
     return [
-      { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#6366f1' },
-      { label: 'Courses', route: '/academic/courses', icon: iconPaths.book, color: '#3b82f6' },
+      { label: 'Students', route: '/students/list', icon: iconPaths.users, color: '#002d5f' },
+      { label: 'Courses', route: '/academic/courses', icon: iconPaths.book, color: '#0056b3' },
     ];
   });
 
@@ -779,7 +779,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private loadRecentActivities(): void {
     this.activityLogService.findRecent(5).pipe(takeUntil(this.destroy$)).subscribe({
       next: (logs) => {
-        const colors = ['#6366f1', '#22c55e', '#f59e0b', '#3b82f6', '#ec4899'];
+        const colors = ['#002d5f', '#28a745', '#e6a817', '#0056b3', '#c8102e'];
         this.recentActivities = logs.map((log, i) => ({
           title: log.action || 'Activity',
           description: log.description || `${log.module || 'System'} - ${log.entityType || ''}`,

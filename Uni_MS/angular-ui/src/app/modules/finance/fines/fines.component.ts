@@ -68,7 +68,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .btn-primary { background: var(--brand-color); color: #fff; }
     .btn-primary:hover { filter: brightness(0.9); }
     .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
-    .btn-success { background: #16a34a; color: #fff; }
+    .btn-success { background: #1e7e34; color: #fff; }
     .btn-success:hover { background: #15803d; }
   `]
 })

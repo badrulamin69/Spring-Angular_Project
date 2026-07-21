@@ -13,4 +13,8 @@ public interface AcademicCalendarRepository extends JpaRepository<AcademicCalend
     List<AcademicCalendar> findByEventType(String eventType);
     List<AcademicCalendar> findByIsHoliday(boolean isHoliday);
     List<AcademicCalendar> findByStartDateBetween(LocalDate start, LocalDate end);
+    List<AcademicCalendar> findBySemester_IdAndIsPublishedTrue(Long semesterId);
+    List<AcademicCalendar> findBySemester_IdAndEventType(Long semesterId, String eventType);
+    List<AcademicCalendar> findByStartDateGreaterThanEqualOrderByStartDateAsc(LocalDate date);
+    List<AcademicCalendar> findBySemester_IdAndIsHolidayTrue(Long semesterId);
 }

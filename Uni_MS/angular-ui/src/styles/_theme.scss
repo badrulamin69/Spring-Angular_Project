@@ -1,0 +1,73 @@
+// ============================================================================
+// NORTH SOUTH UNIVERSITY (NSU) INSPIRED COLOR THEME
+// Professional University Color Palette
+// ============================================================================
+
+// --- Core Brand Colors ---
+$nsu-primary: #002d5f;
+$nsu-primary-light: #004080;
+$nsu-primary-dark: #001a3a;
+$nsu-primary-lighter: #e8eef6;
+$nsu-secondary: #c8102e;
+$nsu-accent: #0056b3;
+$nsu-accent-light: #e0ecf7;
+
+// --- Neutral Colors ---
+$nsu-white: #ffffff;
+$nsu-black: #000000;
+$nsu-gray-50: #f8f9fa;
+$nsu-gray-100: #f1f3f5;
+$nsu-gray-200: #e9ecef;
+$nsu-gray-300: #dee2e6;
+$nsu-gray-400: #ced4da;
+$nsu-gray-500: #adb5bd;
+$nsu-gray-600: #6c757d;
+$nsu-gray-700: #495057;
+$nsu-gray-800: #343a40;
+$nsu-gray-900: #212529;
+
+// --- Text Colors ---
+$nsu-text-primary: #1a1a2e;
+$nsu-text-secondary: #4a5568;
+$nsu-text-muted: #718096;
+$nsu-text-on-dark: #e8edf4;
+$nsu-text-on-primary: #ffffff;
+
+// --- Background Colors ---
+$nsu-bg-page: #f0f3f7;
+$nsu-bg-surface: #ffffff;
+$nsu-bg-sidebar: #001a3a;
+$nsu-bg-tertiary: #f7f9fc;
+$nsu-bg-hover-dark: rgba(255, 255, 255, 0.08);
+$nsu-bg-hover-dark-strong: rgba(255, 255, 255, 0.14);
+$nsu-bg-hover-light: rgba(0, 45, 95, 0.06);
+$nsu-bg-hover-light-strong: rgba(0, 45, 95, 0.1);
+
+// --- Border Colors ---
+$nsu-border-light: rgba(255, 255, 255, 0.08);
+$nsu-border-default: #dee2e6;
+$nsu-border-focus: $nsu-primary;
+
+// --- Semantic Status Colors ---
+$nsu-success: #28a745;
+$nsu-success-light: #d4edda;
+$nsu-success-dark: #1e7e34;
+$nsu-warning: #e6a817;
+$nsu-warning-light: #fff3cd;
+$nsu-warning-dark: #b38600;
+$nsu-danger: #dc3545;
+$nsu-danger-light: #f8d7da;
+$nsu-danger-dark: #bd2130;
+$nsu-info: #17a2b8;
+$nsu-info-light: #d1ecf1;
+$nsu-info-dark: #117a8b;
+
+// --- Shadow Colors ---
+$nsu-shadow-sm: 0 1px 3px 0 rgba(0, 26, 58, 0.06);
+$nsu-shadow-md: 0 4px 8px -1px rgba(0, 26, 58, 0.08), 0 2px 4px -1px rgba(0, 26, 58, 0.04);
+$nsu-shadow-lg: 0 12px 20px -4px rgba(0, 26, 58, 0.1), 0 4px 8px -2px rgba(0, 26, 58, 0.04);
+
+// --- Gradient Colors ---
+$nsu-gradient-primary: linear-gradient(135deg, #001a3a, #002d5f);
+$nsu-gradient-primary-hover: linear-gradient(135deg, #002d5f, #004080);
+$nsu-gradient-sidebar: linear-gradient(180deg, #001a3a 0%, #002244 100%);

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SecurityDashboardService } from '../../../services/security-dashboard.service';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
@@ -146,8 +146,8 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .login-stat-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg-primary); border-radius: 8px; }
     .login-stat-label { font-size: 0.875rem; color: var(--text-secondary); }
     .login-stat-value { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); }
-    .login-stat-value.success { color: #16a34a; }
-    .login-stat-value.danger { color: #dc2626; }
+    .login-stat-value.success { color: #1e7e34; }
+    .login-stat-value.danger { color: #bd2130; }
     .activity-card { max-height: 500px; overflow: hidden; display: flex; flex-direction: column; }
     .activity-card .table-scroll { overflow-x: auto; flex: 1; }
     table { width: 100%; border-collapse: collapse; }
@@ -155,7 +155,7 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     th { background: var(--bg-tertiary); font-weight: 600; color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; }
     tr:hover { background: var(--bg-hover); }
     .badge { padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 500; }
-    .badge-info { background: #dbeafe; color: #1d4ed8; }
+    .badge-info { background: #dbeafe; color: #002d5f; }
     .empty-activity { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.875rem; }
     .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem; gap: 12px; color: var(--text-muted); }
     .spinner { width: 24px; height: 24px; border: 3px solid var(--border-color); border-top-color: var(--brand-color); border-radius: 50%; animation: spin 0.8s linear infinite; }

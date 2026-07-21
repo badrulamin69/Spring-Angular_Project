@@ -32,10 +32,10 @@ export class ToastService {
     const container = this.ensureContainer();
 
     const colors: Record<string, { bg: string; color: string; border: string; iconBg: string; icon: string }> = {
-      success: { bg: '#f0fdf4', color: '#166534', border: '#bbf7d0', iconBg: '#dcfce7', icon: '\u2713' },
-      error: { bg: '#fef2f2', color: '#dc2626', border: '#fecaca', iconBg: '#fee2e2', icon: '\u2717' },
-      warning: { bg: '#fffbeb', color: '#92400e', border: '#fde68a', iconBg: '#fef3c7', icon: '!' },
-      info: { bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe', iconBg: '#dbeafe', icon: 'i' },
+      success: { bg: '#d4edda', color: '#155724', border: '#a3d9b1', iconBg: '#c3e6cb', icon: '\u2713' },
+      error: { bg: '#f8d7da', color: '#721c24', border: '#f0b8bc', iconBg: '#f5c6cb', icon: '\u2717' },
+      warning: { bg: '#fff3cd', color: '#856404', border: '#ffe69c', iconBg: '#ffeeba', icon: '!' },
+      info: { bg: '#d1ecf1', color: '#0c5460', border: '#a6dce8', iconBg: '#bee5eb', icon: 'i' },
     };
 
     const c = colors[type] || colors['info'];

@@ -41,9 +41,9 @@ import { AuthService } from '../../../services/auth.service';
       box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
     .warning-icon { font-size: 48px; margin-bottom: 16px; }
-    h3 { font-size: 18px; color: #1e293b; margin: 0 0 8px; }
-    p { color: #64748b; margin: 0 0 24px; font-size: 14px; }
-    strong { color: #f59e0b; font-size: 18px; }
+    h3 { font-size: 18px; color: #1a1a2e; margin: 0 0 8px; }
+    p { color: #718096; margin: 0 0 24px; font-size: 14px; }
+    strong { color: #e6a817; font-size: 18px; }
     .warning-actions { display: flex; gap: 12px; justify-content: center; }
     .btn {
       padding: 10px 20px;
@@ -53,8 +53,8 @@ import { AuthService } from '../../../services/auth.service';
       cursor: pointer;
       border: none;
     }
-    .btn-primary { background: #6366f1; color: white; }
-    .btn-secondary { background: #e2e8f0; color: #475569; }
+    .btn-primary { background: #002d5f; color: white; }
+    .btn-secondary { background: #e9ecef; color: #495057; }
   `]
 })
 export class SessionTimeoutWarningComponent implements OnInit, OnDestroy {

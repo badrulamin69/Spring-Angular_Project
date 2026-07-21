@@ -145,23 +145,23 @@ import { environment } from '../../../../environments/environment';
     .btn-secondary { background: #e2e8f0; color: #475569; }
     .btn-outline { background: white; color: #475569; border: 1px solid #d1d5db; }
     .btn-sm { padding: 6px 12px; font-size: 0.8125rem; }
-    .btn-success { background: #22c55e; color: #fff; }
-    .btn-warning { background: #f59e0b; color: #fff; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    :host ::ng-deep .btn-icon-success { color: #22c55e; }
-    :host ::ng-deep .btn-icon-success:hover { background: #f0fdf4; color: #16a34a; }
-    :host ::ng-deep .btn-icon-warning { color: #f59e0b; }
-    :host ::ng-deep .btn-icon-warning:hover { background: #fffbeb; color: #d97706; }
-    :host ::ng-deep .btn-icon-danger { color: #ef4444; }
-    :host ::ng-deep .btn-icon-danger:hover { background: #fef2f2; color: #dc2626; }
-    :host ::ng-deep .btn-icon-info { color: #3b82f6; }
-    :host ::ng-deep .btn-icon-info:hover { background: #eff6ff; color: #2563eb; }
+    .btn-success { background: #28a745; color: #fff; }
+    .btn-warning { background: #e6a817; color: #fff; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    :host ::ng-deep .btn-icon-success { color: #28a745; }
+    :host ::ng-deep .btn-icon-success:hover { background: #f0fdf4; color: #1e7e34; }
+    :host ::ng-deep .btn-icon-warning { color: #e6a817; }
+    :host ::ng-deep .btn-icon-warning:hover { background: #fffbeb; color: #b38600; }
+    :host ::ng-deep .btn-icon-danger { color: #dc3545; }
+    :host ::ng-deep .btn-icon-danger:hover { background: #fef2f2; color: #bd2130; }
+    :host ::ng-deep .btn-icon-info { color: #0056b3; }
+    :host ::ng-deep .btn-icon-info:hover { background: #eff6ff; color: #004080; }
     .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
     .stat-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; text-align: center; }
     .stat-card .stat-val { display: block; font-size: 1.75rem; font-weight: 700; color: #1e293b; }
     .stat-card .stat-lbl { font-size: 0.8125rem; color: #64748b; }
-    .stat-card.draft .stat-val { color: #f59e0b; }
-    .stat-card.active .stat-val { color: #22c55e; }
+    .stat-card.draft .stat-val { color: #e6a817; }
+    .stat-card.active .stat-val { color: #28a745; }
     .stat-card.closed .stat-val { color: #6b7280; }
     .filter-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; padding: 0.75rem 1rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
     .filter-bar input, .filter-bar select { padding: 0.375rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.875rem; background: white; }

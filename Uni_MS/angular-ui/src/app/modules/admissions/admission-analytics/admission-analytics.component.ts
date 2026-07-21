@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -26,28 +26,28 @@ import { environment } from '../../../../environments/environment';
     } @else {
       <div class="analytics-grid">
         <div class="stat-card">
-          <div class="stat-icon" style="background:#6366f118;color:#6366f1"><span class="material-symbols-outlined">person_add</span></div>
+          <div class="stat-icon" style="background:#002d5f18;color:#002d5f"><span class="material-symbols-outlined">person_add</span></div>
           <div class="stat-info">
             <div class="stat-value">{{ totalApplications }}</div>
             <div class="stat-label">Total Applications</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon" style="background:#22c55e18;color:#22c55e"><span class="material-symbols-outlined">check_circle</span></div>
+          <div class="stat-icon" style="background:#28a74518;color:#28a745"><span class="material-symbols-outlined">check_circle</span></div>
           <div class="stat-info">
             <div class="stat-value">{{ approvedCount }}</div>
             <div class="stat-label">Approved</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon" style="background:#f59e0b18;color:#f59e0b"><span class="material-symbols-outlined">pending</span></div>
+          <div class="stat-icon" style="background:#e6a81718;color:#e6a817"><span class="material-symbols-outlined">pending</span></div>
           <div class="stat-info">
             <div class="stat-value">{{ pendingCount }}</div>
             <div class="stat-label">Pending</div>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon" style="background:#ef444418;color:#ef4444"><span class="material-symbols-outlined">cancel</span></div>
+          <div class="stat-icon" style="background:#dc354518;color:#dc3545"><span class="material-symbols-outlined">cancel</span></div>
           <div class="stat-info">
             <div class="stat-value">{{ rejectedCount }}</div>
             <div class="stat-label">Rejected</div>
@@ -80,14 +80,14 @@ import { environment } from '../../../../environments/environment';
               <svg class="line-chart" viewBox="0 0 400 150" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="adGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/>
-                    <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                    <stop offset="0%" stop-color="#002d5f" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#002d5f" stop-opacity="0"/>
                   </linearGradient>
                 </defs>
                 <path [attr.d]="areaPath" fill="url(#adGrad)" />
-                <path [attr.d]="linePath" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" />
+                <path [attr.d]="linePath" fill="none" stroke="#002d5f" stroke-width="2.5" stroke-linecap="round" />
                 @for (pt of points; track pt.x) {
-                  <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="4" fill="#6366f1" stroke="white" stroke-width="2" />
+                  <circle [attr.cx]="pt.x" [attr.cy]="pt.y" r="4" fill="#002d5f" stroke="white" stroke-width="2" />
                 }
               </svg>
               <div class="chart-labels">
@@ -102,7 +102,7 @@ import { environment } from '../../../../environments/environment';
         <div class="summary-card">
           <h3>Conversion Funnel</h3>
           <div class="funnel">
-            <div class="funnel-bar" style="width:100%;background:#6366f1"><span>Applications</span><span>{{ totalApplications }}</span></div>
+            <div class="funnel-bar" style="width:100%;background:#002d5f"><span>Applications</span><span>{{ totalApplications }}</span></div>
             <div class="funnel-bar" [style.width.%]="approvalRate + '%'"><span>Approved</span><span>{{ approvedCount }}</span></div>
             <div class="funnel-bar" [style.width.%]="enrollmentRate + '%'"><span>Enrolled</span><span>{{ enrolledCount }}</span></div>
           </div>
@@ -148,14 +148,14 @@ import { environment } from '../../../../environments/environment';
     .funnel-bar { display: flex; justify-content: space-between; padding: 10px 16px; border-radius: 6px; color: white; font-size: 12px; font-weight: 500; }
     .metric-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-color); font-size: 13px; color: var(--text-secondary); }
     .metric-val { font-weight: 600; color: var(--text-primary); }
-    .metric-val.green { color: #22c55e; }
-    .metric-val.blue { color: #3b82f6; }
-    .metric-val.amber { color: #f59e0b; }
+    .metric-val.green { color: #28a745; }
+    .metric-val.blue { color: #0056b3; }
+    .metric-val.amber { color: #e6a817; }
     .loading-state { text-align: center; padding: 4rem; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-    .loader { width: 36px; height: 36px; border: 3px solid var(--border-color); border-top-color: #6366f1; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .loader { width: 36px; height: 36px; border: 3px solid var(--border-color); border-top-color: #002d5f; border-radius: 50%; animation: spin 0.8s linear infinite; }
     .error-state { text-align: center; padding: 4rem; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 1rem; }
-    .error-state svg { color: #ef4444; opacity: 0.6; }
-    .retry-btn { padding: 0.5rem 1.25rem; border-radius: 8px; background: #6366f1; color: #fff; border: none; font-size: 0.8125rem; font-weight: 600; cursor: pointer; }
+    .error-state svg { color: #dc3545; opacity: 0.6; }
+    .retry-btn { padding: 0.5rem 1.25rem; border-radius: 8px; background: #002d5f; color: #fff; border: none; font-size: 0.8125rem; font-weight: 600; cursor: pointer; }
     .retry-btn:hover { opacity: 0.9; }
     .empty-chart { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8125rem; }
     @keyframes spin { to { transform: rotate(360deg); } }

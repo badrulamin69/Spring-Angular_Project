@@ -135,8 +135,8 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .btn-sm { padding: 5px 10px; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
     .btn-outline:hover { background: var(--bg-hover); }
-    .btn-enroll { background: #22c55e; color: #fff; }
-    .btn-enroll:hover { background: #16a34a; }
+    .btn-enroll { background: #28a745; color: #fff; }
+    .btn-enroll:hover { background: #1e7e34; }
     .btn-enroll:disabled { opacity: 0.6; cursor: not-allowed; }
     .table-scroll { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; }

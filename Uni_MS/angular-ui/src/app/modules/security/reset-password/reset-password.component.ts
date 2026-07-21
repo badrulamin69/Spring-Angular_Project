@@ -46,7 +46,7 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
             <div class="success-icon">
               <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
                 <circle cx="24" cy="24" r="24" fill="#dcfce7"/>
-                <path d="M16 24l5 5 11-11" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 24l5 5 11-11" stroke="#1e7e34" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
             <h3>Password Reset Successfully</h3>
@@ -75,7 +75,7 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .form-group label { display: block; font-size: 0.8125rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 4px; }
     .form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-primary); font-size: 0.875rem; transition: border-color 0.2s; }
     .form-control:focus { outline: none; border-color: var(--brand-color); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
-    .error-message { color: #ef4444; font-size: 0.8125rem; margin-bottom: 12px; }
+    .error-message { color: #dc3545; font-size: 0.8125rem; margin-bottom: 12px; }
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.15s; }
     .btn-primary { background: var(--brand-color); color: #fff; }
     .btn-primary:hover { filter: brightness(0.9); }

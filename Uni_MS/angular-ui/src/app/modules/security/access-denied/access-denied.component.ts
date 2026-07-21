@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   template: `
     <div class="denied-container">
       <div class="denied-card">
-        <span class="denied-icon">≡ƒÜ½</span>
+        <span class="denied-icon">=�ܽ</span>
         <h1>Access Denied</h1>
         <p>You do not have the required permissions to view this page.</p>
         <a routerLink="/" class="btn btn-primary">Go to Home</a>
@@ -49,7 +49,7 @@ import { RouterLink } from '@angular/router';
     .btn {
       display: inline-block;
       padding: 10px 20px;
-      background: #6366f1;
+      background: #002d5f;
       color: white;
       text-decoration: none;
       border-radius: 6px;

@@ -32,7 +32,7 @@ export class DashboardService {
             label: a.title || a.label,
             route: a.route,
             icon: a.icon,
-            color: '#6366f1',
+            color: '#002d5f',
           }));
         }
 

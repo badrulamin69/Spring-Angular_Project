@@ -14,7 +14,7 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
         <div class="card-header">
           <div class="uni-logo">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <rect width="48" height="48" rx="12" fill="#2563eb"/>
+              <rect width="48" height="48" rx="12" fill="#004080"/>
               <path d="M14 34V20l10-8 10 8v14H28V26h-8v8z" fill="#fff"/>
               <rect x="12" y="34" width="24" height="3" rx="1" fill="#fff"/>
             </svg>
@@ -224,22 +224,22 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; margin-bottom: 4px; font-size: 0.875rem; font-weight: 500; color: #374151; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.875rem; transition: border-color 0.15s; box-sizing: border-box; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #004080; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
     .searchable-select { position: relative; }
     .searchable-input { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.875rem; transition: border-color 0.15s; box-sizing: border-box; background: #fff; }
-    .searchable-input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .searchable-input:focus { outline: none; border-color: #004080; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
     .dropdown-list { position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; margin-top: 4px; }
     .dropdown-item { padding: 8px 12px; font-size: 0.875rem; cursor: pointer; color: #374151; }
-    .dropdown-item:hover { background: #f0f4ff; color: #2563eb; }
+    .dropdown-item:hover { background: #f0f4ff; color: #004080; }
     .dropdown-item.no-results { color: #9ca3af; cursor: default; font-style: italic; }
     .dropdown-item.no-results:hover { background: transparent; color: #9ca3af; }
     .upload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.5rem; }
     .upload-col label { display: block; margin-bottom: 6px; font-size: 0.875rem; font-weight: 500; color: #374151; }
     .photo-preview { position: relative; width: 100%; height: 100px; border-radius: 8px; overflow: hidden; border: 2px solid #e2e8f0; background: #fff; }
     .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
-    .photo-remove { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: #ef4444; color: #fff; border: none; cursor: pointer; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; line-height: 1; }
+    .photo-remove { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: #dc3545; color: #fff; border: none; cursor: pointer; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; line-height: 1; }
     .photo-dropzone.compact { border: 2px dashed #d1d5db; border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: border-color 0.15s, background 0.15s; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .photo-dropzone.compact:hover { border-color: #2563eb; background: #f0f4ff; }
+    .photo-dropzone.compact:hover { border-color: #004080; background: #f0f4ff; }
     .photo-dropzone.compact p { margin: 0.25rem 0 2px; font-size: 0.8125rem; color: #374151; font-weight: 500; }
     .photo-dropzone.compact span { font-size: 0.6875rem; color: #94a3af; }
     .signature-preview { position: relative; width: 100%; height: 100px; border-radius: 8px; overflow: hidden; border: 2px solid #e2e8f0; background: #fff; }
@@ -247,13 +247,13 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .signature-dropzone { min-height: 100px; }
     .form-actions { margin-top: 1.5rem; display: flex; gap: 1rem; align-items: center; }
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.15s; text-decoration: none; display: inline-flex; align-items: center; }
-    .btn-primary { background: #2563eb; color: #fff; }
-    .btn-primary:hover { background: #1d4ed8; }
+    .btn-primary { background: #004080; color: #fff; }
+    .btn-primary:hover { background: #002d5f; }
     .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-lg { padding: 12px 28px; font-size: 1rem; }
     .btn-outline { background: #fff; color: #374151; border: 1px solid #d1d5db; }
     .btn-outline:hover { background: #f9fafb; }
-    .btn-link { color: #2563eb; background: none; }
+    .btn-link { color: #004080; background: none; }
     .btn-link:hover { text-decoration: underline; }
     .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
     .alert-error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }

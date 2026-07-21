@@ -33,24 +33,24 @@ export class LayoutComponent implements OnInit {
 
   moduleColors: Record<string, string> = {
     'Security': '#1b3a5f',
-    'Academic': '#0d9488',
-    'Admissions': '#f59e0b',
+    'Academic': '#002d5f',
+    'Admissions': '#e6a817',
     'Students': '#0ea5e9',
-    'Teachers': '#8b5cf6',
-    'Administration': '#6366f1',
-    'HRM': '#ef4444',
-    'Examination': '#ec4899',
-    'LMS': '#14b8a6',
+    'Teachers': '#5a3e8e',
+    'Administration': '#002d5f',
+    'HRM': '#dc3545',
+    'Examination': '#c8102e',
+    'LMS': '#3388cc',
     'Finance': '#f97316',
-    'Library': '#06b6d4',
+    'Library': '#17a2b8',
     'Hostel': '#84cc16',
-    'Transport': '#8b5cf6',
+    'Transport': '#5a3e8e',
     'Communication': '#0284c7',
     'Activities': '#e11d48',
     'Reports': '#64748b',
     'Settings': '#475569',
     'System': '#1b3a5f',
-    'Dashboard': '#0d9488'
+    'Dashboard': '#002d5f'
   };
 
   isDarkMode = false;
@@ -91,7 +91,7 @@ export class LayoutComponent implements OnInit {
   }
 
   getModuleColor(module: MenuItem): string {
-    return this.moduleColors[module.title] || '#6366f1';
+    return this.moduleColors[module.title] || '#002d5f';
   }
 
   getModuleInitial(module: MenuItem): string {

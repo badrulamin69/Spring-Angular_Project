@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { StudentDashboardService } from '../../../services/student-dashboard.service';
@@ -110,14 +110,14 @@ import { StudentDashboardService } from '../../../services/student-dashboard.ser
     .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; cursor: pointer; transition: all 0.15s; }
     .stat-card:hover { border-color: var(--brand-color); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .stat-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .stat-icon.blue { background: rgba(59,130,246,0.1); color: #3b82f6; }
-    .stat-icon.green { background: rgba(16,185,129,0.1); color: #10b981; }
-    .stat-icon.orange { background: rgba(245,158,11,0.1); color: #f59e0b; }
-    .stat-icon.purple { background: rgba(139,92,246,0.1); color: #8b5cf6; }
-    .stat-icon.cyan { background: rgba(6,182,212,0.1); color: #06b6d4; }
-    .stat-icon.red { background: rgba(239,68,68,0.1); color: #ef4444; }
-    .stat-icon.teal { background: rgba(20,184,166,0.1); color: #14b8a6; }
-    .stat-icon.indigo { background: rgba(99,102,241,0.1); color: #6366f1; }
+    .stat-icon.blue { background: rgba(59,130,246,0.1); color: #0056b3; }
+    .stat-icon.green { background: rgba(16,185,129,0.1); color: #28a745; }
+    .stat-icon.orange { background: rgba(245,158,11,0.1); color: #e6a817; }
+    .stat-icon.purple { background: rgba(139,92,246,0.1); color: #5a3e8e; }
+    .stat-icon.cyan { background: rgba(6,182,212,0.1); color: #17a2b8; }
+    .stat-icon.red { background: rgba(239,68,68,0.1); color: #dc3545; }
+    .stat-icon.teal { background: rgba(20,184,166,0.1); color: #3388cc; }
+    .stat-icon.indigo { background: rgba(99,102,241,0.1); color: #002d5f; }
     .stat-info { display: flex; flex-direction: column; }
     .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
     .stat-label { font-size: 0.8rem; color: var(--text-muted); }

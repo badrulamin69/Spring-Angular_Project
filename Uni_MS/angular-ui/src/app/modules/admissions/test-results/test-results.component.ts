@@ -175,7 +175,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .bulk-input { padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.875rem; width: 100%; box-sizing: border-box; }
     .bulk-input:focus { outline: none; border-color: var(--brand-color); }
     .btn-icon { background: none; border: none; cursor: pointer; padding: 4px 6px; border-radius: 4px; color: var(--text-muted); display: inline-flex; }
-    .btn-icon-danger:hover { background: #fef2f2; color: #ef4444; }
+    .btn-icon-danger:hover { background: #fef2f2; color: #dc3545; }
     .upload-zone { border: 2px dashed var(--border-color); border-radius: 10px; padding: 32px; text-align: center; cursor: pointer; transition: border-color 0.15s; }
     .upload-zone:hover { border-color: var(--brand-color); }
     .upload-zone p { margin: 8px 0 4px; color: var(--text-secondary); font-size: 0.875rem; }

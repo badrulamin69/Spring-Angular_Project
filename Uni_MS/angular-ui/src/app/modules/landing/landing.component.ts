@@ -14,10 +14,12 @@ import { RouterLink } from '@angular/router';
       --bg-topbar: rgba(255, 255, 255, 0.85);
       --bg-dash: rgba(255, 255, 255, 0.9);
       --bg-dash-solid: rgba(255, 255, 255, 0.95);
-      --text-primary: #0f172a;
-      --text-secondary: #334155;
-      --text-muted: #64748b;
+      --text-primary: #1a1a2e;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
       --text-muted-dark: #475569;
+      --accent-color: #0056b3;
+      --brand-color: #002d5f;
       --border-ultralight: rgba(0, 0, 0, 0.02);
       --border-verylight: rgba(0, 0, 0, 0.03);
       --border-light: rgba(0, 0, 0, 0.04);
@@ -29,15 +31,17 @@ import { RouterLink } from '@angular/router';
     }
 
     :host-context(.dark-theme) {
-      --bg-base: #030014;
-      --bg-alt: #0a0520;
-      --bg-topbar: rgba(3, 0, 20, 0.85);
-      --bg-dash: rgba(15, 10, 40, 0.6);
-      --bg-dash-solid: rgba(15, 10, 40, 0.8);
-      --text-primary: #f8fafc;
-      --text-secondary: #e2e8f0;
-      --text-muted: #94a3b8;
-      --text-muted-dark: #64748b;
+      --bg-base: #0a1628;
+      --bg-alt: #0f1f3a;
+      --bg-topbar: rgba(10, 22, 40, 0.85);
+      --bg-dash: rgba(15, 25, 50, 0.6);
+      --bg-dash-solid: rgba(15, 25, 50, 0.8);
+      --text-primary: #e8edf5;
+      --text-secondary: #b0bec5;
+      --text-muted: #78909c;
+      --text-muted-dark: #546e7a;
+      --accent-color: #5b9bd5;
+      --brand-color: #002d5f;
       --border-ultralight: rgba(255, 255, 255, 0.02);
       --border-verylight: rgba(255, 255, 255, 0.03);
       --border-light: rgba(255, 255, 255, 0.04);
@@ -109,7 +113,7 @@ import { RouterLink } from '@angular/router';
     }
 
     .brand-name span {
-      color: #a78bfa;
+      color: #8bb8e0;
     }
 
     .topbar-nav {
@@ -160,7 +164,7 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 8px;
       padding: 10px 20px;
-      background: linear-gradient(135deg, #6366f1, #7c3aed);
+      background: linear-gradient(135deg, #002d5f, #0056b3);
       color: var(--text-primary);
       border: none;
       border-radius: 10px;
@@ -169,13 +173,13 @@ import { RouterLink } from '@angular/router';
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), inset 0 1px 0 var(--border-stronger);
-      border: 1px solid rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 20px rgba(0, 45, 95, 0.3), inset 0 1px 0 var(--border-stronger);
+      border: 1px solid rgba(0, 45, 95, 0.5);
     }
 
     .btn-smart:hover {
       transform: translateY(-1px);
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.5), inset 0 1px 0 var(--border-visible);
+      box-shadow: 0 0 30px rgba(0, 45, 95, 0.5), inset 0 1px 0 var(--border-visible);
     }
 
     .btn-smart svg {
@@ -247,13 +251,13 @@ import { RouterLink } from '@angular/router';
     .hero-glow-1 {
       top: -200px;
       left: -100px;
-      background: #6366f1;
+      background: #002d5f;
     }
 
     .hero-glow-2 {
       bottom: -200px;
       right: -100px;
-      background: #7c3aed;
+      background: #0056b3;
     }
 
     .hero-content {
@@ -273,11 +277,11 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 8px;
       padding: 6px 14px 6px 6px;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.2);
+      background: rgba(0, 45, 95, 0.15);
+      border: 1px solid rgba(0, 45, 95, 0.25);
       border-radius: 100px;
       font-size: 0.8125rem;
-      color: #a5b4fc;
+      color: #8bb8e0;
       font-weight: 500;
       margin-bottom: 1.5rem;
     }
@@ -286,7 +290,7 @@ import { RouterLink } from '@angular/router';
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #6366f1, #7c3aed);
+      background: linear-gradient(135deg, #002d5f, #0056b3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -308,7 +312,7 @@ import { RouterLink } from '@angular/router';
     }
 
     .hero-title .gradient {
-      background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+      background: linear-gradient(135deg, #5b9bd5 0%, #8bb8e0 50%, #b0d4f0 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -333,7 +337,7 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 10px;
       padding: 14px 28px;
-      background: linear-gradient(135deg, #6366f1, #7c3aed);
+      background: linear-gradient(135deg, #002d5f, #0056b3);
       color: var(--text-primary);
       border: none;
       border-radius: 12px;
@@ -342,12 +346,12 @@ import { RouterLink } from '@angular/router';
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.4), 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 30px rgba(0, 45, 95, 0.4), 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .btn-hero-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 40px rgba(99, 102, 241, 0.5), 0 8px 25px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 40px rgba(0, 45, 95, 0.5), 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     .btn-hero-primary svg {
@@ -416,9 +420,9 @@ import { RouterLink } from '@angular/router';
       border-radius: 50%;
     }
 
-    .dash-dots span:nth-child(1) { background: #ef4444; }
+    .dash-dots span:nth-child(1) { background: #dc3545; }
     .dash-dots span:nth-child(2) { background: #eab308; }
-    .dash-dots span:nth-child(3) { background: #22c55e; }
+    .dash-dots span:nth-child(3) { background: #28a745; }
 
     .dash-nav {
       display: flex;
@@ -434,8 +438,8 @@ import { RouterLink } from '@angular/router';
     }
 
     .dash-nav-item.active {
-      background: rgba(99, 102, 241, 0.15);
-      color: #818cf8;
+      background: rgba(0, 45, 95, 0.15);
+      color: #5b9bd5;
     }
 
     .dash-stats {
@@ -516,7 +520,7 @@ import { RouterLink } from '@angular/router';
       border-radius: 50%;
     }
 
-    .legend-dot.primary::before { background: #6366f1; }
+    .legend-dot.primary::before { background: #002d5f; }
     .legend-dot.secondary::before { background: #a855f7; }
 
     .dash-bars {
@@ -582,13 +586,13 @@ import { RouterLink } from '@angular/router';
     }
 
     .float-icon.green {
-      background: rgba(34, 197, 94, 0.15);
-      color: #22c55e;
+      background: rgba(40, 167, 69, 0.15);
+      color: #28a745;
     }
 
     .float-icon.blue {
-      background: rgba(59, 130, 246, 0.15);
-      color: #3b82f6;
+      background: rgba(0, 86, 179, 0.15);
+      color: #0056b3;
     }
 
     .float-text {
@@ -667,12 +671,12 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 6px;
       padding: 6px 14px;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.15);
+      background: rgba(0, 45, 95, 0.1);
+      border: 1px solid rgba(0, 45, 95, 0.15);
       border-radius: 100px;
       font-size: 0.8125rem;
       font-weight: 600;
-      color: #818cf8;
+      color: #5b9bd5;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 1.25rem;
@@ -784,7 +788,7 @@ import { RouterLink } from '@angular/router';
       left: 12%;
       right: 12%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 45, 95, 0.3), rgba(168, 85, 247, 0.3), transparent);
     }
 
     .step-card {
@@ -796,15 +800,15 @@ import { RouterLink } from '@angular/router';
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: rgba(99, 102, 241, 0.1);
-      border: 2px solid rgba(99, 102, 241, 0.2);
+      background: rgba(0, 45, 95, 0.1);
+      border: 2px solid rgba(0, 45, 95, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 1.5rem;
       font-size: 1.5rem;
       font-weight: 800;
-      color: #818cf8;
+      color: #5b9bd5;
       position: relative;
       z-index: 2;
     }
@@ -854,8 +858,8 @@ import { RouterLink } from '@angular/router';
     }
 
     .module-card:hover {
-      border-color: var(--mod-color, #6366f1);
-      box-shadow: 0 8px 24px -8px rgba(0,0,0,0.12), 0 0 0 1px var(--mod-color, #6366f1);
+      border-color: var(--mod-color, #002d5f);
+      box-shadow: 0 8px 24px -8px rgba(0,0,0,0.12), 0 0 0 1px var(--mod-color, #002d5f);
       transform: translateY(-2px);
     }
 
@@ -916,7 +920,7 @@ import { RouterLink } from '@angular/router';
 
     .module-card:hover .module-meta svg {
       transform: translateX(3px);
-      color: var(--mod-color, #6366f1);
+      color: var(--mod-color, #002d5f);
     }
 
     /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
@@ -947,7 +951,7 @@ import { RouterLink } from '@angular/router';
       letter-spacing: -1px;
       line-height: 1;
       margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #818cf8, #c084fc);
+      background: linear-gradient(135deg, #5b9bd5, #8bb8e0);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -977,7 +981,7 @@ import { RouterLink } from '@angular/router';
     .cta-glow {
       position: absolute;
       inset: -40px;
-      background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.15), transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(0, 45, 95, 0.15), transparent 70%);
       pointer-events: none;
     }
 
@@ -1027,7 +1031,7 @@ import { RouterLink } from '@angular/router';
     .demo-item-role {
       font-size: 0.75rem;
       font-weight: 700;
-      color: #818cf8;
+      color: #5b9bd5;
       margin-bottom: 4px;
     }
 
@@ -1151,17 +1155,17 @@ import { RouterLink } from '@angular/router';
 })
 export class LandingComponent implements OnInit, OnDestroy {
   features = [
-    { icon: 'shield', title: 'Role-Based Access Control', desc: 'Granular permissions with 50+ controls, 8 role templates, and dynamic menu assignment.', color: '#6366f1' },
-    { icon: 'school', title: 'Academic Management', desc: 'Departments, courses, batches, sections, subjects, and course assignments.', color: '#8b5cf6' },
-    { icon: 'person_add', title: 'Admissions Pipeline', desc: 'End-to-end admission with test scoring, academic results, and document verification.', color: '#a78bfa' },
+    { icon: 'shield', title: 'Role-Based Access Control', desc: 'Granular permissions with 50+ controls, 8 role templates, and dynamic menu assignment.', color: '#002d5f' },
+    { icon: 'school', title: 'Academic Management', desc: 'Departments, courses, batches, sections, subjects, and course assignments.', color: '#5a3e8e' },
+    { icon: 'person_add', title: 'Admissions Pipeline', desc: 'End-to-end admission with test scoring, academic results, and document verification.', color: '#0056b3' },
     { icon: 'groups', title: 'Student Lifecycle', desc: 'Enrollment, profiles, guardians, and complete student records management.', color: '#34d399' },
-    { icon: 'badge', title: 'Administration Management', desc: 'Administrative staff, officer profiles, and department management.', color: '#2dd4bf' },
+    { icon: 'badge', title: 'Administration Management', desc: 'Administrative staff, officer profiles, and department management.', color: '#5b9bd5' },
     { icon: 'business', title: 'HR & Payroll', desc: 'Employee records, leave management, attendance, and payroll processing.', color: '#fbbf24' },
-    { icon: 'quiz', title: 'Examination System', desc: 'Exam scheduling, marks entry, grade rules, and result publishing.', color: '#f472b6' },
+    { icon: 'quiz', title: 'Examination System', desc: 'Exam scheduling, marks entry, grade rules, and result publishing.', color: '#c8102e' },
     { icon: 'menu_book', title: 'Learning Management', desc: 'Assignments, submissions, course materials, and online class scheduling.', color: '#fb923c' },
     { icon: 'payments', title: 'Finance & Invoicing', desc: 'Fee types, student fees, invoices, payments, accounts, and transactions.', color: '#a3e635' },
     { icon: 'local_library', title: 'Library System', desc: 'Book catalog, categories, issue tracking, and return management.', color: '#38bdf8' },
-    { icon: 'apartment', title: 'Hostel Management', desc: 'Hostels, rooms, allocations, and occupancy tracking.', color: '#c084fc' },
+    { icon: 'apartment', title: 'Hostel Management', desc: 'Hostels, rooms, allocations, and occupancy tracking.', color: '#5b9bd5' },
     { icon: 'directions_bus', title: 'Transport', desc: 'Vehicles, routes, and transport allocation management.', color: '#fb7185' },
     { icon: 'mail', title: 'Communication Hub', desc: 'Notices, announcements, messages, and notification delivery.', color: '#4ade80' },
     { icon: 'emoji_events', title: 'Activities & Events', desc: 'Clubs, sports, events, and registration management.', color: '#e879f9' },
@@ -1182,21 +1186,21 @@ export class LandingComponent implements OnInit, OnDestroy {
   ];
 
   modules = [
-    { icon: 'school', name: 'Academic', desc: 'Faculties, departments, courses, sessions, semesters, batches, sections, subjects, curriculum, credit rules, prerequisites, and class routines.', color: '#6366f1', count: '18 sub-modules' },
-    { icon: 'assignment', name: 'Admissions', desc: 'Sessions, circulars, applications, test scoring, merit lists, interviews, document verification, enrollment, and student ID generation.', color: '#8b5cf6', count: '20 sub-modules' },
+    { icon: 'school', name: 'Academic', desc: 'Faculties, departments, courses, sessions, semesters, batches, sections, subjects, curriculum, credit rules, prerequisites, and class routines.', color: '#002d5f', count: '18 sub-modules' },
+    { icon: 'assignment', name: 'Admissions', desc: 'Sessions, circulars, applications, test scoring, merit lists, interviews, document verification, enrollment, and student ID generation.', color: '#5a3e8e', count: '20 sub-modules' },
     { icon: 'person', name: 'Students', desc: 'Student list, enrollments, profiles, guardians, attendance, academic history, course registration, results, transcripts, and certificates.', color: '#34d399', count: '17 sub-modules' },
-    { icon: 'person_add', name: 'Administration', desc: 'Administrative heads, academic heads, head of offices, and staff management across all divisions.', color: '#2dd4bf', count: '4 sub-modules' },
+    { icon: 'person_add', name: 'Administration', desc: 'Administrative heads, academic heads, head of offices, and staff management across all divisions.', color: '#5b9bd5', count: '4 sub-modules' },
     { icon: 'business', name: 'HRM', desc: 'Employee management, attendance tracking, leave requests, and payroll processing.', color: '#fbbf24', count: '4 sub-modules' },
-    { icon: 'quiz', name: 'Examination', desc: 'Exam scheduling, marks entry, grade rules, result publishing, and academic performance tracking.', color: '#f472b6', count: '5 sub-modules' },
+    { icon: 'quiz', name: 'Examination', desc: 'Exam scheduling, marks entry, grade rules, result publishing, and academic performance tracking.', color: '#c8102e', count: '5 sub-modules' },
     { icon: 'menu_book', name: 'Learning Management', desc: 'Assignments, submissions, course materials, and online class scheduling.', color: '#fb923c', count: '4 sub-modules' },
     { icon: 'payments', name: 'Finance', desc: 'Fee types, student fees, invoices, payments, accounts, and transaction management.', color: '#a3e635', count: '6 sub-modules' },
     { icon: 'local_library', name: 'Library', desc: 'Book catalog, categories, issue tracking, and return management.', color: '#38bdf8', count: '4 sub-modules' },
-    { icon: 'apartment', name: 'Hostel', desc: 'Hostels, rooms, allocations, and occupancy tracking for campus housing.', color: '#c084fc', count: '3 sub-modules' },
+    { icon: 'apartment', name: 'Hostel', desc: 'Hostels, rooms, allocations, and occupancy tracking for campus housing.', color: '#5b9bd5', count: '3 sub-modules' },
     { icon: 'directions_bus', name: 'Transport', desc: 'Vehicle management, route planning, and transport allocation for students and staff.', color: '#fb7185', count: '3 sub-modules' },
     { icon: 'mail', name: 'Communication', desc: 'Notices, announcements, messages, and notification delivery across the campus.', color: '#4ade80', count: '4 sub-modules' },
     { icon: 'emoji_events', name: 'Activities', desc: 'Clubs, sports, events, and student registration for extracurricular activities.', color: '#e879f9', count: '4 sub-modules' },
     { icon: 'assessment', name: 'Reports', desc: 'Custom report templates and generated analytics dashboards for data-driven decisions.', color: '#facc15', count: '2 sub-modules' },
-    { icon: 'shield', name: 'Security', desc: 'Users, roles, permissions, menus, audit logs, workflow management, and security settings.', color: '#ef4444', count: '18 sub-modules' },
+    { icon: 'shield', name: 'Security', desc: 'Users, roles, permissions, menus, audit logs, workflow management, and security settings.', color: '#dc3545', count: '18 sub-modules' },
   ];
 
   navScrolled = false;

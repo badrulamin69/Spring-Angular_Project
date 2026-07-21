@@ -77,7 +77,7 @@ import { TableColumn } from '../data-table/data-table.component';
     .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; margin-bottom: 5px; font-weight: 500; color: var(--text-secondary); font-size: 0.8125rem; }
-    .required { color: #ef4444; margin-left: 2px; }
+    .required { color: #dc3545; margin-left: 2px; }
     .form-control { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-primary); font-size: 0.875rem; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box; font-family: inherit; }
     .form-control:focus { outline: none; border-color: var(--brand-color); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
     textarea.form-control { resize: vertical; min-height: 60px; }
@@ -85,8 +85,8 @@ import { TableColumn } from '../data-table/data-table.component';
     .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; color: var(--text-primary); cursor: pointer; }
     .checkbox-label input { width: 16px; height: 16px; accent-color: var(--brand-color); }
     .alert { padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 0.8125rem; }
-    .alert-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-    .field-error { color: #dc2626; font-size: 0.75rem; margin-top: 4px; display: block; }
+    .alert-error { background: #fef2f2; color: #bd2130; border: 1px solid #fecaca; }
+    .field-error { color: #bd2130; font-size: 0.75rem; margin-top: 4px; display: block; }
     .modal-footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px; }
     .btn { padding: 8px 16px; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; }
     .btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); }

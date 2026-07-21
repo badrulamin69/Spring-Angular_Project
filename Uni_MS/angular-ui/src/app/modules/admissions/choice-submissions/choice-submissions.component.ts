@@ -95,19 +95,19 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
     .btn-outline { background: white; color: #475569; border: 1px solid #d1d5db; }
     .btn-sm { padding: 6px 12px; font-size: 0.8125rem; }
-    :host ::ng-deep .btn-icon-success { color: #22c55e; }
-    :host ::ng-deep .btn-icon-success:hover { background: #f0fdf4; color: #16a34a; }
-    :host ::ng-deep .btn-icon-warning { color: #f59e0b; }
-    :host ::ng-deep .btn-icon-warning:hover { background: #fffbeb; color: #d97706; }
-    :host ::ng-deep .btn-icon-info { color: #3b82f6; }
-    :host ::ng-deep .btn-icon-info:hover { background: #eff6ff; color: #2563eb; }
+    :host ::ng-deep .btn-icon-success { color: #28a745; }
+    :host ::ng-deep .btn-icon-success:hover { background: #f0fdf4; color: #1e7e34; }
+    :host ::ng-deep .btn-icon-warning { color: #e6a817; }
+    :host ::ng-deep .btn-icon-warning:hover { background: #fffbeb; color: #b38600; }
+    :host ::ng-deep .btn-icon-info { color: #0056b3; }
+    :host ::ng-deep .btn-icon-info:hover { background: #eff6ff; color: #004080; }
     .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
     .stat-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; text-align: center; }
     .stat-card .stat-val { display: block; font-size: 1.75rem; font-weight: 700; color: #1e293b; }
     .stat-card .stat-lbl { font-size: 0.8125rem; color: #64748b; }
-    .stat-card.draft .stat-val { color: #f59e0b; }
-    .stat-card.submitted .stat-val { color: #3b82f6; }
-    .stat-card.locked .stat-val { color: #22c55e; }
+    .stat-card.draft .stat-val { color: #e6a817; }
+    .stat-card.submitted .stat-val { color: #0056b3; }
+    .stat-card.locked .stat-val { color: #28a745; }
     .filter-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; padding: 0.75rem 1rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
     .filter-bar input, .filter-bar select { padding: 0.375rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.875rem; background: white; }
     .filter-bar input { flex: 1; min-width: 200px; }
@@ -123,7 +123,7 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .info-row strong { color: #1e293b; }
     .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
     .status-badge[data-status="DRAFT"] { background: #fef3c7; color: #92400e; }
-    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #1d4ed8; }
+    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #002d5f; }
     .status-badge[data-status="LOCKED"] { background: #d1fae5; color: #065f46; }
     .choices-list h4 { margin: 0 0 0.75rem; color: #1e293b; }
     .choice-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 0.5rem; }

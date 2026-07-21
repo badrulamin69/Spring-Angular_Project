@@ -167,8 +167,8 @@ export interface RowAction {
     .btn-sm { padding: 5px 10px; font-size: 0.8125rem; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
     .btn-outline:hover { background: var(--bg-hover); color: var(--text-primary); }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-danger:hover { background: #dc2626; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-danger:hover { background: #bd2130; }
     .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .table-scroll::-webkit-scrollbar { height: 6px; }
     .table-scroll::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
@@ -185,7 +185,7 @@ export interface RowAction {
     .col-actions { text-align: center; white-space: nowrap; }
     .btn-icon { background: none; border: none; cursor: pointer; padding: 4px 6px; border-radius: 4px; color: var(--text-muted); transition: all 0.15s; display: inline-flex; }
     .btn-icon:hover { background: var(--bg-hover); color: var(--text-primary); }
-    .btn-icon-danger:hover { background: #fef2f2; color: #ef4444; }
+    .btn-icon-danger:hover { background: #fef2f2; color: #dc3545; }
     .empty-state { text-align: center; padding: 3rem 1rem !important; color: var(--text-muted); }
     .empty-icon { font-size: 2rem; margin-bottom: 8px; }
     .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; gap: 12px; color: var(--text-muted); }

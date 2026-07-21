@@ -72,8 +72,8 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .page-sub { margin: 2px 0 0; font-size: 0.875rem; color: #64748b; }
     .header-actions { display: flex; gap: 0.5rem; }
     .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-success { background: #22c55e; color: #fff; }
-    .btn-warning { background: #f59e0b; color: #fff; }
+    .btn-success { background: #28a745; color: #fff; }
+    .btn-warning { background: #e6a817; color: #fff; }
     .btn-outline { background: white; color: #475569; border: 1px solid #d1d5db; }
     .btn-sm { padding: 6px 12px; font-size: 0.8125rem; }
     .info-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }

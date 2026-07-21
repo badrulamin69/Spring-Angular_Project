@@ -196,9 +196,9 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .stat-card { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; }
     .stat-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .stat-revenue .stat-icon { background: #ede9fe; color: #7c3aed; }
-    .stat-today .stat-icon { background: #dcfce7; color: #16a34a; }
-    .stat-pending .stat-icon { background: #fef3c7; color: #d97706; }
-    .stat-failed .stat-icon { background: #fee2e2; color: #dc2626; }
+    .stat-today .stat-icon { background: #dcfce7; color: #1e7e34; }
+    .stat-pending .stat-icon { background: #fef3c7; color: #b38600; }
+    .stat-failed .stat-icon { background: #fee2e2; color: #bd2130; }
     .stat-content { display: flex; flex-direction: column; gap: 2px; }
     .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
     .stat-label { font-size: 0.8125rem; color: var(--text-muted); }
@@ -215,7 +215,7 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
 
     .method-badge { padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 500; }
     .method-badge[data-method="CASH"] { background: #dcfce7; color: #166534; }
-    .method-badge[data-method="CARD"] { background: #dbeafe; color: #1d4ed8; }
+    .method-badge[data-method="CARD"] { background: #dbeafe; color: #002d5f; }
     .method-badge[data-method="BANK_TRANSFER"] { background: #ede9fe; color: #7c3aed; }
     .method-badge[data-method="ONLINE"] { background: #fef3c7; color: #92400e; }
     .method-badge[data-method="CHECK"] { background: #f3f4f6; color: #6b7280; }
@@ -227,20 +227,20 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
     .status-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: var(--bg-primary); border-radius: 8px; }
     .status-info { display: flex; align-items: center; gap: 10px; }
     .status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .status-dot[data-status="COMPLETED"] { background: #16a34a; }
-    .status-dot[data-status="APPROVED"] { background: #16a34a; }
-    .status-dot[data-status="PENDING"] { background: #d97706; }
-    .status-dot[data-status="FAILED"] { background: #dc2626; }
-    .status-dot[data-status="REJECTED"] { background: #dc2626; }
-    .status-dot[data-status="REFUNDED"] { background: #2563eb; }
+    .status-dot[data-status="COMPLETED"] { background: #1e7e34; }
+    .status-dot[data-status="APPROVED"] { background: #1e7e34; }
+    .status-dot[data-status="PENDING"] { background: #b38600; }
+    .status-dot[data-status="FAILED"] { background: #bd2130; }
+    .status-dot[data-status="REJECTED"] { background: #bd2130; }
+    .status-dot[data-status="REFUNDED"] { background: #004080; }
     .status-name { font-size: 0.875rem; color: var(--text-primary); font-weight: 500; }
     .status-stats { display: flex; flex-direction: column; align-items: flex-end; }
     .status-count { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); }
     .status-amount { font-size: 0.75rem; color: var(--text-muted); }
 
-    .text-green { color: #16a34a; }
-    .text-yellow { color: #d97706; }
-    .text-red { color: #dc2626; }
+    .text-green { color: #1e7e34; }
+    .text-yellow { color: #b38600; }
+    .text-red { color: #bd2130; }
 
     .empty-cell { text-align: center; padding: 2rem 1rem !important; color: var(--text-muted); }
 

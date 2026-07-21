@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
@@ -168,9 +168,9 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .toggle-btn { padding: 4px 10px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-muted); font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all 0.15s; }
     .toggle-btn:hover { background: var(--bg-hover); }
     .toggle-btn.active { font-weight: 600; }
-    .toggle-btn.inherit.active { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+    .toggle-btn.inherit.active { background: #dbeafe; color: #002d5f; border-color: #93c5fd; }
     .toggle-btn.grant.active { background: #dcfce7; color: #166534; border-color: #86efac; }
-    .toggle-btn.deny.active { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+    .toggle-btn.deny.active { background: #fee2e2; color: #bd2130; border-color: #fca5a5; }
     .empty-state { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.875rem; }
     .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem; gap: 12px; color: var(--text-muted); }
     .spinner { width: 24px; height: 24px; border: 3px solid var(--border-color); border-top-color: var(--brand-color); border-radius: 50%; animation: spin 0.8s linear infinite; }

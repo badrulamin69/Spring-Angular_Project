@@ -158,10 +158,10 @@ import { Router } from '@angular/router';
     .subtitle { color: #6b7280; margin: 4px 0 0; }
     .filter-bar { margin-bottom: 24px; }
     .allocation-card { background: white; border-radius: 12px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 6px solid #d1d5db; }
-    .allocation-card.allocated { border-left-color: #2563eb; }
-    .allocation-card.confirmed { border-left-color: #22c55e; }
-    .allocation-card.waiting { border-left-color: #f59e0b; }
-    .allocation-card.not-allocated { border-left-color: #ef4444; }
+    .allocation-card.allocated { border-left-color: #004080; }
+    .allocation-card.confirmed { border-left-color: #28a745; }
+    .allocation-card.waiting { border-left-color: #e6a817; }
+    .allocation-card.not-allocated { border-left-color: #dc3545; }
     .allocation-card.declined { border-left-color: #6b7280; }
     .allocation-card.expired { border-left-color: #9ca3af; }
     .allocation-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
@@ -176,13 +176,13 @@ import { Router } from '@angular/router';
     .allocation-details { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
     .detail-group label { display: block; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
     .detail-value { font-size: 16px; font-weight: 500; color: #1f2937; }
-    .detail-value.highlight { font-size: 20px; color: #2563eb; font-weight: 700; }
-    .detail-value.urgent { color: #ef4444; font-weight: 600; }
+    .detail-value.highlight { font-size: 20px; color: #004080; font-weight: 700; }
+    .detail-value.urgent { color: #dc3545; font-weight: 600; }
     .action-buttons { display: flex; gap: 16px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
     .btn { padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 15px; font-weight: 600; }
     .btn-lg { padding: 14px 32px; font-size: 16px; }
-    .btn-success { background: #22c55e; color: white; }
-    .btn-danger { background: #ef4444; color: white; }
+    .btn-success { background: #28a745; color: white; }
+    .btn-danger { background: #dc3545; color: white; }
     .btn-secondary { background: #e5e7eb; color: #374151; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .waiting-info { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 16px; margin-top: 16px; }

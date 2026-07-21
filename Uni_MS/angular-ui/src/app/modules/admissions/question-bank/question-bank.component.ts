@@ -166,7 +166,7 @@ import { environment } from '../../../../environments/environment';
     .btn-primary { background: #4F46E5; color: white; }
     .btn-primary:hover { background: #4338CA; }
     .btn-secondary { background: #e2e8f0; color: #475569; }
-    .btn-danger { background: #EF4444; color: white; }
+    .btn-danger { background: #dc3545; color: white; }
     .filter-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; padding: 0.75rem 1rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
     .filter-bar label { font-weight: 500; color: #475569; font-size: 0.875rem; }
     .filter-bar select { padding: 0.375rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.875rem; background: white; }

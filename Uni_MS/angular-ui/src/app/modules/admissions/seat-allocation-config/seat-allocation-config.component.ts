@@ -144,7 +144,7 @@ import { environment } from '../../../../environments/environment';
     .form-control { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
     .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
     .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 14px; font-weight: 500; }
-    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary { background: #004080; color: white; }
     .btn-secondary { background: #e5e7eb; color: #374151; }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   `]

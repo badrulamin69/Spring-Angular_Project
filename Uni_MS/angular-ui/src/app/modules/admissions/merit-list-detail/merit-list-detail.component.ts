@@ -85,8 +85,8 @@ import { environment } from '../../../../environments/environment';
     .btn-secondary { background: #e2e8f0; color: #475569; }
     .btn-outline { background: white; color: #475569; border: 1px solid #d1d5db; }
     .btn-sm { padding: 6px 12px; font-size: 0.8125rem; }
-    .btn-success { background: #22c55e; color: #fff; }
-    .btn-warning { background: #f59e0b; color: #fff; }
+    .btn-success { background: #28a745; color: #fff; }
+    .btn-warning { background: #e6a817; color: #fff; }
     .info-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
     .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem; }
     .info-label { display: block; font-size: 0.75rem; color: #64748b; margin-bottom: 0.25rem; }
@@ -99,8 +99,8 @@ import { environment } from '../../../../environments/environment';
     .stat-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; text-align: center; }
     .stat-card .stat-val { display: block; font-size: 1.75rem; font-weight: 700; color: #1e293b; }
     .stat-card .stat-lbl { font-size: 0.8125rem; color: #64748b; }
-    .stat-card.selected .stat-val { color: #22c55e; }
-    .stat-card.waiting .stat-val { color: #f59e0b; }
+    .stat-card.selected .stat-val { color: #28a745; }
+    .stat-card.waiting .stat-val { color: #e6a817; }
     .filter-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; padding: 0.75rem 1rem; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
     .filter-bar input, .filter-bar select { padding: 0.375rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.875rem; background: white; }
     .filter-bar input { flex: 1; min-width: 200px; }

@@ -178,8 +178,8 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .summary-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; text-align: center; }
     .summary-label { display: block; font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
     .summary-value { display: block; font-size: 0.9375rem; font-weight: 700; color: #1e293b; }
-    .summary-value.highlight { color: #2563eb; font-family: 'SF Mono', 'Consolas', monospace; font-size: 0.875rem; }
-    .status-pending { color: #d97706; background: #fef3c7; padding: 2px 10px; border-radius: 12px; display: inline-block; font-size: 0.8125rem !important; }
+    .summary-value.highlight { color: #004080; font-family: 'SF Mono', 'Consolas', monospace; font-size: 0.875rem; }
+    .status-pending { color: #b38600; background: #fef3c7; padding: 2px 10px; border-radius: 12px; display: inline-block; font-size: 0.8125rem !important; }
     .qr-section { text-align: center; margin-bottom: 1.5rem; padding: 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; }
     .qr-section h3 { margin: 0 0 12px; font-size: 1rem; color: #1e293b; }
     .qr-image { width: 180px; height: 180px; border: 2px solid #e2e8f0; border-radius: 8px; }
@@ -201,7 +201,7 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .detail-row:last-child { border-bottom: none; }
     .detail-label { font-size: 0.875rem; color: #64748b; }
     .detail-value { font-size: 0.875rem; color: #1e293b; font-weight: 600; }
-    .status-badge { color: #1d4ed8; background: #dbeafe; padding: 2px 10px; border-radius: 12px; font-size: 0.8125rem !important; }
+    .status-badge { color: #002d5f; background: #dbeafe; padding: 2px 10px; border-radius: 12px; font-size: 0.8125rem !important; }
     .action-buttons { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.15s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
     .btn-primary { background: #059669; color: #fff; }
@@ -217,9 +217,9 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .timeline-item { display: flex; gap: 14px; align-items: flex-start; position: relative; padding-bottom: 16px; padding-left: 4px; }
     .timeline-item:last-child { padding-bottom: 0; }
     .timeline-item:not(:last-child)::before { content: ''; position: absolute; left: 11px; top: 20px; bottom: 0; width: 2px; background: #e2e8f0; }
-    .timeline-item.active:not(:last-child)::before { background: #2563eb; }
+    .timeline-item.active:not(:last-child)::before { background: #004080; }
     .timeline-dot { width: 24px; height: 24px; border-radius: 50%; background: #e2e8f0; border: 3px solid #fff; box-shadow: 0 0 0 2px #e2e8f0; flex-shrink: 0; margin-top: 2px; z-index: 1; }
-    .timeline-item.active .timeline-dot { background: #2563eb; box-shadow: 0 0 0 2px #2563eb; }
+    .timeline-item.active .timeline-dot { background: #004080; box-shadow: 0 0 0 2px #004080; }
     .timeline-content strong { font-size: 0.875rem; color: #1e293b; display: block; margin-bottom: 2px; }
     .timeline-content p { margin: 0; font-size: 0.8125rem; color: #64748b; line-height: 1.4; }
     .warning-text { font-size: 0.8125rem; color: #b45309; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 10px 14px; margin-bottom: 1.5rem; text-align: left; }

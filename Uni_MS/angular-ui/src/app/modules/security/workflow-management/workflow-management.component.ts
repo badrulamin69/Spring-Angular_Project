@@ -156,12 +156,12 @@ import { DynamicFormComponent } from '../../../shared/dynamic-form/dynamic-form.
     .step-name { font-weight: 500; color: var(--text-primary); }
     .step-meta { display: flex; gap: 6px; margin-top: 4px; }
     .badge { padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
-    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-blue { background: #dbeafe; color: #002d5f; }
     .badge-green { background: #dcfce7; color: #15803d; }
     .step-actions { display: flex; gap: 4px; }
     .btn-icon { background: none; border: none; padding: 4px; cursor: pointer; color: var(--text-muted); border-radius: 4px; }
     .btn-icon:hover { background: var(--bg-tertiary); }
-    .btn-icon.danger:hover { color: #ef4444; }
+    .btn-icon.danger:hover { color: #dc3545; }
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 0.8125rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 4px; }
     .form-control { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-primary); font-size: 0.875rem; }

@@ -14,7 +14,7 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
         <div class="card-header">
           <div class="uni-logo">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <rect width="48" height="48" rx="12" fill="#2563eb"/>
+              <rect width="48" height="48" rx="12" fill="#004080"/>
               <path d="M14 34V20l10-8 10 8v14H28V26h-8v8z" fill="#fff"/>
               <rect x="12" y="34" width="24" height="3" rx="1" fill="#fff"/>
             </svg>
@@ -68,10 +68,10 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .card-header p { margin: 4px 0 0; color: #64748b; }
     .search-row { display: flex; gap: 8px; }
     .search-row input { flex: 1; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; }
-    .search-row input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .search-row input:focus { outline: none; border-color: #004080; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
     .btn { padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.875rem; font-weight: 500; transition: all 0.15s; }
-    .btn-primary { background: #2563eb; color: #fff; }
-    .btn-primary:hover { background: #1d4ed8; }
+    .btn-primary { background: #004080; color: #fff; }
+    .btn-primary:hover { background: #002d5f; }
     .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
     .alert { padding: 1rem; border-radius: 8px; margin-top: 1rem; }
     .alert-error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
@@ -82,7 +82,7 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .result-row .value { font-weight: 600; color: #1e293b; }
     .status-badge { padding: 2px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
     .status-badge[data-status="DRAFT"] { background: #f1f5f9; color: #64748b; }
-    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #1d4ed8; }
+    .status-badge[data-status="SUBMITTED"] { background: #dbeafe; color: #002d5f; }
     .status-badge[data-status="ADMIT_CARD_GENERATED"] { background: #d1fae5; color: #065f46; }
     .status-badge[data-status="TEST_COMPLETED"] { background: #e0e7ff; color: #3730a3; }
     .status-badge[data-status="MERIT_PROCESSED"] { background: #fef3c7; color: #92400e; }
@@ -90,7 +90,7 @@ import { PreAdmissionService } from '../../../services/pre-admission.service';
     .status-badge[data-status="ENROLLED"] { background: #a7f3d0; color: #065f46; }
     .status-badge[data-status="REJECTED"] { background: #fee2e2; color: #991b1b; }
     .footer-links { margin-top: 1.5rem; text-align: center; }
-    .footer-links a { color: #2563eb; text-decoration: none; font-size: 0.875rem; }
+    .footer-links a { color: #004080; text-decoration: none; font-size: 0.875rem; }
     .footer-links a:hover { text-decoration: underline; }
   `]
 })

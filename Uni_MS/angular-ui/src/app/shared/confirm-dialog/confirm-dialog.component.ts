@@ -1,4 +1,4 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -32,9 +32,9 @@ import { CommonModule } from '@angular/common';
     .confirm-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(4px); }
     .confirm-box { background: var(--bg-secondary); border-radius: 16px; padding: 28px; max-width: 380px; width: 90%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: popIn 0.2s ease-out; }
     .confirm-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 16px; }
-    .icon-danger { background: #fee2e2; color: #dc2626; }
-    .icon-warning { background: #fef3c7; color: #d97706; }
-    .icon-info { background: #dbeafe; color: #2563eb; }
+    .icon-danger { background: #f8d7da; color: #dc3545; }
+    .icon-warning { background: #fff3cd; color: #e6a817; }
+    .icon-info { background: #d1ecf1; color: #17a2b8; }
     .confirm-box h3 { margin: 0 0 8px; font-size: 1.125rem; color: var(--text-primary); }
     .confirm-box p { margin: 0 0 20px; font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; }
     .confirm-actions { display: flex; gap: 10px; justify-content: center; }

@@ -66,8 +66,8 @@ import { ApplicantPortalService } from '../../../services/applicant-portal.servi
     .empty-state h2 { color: #475569; margin: 0.5rem 0; }
     .empty-state p { color: #64748b; font-size: 0.9375rem; }
     .result-card { background: #fff; border: 2px solid #e2e8f0; border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
-    .result-card.selected { border-color: #22c55e; }
-    .result-card.waiting, .result-card.waiting-card { border-color: #f59e0b; }
+    .result-card.selected { border-color: #28a745; }
+    .result-card.waiting, .result-card.waiting-card { border-color: #e6a817; }
     .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
     .result-header h2 { margin: 0; color: #1e293b; }
     .status-badge { display: inline-block; padding: 4px 12px; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; }

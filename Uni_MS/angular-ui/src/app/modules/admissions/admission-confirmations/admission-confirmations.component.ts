@@ -246,9 +246,9 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
   styles: [`
     .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 24px; }
     .stat-card { background: var(--bg-secondary); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); }
-    .stat-card.warning .stat-value { color: #f59e0b; }
-    .stat-card.info .stat-value { color: #3b82f6; }
-    .stat-card.success .stat-value { color: #10b981; }
+    .stat-card.warning .stat-value { color: #e6a817; }
+    .stat-card.info .stat-value { color: #0056b3; }
+    .stat-card.success .stat-value { color: #28a745; }
     .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); }
     .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
     .table-wrapper { background: var(--bg-secondary); border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; }
@@ -260,12 +260,12 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-primary); }
     .btn-outline:hover { background: var(--bg-hover); }
-    .btn-primary { background: #3b82f6; color: #fff; }
-    .btn-primary:hover { background: #2563eb; }
-    .btn-success { background: #10b981; color: #fff; }
+    .btn-primary { background: #0056b3; color: #fff; }
+    .btn-primary:hover { background: #004080; }
+    .btn-success { background: #28a745; color: #fff; }
     .btn-success:hover { background: #059669; }
-    .btn-danger { background: #ef4444; color: #fff; }
-    .btn-danger:hover { background: #dc2626; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-danger:hover { background: #bd2130; }
     .table-scroll { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; }
     th, td { padding: 12px 16px; text-align: left; font-size: 0.875rem; border-bottom: 1px solid var(--border-color); }
@@ -275,15 +275,15 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
     .action-btns { display: flex; gap: 6px; }
     .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; white-space: nowrap; }
     .status-badge[data-status="PENDING"] { background: #fef3c7; color: #92400e; }
-    .status-badge[data-status="ALLOCATED"], .status-badge[data-status="DOCUMENTS_SUBMITTED"] { background: #dbeafe; color: #1d4ed8; }
+    .status-badge[data-status="ALLOCATED"], .status-badge[data-status="DOCUMENTS_SUBMITTED"] { background: #dbeafe; color: #002d5f; }
     .status-badge[data-status="DOCUMENTS_VERIFIED"] { background: #d1fae5; color: #065f46; }
     .status-badge[data-status="DOCUMENTS_REJECTED"] { background: #fee2e2; color: #991b1b; }
     .status-badge[data-status="FEE_PAID"] { background: #e0e7ff; color: #3730a3; }
     .status-badge[data-status="CONFIRMED"], .status-badge[data-status="ENROLLED"] { background: #dcfce7; color: #166534; }
     .empty-state { text-align: center; padding: 40px 16px; color: var(--text-muted); }
     .loading-state { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 40px; color: var(--text-muted); }
-    .spinner { width: 24px; height: 24px; border: 3px solid var(--border-color); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    .spinner-sm { width: 14px; height: 14px; border: 2px solid var(--border-color); border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
+    .spinner { width: 24px; height: 24px; border: 3px solid var(--border-color); border-top-color: #0056b3; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    .spinner-sm { width: 14px; height: 14px; border: 2px solid var(--border-color); border-top-color: #0056b3; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .pagination { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 16px; }
     .page-info { font-size: 0.875rem; color: var(--text-muted); }

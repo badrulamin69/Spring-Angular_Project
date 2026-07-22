@@ -4,6 +4,8 @@ import com.badrulamin.University_Management.entity.EntityAttachment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,7 +21,8 @@ public interface EntityAttachmentRepository extends JpaRepository<EntityAttachme
 
     long countByEntityTypeAndEntityId(String entityType, Long entityId);
 
-    long sumSizeByEntityTypeAndEntityId(String entityType, Long entityId);
+    @Query("SELECT COALESCE(SUM(a.size), 0) FROM EntityAttachment a WHERE a.entityType = :entityType AND a.entityId = :entityId AND a.status = 'ACTIVE'")
+    long sumSizeByEntityTypeAndEntityId(@Param("entityType") String entityType, @Param("entityId") Long entityId);
 
     List<EntityAttachment> findByUploadedBy_IdOrderByCreatedAtDesc(Long userId);
 }

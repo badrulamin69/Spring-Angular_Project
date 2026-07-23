@@ -2,6 +2,8 @@ package com.badrulamin.University_Management.service;
 
 import com.badrulamin.University_Management.entity.EntityComment;
 import com.badrulamin.University_Management.entity.User;
+import com.badrulamin.University_Management.exception.BusinessException;
+import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.repository.EntityCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -43,9 +45,9 @@ public class EntityCommentService {
     @Transactional
     public EntityComment updateComment(Long commentId, String content, Long currentUserId) {
         EntityComment comment = commentRepository.findById(commentId)
-            .orElseThrow(() -> new RuntimeException("Comment not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("EntityComment", "id", commentId));
         if (!comment.getUser().getId().equals(currentUserId)) {
-            throw new RuntimeException("You can only edit your own comments");
+            throw new BusinessException("You can only edit your own comments");
         }
         comment.setContent(content);
         comment.setEdited(true);
@@ -55,9 +57,9 @@ public class EntityCommentService {
     @Transactional
     public void deleteComment(Long commentId, Long currentUserId) {
         EntityComment comment = commentRepository.findById(commentId)
-            .orElseThrow(() -> new RuntimeException("Comment not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("EntityComment", "id", commentId));
         if (!comment.getUser().getId().equals(currentUserId)) {
-            throw new RuntimeException("You can only delete your own comments");
+            throw new BusinessException("You can only delete your own comments");
         }
         comment.setStatus(EntityComment.CommentStatus.DELETED);
         commentRepository.save(comment);

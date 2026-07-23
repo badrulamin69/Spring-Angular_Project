@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.service;
 
 import com.badrulamin.University_Management.entity.*;
+import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class AdmissionMeritListService {
     public void delete(Long id) {
         AdmissionMeritList list = findById(id);
         if ("PUBLISHED".equals(list.getStatus())) {
-            throw new RuntimeException("Cannot delete a published merit list. Unpublish it first.");
+            throw new BusinessException("Cannot delete a published merit list. Unpublish it first.");
         }
         entryRepository.deleteAll(entryRepository.findByMeritList_IdOrderByRankAsc(id));
         meritListRepository.deleteById(id);
@@ -149,7 +150,7 @@ public class AdmissionMeritListService {
     public AdmissionMeritList publish(Long id, String publishedBy) {
         AdmissionMeritList meritList = findById(id);
         if ("PUBLISHED".equals(meritList.getStatus())) {
-            throw new RuntimeException("Merit list is already published");
+            throw new BusinessException("Merit list is already published");
         }
         meritList.setStatus("PUBLISHED");
         meritList.setPublishedAt(LocalDateTime.now());
@@ -161,7 +162,7 @@ public class AdmissionMeritListService {
     public AdmissionMeritList unpublish(Long id) {
         AdmissionMeritList meritList = findById(id);
         if (!"PUBLISHED".equals(meritList.getStatus())) {
-            throw new RuntimeException("Merit list is not published");
+            throw new BusinessException("Merit list is not published");
         }
         meritList.setStatus("DRAFT");
         meritList.setPublishedAt(null);

@@ -4,6 +4,7 @@ import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 import com.lowagie.text.pdf.draw.LineSeparator;
+import com.badrulamin.University_Management.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -526,7 +527,7 @@ public class RegistrationPdfService {
             try {
                 this.baseFont = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.WINANSI, false);
             } catch (Exception e) {
-                throw new RuntimeException("Failed to load watermark font", e);
+                throw new BusinessException("Failed to load watermark font: " + e.getMessage());
             }
         }
 

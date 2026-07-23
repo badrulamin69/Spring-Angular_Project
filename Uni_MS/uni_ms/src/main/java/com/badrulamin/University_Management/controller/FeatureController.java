@@ -1,7 +1,6 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Feature;
-import com.badrulamin.University_Management.entity.FeatureAuditLog;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.FeatureService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,18 +19,21 @@ public class FeatureController {
     private FeatureService featureService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getAllFeatures() {
         List<Feature> features = featureService.getAllFeatures();
         return ResponseEntity.ok(ApiResponse.success(features));
     }
 
     @GetMapping("/states")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getFeatureStates() {
         Map<String, Boolean> states = featureService.getAllFeatureStates();
         return ResponseEntity.ok(ApiResponse.success(states));
     }
 
     @GetMapping("/enabled")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getEnabledFeatures() {
         List<String> enabled = featureService.getAllFeatureStates().entrySet().stream()
                 .filter(Map.Entry::getValue)
@@ -41,36 +43,43 @@ public class FeatureController {
     }
 
     @GetMapping("/stats")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<?> getStats() {
         return ResponseEntity.ok(ApiResponse.success(featureService.getFeatureStats()));
     }
 
     @GetMapping("/modules")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getModules() {
         return ResponseEntity.ok(ApiResponse.success(featureService.getModules()));
     }
 
     @GetMapping("/categories")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getCategories() {
         return ResponseEntity.ok(ApiResponse.success(featureService.getCategories()));
     }
 
     @GetMapping("/module/{moduleName}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getByModule(@PathVariable String moduleName) {
         return ResponseEntity.ok(ApiResponse.success(featureService.getFeaturesByModule(moduleName)));
     }
 
     @GetMapping("/category/{category}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getByCategory(@PathVariable String category) {
         return ResponseEntity.ok(ApiResponse.success(featureService.getFeaturesByCategory(category)));
     }
 
     @GetMapping("/audit-logs")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     public ResponseEntity<?> getAuditLogs(@RequestParam(required = false) String featureKey) {
         return ResponseEntity.ok(ApiResponse.success(featureService.getAuditLogs(featureKey)));
     }
 
     @GetMapping("/{featureKey}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getByKey(@PathVariable String featureKey) {
         Optional<Feature> feature = featureService.getFeatureByKey(featureKey);
         if (feature.isEmpty()) {
@@ -139,6 +148,7 @@ public class FeatureController {
     }
 
     @GetMapping("/check/{featureKey}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> checkFeature(@PathVariable String featureKey) {
         boolean enabled = featureService.isFeatureEnabled(featureKey);
         Map<String, Object> result = new HashMap<>();

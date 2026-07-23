@@ -70,10 +70,6 @@ public class AlumniController {
         Map<String, Object> stats = new HashMap<>();
         Page<Alumni> all = alumniService.findAll(PageRequest.of(0, 1));
         stats.put("totalAlumni", all.getTotalElements());
-        stats.put("availableForMentoring", alumniService.findAll(PageRequest.of(0, Integer.MAX_VALUE)).getContent().stream()
-                .filter(a -> Boolean.TRUE.equals(a.getIsAvailableForMentoring())).count());
-        stats.put("availableForRecruitment", alumniService.findAll(PageRequest.of(0, Integer.MAX_VALUE)).getContent().stream()
-                .filter(a -> Boolean.TRUE.equals(a.getIsAvailableForRecruitment())).count());
         return ResponseEntity.ok(stats);
     }
 }

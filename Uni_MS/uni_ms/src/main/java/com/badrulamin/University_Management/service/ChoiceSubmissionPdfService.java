@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.entity.ApplicantChoice;
 import com.badrulamin.University_Management.entity.ApplicantChoiceSubmission;
 import com.badrulamin.University_Management.entity.ChoiceFillingConfig;
@@ -60,7 +61,7 @@ public class ChoiceSubmissionPdfService {
 
             document.close();
         } catch (DocumentException e) {
-            throw new RuntimeException("Error generating PDF report", e);
+            throw new BusinessException("Error generating PDF report: " + e.getMessage());
         }
         return baos.toByteArray();
     }
@@ -132,7 +133,7 @@ public class ChoiceSubmissionPdfService {
 
             document.close();
         } catch (DocumentException e) {
-            throw new RuntimeException("Error generating applicant choices PDF", e);
+            throw new BusinessException("Error generating applicant choices PDF: " + e.getMessage());
         }
         return baos.toByteArray();
     }

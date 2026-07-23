@@ -19,23 +19,23 @@ export class ClassRoutineService {
   constructor(private http: HttpClient) {}
 
   getTimeslots(): Observable<TimeSlot[]> {
-    return this.http.get<TimeSlot[]>(`${this.apiUrl}/timeslots`);
+    return this.http.get<TimeSlot[]>(`${this.apiUrl}/time-slots`);
   }
 
   getTimeslotById(id: number): Observable<TimeSlot> {
-    return this.http.get<TimeSlot>(`${this.apiUrl}/timeslots/${id}`);
+    return this.http.get<TimeSlot>(`${this.apiUrl}/time-slots/${id}`);
   }
 
-  createTimeSlot(data: TimeSlot): Observable<TimeSlot> {
-    return this.http.post<TimeSlot>(`${this.apiUrl}/timeslots`, data);
+  createTimeSlot(data: Partial<TimeSlot>): Observable<TimeSlot> {
+    return this.http.post<TimeSlot>(`${this.apiUrl}/time-slots`, data);
   }
 
-  updateTimeSlot(id: number, data: TimeSlot): Observable<TimeSlot> {
-    return this.http.put<TimeSlot>(`${this.apiUrl}/timeslots/${id}`, data);
+  updateTimeSlot(id: number, data: Partial<TimeSlot>): Observable<TimeSlot> {
+    return this.http.put<TimeSlot>(`${this.apiUrl}/time-slots/${id}`, data);
   }
 
   deleteTimeSlot(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/timeslots/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/time-slots/${id}`);
   }
 
   getBuildings(): Observable<Building[]> {

@@ -122,21 +122,27 @@ public class SubjectOffering {
     private String roomNumber;
 
     @Column(name = "max_seats", nullable = false)
+    @Builder.Default
     private Integer maxSeats = 40;
 
     @Column(name = "enrolled_count", nullable = false)
+    @Builder.Default
     private Integer enrolledCount = 0;
 
     @Column(name = "waitlist_count", nullable = false)
+    @Builder.Default
     private Integer waitlistCount = 0;
 
     @Column(name = "max_waitlist")
+    @Builder.Default
     private Integer maxWaitlist = 10;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean isActive = true;
 
     @Column(length = 20)
+    @Builder.Default
     private String status = "ACTIVE";
 
     @Column(length = 500)

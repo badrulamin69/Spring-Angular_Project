@@ -78,12 +78,15 @@ public class AdmissionMeritListEntry {
     private String quotaType;
 
     @Column(name = "status", length = 50)
+    @Builder.Default
     private String status = "SELECTED";
 
     @Column(name = "is_offered")
+    @Builder.Default
     private Boolean isOffered = false;
 
     @Column(name = "is_enrolled")
+    @Builder.Default
     private Boolean isEnrolled = false;
 
     @Column(name = "remarks", length = 500)

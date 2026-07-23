@@ -79,6 +79,7 @@ public class CourseRegistration extends BaseEntity {
     private Double paymentAmount;
 
     @Column(name = "finalized", nullable = false)
+    @Builder.Default
     private Boolean finalized = false;
 
     @Column(name = "finalized_at")

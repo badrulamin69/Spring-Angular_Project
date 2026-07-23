@@ -44,10 +44,12 @@ public class EntityAttachment extends BaseEntity {
     private String category;
 
     @Column(name = "is_verified", nullable = false)
+    @Builder.Default
     private Boolean verified = false;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
+    @Builder.Default
     private AttachmentStatus status = AttachmentStatus.ACTIVE;
 
     public enum AttachmentStatus {

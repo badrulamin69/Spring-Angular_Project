@@ -57,6 +57,7 @@ public class AdmissionMeritList {
     private AdmissionTest test;
 
     @Column(nullable = false, length = 30)
+    @Builder.Default
     private String status = "DRAFT";
 
     @Column(name = "total_seats")

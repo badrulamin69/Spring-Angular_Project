@@ -1,6 +1,8 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Course;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
+import com.badrulamin.University_Management.payload.response.CourseResponse;
 import com.badrulamin.University_Management.service.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -26,7 +25,7 @@ public class CourseController {
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Course>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<CourseResponse>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -37,32 +36,33 @@ public class CourseController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Course> paged = courseService.searchCourses(search, departmentId, programId, pageable);
-        PagedResponse<Course> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        Page<CourseResponse> dtoPage = paged.map(courseService::toResponse);
+        PagedResponse<CourseResponse> response = new PagedResponse<>(dtoPage.getContent(), dtoPage.getNumber(), dtoPage.getSize(), dtoPage.getTotalElements(), dtoPage.getTotalPages(), dtoPage.isFirst(), dtoPage.isLast());
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Course> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(courseService.findById(id));
+    public ResponseEntity<ApiResponse<CourseResponse>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(courseService.toResponse(courseService.findById(id))));
     }
 
     @PreAuthorize("hasAuthority('COURSE_MANAGE')")
     @PostMapping
-    public ResponseEntity<Course> save(@Valid @RequestBody Course course) {
-        return ResponseEntity.ok(courseService.save(course));
+    public ResponseEntity<ApiResponse<CourseResponse>> save(@Valid @RequestBody Course course) {
+        return ResponseEntity.ok(ApiResponse.success(courseService.toResponse(courseService.save(course))));
     }
 
     @PreAuthorize("hasAuthority('COURSE_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Course> update(@PathVariable Long id, @Valid @RequestBody Course course) {
-        return ResponseEntity.ok(courseService.update(id, course));
+    public ResponseEntity<ApiResponse<CourseResponse>> update(@PathVariable Long id, @Valid @RequestBody Course course) {
+        return ResponseEntity.ok(ApiResponse.success(courseService.toResponse(courseService.update(id, course))));
     }
 
     @PreAuthorize("hasAuthority('COURSE_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         courseService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

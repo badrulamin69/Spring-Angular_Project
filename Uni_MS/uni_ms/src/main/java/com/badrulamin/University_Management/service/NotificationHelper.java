@@ -1,7 +1,9 @@
 package com.badrulamin.University_Management.service;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+    @Transactional(readOnly = true)
 @Component
 public class NotificationHelper {
 

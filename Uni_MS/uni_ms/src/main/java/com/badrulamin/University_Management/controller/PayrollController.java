@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Payroll;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.PayrollService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class PayrollController {
 
     @PreAuthorize("hasAuthority('HRM_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Payroll>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Payroll>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class PayrollController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Payroll> paged = payrollService.findAll(pageable);
         PagedResponse<Payroll> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('HRM_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Payroll> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(payrollService.findById(id));
+    public ResponseEntity<ApiResponse<Payroll>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(payrollService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('PAYROLL_MANAGE')")
     @PostMapping
-    public ResponseEntity<Payroll> save(@Valid @RequestBody Payroll payroll) {
-        return ResponseEntity.ok(payrollService.save(payroll));
+    public ResponseEntity<ApiResponse<Payroll>> save(@Valid @RequestBody Payroll payroll) {
+        return ResponseEntity.ok(ApiResponse.success(payrollService.save(payroll)));
     }
 
     @PreAuthorize("hasAuthority('PAYROLL_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Payroll> update(@PathVariable Long id, @Valid @RequestBody Payroll payroll) {
-        return ResponseEntity.ok(payrollService.update(id, payroll));
+    public ResponseEntity<ApiResponse<Payroll>> update(@PathVariable Long id, @Valid @RequestBody Payroll payroll) {
+        return ResponseEntity.ok(ApiResponse.success(payrollService.update(id, payroll)));
     }
 
     @PreAuthorize("hasAuthority('PAYROLL_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         payrollService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

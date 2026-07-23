@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmitCard;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmitCardService;
 import com.badrulamin.University_Management.service.AdmitCardPdfService;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
@@ -28,7 +29,7 @@ public class AdmitCardController {
 
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<AdmitCard>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<AdmitCard>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -37,50 +38,50 @@ public class AdmitCardController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<AdmitCard> paged = admitCardService.findAll(pageable);
         PagedResponse<AdmitCard> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<AdmitCard> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(admitCardService.findById(id));
+    public ResponseEntity<ApiResponse<AdmitCard>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admitCardService.findById(id)));
     }
 
     @GetMapping("/test/{testId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<List<AdmitCard>> findByTestId(@PathVariable Long testId) {
-        return ResponseEntity.ok(admitCardService.findByTestId(testId));
+    public ResponseEntity<ApiResponse<List<AdmitCard>>> findByTestId(@PathVariable Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(admitCardService.findByTestId(testId)));
     }
 
     @GetMapping("/registration/{registrationId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<List<AdmitCard>> findByRegistrationId(@PathVariable Long registrationId) {
-        return ResponseEntity.ok(admitCardService.findByRegistrationId(registrationId));
+    public ResponseEntity<ApiResponse<List<AdmitCard>>> findByRegistrationId(@PathVariable Long registrationId) {
+        return ResponseEntity.ok(ApiResponse.success(admitCardService.findByRegistrationId(registrationId)));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmitCard> save(@Valid @RequestBody AdmitCard admitCard) {
-        return ResponseEntity.ok(admitCardService.save(admitCard));
+    public ResponseEntity<ApiResponse<AdmitCard>> save(@Valid @RequestBody AdmitCard admitCard) {
+        return ResponseEntity.ok(ApiResponse.success(admitCardService.save(admitCard)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmitCard> update(@PathVariable Long id, @Valid @RequestBody AdmitCard admitCard) {
-        return ResponseEntity.ok(admitCardService.update(id, admitCard));
+    public ResponseEntity<ApiResponse<AdmitCard>> update(@PathVariable Long id, @Valid @RequestBody AdmitCard admitCard) {
+        return ResponseEntity.ok(ApiResponse.success(admitCardService.update(id, admitCard)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         admitCardService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PostMapping("/generate/{testId}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<List<AdmitCard>> generateAdmitCards(@PathVariable Long testId) {
-        return ResponseEntity.ok(admitCardService.generateAdmitCards(testId));
+    public ResponseEntity<ApiResponse<List<AdmitCard>>> generateAdmitCards(@PathVariable Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(admitCardService.generateAdmitCards(testId)));
     }
 
     @GetMapping("/{id}/pdf")

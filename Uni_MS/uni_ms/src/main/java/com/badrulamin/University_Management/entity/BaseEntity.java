@@ -8,12 +8,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.annotations.Where;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@Where(clause = "is_deleted = false")
 public abstract class BaseEntity {
 
     @jakarta.persistence.Id

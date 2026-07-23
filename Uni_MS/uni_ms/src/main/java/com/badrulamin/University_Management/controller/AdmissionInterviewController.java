@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionInterview;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionInterviewService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,27 +42,27 @@ public class AdmissionInterviewController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<AdmissionInterview> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionInterviewService.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionInterview>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionInterviewService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_CREATE')")
-    public ResponseEntity<AdmissionInterview> create(@Valid @RequestBody AdmissionInterview interview) {
-        return ResponseEntity.ok(admissionInterviewService.create(interview));
+    public ResponseEntity<ApiResponse<AdmissionInterview>> create(@Valid @RequestBody AdmissionInterview interview) {
+        return ResponseEntity.ok(ApiResponse.success(admissionInterviewService.create(interview)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_EDIT')")
-    public ResponseEntity<AdmissionInterview> update(@PathVariable Long id, @Valid @RequestBody AdmissionInterview interview) {
-        return ResponseEntity.ok(admissionInterviewService.update(id, interview));
+    public ResponseEntity<ApiResponse<AdmissionInterview>> update(@PathVariable Long id, @Valid @RequestBody AdmissionInterview interview) {
+        return ResponseEntity.ok(ApiResponse.success(admissionInterviewService.update(id, interview)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_DELETE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         admissionInterviewService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")

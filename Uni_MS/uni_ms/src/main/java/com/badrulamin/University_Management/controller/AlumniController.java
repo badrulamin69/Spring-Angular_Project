@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Alumni;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AlumniService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class AlumniController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<Alumni> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(alumniService.findById(id));
+    public ResponseEntity<ApiResponse<Alumni>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(alumniService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Alumni> create(@RequestBody Alumni alumni) {
-        return ResponseEntity.ok(alumniService.create(alumni));
+    public ResponseEntity<ApiResponse<Alumni>> create(@RequestBody Alumni alumni) {
+        return ResponseEntity.ok(ApiResponse.success(alumniService.create(alumni)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Alumni> update(@PathVariable Long id, @RequestBody Alumni alumni) {
-        return ResponseEntity.ok(alumniService.update(id, alumni));
+    public ResponseEntity<ApiResponse<Alumni>> update(@PathVariable Long id, @RequestBody Alumni alumni) {
+        return ResponseEntity.ok(ApiResponse.success(alumniService.update(id, alumni)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         alumniService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -74,6 +75,6 @@ public class AlumniController {
                 .filter(a -> Boolean.TRUE.equals(a.getIsAvailableForMentoring())).count());
         stats.put("availableForRecruitment", alumniService.findAll(PageRequest.of(0, Integer.MAX_VALUE)).getContent().stream()
                 .filter(a -> Boolean.TRUE.equals(a.getIsAvailableForRecruitment())).count());
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

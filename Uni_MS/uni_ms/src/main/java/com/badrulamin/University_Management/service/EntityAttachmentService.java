@@ -18,6 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EntityAttachmentService {
 
     private final EntityAttachmentRepository attachmentRepository;

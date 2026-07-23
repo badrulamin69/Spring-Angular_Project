@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Administration;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.AdministrationService;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class AdministrationController {
 
     @PreAuthorize("hasAuthority('ADMINISTRATION_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Administration>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Administration>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class AdministrationController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Administration> paged = administrationService.findAll(pageable);
         PagedResponse<Administration> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATION_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Administration> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(administrationService.findById(id));
+    public ResponseEntity<ApiResponse<Administration>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(administrationService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATION_MANAGE')")
     @PostMapping
-    public ResponseEntity<Administration> save(@Valid @RequestBody Administration administration) {
-        return ResponseEntity.ok(administrationService.save(administration));
+    public ResponseEntity<ApiResponse<Administration>> save(@Valid @RequestBody Administration administration) {
+        return ResponseEntity.ok(ApiResponse.success(administrationService.save(administration)));
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATION_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Administration> update(@PathVariable Long id, @Valid @RequestBody Administration administration) {
-        return ResponseEntity.ok(administrationService.update(id, administration));
+    public ResponseEntity<ApiResponse<Administration>> update(@PathVariable Long id, @Valid @RequestBody Administration administration) {
+        return ResponseEntity.ok(ApiResponse.success(administrationService.update(id, administration)));
     }
 
     @PreAuthorize("hasAuthority('ADMINISTRATION_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         administrationService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

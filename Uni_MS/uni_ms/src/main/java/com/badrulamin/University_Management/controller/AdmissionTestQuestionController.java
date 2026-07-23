@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionTestQuestion;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionTestQuestionService;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import jakarta.validation.Valid;
@@ -35,40 +36,40 @@ public class AdmissionTestQuestionController {
         Pageable pageable = PageRequest.of(page, size, sort);
         if (testId != null) {
             List<AdmissionTestQuestion> questions = service.findByTestId(testId);
-            return ResponseEntity.ok(questions);
+            return ResponseEntity.ok(ApiResponse.success(questions));
         }
         Page<AdmissionTestQuestion> paged = service.findAll(pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionTestQuestion> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionTestQuestion>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(service.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionTestQuestion> save(@Valid @RequestBody AdmissionTestQuestion question) {
-        return ResponseEntity.ok(service.save(question));
+    public ResponseEntity<ApiResponse<AdmissionTestQuestion>> save(@Valid @RequestBody AdmissionTestQuestion question) {
+        return ResponseEntity.ok(ApiResponse.success(service.save(question)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionTestQuestion> update(@PathVariable Long id, @Valid @RequestBody AdmissionTestQuestion question) {
-        return ResponseEntity.ok(service.update(id, question));
+    public ResponseEntity<ApiResponse<AdmissionTestQuestion>> update(@PathVariable Long id, @Valid @RequestBody AdmissionTestQuestion question) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, question)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/count")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<Map<String, Long>> countByTestId(@RequestParam Long testId) {
-        return ResponseEntity.ok(Map.of("count", service.countByTestId(testId)));
+    public ResponseEntity<ApiResponse<Map<String, Long>>> countByTestId(@RequestParam Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(Map.of("count", service.countByTestId(testId))));
     }
 }

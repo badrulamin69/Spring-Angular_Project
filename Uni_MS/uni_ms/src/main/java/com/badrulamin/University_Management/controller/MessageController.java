@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Message;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.MessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class MessageController {
 
     @PreAuthorize("hasAuthority('COMMUNICATION_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Message>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Message>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class MessageController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Message> paged = messageService.findAll(pageable);
         PagedResponse<Message> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('COMMUNICATION_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Message> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(messageService.findById(id));
+    public ResponseEntity<ApiResponse<Message>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(messageService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('COMMUNICATION_VIEW')")
     @PostMapping
-    public ResponseEntity<Message> save(@Valid @RequestBody Message message) {
-        return ResponseEntity.ok(messageService.save(message));
+    public ResponseEntity<ApiResponse<Message>> save(@Valid @RequestBody Message message) {
+        return ResponseEntity.ok(ApiResponse.success(messageService.save(message)));
     }
 
     @PreAuthorize("hasAuthority('COMMUNICATION_VIEW')")
     @PutMapping("/{id}")
-    public ResponseEntity<Message> update(@PathVariable Long id, @Valid @RequestBody Message message) {
-        return ResponseEntity.ok(messageService.update(id, message));
+    public ResponseEntity<ApiResponse<Message>> update(@PathVariable Long id, @Valid @RequestBody Message message) {
+        return ResponseEntity.ok(ApiResponse.success(messageService.update(id, message)));
     }
 
     @PreAuthorize("hasAuthority('COMMUNICATION_VIEW')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         messageService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

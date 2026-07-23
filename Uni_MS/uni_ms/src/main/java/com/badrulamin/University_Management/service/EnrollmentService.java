@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EnrollmentService {
 
     private final StudentRepository studentRepository;

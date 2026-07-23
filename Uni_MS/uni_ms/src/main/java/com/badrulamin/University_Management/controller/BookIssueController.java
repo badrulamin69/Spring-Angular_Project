@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.BookIssue;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.BookIssueService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class BookIssueController {
 
     @PreAuthorize("hasAuthority('LIBRARY_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<BookIssue>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<BookIssue>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class BookIssueController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<BookIssue> paged = bookIssueService.findAll(pageable);
         PagedResponse<BookIssue> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('LIBRARY_VIEW')")
-    public ResponseEntity<BookIssue> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(bookIssueService.findById(id));
+    public ResponseEntity<ApiResponse<BookIssue>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(bookIssueService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('BOOK_ISSUE')")
-    public ResponseEntity<BookIssue> save(@Valid @RequestBody BookIssue bookIssue) {
-        return ResponseEntity.ok(bookIssueService.save(bookIssue));
+    public ResponseEntity<ApiResponse<BookIssue>> save(@Valid @RequestBody BookIssue bookIssue) {
+        return ResponseEntity.ok(ApiResponse.success(bookIssueService.save(bookIssue)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('BOOK_ISSUE')")
-    public ResponseEntity<BookIssue> update(@PathVariable Long id, @Valid @RequestBody BookIssue bookIssue) {
-        return ResponseEntity.ok(bookIssueService.update(id, bookIssue));
+    public ResponseEntity<ApiResponse<BookIssue>> update(@PathVariable Long id, @Valid @RequestBody BookIssue bookIssue) {
+        return ResponseEntity.ok(ApiResponse.success(bookIssueService.update(id, bookIssue)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('BOOK_ISSUE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         bookIssueService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

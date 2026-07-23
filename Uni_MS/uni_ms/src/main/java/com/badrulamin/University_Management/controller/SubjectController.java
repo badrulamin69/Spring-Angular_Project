@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Subject;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.SubjectService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class SubjectController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
-    public ResponseEntity<PagedResponse<Subject>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Subject>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class SubjectController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Subject> paged = subjectService.findAll(pageable);
         PagedResponse<Subject> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
-    public ResponseEntity<Subject> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(subjectService.findById(id));
+    public ResponseEntity<ApiResponse<Subject>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(subjectService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('SUBJECT_MANAGE')")
-    public ResponseEntity<Subject> save(@Valid @RequestBody Subject subject) {
-        return ResponseEntity.ok(subjectService.save(subject));
+    public ResponseEntity<ApiResponse<Subject>> save(@Valid @RequestBody Subject subject) {
+        return ResponseEntity.ok(ApiResponse.success(subjectService.save(subject)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('SUBJECT_MANAGE')")
-    public ResponseEntity<Subject> update(@PathVariable Long id, @Valid @RequestBody Subject subject) {
-        return ResponseEntity.ok(subjectService.update(id, subject));
+    public ResponseEntity<ApiResponse<Subject>> update(@PathVariable Long id, @Valid @RequestBody Subject subject) {
+        return ResponseEntity.ok(ApiResponse.success(subjectService.update(id, subject)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('SUBJECT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         subjectService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

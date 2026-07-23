@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AuditLog;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AuditLogService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class AuditLogController {
 
     @PreAuthorize("hasAuthority('AUDIT_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<AuditLog>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<AuditLog>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class AuditLogController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<AuditLog> paged = auditLogService.findAll(pageable);
         PagedResponse<AuditLog> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('AUDIT_VIEW')")
-    public ResponseEntity<AuditLog> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(auditLogService.findById(id));
+    public ResponseEntity<ApiResponse<AuditLog>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(auditLogService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('AUDIT_VIEW')")
-    public ResponseEntity<AuditLog> save(@Valid @RequestBody AuditLog auditLog) {
-        return ResponseEntity.ok(auditLogService.save(auditLog));
+    public ResponseEntity<ApiResponse<AuditLog>> save(@Valid @RequestBody AuditLog auditLog) {
+        return ResponseEntity.ok(ApiResponse.success(auditLogService.save(auditLog)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('AUDIT_VIEW')")
-    public ResponseEntity<AuditLog> update(@PathVariable Long id, @Valid @RequestBody AuditLog auditLog) {
-        return ResponseEntity.ok(auditLogService.update(id, auditLog));
+    public ResponseEntity<ApiResponse<AuditLog>> update(@PathVariable Long id, @Valid @RequestBody AuditLog auditLog) {
+        return ResponseEntity.ok(ApiResponse.success(auditLogService.update(id, auditLog)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('AUDIT_VIEW')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         auditLogService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

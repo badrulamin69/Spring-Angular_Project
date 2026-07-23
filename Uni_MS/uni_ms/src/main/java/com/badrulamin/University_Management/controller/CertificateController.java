@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Certificate;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.CertificateService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class CertificateController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<Certificate> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(certificateService.findById(id));
+    public ResponseEntity<ApiResponse<Certificate>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(certificateService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Certificate> create(@RequestBody Certificate certificate) {
-        return ResponseEntity.ok(certificateService.create(certificate));
+    public ResponseEntity<ApiResponse<Certificate>> create(@RequestBody Certificate certificate) {
+        return ResponseEntity.ok(ApiResponse.success(certificateService.create(certificate)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Certificate> update(@PathVariable Long id, @RequestBody Certificate certificate) {
-        return ResponseEntity.ok(certificateService.update(id, certificate));
+    public ResponseEntity<ApiResponse<Certificate>> update(@PathVariable Long id, @RequestBody Certificate certificate) {
+        return ResponseEntity.ok(ApiResponse.success(certificateService.update(id, certificate)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         certificateService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class CertificateController {
         stats.put("totalPending", certificateService.countByStatus("PENDING"));
         stats.put("totalRevoked", certificateService.countByStatus("REVOKED"));
         stats.put("totalRequested", certificateService.countByStatus("REQUESTED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

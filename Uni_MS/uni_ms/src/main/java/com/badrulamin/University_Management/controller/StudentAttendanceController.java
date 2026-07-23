@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.StudentAttendance;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.StudentAttendanceService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class StudentAttendanceController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<StudentAttendance> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentAttendanceService.findById(id));
+    public ResponseEntity<ApiResponse<StudentAttendance>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(studentAttendanceService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<StudentAttendance> create(@RequestBody StudentAttendance studentAttendance) {
-        return ResponseEntity.ok(studentAttendanceService.create(studentAttendance));
+    public ResponseEntity<ApiResponse<StudentAttendance>> create(@RequestBody StudentAttendance studentAttendance) {
+        return ResponseEntity.ok(ApiResponse.success(studentAttendanceService.create(studentAttendance)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<StudentAttendance> update(@PathVariable Long id, @RequestBody StudentAttendance studentAttendance) {
-        return ResponseEntity.ok(studentAttendanceService.update(id, studentAttendance));
+    public ResponseEntity<ApiResponse<StudentAttendance>> update(@PathVariable Long id, @RequestBody StudentAttendance studentAttendance) {
+        return ResponseEntity.ok(ApiResponse.success(studentAttendanceService.update(id, studentAttendance)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         studentAttendanceService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class StudentAttendanceController {
         stats.put("totalAbsent", studentAttendanceService.countByStatus("ABSENT"));
         stats.put("totalLate", studentAttendanceService.countByStatus("LATE"));
         stats.put("totalExcused", studentAttendanceService.countByStatus("EXCUSED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

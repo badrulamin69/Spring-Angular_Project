@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.repository.*;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +31,7 @@ public class SecurityDashboardController {
 
     @GetMapping("/stats")
     @PreAuthorize("hasAuthority('DASHBOARD_VIEW')")
-    public ResponseEntity<Map<String, Object>> getStats() {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats() {
         long totalUsers = userRepository.count();
         long activeUsers = userRepository.countByActiveTrue();
         long inactiveUsers = totalUsers - activeUsers;
@@ -54,12 +55,12 @@ public class SecurityDashboardController {
         stats.put("activeSessions", activeSessions);
         stats.put("userOverrides", userOverrides);
 
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 
     @GetMapping("/recent-activities")
     @PreAuthorize("hasAuthority('DASHBOARD_VIEW')")
-    public ResponseEntity<List<Map<String, Object>>> getRecentActivities() {
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getRecentActivities() {
         List<Map<String, Object>> activities = new ArrayList<>();
 
         try {
@@ -80,12 +81,12 @@ public class SecurityDashboardController {
         } catch (Exception ignored) {
         }
 
-        return ResponseEntity.ok(activities);
+        return ResponseEntity.ok(ApiResponse.success(activities));
     }
 
     @GetMapping("/login-stats")
     @PreAuthorize("hasAuthority('DASHBOARD_VIEW')")
-    public ResponseEntity<Map<String, Object>> getLoginStats() {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getLoginStats() {
         long successfulLogins = loginHistoryRepository.countBySuccessTrue();
         long failedLogins = loginHistoryRepository.countBySuccessFalse();
 
@@ -103,6 +104,6 @@ public class SecurityDashboardController {
         stats.put("todayLogins", todayLogins);
         stats.put("thisWeekLogins", thisWeekLogins);
 
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

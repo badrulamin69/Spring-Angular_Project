@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Permission;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.entity.UserPermission;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.UserPermissionService;
@@ -25,7 +26,7 @@ public class UserPermissionController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<PagedResponse<UserPermission>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<UserPermission>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -34,51 +35,51 @@ public class UserPermissionController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<UserPermission> paged = userPermissionService.findAll(pageable);
         PagedResponse<UserPermission> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<UserPermission> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(userPermissionService.findById(id));
+    public ResponseEntity<ApiResponse<UserPermission>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(userPermissionService.findById(id)));
     }
 
     @GetMapping("/user/{userId}")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<List<UserPermission>> findByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(userPermissionService.findByUserId(userId));
+    public ResponseEntity<ApiResponse<List<UserPermission>>> findByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(ApiResponse.success(userPermissionService.findByUserId(userId)));
     }
 
     @GetMapping("/user/{userId}/effective")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<List<Permission>> getEffectivePermissions(@PathVariable Long userId) {
-        return ResponseEntity.ok(userPermissionService.getEffectivePermissions(userId));
+    public ResponseEntity<ApiResponse<List<Permission>>> getEffectivePermissions(@PathVariable Long userId) {
+        return ResponseEntity.ok(ApiResponse.success(userPermissionService.getEffectivePermissions(userId)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<UserPermission> save(@Valid @RequestBody UserPermission userPermission) {
-        return ResponseEntity.ok(userPermissionService.save(userPermission));
+    public ResponseEntity<ApiResponse<UserPermission>> save(@Valid @RequestBody UserPermission userPermission) {
+        return ResponseEntity.ok(ApiResponse.success(userPermissionService.save(userPermission)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<UserPermission> update(@PathVariable Long id, @Valid @RequestBody UserPermission userPermission) {
-        return ResponseEntity.ok(userPermissionService.update(id, userPermission));
+    public ResponseEntity<ApiResponse<UserPermission>> update(@PathVariable Long id, @Valid @RequestBody UserPermission userPermission) {
+        return ResponseEntity.ok(ApiResponse.success(userPermissionService.update(id, userPermission)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         userPermissionService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PostMapping("/bulk")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<Void> bulkSave(@Valid @RequestBody BulkUserPermissionRequest request) {
+    public ResponseEntity<ApiResponse<Void>> bulkSave(@Valid @RequestBody BulkUserPermissionRequest request) {
         userPermissionService.bulkSave(request.getUserId(), request.getPermissionIds(), request.isGranted());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     public static class BulkUserPermissionRequest {

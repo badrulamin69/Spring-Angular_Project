@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.StudentDocument;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.StudentDocumentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class StudentDocumentController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<StudentDocument> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentDocumentService.findById(id));
+    public ResponseEntity<ApiResponse<StudentDocument>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(studentDocumentService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<StudentDocument> create(@RequestBody StudentDocument studentDocument) {
-        return ResponseEntity.ok(studentDocumentService.create(studentDocument));
+    public ResponseEntity<ApiResponse<StudentDocument>> create(@RequestBody StudentDocument studentDocument) {
+        return ResponseEntity.ok(ApiResponse.success(studentDocumentService.create(studentDocument)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<StudentDocument> update(@PathVariable Long id, @RequestBody StudentDocument studentDocument) {
-        return ResponseEntity.ok(studentDocumentService.update(id, studentDocument));
+    public ResponseEntity<ApiResponse<StudentDocument>> update(@PathVariable Long id, @RequestBody StudentDocument studentDocument) {
+        return ResponseEntity.ok(ApiResponse.success(studentDocumentService.update(id, studentDocument)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         studentDocumentService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class StudentDocumentController {
         stats.put("totalPending", studentDocumentService.countByStatus("PENDING"));
         stats.put("totalRejected", studentDocumentService.countByStatus("REJECTED"));
         stats.put("totalUploaded", studentDocumentService.countByStatus("UPLOADED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

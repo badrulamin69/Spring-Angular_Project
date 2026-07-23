@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmitCard;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.repository.AdmitCardRepository;
@@ -38,7 +39,7 @@ public class PreAdmissionRegistrationController {
     private final AdmitCardRepository admitCardRepository;
 
     @PostMapping(value = "/pre-admission/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map<String, Object>> register(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> register(
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
             @RequestParam("email") String email,
@@ -84,7 +85,7 @@ public class PreAdmissionRegistrationController {
         if (programPreference2 != null) registration.setProgramPreference2(programPreference2);
         if (programPreference3 != null) registration.setProgramPreference3(programPreference3);
 
-        return ResponseEntity.ok(service.saveWithUserAccount(registration, photo, signature));
+        return ResponseEntity.ok(ApiResponse.success(service.saveWithUserAccount(registration, photo, signature)));
     }
 
     @GetMapping("/pre-admission/register/{registrationNumber}/pdf")
@@ -108,19 +109,19 @@ public class PreAdmissionRegistrationController {
     }
 
     @GetMapping("/pre-admission/status/{registrationNumber}")
-    public ResponseEntity<Map<String, Object>> checkStatus(@PathVariable String registrationNumber) {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> checkStatus(@PathVariable String registrationNumber) {
         PreAdmissionRegistration reg = service.findByRegistrationNumber(registrationNumber);
-        return ResponseEntity.ok(Map.of(
+        return ResponseEntity.ok(ApiResponse.success(Map.of(
                 "registrationNumber", reg.getRegistrationNumber(),
                 "status", reg.getStatus(),
                 "firstName", reg.getFirstName(),
                 "lastName", reg.getLastName()
-        ));
+        )));
     }
 
     @GetMapping("/pre-admissions")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_VIEW')")
-    public ResponseEntity<PagedResponse<PreAdmissionRegistration>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<PreAdmissionRegistration>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -128,38 +129,38 @@ public class PreAdmissionRegistrationController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<PreAdmissionRegistration> paged = service.findAll(pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/pre-admissions/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_VIEW')")
-    public ResponseEntity<PreAdmissionRegistration> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<ApiResponse<PreAdmissionRegistration>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(service.findById(id)));
     }
 
     @PutMapping("/pre-admissions/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<PreAdmissionRegistration> update(@PathVariable Long id, @Valid @RequestBody PreAdmissionRegistration registration) {
-        return ResponseEntity.ok(service.update(id, registration));
+    public ResponseEntity<ApiResponse<PreAdmissionRegistration>> update(@PathVariable Long id, @Valid @RequestBody PreAdmissionRegistration registration) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, registration)));
     }
 
     @DeleteMapping("/pre-admissions/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PutMapping("/pre-admissions/{id}/approve")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<PreAdmissionRegistration> approve(@PathVariable Long id) {
-        return ResponseEntity.ok(service.approve(id));
+    public ResponseEntity<ApiResponse<PreAdmissionRegistration>> approve(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(service.approve(id)));
     }
 
     @PutMapping("/pre-admissions/{id}/reject")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<PreAdmissionRegistration> reject(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        return ResponseEntity.ok(service.reject(id, body.get("remarks")));
+    public ResponseEntity<ApiResponse<PreAdmissionRegistration>> reject(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        return ResponseEntity.ok(ApiResponse.success(service.reject(id, body.get("remarks"))));
     }
 
     @GetMapping("/pre-admissions/{id}/admit-card")
@@ -174,8 +175,8 @@ public class PreAdmissionRegistrationController {
 
     @PostMapping("/pre-admissions/process-merit")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<Map<String, Object>> processMerit() {
-        return ResponseEntity.ok(service.processMerit());
+    public ResponseEntity<ApiResponse<Map<String, Object>>> processMerit() {
+        return ResponseEntity.ok(ApiResponse.success(service.processMerit()));
     }
 
     @GetMapping("/pre-admissions/{id}/admit-card/pdf")
@@ -194,8 +195,8 @@ public class PreAdmissionRegistrationController {
 
     @GetMapping("/pre-admissions/merit-preview")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<Map<String, Object>> meritPreview() {
-        return ResponseEntity.ok(service.getMeritPreview());
+    public ResponseEntity<ApiResponse<Map<String, Object>>> meritPreview() {
+        return ResponseEntity.ok(ApiResponse.success(service.getMeritPreview()));
     }
 
     private String generateAdmitCardHtml(PreAdmissionRegistration reg) {

@@ -14,6 +14,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AdmissionMeritListService {
 
     private final AdmissionMeritListRepository meritListRepository;

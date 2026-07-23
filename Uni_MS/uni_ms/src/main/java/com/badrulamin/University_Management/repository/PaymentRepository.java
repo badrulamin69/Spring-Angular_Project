@@ -28,6 +28,9 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.paymentStatus = 'COMPLETED' AND FUNCTION('DATE', p.paymentDate) = CURRENT_DATE")
     Double sumTodayPayments();
 
+    @Query("SELECT COALESCE(MAX(CAST(SUBSTRING(p.paymentNumber, :prefixLength + 1) AS long)), 0) FROM Payment p WHERE p.paymentNumber LIKE CONCAT(:prefix, '%')")
+    Long findMaxSequenceByPrefix(@Param("prefix") String prefix, @Param("prefixLength") int prefixLength);
+
     @Query("SELECT p FROM Payment p WHERE " +
            "(:search IS NULL OR :search = '' OR " +
            "LOWER(p.paymentNumber) LIKE LOWER(CONCAT('%', :search, '%')) OR " +

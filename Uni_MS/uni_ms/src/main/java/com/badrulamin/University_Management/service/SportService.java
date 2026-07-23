@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.config.EntityUpdateUtil;
 import com.badrulamin.University_Management.entity.Sport;
 import com.badrulamin.University_Management.repository.SportRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,12 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SportService {
 
     private final SportRepository sportRepository;
+    private final EntityUpdateUtil entityUpdateUtil;
 
     public Page<Sport> findAll(Pageable pageable) {
         return sportRepository.findAll(pageable);
@@ -29,10 +33,11 @@ public class SportService {
         return sportRepository.save(sport);
     }
 
-    public Sport update(Long id, Sport sport) {
-        findById(id);
-        sport.setId(id);
-        return sportRepository.save(sport);
+    @Transactional
+    public Sport update(Long id, Sport incoming) {
+        Sport existing = findById(id);
+        entityUpdateUtil.merge(incoming, existing);
+        return sportRepository.save(existing);
     }
 
     public void delete(Long id) {

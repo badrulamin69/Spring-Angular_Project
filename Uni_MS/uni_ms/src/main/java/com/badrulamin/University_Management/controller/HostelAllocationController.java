@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.HostelAllocation;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.HostelAllocationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class HostelAllocationController {
 
     @PreAuthorize("hasAuthority('HOSTEL_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<HostelAllocation>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<HostelAllocation>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class HostelAllocationController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<HostelAllocation> paged = hostelAllocationService.findAll(pageable);
         PagedResponse<HostelAllocation> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('HOSTEL_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<HostelAllocation> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(hostelAllocationService.findById(id));
+    public ResponseEntity<ApiResponse<HostelAllocation>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(hostelAllocationService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
     @PostMapping
-    public ResponseEntity<HostelAllocation> save(@Valid @RequestBody HostelAllocation hostelAllocation) {
-        return ResponseEntity.ok(hostelAllocationService.save(hostelAllocation));
+    public ResponseEntity<ApiResponse<HostelAllocation>> save(@Valid @RequestBody HostelAllocation hostelAllocation) {
+        return ResponseEntity.ok(ApiResponse.success(hostelAllocationService.save(hostelAllocation)));
     }
 
     @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<HostelAllocation> update(@PathVariable Long id, @Valid @RequestBody HostelAllocation hostelAllocation) {
-        return ResponseEntity.ok(hostelAllocationService.update(id, hostelAllocation));
+    public ResponseEntity<ApiResponse<HostelAllocation>> update(@PathVariable Long id, @Valid @RequestBody HostelAllocation hostelAllocation) {
+        return ResponseEntity.ok(ApiResponse.success(hostelAllocationService.update(id, hostelAllocation)));
     }
 
     @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         hostelAllocationService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.DocumentVerification;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.DocumentVerificationService;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class DocumentVerificationController {
 
     @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<DocumentVerification>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<DocumentVerification>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class DocumentVerificationController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<DocumentVerification> paged = documentVerificationService.findAll(pageable);
         PagedResponse<DocumentVerification> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentVerification> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(documentVerificationService.findById(id));
+    public ResponseEntity<ApiResponse<DocumentVerification>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(documentVerificationService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     @PostMapping
-    public ResponseEntity<DocumentVerification> save(@Valid @RequestBody DocumentVerification documentVerification) {
-        return ResponseEntity.ok(documentVerificationService.save(documentVerification));
+    public ResponseEntity<ApiResponse<DocumentVerification>> save(@Valid @RequestBody DocumentVerification documentVerification) {
+        return ResponseEntity.ok(ApiResponse.success(documentVerificationService.save(documentVerification)));
     }
 
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<DocumentVerification> update(@PathVariable Long id, @Valid @RequestBody DocumentVerification documentVerification) {
-        return ResponseEntity.ok(documentVerificationService.update(id, documentVerification));
+    public ResponseEntity<ApiResponse<DocumentVerification>> update(@PathVariable Long id, @Valid @RequestBody DocumentVerification documentVerification) {
+        return ResponseEntity.ok(ApiResponse.success(documentVerificationService.update(id, documentVerification)));
     }
 
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         documentVerificationService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

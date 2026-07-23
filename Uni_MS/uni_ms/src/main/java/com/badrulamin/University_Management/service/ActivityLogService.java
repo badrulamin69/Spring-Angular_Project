@@ -18,6 +18,7 @@ import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ActivityLogService {
 
     private final ActivityLogRepository activityLogRepository;

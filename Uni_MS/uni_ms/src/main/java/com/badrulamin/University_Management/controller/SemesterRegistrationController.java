@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.SemesterRegistration;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.SemesterRegistrationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class SemesterRegistrationController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<SemesterRegistration> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(semesterRegistrationService.findById(id));
+    public ResponseEntity<ApiResponse<SemesterRegistration>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(semesterRegistrationService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<SemesterRegistration> create(@RequestBody SemesterRegistration semesterRegistration) {
-        return ResponseEntity.ok(semesterRegistrationService.create(semesterRegistration));
+    public ResponseEntity<ApiResponse<SemesterRegistration>> create(@RequestBody SemesterRegistration semesterRegistration) {
+        return ResponseEntity.ok(ApiResponse.success(semesterRegistrationService.create(semesterRegistration)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<SemesterRegistration> update(@PathVariable Long id, @RequestBody SemesterRegistration semesterRegistration) {
-        return ResponseEntity.ok(semesterRegistrationService.update(id, semesterRegistration));
+    public ResponseEntity<ApiResponse<SemesterRegistration>> update(@PathVariable Long id, @RequestBody SemesterRegistration semesterRegistration) {
+        return ResponseEntity.ok(ApiResponse.success(semesterRegistrationService.update(id, semesterRegistration)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         semesterRegistrationService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class SemesterRegistrationController {
         stats.put("totalPending", semesterRegistrationService.countByStatus("PENDING"));
         stats.put("totalApproved", semesterRegistrationService.countByStatus("APPROVED"));
         stats.put("totalRejected", semesterRegistrationService.countByStatus("REJECTED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

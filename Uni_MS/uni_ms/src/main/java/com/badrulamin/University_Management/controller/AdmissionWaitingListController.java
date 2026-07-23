@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionWaitingList;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.entity.AdmissionWaitingListEntry;
 import com.badrulamin.University_Management.service.AdmissionWaitingListService;
 import com.badrulamin.University_Management.service.AdmissionWaitingListEntryService;
@@ -49,58 +50,58 @@ public class AdmissionWaitingListController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<AdmissionWaitingList> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(waitingListService.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionWaitingList>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(waitingListService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingList> save(@Valid @RequestBody AdmissionWaitingList waitingList) {
-        return ResponseEntity.ok(waitingListService.save(waitingList));
+    public ResponseEntity<ApiResponse<AdmissionWaitingList>> save(@Valid @RequestBody AdmissionWaitingList waitingList) {
+        return ResponseEntity.ok(ApiResponse.success(waitingListService.save(waitingList)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingList> update(@PathVariable Long id, @Valid @RequestBody AdmissionWaitingList waitingList) {
-        return ResponseEntity.ok(waitingListService.update(id, waitingList));
+    public ResponseEntity<ApiResponse<AdmissionWaitingList>> update(@PathVariable Long id, @Valid @RequestBody AdmissionWaitingList waitingList) {
+        return ResponseEntity.ok(ApiResponse.success(waitingListService.update(id, waitingList)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         waitingListService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PostMapping("/generate")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingList> generate(
+    public ResponseEntity<ApiResponse<AdmissionWaitingList>> generate(
             @RequestParam Long testId,
             @RequestParam(required = false) String listName,
             @RequestParam(required = false) Integer totalSlots,
             @RequestParam(required = false) String academicYear,
             @RequestParam(required = false) Long facultyId,
             @RequestParam(required = false) Long programId) {
-        return ResponseEntity.ok(waitingListService.generateWaitingList(testId, listName, totalSlots,
-                academicYear, facultyId, programId));
+        return ResponseEntity.ok(ApiResponse.success(waitingListService.generateWaitingList(testId, listName, totalSlots,
+                academicYear, facultyId, programId)));
     }
 
     @PutMapping("/{id}/publish")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingList> publish(@PathVariable Long id) {
-        return ResponseEntity.ok(waitingListService.publish(id));
+    public ResponseEntity<ApiResponse<AdmissionWaitingList>> publish(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(waitingListService.publish(id)));
     }
 
     @PutMapping("/{id}/unpublish")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingList> unpublish(@PathVariable Long id) {
-        return ResponseEntity.ok(waitingListService.unpublish(id));
+    public ResponseEntity<ApiResponse<AdmissionWaitingList>> unpublish(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(waitingListService.unpublish(id)));
     }
 
     @GetMapping("/stats")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<Map<String, Object>> getStats() {
-        return ResponseEntity.ok(waitingListService.getStats());
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats() {
+        return ResponseEntity.ok(ApiResponse.success(waitingListService.getStats()));
     }
 
     @GetMapping("/{waitingListId}/entries")
@@ -122,36 +123,36 @@ public class AdmissionWaitingListController {
 
     @GetMapping("/{waitingListId}/entries/all")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<List<AdmissionWaitingListEntry>> getAllEntries(@PathVariable Long waitingListId) {
-        return ResponseEntity.ok(entryService.findByWaitingListIdOrdered(waitingListId));
+    public ResponseEntity<ApiResponse<List<AdmissionWaitingListEntry>>> getAllEntries(@PathVariable Long waitingListId) {
+        return ResponseEntity.ok(ApiResponse.success(entryService.findByWaitingListIdOrdered(waitingListId)));
     }
 
     @PostMapping("/{waitingListId}/entries")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingListEntry> addEntry(@PathVariable Long waitingListId,
+    public ResponseEntity<ApiResponse<AdmissionWaitingListEntry>> addEntry(@PathVariable Long waitingListId,
             @RequestBody AdmissionWaitingListEntry entry) {
         entry.setWaitingList(waitingListService.findById(waitingListId));
-        return ResponseEntity.ok(entryService.save(entry));
+        return ResponseEntity.ok(ApiResponse.success(entryService.save(entry)));
     }
 
     @PutMapping("/entries/{entryId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingListEntry> updateEntry(@PathVariable Long entryId,
+    public ResponseEntity<ApiResponse<AdmissionWaitingListEntry>> updateEntry(@PathVariable Long entryId,
             @RequestBody AdmissionWaitingListEntry entry) {
-        return ResponseEntity.ok(entryService.update(entryId, entry));
+        return ResponseEntity.ok(ApiResponse.success(entryService.update(entryId, entry)));
     }
 
     @PutMapping("/entries/{entryId}/status")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionWaitingListEntry> updateEntryStatus(@PathVariable Long entryId,
+    public ResponseEntity<ApiResponse<AdmissionWaitingListEntry>> updateEntryStatus(@PathVariable Long entryId,
             @RequestParam String status) {
-        return ResponseEntity.ok(entryService.updateStatus(entryId, status));
+        return ResponseEntity.ok(ApiResponse.success(entryService.updateStatus(entryId, status)));
     }
 
     @DeleteMapping("/entries/{entryId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<Void> deleteEntry(@PathVariable Long entryId) {
+    public ResponseEntity<ApiResponse<Void>> deleteEntry(@PathVariable Long entryId) {
         entryService.delete(entryId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.config.EntityUpdateUtil;
 import com.badrulamin.University_Management.entity.Department;
 import com.badrulamin.University_Management.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,12 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final EntityUpdateUtil entityUpdateUtil;
 
     public Page<Department> findAll(Pageable pageable) {
         return departmentRepository.findAll(pageable);
@@ -33,10 +37,11 @@ public class DepartmentService {
         return departmentRepository.save(department);
     }
 
-    public Department update(Long id, Department department) {
-        findById(id);
-        department.setId(id);
-        return departmentRepository.save(department);
+    @Transactional
+    public Department update(Long id, Department incoming) {
+        Department existing = findById(id);
+        entityUpdateUtil.merge(incoming, existing);
+        return departmentRepository.save(existing);
     }
 
     public void delete(Long id) {

@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.OnlineClass;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.OnlineClassService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class OnlineClassController {
 
     @PreAuthorize("hasAuthority('LMS_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<OnlineClass>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<OnlineClass>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class OnlineClassController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<OnlineClass> paged = onlineClassService.findAll(pageable);
         PagedResponse<OnlineClass> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('LMS_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<OnlineClass> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(onlineClassService.findById(id));
+    public ResponseEntity<ApiResponse<OnlineClass>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(onlineClassService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('LMS_VIEW')")
     @PostMapping
-    public ResponseEntity<OnlineClass> save(@Valid @RequestBody OnlineClass onlineClass) {
-        return ResponseEntity.ok(onlineClassService.save(onlineClass));
+    public ResponseEntity<ApiResponse<OnlineClass>> save(@Valid @RequestBody OnlineClass onlineClass) {
+        return ResponseEntity.ok(ApiResponse.success(onlineClassService.save(onlineClass)));
     }
 
     @PreAuthorize("hasAuthority('LMS_VIEW')")
     @PutMapping("/{id}")
-    public ResponseEntity<OnlineClass> update(@PathVariable Long id, @Valid @RequestBody OnlineClass onlineClass) {
-        return ResponseEntity.ok(onlineClassService.update(id, onlineClass));
+    public ResponseEntity<ApiResponse<OnlineClass>> update(@PathVariable Long id, @Valid @RequestBody OnlineClass onlineClass) {
+        return ResponseEntity.ok(ApiResponse.success(onlineClassService.update(id, onlineClass)));
     }
 
     @PreAuthorize("hasAuthority('LMS_VIEW')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         onlineClassService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

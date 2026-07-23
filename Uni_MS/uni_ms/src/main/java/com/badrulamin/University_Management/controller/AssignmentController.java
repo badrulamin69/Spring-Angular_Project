@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Assignment;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AssignmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class AssignmentController {
 
     @PreAuthorize("hasAuthority('LMS_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Assignment>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Assignment>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class AssignmentController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Assignment> paged = assignmentService.findAll(pageable);
         PagedResponse<Assignment> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('LMS_VIEW')")
-    public ResponseEntity<Assignment> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(assignmentService.findById(id));
+    public ResponseEntity<ApiResponse<Assignment>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(assignmentService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ASSIGNMENT_MANAGE')")
-    public ResponseEntity<Assignment> save(@Valid @RequestBody Assignment assignment) {
-        return ResponseEntity.ok(assignmentService.save(assignment));
+    public ResponseEntity<ApiResponse<Assignment>> save(@Valid @RequestBody Assignment assignment) {
+        return ResponseEntity.ok(ApiResponse.success(assignmentService.save(assignment)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ASSIGNMENT_MANAGE')")
-    public ResponseEntity<Assignment> update(@PathVariable Long id, @Valid @RequestBody Assignment assignment) {
-        return ResponseEntity.ok(assignmentService.update(id, assignment));
+    public ResponseEntity<ApiResponse<Assignment>> update(@PathVariable Long id, @Valid @RequestBody Assignment assignment) {
+        return ResponseEntity.ok(ApiResponse.success(assignmentService.update(id, assignment)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ASSIGNMENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         assignmentService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

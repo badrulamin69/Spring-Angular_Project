@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.BookCategory;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.BookCategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class BookCategoryController {
 
     @PreAuthorize("hasAuthority('LIBRARY_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<BookCategory>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<BookCategory>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class BookCategoryController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<BookCategory> paged = bookCategoryService.findAll(pageable);
         PagedResponse<BookCategory> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('LIBRARY_VIEW')")
-    public ResponseEntity<BookCategory> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(bookCategoryService.findById(id));
+    public ResponseEntity<ApiResponse<BookCategory>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(bookCategoryService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('BOOK_MANAGE')")
-    public ResponseEntity<BookCategory> save(@Valid @RequestBody BookCategory bookCategory) {
-        return ResponseEntity.ok(bookCategoryService.save(bookCategory));
+    public ResponseEntity<ApiResponse<BookCategory>> save(@Valid @RequestBody BookCategory bookCategory) {
+        return ResponseEntity.ok(ApiResponse.success(bookCategoryService.save(bookCategory)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('BOOK_MANAGE')")
-    public ResponseEntity<BookCategory> update(@PathVariable Long id, @Valid @RequestBody BookCategory bookCategory) {
-        return ResponseEntity.ok(bookCategoryService.update(id, bookCategory));
+    public ResponseEntity<ApiResponse<BookCategory>> update(@PathVariable Long id, @Valid @RequestBody BookCategory bookCategory) {
+        return ResponseEntity.ok(ApiResponse.success(bookCategoryService.update(id, bookCategory)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('BOOK_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         bookCategoryService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

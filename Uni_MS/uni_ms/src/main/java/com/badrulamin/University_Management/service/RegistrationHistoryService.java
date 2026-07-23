@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RegistrationHistoryService {
 
     private final RegistrationHistoryRepository registrationHistoryRepository;

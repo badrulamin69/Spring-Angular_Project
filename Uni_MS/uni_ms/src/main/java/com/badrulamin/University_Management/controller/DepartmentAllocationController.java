@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.DepartmentAllocation;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.DepartmentAllocationService;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ public class DepartmentAllocationController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_VIEW')")
-    public ResponseEntity<PagedResponse<DepartmentAllocation>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<DepartmentAllocation>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -30,43 +31,43 @@ public class DepartmentAllocationController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<DepartmentAllocation> paged = service.findAll(pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW') or hasAuthority('PRE_ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_VIEW')")
-    public ResponseEntity<DepartmentAllocation> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<ApiResponse<DepartmentAllocation>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(service.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<DepartmentAllocation> save(@Valid @RequestBody DepartmentAllocation allocation) {
-        return ResponseEntity.ok(service.save(allocation));
+    public ResponseEntity<ApiResponse<DepartmentAllocation>> save(@Valid @RequestBody DepartmentAllocation allocation) {
+        return ResponseEntity.ok(ApiResponse.success(service.save(allocation)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<DepartmentAllocation> update(@PathVariable Long id, @Valid @RequestBody DepartmentAllocation allocation) {
-        return ResponseEntity.ok(service.update(id, allocation));
+    public ResponseEntity<ApiResponse<DepartmentAllocation>> update(@PathVariable Long id, @Valid @RequestBody DepartmentAllocation allocation) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, allocation)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PutMapping("/{id}/confirm")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<DepartmentAllocation> confirm(@PathVariable Long id) {
-        return ResponseEntity.ok(service.confirm(id));
+    public ResponseEntity<ApiResponse<DepartmentAllocation>> confirm(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(service.confirm(id)));
     }
 
     @PutMapping("/{id}/cancel")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('PRE_ADMISSION_MANAGE')")
-    public ResponseEntity<DepartmentAllocation> cancel(@PathVariable Long id) {
-        return ResponseEntity.ok(service.cancel(id));
+    public ResponseEntity<ApiResponse<DepartmentAllocation>> cancel(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(service.cancel(id)));
     }
 }

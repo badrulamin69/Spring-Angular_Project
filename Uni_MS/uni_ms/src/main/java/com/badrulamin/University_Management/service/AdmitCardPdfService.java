@@ -17,9 +17,11 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AdmitCardPdfService {
 
     public byte[] generateAdmitCardPdf(AdmitCard admitCard) {

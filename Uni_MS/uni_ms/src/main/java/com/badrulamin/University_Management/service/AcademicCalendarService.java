@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AcademicCalendarService {
 
     private final AcademicCalendarRepository academicCalendarRepository;

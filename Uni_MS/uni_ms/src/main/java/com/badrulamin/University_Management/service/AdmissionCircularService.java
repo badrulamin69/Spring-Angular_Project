@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class AdmissionCircularService {
 

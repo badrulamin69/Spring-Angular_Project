@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Transcript;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.TranscriptService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class TranscriptController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<Transcript> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(transcriptService.findById(id));
+    public ResponseEntity<ApiResponse<Transcript>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(transcriptService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Transcript> create(@RequestBody Transcript transcript) {
-        return ResponseEntity.ok(transcriptService.create(transcript));
+    public ResponseEntity<ApiResponse<Transcript>> create(@RequestBody Transcript transcript) {
+        return ResponseEntity.ok(ApiResponse.success(transcriptService.create(transcript)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Transcript> update(@PathVariable Long id, @RequestBody Transcript transcript) {
-        return ResponseEntity.ok(transcriptService.update(id, transcript));
+    public ResponseEntity<ApiResponse<Transcript>> update(@PathVariable Long id, @RequestBody Transcript transcript) {
+        return ResponseEntity.ok(ApiResponse.success(transcriptService.update(id, transcript)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         transcriptService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class TranscriptController {
         stats.put("totalPending", transcriptService.countByStatus("PENDING"));
         stats.put("totalRevoked", transcriptService.countByStatus("REVOKED"));
         stats.put("totalRequested", transcriptService.countByStatus("REQUESTED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

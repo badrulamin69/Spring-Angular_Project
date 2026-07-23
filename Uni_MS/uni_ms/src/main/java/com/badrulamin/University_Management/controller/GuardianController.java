@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Guardian;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.GuardianService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class GuardianController {
 
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Guardian>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Guardian>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class GuardianController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Guardian> paged = guardianService.findAll(pageable);
         PagedResponse<Guardian> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Guardian> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(guardianService.findById(id));
+    public ResponseEntity<ApiResponse<Guardian>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(guardianService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
     @PostMapping
-    public ResponseEntity<Guardian> save(@Valid @RequestBody Guardian guardian) {
-        return ResponseEntity.ok(guardianService.save(guardian));
+    public ResponseEntity<ApiResponse<Guardian>> save(@Valid @RequestBody Guardian guardian) {
+        return ResponseEntity.ok(ApiResponse.success(guardianService.save(guardian)));
     }
 
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
     @PutMapping("/{id}")
-    public ResponseEntity<Guardian> update(@PathVariable Long id, @Valid @RequestBody Guardian guardian) {
-        return ResponseEntity.ok(guardianService.update(id, guardian));
+    public ResponseEntity<ApiResponse<Guardian>> update(@PathVariable Long id, @Valid @RequestBody Guardian guardian) {
+        return ResponseEntity.ok(ApiResponse.success(guardianService.update(id, guardian)));
     }
 
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         guardianService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Sport;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.SportService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class SportController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
-    public ResponseEntity<PagedResponse<Sport>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Sport>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class SportController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Sport> paged = sportService.findAll(pageable);
         PagedResponse<Sport> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
-    public ResponseEntity<Sport> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(sportService.findById(id));
+    public ResponseEntity<ApiResponse<Sport>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(sportService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ACTIVITY_MANAGE')")
-    public ResponseEntity<Sport> save(@Valid @RequestBody Sport sport) {
-        return ResponseEntity.ok(sportService.save(sport));
+    public ResponseEntity<ApiResponse<Sport>> save(@Valid @RequestBody Sport sport) {
+        return ResponseEntity.ok(ApiResponse.success(sportService.save(sport)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ACTIVITY_MANAGE')")
-    public ResponseEntity<Sport> update(@PathVariable Long id, @Valid @RequestBody Sport sport) {
-        return ResponseEntity.ok(sportService.update(id, sport));
+    public ResponseEntity<ApiResponse<Sport>> update(@PathVariable Long id, @Valid @RequestBody Sport sport) {
+        return ResponseEntity.ok(ApiResponse.success(sportService.update(id, sport)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ACTIVITY_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         sportService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.DisciplinaryRecord;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.DisciplinaryRecordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class DisciplinaryRecordController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<DisciplinaryRecord> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(disciplinaryRecordService.findById(id));
+    public ResponseEntity<ApiResponse<DisciplinaryRecord>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(disciplinaryRecordService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<DisciplinaryRecord> create(@RequestBody DisciplinaryRecord disciplinaryRecord) {
-        return ResponseEntity.ok(disciplinaryRecordService.create(disciplinaryRecord));
+    public ResponseEntity<ApiResponse<DisciplinaryRecord>> create(@RequestBody DisciplinaryRecord disciplinaryRecord) {
+        return ResponseEntity.ok(ApiResponse.success(disciplinaryRecordService.create(disciplinaryRecord)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<DisciplinaryRecord> update(@PathVariable Long id, @RequestBody DisciplinaryRecord disciplinaryRecord) {
-        return ResponseEntity.ok(disciplinaryRecordService.update(id, disciplinaryRecord));
+    public ResponseEntity<ApiResponse<DisciplinaryRecord>> update(@PathVariable Long id, @RequestBody DisciplinaryRecord disciplinaryRecord) {
+        return ResponseEntity.ok(ApiResponse.success(disciplinaryRecordService.update(id, disciplinaryRecord)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         disciplinaryRecordService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class DisciplinaryRecordController {
         stats.put("totalResolved", disciplinaryRecordService.countByStatus("RESOLVED"));
         stats.put("totalPending", disciplinaryRecordService.countByStatus("PENDING"));
         stats.put("totalDismissed", disciplinaryRecordService.countByStatus("DISMISSED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

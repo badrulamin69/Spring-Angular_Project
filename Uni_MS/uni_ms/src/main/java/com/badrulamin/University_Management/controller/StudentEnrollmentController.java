@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.StudentEnrollment;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.StudentEnrollmentService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class StudentEnrollmentController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<PagedResponse<StudentEnrollment>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<StudentEnrollment>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class StudentEnrollmentController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<StudentEnrollment> paged = studentEnrollmentService.findAll(pageable);
         PagedResponse<StudentEnrollment> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<StudentEnrollment> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentEnrollmentService.findById(id));
+    public ResponseEntity<ApiResponse<StudentEnrollment>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(studentEnrollmentService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_CREATE')")
-    public ResponseEntity<StudentEnrollment> save(@Valid @RequestBody StudentEnrollment studentEnrollment) {
-        return ResponseEntity.ok(studentEnrollmentService.save(studentEnrollment));
+    public ResponseEntity<ApiResponse<StudentEnrollment>> save(@Valid @RequestBody StudentEnrollment studentEnrollment) {
+        return ResponseEntity.ok(ApiResponse.success(studentEnrollmentService.save(studentEnrollment)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_CREATE')")
-    public ResponseEntity<StudentEnrollment> update(@PathVariable Long id, @Valid @RequestBody StudentEnrollment studentEnrollment) {
-        return ResponseEntity.ok(studentEnrollmentService.update(id, studentEnrollment));
+    public ResponseEntity<ApiResponse<StudentEnrollment>> update(@PathVariable Long id, @Valid @RequestBody StudentEnrollment studentEnrollment) {
+        return ResponseEntity.ok(ApiResponse.success(studentEnrollmentService.update(id, studentEnrollment)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_CREATE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         studentEnrollmentService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

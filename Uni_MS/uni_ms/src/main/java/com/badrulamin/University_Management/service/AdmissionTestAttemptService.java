@@ -16,6 +16,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AdmissionTestAttemptService {
 
     private final AdmissionTestAttemptRepository repository;

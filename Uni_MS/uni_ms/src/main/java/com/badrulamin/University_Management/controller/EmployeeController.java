@@ -1,6 +1,8 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Employee;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
+import com.badrulamin.University_Management.payload.response.EmployeeResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -22,7 +24,7 @@ public class EmployeeController {
 
     @PreAuthorize("hasAuthority('HRM_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Employee>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<EmployeeResponse>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -34,32 +36,33 @@ public class EmployeeController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Employee> paged = employeeService.searchEmployees(search, departmentId, designation, status, pageable);
-        PagedResponse<Employee> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        Page<EmployeeResponse> dtoPage = paged.map(employeeService::toResponse);
+        PagedResponse<EmployeeResponse> response = new PagedResponse<>(dtoPage.getContent(), dtoPage.getNumber(), dtoPage.getSize(), dtoPage.getTotalElements(), dtoPage.getTotalPages(), dtoPage.isFirst(), dtoPage.isLast());
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('HRM_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(employeeService.findById(id));
+    public ResponseEntity<ApiResponse<EmployeeResponse>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(employeeService.toResponse(employeeService.findById(id))));
     }
 
     @PreAuthorize("hasAuthority('EMPLOYEE_MANAGE')")
     @PostMapping
-    public ResponseEntity<Employee> save(@Valid @RequestBody Employee employee) {
-        return ResponseEntity.ok(employeeService.save(employee));
+    public ResponseEntity<ApiResponse<EmployeeResponse>> save(@Valid @RequestBody Employee employee) {
+        return ResponseEntity.ok(ApiResponse.success(employeeService.toResponse(employeeService.save(employee))));
     }
 
     @PreAuthorize("hasAuthority('EMPLOYEE_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> update(@PathVariable Long id, @Valid @RequestBody Employee employee) {
-        return ResponseEntity.ok(employeeService.update(id, employee));
+    public ResponseEntity<ApiResponse<EmployeeResponse>> update(@PathVariable Long id, @Valid @RequestBody Employee employee) {
+        return ResponseEntity.ok(ApiResponse.success(employeeService.toResponse(employeeService.update(id, employee))));
     }
 
     @PreAuthorize("hasAuthority('EMPLOYEE_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         employeeService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

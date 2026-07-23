@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Notification;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.security.services.UserDetailsImpl;
 import com.badrulamin.University_Management.service.NotificationService;
 import lombok.RequiredArgsConstructor;
@@ -23,35 +24,35 @@ public class NotificationController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<Page<Notification>> getUserNotifications(
+    public ResponseEntity<ApiResponse<Page<Notification>>> getUserNotifications(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         Long userId = getCurrentUserId();
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        return ResponseEntity.ok(notificationService.getUserNotifications(userId, pageable));
+        return ResponseEntity.ok(ApiResponse.success(notificationService.getUserNotifications(userId, pageable)));
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/unread-count")
-    public ResponseEntity<Long> getUnreadCount() {
+    public ResponseEntity<ApiResponse<Long>> getUnreadCount() {
         Long userId = getCurrentUserId();
-        return ResponseEntity.ok(notificationService.getUnreadCount(userId));
+        return ResponseEntity.ok(ApiResponse.success(notificationService.getUnreadCount(userId)));
     }
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}/read")
-    public ResponseEntity<Void> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> markAsRead(@PathVariable Long id) {
         Long userId = getCurrentUserId();
         notificationService.markAsRead(id, userId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/read-all")
-    public ResponseEntity<Void> markAllAsRead() {
+    public ResponseEntity<ApiResponse<Void>> markAllAsRead() {
         Long userId = getCurrentUserId();
         notificationService.markAllAsRead(userId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     private Long getCurrentUserId() {

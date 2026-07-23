@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class AdmissionEnrollmentService {
 

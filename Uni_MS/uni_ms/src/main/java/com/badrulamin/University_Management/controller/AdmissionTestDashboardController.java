@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.service.AdmissionTestDashboardService;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,13 +18,13 @@ public class AdmissionTestDashboardController {
 
     @GetMapping("/stats")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<Map<String, Object>> getStats() {
-        return ResponseEntity.ok(admissionTestDashboardService.getStats());
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats() {
+        return ResponseEntity.ok(ApiResponse.success(admissionTestDashboardService.getStats()));
     }
 
     @GetMapping("/charts")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<Map<String, Object>> getChartData() {
-        return ResponseEntity.ok(admissionTestDashboardService.getChartData());
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getChartData() {
+        return ResponseEntity.ok(ApiResponse.success(admissionTestDashboardService.getChartData()));
     }
 }

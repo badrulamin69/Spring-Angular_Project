@@ -4,6 +4,8 @@ import com.badrulamin.University_Management.entity.Refund;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +18,7 @@ public interface RefundRepository extends JpaRepository<Refund, Long> {
     List<Refund> findByStatus(String status);
     Page<Refund> findByStatus(String status, Pageable pageable);
     long countByStatus(String status);
+
+    @Query("SELECT COALESCE(MAX(CAST(SUBSTRING(r.refundNumber, :prefixLength + 1) AS long)), 0) FROM Refund r WHERE r.refundNumber LIKE CONCAT(:prefix, '%')")
+    Long findMaxSequenceByPrefix(@Param("prefix") String prefix, @Param("prefixLength") int prefixLength);
 }

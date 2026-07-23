@@ -7,6 +7,7 @@ import com.badrulamin.University_Management.entity.Refund;
 import com.badrulamin.University_Management.entity.Student;
 import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import com.badrulamin.University_Management.payload.response.PaymentResponse;
 import com.badrulamin.University_Management.repository.InvoiceRepository;
 import com.badrulamin.University_Management.repository.PaymentRepository;
 import com.badrulamin.University_Management.repository.PaymentTransactionRepository;
@@ -169,6 +170,26 @@ public class PaymentService {
         stats.put("pendingPayments", paymentRepository.countByPaymentStatus("PENDING"));
         stats.put("failedPayments", paymentRepository.countByPaymentStatus("FAILED"));
         return stats;
+    }
+
+    public PaymentResponse toResponse(Payment payment) {
+        PaymentResponse response = new PaymentResponse();
+        response.setId(payment.getId());
+        response.setPaymentNumber(payment.getPaymentNumber());
+        Invoice invoice = payment.getInvoice();
+        response.setInvoiceId(invoice != null ? invoice.getId() : null);
+        Student student = payment.getStudent();
+        response.setStudentId(student != null ? student.getId() : null);
+        if (student != null) {
+            response.setStudentName(student.getFirstName() + " " + student.getLastName());
+        }
+        response.setAmount(payment.getAmount());
+        response.setPaymentMethod(payment.getPaymentMethod());
+        response.setPaymentStatus(payment.getPaymentStatus());
+        response.setPaymentDate(payment.getPaymentDate());
+        response.setNotes(payment.getNotes());
+        response.setCreatedAt(payment.getCreatedAt());
+        return response;
     }
 
     private void updateInvoiceAmounts(Invoice invoice, Double paymentAmount) {

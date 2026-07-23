@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.SeatAllocationConfig;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.SeatAllocationConfigService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class SeatAllocationConfigController {
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<PagedResponse<SeatAllocationConfig>> getAll(
+    public ResponseEntity<ApiResponse<PagedResponse<SeatAllocationConfig>>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,44 +33,44 @@ public class SeatAllocationConfigController {
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<SeatAllocationConfig> paged = configService.findByFilters(search, status, sessionId, pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
-                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
+                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<SeatAllocationConfig> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(configService.findById(id));
+    public ResponseEntity<ApiResponse<SeatAllocationConfig>> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(configService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<SeatAllocationConfig> create(@RequestBody SeatAllocationConfig config) {
-        return ResponseEntity.ok(configService.create(config));
+    public ResponseEntity<ApiResponse<SeatAllocationConfig>> create(@RequestBody SeatAllocationConfig config) {
+        return ResponseEntity.ok(ApiResponse.success(configService.create(config)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<SeatAllocationConfig> update(@PathVariable Long id, @RequestBody SeatAllocationConfig config) {
-        return ResponseEntity.ok(configService.update(id, config));
+    public ResponseEntity<ApiResponse<SeatAllocationConfig>> update(@PathVariable Long id, @RequestBody SeatAllocationConfig config) {
+        return ResponseEntity.ok(ApiResponse.success(configService.update(id, config)));
     }
 
     @PutMapping("/{id}/activate")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<SeatAllocationConfig> activate(@PathVariable Long id) {
-        return ResponseEntity.ok(configService.activate(id));
+    public ResponseEntity<ApiResponse<SeatAllocationConfig>> activate(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(configService.activate(id)));
     }
 
     @PutMapping("/{id}/close")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<SeatAllocationConfig> close(@PathVariable Long id) {
-        return ResponseEntity.ok(configService.close(id));
+    public ResponseEntity<ApiResponse<SeatAllocationConfig>> close(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(configService.close(id)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         configService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

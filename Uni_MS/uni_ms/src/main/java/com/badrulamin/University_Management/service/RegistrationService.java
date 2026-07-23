@@ -8,6 +8,7 @@ import com.badrulamin.University_Management.payload.response.*;
 import com.badrulamin.University_Management.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RegistrationService {
 
     private final CourseRegistrationRepository courseRegistrationRepository;
@@ -234,38 +236,27 @@ public class RegistrationService {
 
     public RegistrationDashboardResponse getDashboardStats(Long semesterId) {
         RegistrationDashboardResponse dashboard = new RegistrationDashboardResponse();
-        List<CourseRegistration> allBySemester = courseRegistrationRepository.findBySemester_Id(semesterId);
 
-        dashboard.setTotalRegistrations((long) allBySemester.size());
-        dashboard.setPendingApprovals(allBySemester.stream()
-                .filter(r -> "PENDING".equals(r.getAdvisorStatus())).count());
-        dashboard.setApprovedRegistrations(allBySemester.stream()
-                .filter(r -> "APPROVED".equals(r.getAdvisorStatus())).count());
-        dashboard.setRegisteredStudents(allBySemester.stream()
-                .filter(r -> "REGISTERED".equals(r.getStatus())).count());
-        dashboard.setDroppedRegistrations(allBySemester.stream()
-                .filter(r -> "DROPPED".equals(r.getStatus())).count());
+        dashboard.setTotalRegistrations(courseRegistrationRepository.countBySemester_Id(semesterId));
+        dashboard.setPendingApprovals(courseRegistrationRepository.countBySemesterIdAndAdvisorStatus(semesterId, "PENDING"));
+        dashboard.setApprovedRegistrations(courseRegistrationRepository.countBySemesterIdAndAdvisorStatus(semesterId, "APPROVED"));
+        dashboard.setRegisteredStudents(courseRegistrationRepository.countBySemesterIdAndStatus(semesterId, "REGISTERED"));
+        dashboard.setDroppedRegistrations(courseRegistrationRepository.countBySemesterIdAndStatus(semesterId, "DROPPED"));
 
-        Map<String, Long> statusCounts = allBySemester.stream()
-                .collect(Collectors.groupingBy(CourseRegistration::getStatus, Collectors.counting()));
-
-        List<RegistrationDashboardResponse.RegistrationStatsByStatus> breakdown = statusCounts.entrySet().stream()
-                .map(entry -> {
+        List<Object[]> statusGroups = courseRegistrationRepository.countGroupByStatus(semesterId);
+        List<RegistrationDashboardResponse.RegistrationStatsByStatus> breakdown = statusGroups.stream()
+                .map(row -> {
                     RegistrationDashboardResponse.RegistrationStatsByStatus stat = new RegistrationDashboardResponse.RegistrationStatsByStatus();
-                    stat.setStatus(entry.getKey());
-                    stat.setCount(entry.getValue());
+                    stat.setStatus((String) row[0]);
+                    stat.setCount((Long) row[1]);
                     return stat;
                 })
                 .collect(Collectors.toList());
         dashboard.setStatusBreakdown(breakdown);
 
-        List<RegistrationDashboardResponse.RecentRegistration> recent = allBySemester.stream()
-                .sorted((a, b) -> {
-                    if (a.getCreatedAt() == null) return 1;
-                    if (b.getCreatedAt() == null) return -1;
-                    return b.getCreatedAt().compareTo(a.getCreatedAt());
-                })
-                .limit(10)
+        List<CourseRegistration> recentRecords = courseRegistrationRepository
+                .findBySemester_IdOrderByCreatedAtDesc(semesterId, PageRequest.of(0, 10));
+        List<RegistrationDashboardResponse.RecentRegistration> recent = recentRecords.stream()
                 .map(reg -> {
                     RegistrationDashboardResponse.RecentRegistration r = new RegistrationDashboardResponse.RecentRegistration();
                     r.setId(reg.getId());

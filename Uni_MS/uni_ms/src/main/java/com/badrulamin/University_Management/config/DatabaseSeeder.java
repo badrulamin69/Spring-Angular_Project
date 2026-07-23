@@ -371,11 +371,15 @@ public class DatabaseSeeder implements CommandLineRunner {
         Role hrManager = createRole("HR Manager", "ROLE_HR_MANAGER", "HR Manager access", hrManagerPerms, 2, universityAdmin);
 
         // ===== DEFAULT ADMIN USER (only one -- you manage the rest via Postman) =====
-        createUser("admin", "admin@erp.com", "admin123", "System", "Administrator", "1234567890", superAdmin);
+        String adminPassword = System.getenv().getOrDefault("SEED_ADMIN_PASSWORD", UUID.randomUUID().toString().substring(0, 12));
+        String registrarPassword = System.getenv().getOrDefault("SEED_REGISTRAR_PASSWORD", UUID.randomUUID().toString().substring(0, 12));
+        String hrManagerPassword = System.getenv().getOrDefault("SEED_HR_MANAGER_PASSWORD", UUID.randomUUID().toString().substring(0, 12));
+
+        createUser("admin", "admin@erp.com", adminPassword, "System", "Administrator", "1234567890", superAdmin);
 
         // ===== DEMO USERS for login page =====
-        createUser("registrar", "registrar@erp.com", "registrar123", "System", "Registrar", "1234567891", registrar);
-        createUser("hrmanager", "hrmanager@erp.com", "hr123", "System", "HR Manager", "1234567892", hrManager);
+        createUser("registrar", "registrar@erp.com", registrarPassword, "System", "Registrar", "1234567891", registrar);
+        createUser("hrmanager", "hrmanager@erp.com", hrManagerPassword, "System", "HR Manager", "1234567892", hrManager);
 
         // ===== MENUS =====
         seedMenus(menuRepository, perms);

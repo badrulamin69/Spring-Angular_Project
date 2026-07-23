@@ -35,4 +35,17 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
     List<CourseRegistration> findApprovedUnpaidCourses(@Param("studentId") Long studentId, @Param("semesterId") Long semesterId);
 
     boolean existsByStudent_IdAndSemester_IdAndCourse_IdAndStatusIn(Long studentId, Long semesterId, Long courseId, List<String> statuses);
+
+    long countBySemester_Id(Long semesterId);
+
+    @Query("SELECT COUNT(cr) FROM CourseRegistration cr WHERE cr.semester.id = :semesterId AND cr.advisorStatus = :status")
+    long countBySemesterIdAndAdvisorStatus(@Param("semesterId") Long semesterId, @Param("status") String status);
+
+    @Query("SELECT COUNT(cr) FROM CourseRegistration cr WHERE cr.semester.id = :semesterId AND cr.status = :status")
+    long countBySemesterIdAndStatus(@Param("semesterId") Long semesterId, @Param("status") String status);
+
+    @Query("SELECT cr.status, COUNT(cr) FROM CourseRegistration cr WHERE cr.semester.id = :semesterId GROUP BY cr.status")
+    List<Object[]> countGroupByStatus(@Param("semesterId") Long semesterId);
+
+    List<CourseRegistration> findBySemester_IdOrderByCreatedAtDesc(Long semesterId, Pageable pageable);
 }

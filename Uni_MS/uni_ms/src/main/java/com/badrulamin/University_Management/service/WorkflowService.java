@@ -13,6 +13,7 @@ import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class WorkflowService {
 
     private final WorkflowRepository workflowRepository;

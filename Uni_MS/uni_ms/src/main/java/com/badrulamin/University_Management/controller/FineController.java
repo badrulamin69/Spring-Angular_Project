@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Fine;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.FineService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class FineController {
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Fine>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Fine>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,45 +34,45 @@ public class FineController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Fine> paged = fineService.findAll(pageable);
         PagedResponse<Fine> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Fine> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(fineService.findById(id));
+    public ResponseEntity<ApiResponse<Fine>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(fineService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/student/{studentId}")
-    public ResponseEntity<List<Fine>> findByStudentId(@PathVariable Long studentId) {
-        return ResponseEntity.ok(fineService.findByStudentId(studentId));
+    public ResponseEntity<ApiResponse<List<Fine>>> findByStudentId(@PathVariable Long studentId) {
+        return ResponseEntity.ok(ApiResponse.success(fineService.findByStudentId(studentId)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PostMapping
-    public ResponseEntity<Fine> save(@Valid @RequestBody Fine fine) {
-        return ResponseEntity.ok(fineService.save(fine));
+    public ResponseEntity<ApiResponse<Fine>> save(@Valid @RequestBody Fine fine) {
+        return ResponseEntity.ok(ApiResponse.success(fineService.save(fine)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Fine> update(@PathVariable Long id, @Valid @RequestBody Fine fine) {
-        return ResponseEntity.ok(fineService.update(id, fine));
+    public ResponseEntity<ApiResponse<Fine>> update(@PathVariable Long id, @Valid @RequestBody Fine fine) {
+        return ResponseEntity.ok(ApiResponse.success(fineService.update(id, fine)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PostMapping("/{id}/waive")
-    public ResponseEntity<Fine> waiveFine(
+    public ResponseEntity<ApiResponse<Fine>> waiveFine(
             @PathVariable Long id,
             @RequestParam(required = false) String waivedBy) {
-        return ResponseEntity.ok(fineService.waiveFine(id, waivedBy));
+        return ResponseEntity.ok(ApiResponse.success(fineService.waiveFine(id, waivedBy)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         fineService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

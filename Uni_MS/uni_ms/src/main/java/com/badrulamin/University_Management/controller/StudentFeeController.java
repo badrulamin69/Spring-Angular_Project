@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.StudentFee;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.StudentFeeService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class StudentFeeController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
-    public ResponseEntity<PagedResponse<StudentFee>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<StudentFee>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class StudentFeeController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<StudentFee> paged = studentFeeService.findAll(pageable);
         PagedResponse<StudentFee> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
-    public ResponseEntity<StudentFee> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentFeeService.findById(id));
+    public ResponseEntity<ApiResponse<StudentFee>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(studentFeeService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
-    public ResponseEntity<StudentFee> save(@Valid @RequestBody StudentFee studentFee) {
-        return ResponseEntity.ok(studentFeeService.save(studentFee));
+    public ResponseEntity<ApiResponse<StudentFee>> save(@Valid @RequestBody StudentFee studentFee) {
+        return ResponseEntity.ok(ApiResponse.success(studentFeeService.save(studentFee)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
-    public ResponseEntity<StudentFee> update(@PathVariable Long id, @Valid @RequestBody StudentFee studentFee) {
-        return ResponseEntity.ok(studentFeeService.update(id, studentFee));
+    public ResponseEntity<ApiResponse<StudentFee>> update(@PathVariable Long id, @Valid @RequestBody StudentFee studentFee) {
+        return ResponseEntity.ok(ApiResponse.success(studentFeeService.update(id, studentFee)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         studentFeeService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

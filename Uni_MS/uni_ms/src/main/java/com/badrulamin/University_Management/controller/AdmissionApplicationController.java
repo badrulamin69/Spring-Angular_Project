@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionApplication;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionApplicationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,33 +47,33 @@ public class AdmissionApplicationController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<AdmissionApplication> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionApplicationService.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionApplication>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionApplicationService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_CREATE')")
-    public ResponseEntity<AdmissionApplication> create(@Valid @RequestBody AdmissionApplication application) {
-        return ResponseEntity.ok(admissionApplicationService.create(application));
+    public ResponseEntity<ApiResponse<AdmissionApplication>> create(@Valid @RequestBody AdmissionApplication application) {
+        return ResponseEntity.ok(ApiResponse.success(admissionApplicationService.create(application)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_EDIT')")
-    public ResponseEntity<AdmissionApplication> update(@PathVariable Long id, @Valid @RequestBody AdmissionApplication application) {
-        return ResponseEntity.ok(admissionApplicationService.update(id, application));
+    public ResponseEntity<ApiResponse<AdmissionApplication>> update(@PathVariable Long id, @Valid @RequestBody AdmissionApplication application) {
+        return ResponseEntity.ok(ApiResponse.success(admissionApplicationService.update(id, application)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_DELETE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         admissionApplicationService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/unverified")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<?> getUnverified() {
-        return ResponseEntity.ok(admissionApplicationService.findUnverified());
+        return ResponseEntity.ok(ApiResponse.success(admissionApplicationService.findUnverified()));
     }
 
     @GetMapping("/stats")
@@ -89,18 +90,18 @@ public class AdmissionApplicationController {
     @GetMapping("/analytics/monthly-trend")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<?> getMonthlyTrend() {
-        return ResponseEntity.ok(admissionApplicationService.getMonthlyTrend());
+        return ResponseEntity.ok(ApiResponse.success(admissionApplicationService.getMonthlyTrend()));
     }
 
     @GetMapping("/analytics/program-breakdown")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<?> getProgramBreakdown() {
-        return ResponseEntity.ok(admissionApplicationService.getProgramBreakdown());
+        return ResponseEntity.ok(ApiResponse.success(admissionApplicationService.getProgramBreakdown()));
     }
 
     @GetMapping("/analytics/status-counts")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<?> getStatusCounts() {
-        return ResponseEntity.ok(admissionApplicationService.getStatusCounts());
+        return ResponseEntity.ok(ApiResponse.success(admissionApplicationService.getStatusCounts()));
     }
 }

@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Prerequisite;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.PrerequisiteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class PrerequisiteController {
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Prerequisite>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Prerequisite>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class PrerequisiteController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Prerequisite> paged = prerequisiteService.findAll(pageable);
         PagedResponse<Prerequisite> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Prerequisite> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(prerequisiteService.findById(id));
+    public ResponseEntity<ApiResponse<Prerequisite>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(prerequisiteService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_MANAGE')")
     @PostMapping
-    public ResponseEntity<Prerequisite> save(@Valid @RequestBody Prerequisite prerequisite) {
-        return ResponseEntity.ok(prerequisiteService.save(prerequisite));
+    public ResponseEntity<ApiResponse<Prerequisite>> save(@Valid @RequestBody Prerequisite prerequisite) {
+        return ResponseEntity.ok(ApiResponse.success(prerequisiteService.save(prerequisite)));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Prerequisite> update(@PathVariable Long id, @Valid @RequestBody Prerequisite prerequisite) {
-        return ResponseEntity.ok(prerequisiteService.update(id, prerequisite));
+    public ResponseEntity<ApiResponse<Prerequisite>> update(@PathVariable Long id, @Valid @RequestBody Prerequisite prerequisite) {
+        return ResponseEntity.ok(ApiResponse.success(prerequisiteService.update(id, prerequisite)));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         prerequisiteService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

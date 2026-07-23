@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionTest;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionTestService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class AdmissionTestController {
 
     @PreAuthorize("hasAuthority('ADMISSION_VIEW') or hasAuthority('ADMISSION_TEST_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<AdmissionTest>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<AdmissionTest>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -39,54 +40,54 @@ public class AdmissionTestController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<AdmissionTest> paged = admissionTestService.findByFilters(search, status, facultyId, departmentId, testDate, pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_VIEW') or hasAuthority('ADMISSION_TEST_VIEW')")
-    public ResponseEntity<AdmissionTest> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionTestService.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionTest>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionTestService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionTest> save(@Valid @RequestBody AdmissionTest admissionTest) {
-        return ResponseEntity.ok(admissionTestService.save(admissionTest));
+    public ResponseEntity<ApiResponse<AdmissionTest>> save(@Valid @RequestBody AdmissionTest admissionTest) {
+        return ResponseEntity.ok(ApiResponse.success(admissionTestService.save(admissionTest)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionTest> update(@PathVariable Long id, @Valid @RequestBody AdmissionTest admissionTest) {
-        return ResponseEntity.ok(admissionTestService.update(id, admissionTest));
+    public ResponseEntity<ApiResponse<AdmissionTest>> update(@PathVariable Long id, @Valid @RequestBody AdmissionTest admissionTest) {
+        return ResponseEntity.ok(ApiResponse.success(admissionTestService.update(id, admissionTest)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         admissionTestService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PutMapping("/{id}/publish")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionTest> publish(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionTestService.publish(id));
+    public ResponseEntity<ApiResponse<AdmissionTest>> publish(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionTestService.publish(id)));
     }
 
     @PutMapping("/{id}/close")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<AdmissionTest> close(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionTestService.close(id));
+    public ResponseEntity<ApiResponse<AdmissionTest>> close(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionTestService.close(id)));
     }
 
     @GetMapping("/stats")
     @PreAuthorize("hasAuthority('ADMISSION_VIEW') or hasAuthority('ADMISSION_TEST_VIEW')")
-    public ResponseEntity<Map<String, Object>> getStats() {
-        return ResponseEntity.ok(Map.of(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats() {
+        return ResponseEntity.ok(ApiResponse.success(Map.of(
                 "total", admissionTestService.countByStatus("DRAFT") + admissionTestService.countByStatus("PUBLISHED") + admissionTestService.countByStatus("CLOSED"),
                 "draft", admissionTestService.countByStatus("DRAFT"),
                 "published", admissionTestService.countByStatus("PUBLISHED"),
                 "closed", admissionTestService.countByStatus("CLOSED")
-        ));
+        )));
     }
 }

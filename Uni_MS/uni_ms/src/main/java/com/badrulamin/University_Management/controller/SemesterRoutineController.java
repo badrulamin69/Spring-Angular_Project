@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.SemesterRoutine;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.SemesterRoutineService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class SemesterRoutineController {
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<SemesterRoutine>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<SemesterRoutine>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class SemesterRoutineController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<SemesterRoutine> paged = semesterRoutineService.findAll(pageable);
         PagedResponse<SemesterRoutine> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<SemesterRoutine> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(semesterRoutineService.findById(id));
+    public ResponseEntity<ApiResponse<SemesterRoutine>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(semesterRoutineService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_MANAGE')")
     @PostMapping
-    public ResponseEntity<SemesterRoutine> save(@Valid @RequestBody SemesterRoutine semesterRoutine) {
-        return ResponseEntity.ok(semesterRoutineService.save(semesterRoutine));
+    public ResponseEntity<ApiResponse<SemesterRoutine>> save(@Valid @RequestBody SemesterRoutine semesterRoutine) {
+        return ResponseEntity.ok(ApiResponse.success(semesterRoutineService.save(semesterRoutine)));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<SemesterRoutine> update(@PathVariable Long id, @Valid @RequestBody SemesterRoutine semesterRoutine) {
-        return ResponseEntity.ok(semesterRoutineService.update(id, semesterRoutine));
+    public ResponseEntity<ApiResponse<SemesterRoutine>> update(@PathVariable Long id, @Valid @RequestBody SemesterRoutine semesterRoutine) {
+        return ResponseEntity.ok(ApiResponse.success(semesterRoutineService.update(id, semesterRoutine)));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         semesterRoutineService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

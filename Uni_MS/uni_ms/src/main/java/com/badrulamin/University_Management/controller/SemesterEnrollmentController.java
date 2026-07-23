@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.User;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.request.AdminEnrollmentActionRequest;
 import com.badrulamin.University_Management.payload.request.EnrollmentApprovalRequest;
 import com.badrulamin.University_Management.payload.request.SemesterEnrollmentRequest;
@@ -166,7 +167,7 @@ public class SemesterEnrollmentController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/history/student/{studentId}")
@@ -175,7 +176,7 @@ public class SemesterEnrollmentController {
             @PathVariable Long studentId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
-        return ResponseEntity.ok(enrollmentHistoryService.getHistoryByStudent(studentId, PageRequest.of(page, size)));
+        return ResponseEntity.ok(ApiResponse.success(enrollmentHistoryService.getHistoryByStudent(studentId, PageRequest.of(page, size))));
     }
 
     @GetMapping("/history/semester/{semesterId}")

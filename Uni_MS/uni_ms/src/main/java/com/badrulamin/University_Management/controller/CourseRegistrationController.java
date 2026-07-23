@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.CourseRegistration;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.CourseRegistrationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class CourseRegistrationController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<CourseRegistration> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(courseRegistrationService.findById(id));
+    public ResponseEntity<ApiResponse<CourseRegistration>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(courseRegistrationService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<CourseRegistration> create(@RequestBody CourseRegistration courseRegistration) {
-        return ResponseEntity.ok(courseRegistrationService.create(courseRegistration));
+    public ResponseEntity<ApiResponse<CourseRegistration>> create(@RequestBody CourseRegistration courseRegistration) {
+        return ResponseEntity.ok(ApiResponse.success(courseRegistrationService.create(courseRegistration)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<CourseRegistration> update(@PathVariable Long id, @RequestBody CourseRegistration courseRegistration) {
-        return ResponseEntity.ok(courseRegistrationService.update(id, courseRegistration));
+    public ResponseEntity<ApiResponse<CourseRegistration>> update(@PathVariable Long id, @RequestBody CourseRegistration courseRegistration) {
+        return ResponseEntity.ok(ApiResponse.success(courseRegistrationService.update(id, courseRegistration)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         courseRegistrationService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class CourseRegistrationController {
         stats.put("totalPending", courseRegistrationService.countByStatus("PENDING"));
         stats.put("totalDropped", courseRegistrationService.countByStatus("DROPPED"));
         stats.put("totalCompleted", courseRegistrationService.countByStatus("COMPLETED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

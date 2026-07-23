@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.ApplicantChoice;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.entity.ApplicantChoiceSubmission;
 import com.badrulamin.University_Management.entity.ChoiceFillingConfig;
 import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
@@ -41,7 +42,7 @@ public class ApplicantChoiceController {
 
     @GetMapping("/admin/submissions")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<PagedResponse<ApplicantChoiceSubmission>> getAllSubmissions(
+    public ResponseEntity<ApiResponse<PagedResponse<ApplicantChoiceSubmission>>> getAllSubmissions(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -52,97 +53,97 @@ public class ApplicantChoiceController {
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<ApplicantChoiceSubmission> paged = choiceService.findSubmissionsByFilters(search, status, configId, pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
-                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
+                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/admin/submissions/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoiceSubmission> getSubmissionById(@PathVariable Long id) {
-        return ResponseEntity.ok(choiceService.findSubmissionById(id));
+    public ResponseEntity<ApiResponse<ApplicantChoiceSubmission>> getSubmissionById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.findSubmissionById(id)));
     }
 
     @GetMapping("/admin/submissions/{id}/choices")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<ApplicantChoice>> getSubmissionChoices(@PathVariable Long id) {
-        return ResponseEntity.ok(choiceService.getChoicesBySubmission(id));
+    public ResponseEntity<ApiResponse<List<ApplicantChoice>>> getSubmissionChoices(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.getChoicesBySubmission(id)));
     }
 
     @PutMapping("/admin/submissions/{id}/lock")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoiceSubmission> lockSubmission(@PathVariable Long id) {
-        return ResponseEntity.ok(choiceService.lockSubmission(id));
+    public ResponseEntity<ApiResponse<ApplicantChoiceSubmission>> lockSubmission(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.lockSubmission(id)));
     }
 
     @PutMapping("/admin/submissions/{id}/reopen")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoiceSubmission> reopenSubmission(@PathVariable Long id) {
-        return ResponseEntity.ok(choiceService.reopenSubmission(id));
+    public ResponseEntity<ApiResponse<ApplicantChoiceSubmission>> reopenSubmission(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.reopenSubmission(id)));
     }
 
     @GetMapping("/admin/stats/{configId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<Map<String, Object>> getStats(@PathVariable Long configId) {
-        return ResponseEntity.ok(choiceService.getStats(configId));
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats(@PathVariable Long configId) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.getStats(configId)));
     }
 
     @GetMapping("/admin/available-programs/{configId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<Map<String, Object>>> getAvailablePrograms(@PathVariable Long configId) {
-        return ResponseEntity.ok(choiceService.getAvailablePrograms(configId));
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getAvailablePrograms(@PathVariable Long configId) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.getAvailablePrograms(configId)));
     }
 
     @GetMapping("/my-submission")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoiceSubmission> getMySubmission(
+    public ResponseEntity<ApiResponse<ApplicantChoiceSubmission>> getMySubmission(
             @RequestParam Long configId,
             @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(choiceService.findSubmissionByRegAndConfig(
-                getUserIdFromUsername(userDetails.getUsername()), configId));
+        return ResponseEntity.ok(ApiResponse.success(choiceService.findSubmissionByRegAndConfig(
+                getUserIdFromUsername(userDetails.getUsername()), configId)));
     }
 
     @GetMapping("/my-choices")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<ApplicantChoice>> getMyChoices(
+    public ResponseEntity<ApiResponse<List<ApplicantChoice>>> getMyChoices(
             @RequestParam Long submissionId,
             @AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(choiceService.getChoicesBySubmission(submissionId));
+        return ResponseEntity.ok(ApiResponse.success(choiceService.getChoicesBySubmission(submissionId)));
     }
 
     @PostMapping("/start/{configId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoiceSubmission> startSubmission(
+    public ResponseEntity<ApiResponse<ApplicantChoiceSubmission>> startSubmission(
             @PathVariable Long configId,
             @AuthenticationPrincipal UserDetails userDetails) {
         Long registrationId = getUserIdFromUsername(userDetails.getUsername());
-        return ResponseEntity.ok(choiceService.getOrCreateSubmission(registrationId, configId));
+        return ResponseEntity.ok(ApiResponse.success(choiceService.getOrCreateSubmission(registrationId, configId)));
     }
 
     @PostMapping("/add-choice/{submissionId}/{programId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoice> addChoice(@PathVariable Long submissionId, @PathVariable Long programId) {
-        return ResponseEntity.ok(choiceService.addChoice(submissionId, programId));
+    public ResponseEntity<ApiResponse<ApplicantChoice>> addChoice(@PathVariable Long submissionId, @PathVariable Long programId) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.addChoice(submissionId, programId)));
     }
 
     @DeleteMapping("/remove-choice/{choiceId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<Void> removeChoice(@PathVariable Long choiceId) {
+    public ResponseEntity<ApiResponse<Void>> removeChoice(@PathVariable Long choiceId) {
         choiceService.removeChoice(choiceId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PutMapping("/move-choice/{choiceId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoice> moveChoice(
+    public ResponseEntity<ApiResponse<ApplicantChoice>> moveChoice(
             @PathVariable Long choiceId,
             @RequestParam String direction) {
-        return ResponseEntity.ok(choiceService.moveChoice(choiceId, direction));
+        return ResponseEntity.ok(ApiResponse.success(choiceService.moveChoice(choiceId, direction)));
     }
 
     @PostMapping("/submit/{submissionId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<ApplicantChoiceSubmission> submitChoices(@PathVariable Long submissionId) {
-        return ResponseEntity.ok(choiceService.submitChoices(submissionId));
+    public ResponseEntity<ApiResponse<ApplicantChoiceSubmission>> submitChoices(@PathVariable Long submissionId) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.submitChoices(submissionId)));
     }
 
     @GetMapping("/admin/submissions/export/pdf")
@@ -176,8 +177,8 @@ public class ApplicantChoiceController {
 
     @GetMapping("/admin/demand-report/{configId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<Map<String, Object>>> getDemandReport(@PathVariable Long configId) {
-        return ResponseEntity.ok(choiceService.getDemandReport(configId));
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getDemandReport(@PathVariable Long configId) {
+        return ResponseEntity.ok(ApiResponse.success(choiceService.getDemandReport(configId)));
     }
 
     private Long getUserIdFromUsername(String username) {

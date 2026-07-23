@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.*;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.entity.AdmissionMeritListEntry;
 import com.badrulamin.University_Management.entity.AdmissionWaitingListEntry;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
@@ -59,7 +60,7 @@ public class ApplicantPortalController {
         result.put("programPreference1", reg.getProgramPreference1());
         result.put("programPreference2", reg.getProgramPreference2());
         result.put("programPreference3", reg.getProgramPreference3());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @GetMapping("/my-test")
@@ -78,7 +79,7 @@ public class ApplicantPortalController {
             result.put("passingMarks", test.getPassingMarks());
             result.put("description", test.getDescription());
         }
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @GetMapping("/my-test/{testId}/questions")
@@ -97,7 +98,7 @@ public class ApplicantPortalController {
             qMap.put("marks", q.getMarks());
             safeQuestions.add(qMap);
         }
-        return ResponseEntity.ok(safeQuestions);
+        return ResponseEntity.ok(ApiResponse.success(safeQuestions));
     }
 
     @PostMapping("/test/{testId}/start")
@@ -109,7 +110,7 @@ public class ApplicantPortalController {
         result.put("status", attempt.getStatus());
         result.put("totalQuestions", attempt.getTotalQuestions());
         result.put("startedAt", attempt.getStartedAt());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @PostMapping("/test/submit")
@@ -126,7 +127,7 @@ public class ApplicantPortalController {
         result.put("correctAnswers", attempt.getCorrectAnswers());
         result.put("totalQuestions", attempt.getTotalQuestions());
         result.put("status", attempt.getStatus());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @GetMapping("/my-results")
@@ -139,7 +140,7 @@ public class ApplicantPortalController {
         result.put("registrationStatus", reg.getStatus());
         result.put("attempts", attempts);
         result.put("testResults", results);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @GetMapping("/my-allocation")
@@ -164,7 +165,7 @@ public class ApplicantPortalController {
             result.put("confirmedAt", a.getConfirmedAt());
             result.put("isEnrolled", "ENROLLED".equals(reg.getStatus()));
         }
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @PostMapping("/my-allocation/{id}/confirm")
@@ -180,7 +181,7 @@ public class ApplicantPortalController {
         allocationRepository.save(allocation);
         reg.setStatus("ALLOCATED");
         registrationRepository.save(reg);
-        return ResponseEntity.ok(Map.of("message", "Allocation confirmed successfully", "status", "CONFIRMED"));
+        return ResponseEntity.ok(ApiResponse.success(Map.of("message", "Allocation confirmed successfully", "status", "CONFIRMED")));
     }
 
     @PostMapping("/my-allocation/{id}/decline")
@@ -193,7 +194,7 @@ public class ApplicantPortalController {
         }
         allocation.setStatus("CANCELLED");
         allocationRepository.save(allocation);
-        return ResponseEntity.ok(Map.of("message", "Allocation declined", "status", "CANCELLED"));
+        return ResponseEntity.ok(ApiResponse.success(Map.of("message", "Allocation declined", "status", "CANCELLED")));
     }
 
     @PostMapping("/my-enroll")
@@ -201,7 +202,7 @@ public class ApplicantPortalController {
         PreAdmissionRegistration reg = findRegistration(userDetails);
         try {
             Map<String, Object> result = enrollmentService.enrollSelf(reg.getId(), reg.getEmail());
-            return ResponseEntity.ok(result);
+            return ResponseEntity.ok(ApiResponse.success(result));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
@@ -232,7 +233,7 @@ public class ApplicantPortalController {
         PreAdmissionRegistration reg = findRegistration(userDetails);
         List<AdmissionMeritListEntry> entries = meritListEntryRepository.findByRegistration_Id(reg.getId());
         if (entries.isEmpty()) {
-            return ResponseEntity.ok(Map.of("found", false, "message", "No merit list entry found"));
+            return ResponseEntity.ok(ApiResponse.success(Map.of("found", false, "message", "No merit list entry found")));
         }
         AdmissionMeritListEntry bestEntry = entries.stream()
                 .filter(e -> "SELECTED".equals(e.getStatus()) || "WAITING".equals(e.getStatus()))
@@ -251,7 +252,7 @@ public class ApplicantPortalController {
         result.put("rollNumber", bestEntry.getRollNumber());
         result.put("programName", bestEntry.getProgramName());
         result.put("totalApplicants", bestEntry.getMeritList().getTotalApplicants());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
     @GetMapping("/my-waiting-position")
@@ -259,7 +260,7 @@ public class ApplicantPortalController {
         PreAdmissionRegistration reg = findRegistration(userDetails);
         List<AdmissionWaitingListEntry> entries = waitingListEntryRepository.findByRegistration_Id(reg.getId());
         if (entries.isEmpty()) {
-            return ResponseEntity.ok(Map.of("found", false, "message", "No waiting list entry found"));
+            return ResponseEntity.ok(ApiResponse.success(Map.of("found", false, "message", "No waiting list entry found")));
         }
         AdmissionWaitingListEntry bestEntry = entries.stream()
                 .min((a, b) -> Integer.compare(a.getRank(), b.getRank()))
@@ -272,6 +273,6 @@ public class ApplicantPortalController {
         result.put("waitingListName", bestEntry.getWaitingList().getName());
         result.put("applicantName", bestEntry.getApplicantName());
         result.put("rollNumber", bestEntry.getRollNumber());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 }

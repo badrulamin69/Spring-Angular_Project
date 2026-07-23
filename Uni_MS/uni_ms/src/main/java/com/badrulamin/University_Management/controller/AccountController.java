@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Account;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class AccountController {
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Account>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Account>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class AccountController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Account> paged = accountService.findAll(pageable);
         PagedResponse<Account> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
-    public ResponseEntity<Account> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(accountService.findById(id));
+    public ResponseEntity<ApiResponse<Account>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(accountService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('INVOICE_MANAGE')")
-    public ResponseEntity<Account> save(@Valid @RequestBody Account account) {
-        return ResponseEntity.ok(accountService.save(account));
+    public ResponseEntity<ApiResponse<Account>> save(@Valid @RequestBody Account account) {
+        return ResponseEntity.ok(ApiResponse.success(accountService.save(account)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('INVOICE_MANAGE')")
-    public ResponseEntity<Account> update(@PathVariable Long id, @Valid @RequestBody Account account) {
-        return ResponseEntity.ok(accountService.update(id, account));
+    public ResponseEntity<ApiResponse<Account>> update(@PathVariable Long id, @Valid @RequestBody Account account) {
+        return ResponseEntity.ok(ApiResponse.success(accountService.update(id, account)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('INVOICE_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         accountService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

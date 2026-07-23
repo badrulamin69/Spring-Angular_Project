@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.repository.*;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +25,7 @@ public class UniversityAdminDashboardController {
     private final EmployeeRepository employeeRepository;
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> getStats() {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats() {
         Map<String, Object> stats = new LinkedHashMap<>();
         stats.put("totalFaculties", facultyRepository.count());
         stats.put("totalDepartments", departmentRepository.count());
@@ -33,6 +34,6 @@ public class UniversityAdminDashboardController {
         stats.put("totalEmployees", employeeRepository.count());
         stats.put("pendingApprovals", 0);
         stats.put("recentActivities", 0);
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

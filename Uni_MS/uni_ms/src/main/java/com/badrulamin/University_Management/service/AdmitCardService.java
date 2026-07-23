@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AdmitCardService {
 
     private final AdmitCardRepository admitCardRepository;

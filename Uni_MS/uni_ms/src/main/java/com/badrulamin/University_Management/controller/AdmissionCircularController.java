@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionCircular;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionCircularService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,26 +42,26 @@ public class AdmissionCircularController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<AdmissionCircular> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionCircularService.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionCircular>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionCircularService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_CREATE')")
-    public ResponseEntity<AdmissionCircular> create(@Valid @RequestBody AdmissionCircular circular) {
-        return ResponseEntity.ok(admissionCircularService.create(circular));
+    public ResponseEntity<ApiResponse<AdmissionCircular>> create(@Valid @RequestBody AdmissionCircular circular) {
+        return ResponseEntity.ok(ApiResponse.success(admissionCircularService.create(circular)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_EDIT')")
-    public ResponseEntity<AdmissionCircular> update(@PathVariable Long id, @Valid @RequestBody AdmissionCircular circular) {
-        return ResponseEntity.ok(admissionCircularService.update(id, circular));
+    public ResponseEntity<ApiResponse<AdmissionCircular>> update(@PathVariable Long id, @Valid @RequestBody AdmissionCircular circular) {
+        return ResponseEntity.ok(ApiResponse.success(admissionCircularService.update(id, circular)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_DELETE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         admissionCircularService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

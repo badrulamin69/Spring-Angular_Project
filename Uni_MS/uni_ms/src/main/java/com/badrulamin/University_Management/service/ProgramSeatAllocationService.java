@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+    @Transactional(readOnly = true)
 @Slf4j
 @Service
 @RequiredArgsConstructor

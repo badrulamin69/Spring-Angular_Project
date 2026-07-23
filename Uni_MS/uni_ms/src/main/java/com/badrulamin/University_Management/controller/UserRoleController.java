@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.UserRole;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.UserRoleService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class UserRoleController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<PagedResponse<UserRole>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<UserRole>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class UserRoleController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<UserRole> paged = userRoleService.findAll(pageable);
         PagedResponse<UserRole> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<UserRole> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(userRoleService.findById(id));
+    public ResponseEntity<ApiResponse<UserRole>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(userRoleService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<UserRole> save(@Valid @RequestBody UserRole userRole) {
-        return ResponseEntity.ok(userRoleService.save(userRole));
+    public ResponseEntity<ApiResponse<UserRole>> save(@Valid @RequestBody UserRole userRole) {
+        return ResponseEntity.ok(ApiResponse.success(userRoleService.save(userRole)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<UserRole> update(@PathVariable Long id, @Valid @RequestBody UserRole userRole) {
-        return ResponseEntity.ok(userRoleService.update(id, userRole));
+    public ResponseEntity<ApiResponse<UserRole>> update(@PathVariable Long id, @Valid @RequestBody UserRole userRole) {
+        return ResponseEntity.ok(ApiResponse.success(userRoleService.update(id, userRole)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         userRoleService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

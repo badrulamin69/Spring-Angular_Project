@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.config.EntityUpdateUtil;
 import com.badrulamin.University_Management.entity.Section;
 import com.badrulamin.University_Management.repository.SectionRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,12 +10,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SectionService {
 
     private final SectionRepository sectionRepository;
+    private final EntityUpdateUtil entityUpdateUtil;
 
     public Page<Section> findAll(Pageable pageable) {
         return sectionRepository.findAll(pageable);
@@ -29,10 +33,11 @@ public class SectionService {
         return sectionRepository.save(section);
     }
 
-    public Section update(Long id, Section section) {
-        findById(id);
-        section.setId(id);
-        return sectionRepository.save(section);
+    @Transactional
+    public Section update(Long id, Section incoming) {
+        Section existing = findById(id);
+        entityUpdateUtil.merge(incoming, existing);
+        return sectionRepository.save(existing);
     }
 
     public void delete(Long id) {

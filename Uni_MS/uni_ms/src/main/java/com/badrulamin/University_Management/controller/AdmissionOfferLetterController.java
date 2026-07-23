@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionOfferLetter;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionOfferLetterService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,39 +42,39 @@ public class AdmissionOfferLetterController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<AdmissionOfferLetter> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionOfferLetterService.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionOfferLetter>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionOfferLetterService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_CREATE')")
-    public ResponseEntity<AdmissionOfferLetter> create(@Valid @RequestBody AdmissionOfferLetter offerLetter) {
-        return ResponseEntity.ok(admissionOfferLetterService.create(offerLetter));
+    public ResponseEntity<ApiResponse<AdmissionOfferLetter>> create(@Valid @RequestBody AdmissionOfferLetter offerLetter) {
+        return ResponseEntity.ok(ApiResponse.success(admissionOfferLetterService.create(offerLetter)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_EDIT')")
-    public ResponseEntity<AdmissionOfferLetter> update(@PathVariable Long id, @Valid @RequestBody AdmissionOfferLetter offerLetter) {
-        return ResponseEntity.ok(admissionOfferLetterService.update(id, offerLetter));
+    public ResponseEntity<ApiResponse<AdmissionOfferLetter>> update(@PathVariable Long id, @Valid @RequestBody AdmissionOfferLetter offerLetter) {
+        return ResponseEntity.ok(ApiResponse.success(admissionOfferLetterService.update(id, offerLetter)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_DELETE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         admissionOfferLetterService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PutMapping("/{id}/accept")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionOfferLetter> accept(@PathVariable Long id) {
-        return ResponseEntity.ok(admissionOfferLetterService.accept(id));
+    public ResponseEntity<ApiResponse<AdmissionOfferLetter>> accept(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(admissionOfferLetterService.accept(id)));
     }
 
     @PutMapping("/{id}/decline")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionOfferLetter> decline(@PathVariable Long id, @Valid @RequestBody Map<String, String> body) {
-        return ResponseEntity.ok(admissionOfferLetterService.decline(id, body.getOrDefault("reason", "")));
+    public ResponseEntity<ApiResponse<AdmissionOfferLetter>> decline(@PathVariable Long id, @Valid @RequestBody Map<String, String> body) {
+        return ResponseEntity.ok(ApiResponse.success(admissionOfferLetterService.decline(id, body.getOrDefault("reason", ""))));
     }
 
     @GetMapping("/stats")

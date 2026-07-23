@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.MedicalInfo;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.MedicalInfoService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,38 +37,38 @@ public class MedicalInfoController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<MedicalInfo> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(medicalInfoService.findById(id));
+    public ResponseEntity<ApiResponse<MedicalInfo>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(medicalInfoService.findById(id)));
     }
 
     @GetMapping("/student/{studentId}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<MedicalInfo> findByStudentId(@PathVariable Long studentId) {
-        return ResponseEntity.ok(medicalInfoService.findByStudentId(studentId));
+    public ResponseEntity<ApiResponse<MedicalInfo>> findByStudentId(@PathVariable Long studentId) {
+        return ResponseEntity.ok(ApiResponse.success(medicalInfoService.findByStudentId(studentId)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<MedicalInfo> create(@RequestBody MedicalInfo medicalInfo) {
-        return ResponseEntity.ok(medicalInfoService.create(medicalInfo));
+    public ResponseEntity<ApiResponse<MedicalInfo>> create(@RequestBody MedicalInfo medicalInfo) {
+        return ResponseEntity.ok(ApiResponse.success(medicalInfoService.create(medicalInfo)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<MedicalInfo> update(@PathVariable Long id, @RequestBody MedicalInfo medicalInfo) {
-        return ResponseEntity.ok(medicalInfoService.update(id, medicalInfo));
+    public ResponseEntity<ApiResponse<MedicalInfo>> update(@PathVariable Long id, @RequestBody MedicalInfo medicalInfo) {
+        return ResponseEntity.ok(ApiResponse.success(medicalInfoService.update(id, medicalInfo)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         medicalInfoService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -76,6 +77,6 @@ public class MedicalInfoController {
         Map<String, Object> stats = new HashMap<>();
         Page<MedicalInfo> all = medicalInfoService.findAll(PageRequest.of(0, 1));
         stats.put("totalRecords", all.getTotalElements());
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

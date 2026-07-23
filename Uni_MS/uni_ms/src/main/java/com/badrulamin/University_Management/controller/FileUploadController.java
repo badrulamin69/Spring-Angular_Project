@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.service.FileUploadService;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,25 +19,25 @@ public class FileUploadController {
 
     @PreAuthorize("hasAuthority('SETTINGS_MANAGE')")
     @PostMapping("/{module}")
-    public ResponseEntity<Map<String, String>> uploadFile(
+    public ResponseEntity<ApiResponse<Map<String, String>>> uploadFile(
             @PathVariable String module,
             @RequestParam("file") MultipartFile file) {
         try {
             String url = fileUploadService.uploadFile(file, module);
-            return ResponseEntity.ok(Map.of("url", url, "filename", file.getOriginalFilename()));
+            return ResponseEntity.ok(ApiResponse.success(Map.of("url", url, "filename", file.getOriginalFilename())));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }
     }
 
     @PreAuthorize("hasAuthority('SETTINGS_MANAGE')")
     @DeleteMapping
-    public ResponseEntity<Map<String, String>> deleteFile(@RequestParam String url) {
+    public ResponseEntity<ApiResponse<Void>> deleteFile(@RequestParam String url) {
         try {
             fileUploadService.deleteFile(url);
-            return ResponseEntity.ok(Map.of("message", "File deleted successfully"));
+            return ResponseEntity.ok(ApiResponse.success("File deleted successfully", null));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
         }
     }
 }

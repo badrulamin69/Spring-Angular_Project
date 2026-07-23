@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.EventRegistration;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.EventRegistrationService;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class EventRegistrationController {
 
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<EventRegistration>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<EventRegistration>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class EventRegistrationController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<EventRegistration> paged = eventRegistrationService.findAll(pageable);
         PagedResponse<EventRegistration> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<EventRegistration> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(eventRegistrationService.findById(id));
+    public ResponseEntity<ApiResponse<EventRegistration>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(eventRegistrationService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
     @PostMapping
-    public ResponseEntity<EventRegistration> save(@Valid @RequestBody EventRegistration eventRegistration) {
-        return ResponseEntity.ok(eventRegistrationService.save(eventRegistration));
+    public ResponseEntity<ApiResponse<EventRegistration>> save(@Valid @RequestBody EventRegistration eventRegistration) {
+        return ResponseEntity.ok(ApiResponse.success(eventRegistrationService.save(eventRegistration)));
     }
 
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
     @PutMapping("/{id}")
-    public ResponseEntity<EventRegistration> update(@PathVariable Long id, @Valid @RequestBody EventRegistration eventRegistration) {
-        return ResponseEntity.ok(eventRegistrationService.update(id, eventRegistration));
+    public ResponseEntity<ApiResponse<EventRegistration>> update(@PathVariable Long id, @Valid @RequestBody EventRegistration eventRegistration) {
+        return ResponseEntity.ok(ApiResponse.success(eventRegistrationService.update(id, eventRegistration)));
     }
 
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         eventRegistrationService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

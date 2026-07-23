@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Announcement;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AnnouncementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class AnnouncementController {
 
     @PreAuthorize("hasAuthority('COMMUNICATION_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Announcement>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Announcement>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class AnnouncementController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Announcement> paged = announcementService.findAll(pageable);
         PagedResponse<Announcement> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('COMMUNICATION_VIEW')")
-    public ResponseEntity<Announcement> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(announcementService.findById(id));
+    public ResponseEntity<ApiResponse<Announcement>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(announcementService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('NOTICE_MANAGE')")
-    public ResponseEntity<Announcement> save(@Valid @RequestBody Announcement announcement) {
-        return ResponseEntity.ok(announcementService.save(announcement));
+    public ResponseEntity<ApiResponse<Announcement>> save(@Valid @RequestBody Announcement announcement) {
+        return ResponseEntity.ok(ApiResponse.success(announcementService.save(announcement)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('NOTICE_MANAGE')")
-    public ResponseEntity<Announcement> update(@PathVariable Long id, @Valid @RequestBody Announcement announcement) {
-        return ResponseEntity.ok(announcementService.update(id, announcement));
+    public ResponseEntity<ApiResponse<Announcement>> update(@PathVariable Long id, @Valid @RequestBody Announcement announcement) {
+        return ResponseEntity.ok(ApiResponse.success(announcementService.update(id, announcement)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('NOTICE_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         announcementService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

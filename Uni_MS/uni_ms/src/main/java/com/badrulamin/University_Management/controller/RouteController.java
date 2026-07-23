@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Route;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.RouteService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class RouteController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('TRANSPORT_VIEW')")
-    public ResponseEntity<PagedResponse<Route>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Route>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class RouteController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Route> paged = routeService.findAll(pageable);
         PagedResponse<Route> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('TRANSPORT_VIEW')")
-    public ResponseEntity<Route> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(routeService.findById(id));
+    public ResponseEntity<ApiResponse<Route>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(routeService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
-    public ResponseEntity<Route> save(@Valid @RequestBody Route route) {
-        return ResponseEntity.ok(routeService.save(route));
+    public ResponseEntity<ApiResponse<Route>> save(@Valid @RequestBody Route route) {
+        return ResponseEntity.ok(ApiResponse.success(routeService.save(route)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
-    public ResponseEntity<Route> update(@PathVariable Long id, @Valid @RequestBody Route route) {
-        return ResponseEntity.ok(routeService.update(id, route));
+    public ResponseEntity<ApiResponse<Route>> update(@PathVariable Long id, @Valid @RequestBody Route route) {
+        return ResponseEntity.ok(ApiResponse.success(routeService.update(id, route)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         routeService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

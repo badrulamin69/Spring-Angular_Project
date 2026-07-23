@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class RegistrationConfigService {
 
     private final RegistrationConfigRepository registrationConfigRepository;

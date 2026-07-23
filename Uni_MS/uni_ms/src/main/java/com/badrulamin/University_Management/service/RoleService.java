@@ -10,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.ArrayList;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class RoleService {
 
     private final RoleRepository roleRepository;

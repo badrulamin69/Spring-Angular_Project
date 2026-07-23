@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionRequirement;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionRequirementService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,26 +41,26 @@ public class AdmissionRequirementController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<AdmissionRequirement> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+    public ResponseEntity<ApiResponse<AdmissionRequirement>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(service.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionRequirement> create(@RequestBody AdmissionRequirement entity) {
-        return ResponseEntity.ok(service.create(entity));
+    public ResponseEntity<ApiResponse<AdmissionRequirement>> create(@RequestBody AdmissionRequirement entity) {
+        return ResponseEntity.ok(ApiResponse.success(service.create(entity)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionRequirement> update(@PathVariable Long id, @RequestBody AdmissionRequirement entity) {
-        return ResponseEntity.ok(service.update(id, entity));
+    public ResponseEntity<ApiResponse<AdmissionRequirement>> update(@PathVariable Long id, @RequestBody AdmissionRequirement entity) {
+        return ResponseEntity.ok(ApiResponse.success(service.update(id, entity)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

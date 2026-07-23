@@ -12,6 +12,7 @@ import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;

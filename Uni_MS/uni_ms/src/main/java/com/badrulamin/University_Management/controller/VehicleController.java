@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Vehicle;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.VehicleService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class VehicleController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('TRANSPORT_VIEW')")
-    public ResponseEntity<PagedResponse<Vehicle>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Vehicle>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class VehicleController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Vehicle> paged = vehicleService.findAll(pageable);
         PagedResponse<Vehicle> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('TRANSPORT_VIEW')")
-    public ResponseEntity<Vehicle> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(vehicleService.findById(id));
+    public ResponseEntity<ApiResponse<Vehicle>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(vehicleService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
-    public ResponseEntity<Vehicle> save(@Valid @RequestBody Vehicle vehicle) {
-        return ResponseEntity.ok(vehicleService.save(vehicle));
+    public ResponseEntity<ApiResponse<Vehicle>> save(@Valid @RequestBody Vehicle vehicle) {
+        return ResponseEntity.ok(ApiResponse.success(vehicleService.save(vehicle)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
-    public ResponseEntity<Vehicle> update(@PathVariable Long id, @Valid @RequestBody Vehicle vehicle) {
-        return ResponseEntity.ok(vehicleService.update(id, vehicle));
+    public ResponseEntity<ApiResponse<Vehicle>> update(@PathVariable Long id, @Valid @RequestBody Vehicle vehicle) {
+        return ResponseEntity.ok(ApiResponse.success(vehicleService.update(id, vehicle)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('TRANSPORT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         vehicleService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

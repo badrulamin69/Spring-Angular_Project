@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Club;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.ClubService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class ClubController {
 
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Club>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Club>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class ClubController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Club> paged = clubService.findAll(pageable);
         PagedResponse<Club> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ACTIVITY_VIEW')")
-    public ResponseEntity<Club> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(clubService.findById(id));
+    public ResponseEntity<ApiResponse<Club>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(clubService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ACTIVITY_MANAGE')")
-    public ResponseEntity<Club> save(@Valid @RequestBody Club club) {
-        return ResponseEntity.ok(clubService.save(club));
+    public ResponseEntity<ApiResponse<Club>> save(@Valid @RequestBody Club club) {
+        return ResponseEntity.ok(ApiResponse.success(clubService.save(club)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ACTIVITY_MANAGE')")
-    public ResponseEntity<Club> update(@PathVariable Long id, @Valid @RequestBody Club club) {
-        return ResponseEntity.ok(clubService.update(id, club));
+    public ResponseEntity<ApiResponse<Club>> update(@PathVariable Long id, @Valid @RequestBody Club club) {
+        return ResponseEntity.ok(ApiResponse.success(clubService.update(id, club)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ACTIVITY_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         clubService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

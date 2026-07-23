@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Faculty;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.FacultyService;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import jakarta.validation.Valid;
@@ -22,7 +23,7 @@ public class FacultyController {
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Faculty>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Faculty>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class FacultyController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Faculty> paged = facultyService.searchFaculties(search, status, pageable);
         PagedResponse<Faculty> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Faculty> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(facultyService.findById(id));
+    public ResponseEntity<ApiResponse<Faculty>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(facultyService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('FACULTY_MANAGE')")
     @PostMapping
-    public ResponseEntity<Faculty> save(@Valid @RequestBody Faculty faculty) {
-        return ResponseEntity.ok(facultyService.save(faculty));
+    public ResponseEntity<ApiResponse<Faculty>> save(@Valid @RequestBody Faculty faculty) {
+        return ResponseEntity.ok(ApiResponse.success(facultyService.save(faculty)));
     }
 
     @PreAuthorize("hasAuthority('FACULTY_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Faculty> update(@PathVariable Long id, @Valid @RequestBody Faculty faculty) {
-        return ResponseEntity.ok(facultyService.update(id, faculty));
+    public ResponseEntity<ApiResponse<Faculty>> update(@PathVariable Long id, @Valid @RequestBody Faculty faculty) {
+        return ResponseEntity.ok(ApiResponse.success(facultyService.update(id, faculty)));
     }
 
     @PreAuthorize("hasAuthority('FACULTY_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         facultyService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

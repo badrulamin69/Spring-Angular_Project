@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProgramSeatConfigService {
 
     private final ProgramSeatConfigRepository seatConfigRepository;

@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Invoice;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.InvoiceService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class InvoiceController {
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Invoice>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Invoice>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -30,12 +31,12 @@ public class InvoiceController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Invoice> paged = invoiceService.findAll(pageable);
         PagedResponse<Invoice> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/search")
-    public ResponseEntity<PagedResponse<Invoice>> search(
+    public ResponseEntity<ApiResponse<PagedResponse<Invoice>>> search(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String status,
             @RequestParam(defaultValue = "0") int page,
@@ -46,18 +47,18 @@ public class InvoiceController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Invoice> paged = invoiceService.search(search, status, pageable);
         PagedResponse<Invoice> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Invoice> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(invoiceService.findById(id));
+    public ResponseEntity<ApiResponse<Invoice>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(invoiceService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/student/{studentId}")
-    public ResponseEntity<PagedResponse<Invoice>> findByStudentId(
+    public ResponseEntity<ApiResponse<PagedResponse<Invoice>>> findByStudentId(
             @PathVariable Long studentId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -67,30 +68,30 @@ public class InvoiceController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Invoice> paged = invoiceService.findByStudentId(studentId, pageable);
         PagedResponse<Invoice> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PostMapping("/generate")
-    public ResponseEntity<Invoice> generateInvoice(
+    public ResponseEntity<ApiResponse<Invoice>> generateInvoice(
             @RequestParam Long studentId,
             @RequestParam Long semesterId,
             @RequestParam String academicYear) {
-        return ResponseEntity.ok(invoiceService.generateInvoice(studentId, semesterId, academicYear));
+        return ResponseEntity.ok(ApiResponse.success(invoiceService.generateInvoice(studentId, semesterId, academicYear)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PutMapping("/{id}/status")
-    public ResponseEntity<Invoice> updateStatus(
+    public ResponseEntity<ApiResponse<Invoice>> updateStatus(
             @PathVariable Long id,
             @RequestParam String status) {
-        return ResponseEntity.ok(invoiceService.updateStatus(id, status));
+        return ResponseEntity.ok(ApiResponse.success(invoiceService.updateStatus(id, status)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         invoiceService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

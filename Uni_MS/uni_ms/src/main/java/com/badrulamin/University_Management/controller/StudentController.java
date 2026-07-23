@@ -1,7 +1,9 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Student;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
+import com.badrulamin.University_Management.payload.response.StudentResponse;
 import com.badrulamin.University_Management.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ public class StudentController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<PagedResponse<Student>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<StudentResponse>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,32 +37,33 @@ public class StudentController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Student> paged = studentService.searchStudents(search, status, departmentId, pageable);
-        PagedResponse<Student> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        Page<StudentResponse> dtoPage = paged.map(studentService::toResponse);
+        PagedResponse<StudentResponse> response = new PagedResponse<>(dtoPage.getContent(), dtoPage.getNumber(), dtoPage.getSize(), dtoPage.getTotalElements(), dtoPage.getTotalPages(), dtoPage.isFirst(), dtoPage.isLast());
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<Student> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.findById(id));
+    public ResponseEntity<ApiResponse<StudentResponse>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(studentService.toResponse(studentService.findById(id))));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_CREATE')")
-    public ResponseEntity<Student> save(@Valid @RequestBody Student student) {
-        return ResponseEntity.ok(studentService.save(student));
+    public ResponseEntity<ApiResponse<StudentResponse>> save(@Valid @RequestBody Student student) {
+        return ResponseEntity.ok(ApiResponse.success(studentService.toResponse(studentService.save(student))));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_EDIT')")
-    public ResponseEntity<Student> update(@PathVariable Long id, @Valid @RequestBody Student student) {
-        return ResponseEntity.ok(studentService.update(id, student));
+    public ResponseEntity<ApiResponse<StudentResponse>> update(@PathVariable Long id, @Valid @RequestBody Student student) {
+        return ResponseEntity.ok(ApiResponse.success(studentService.toResponse(studentService.update(id, student))));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_DELETE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         studentService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

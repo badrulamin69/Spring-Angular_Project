@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.LoginSession;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.LoginSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,57 +21,57 @@ public class LoginSessionController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<Page<LoginSession>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(loginSessionService.findAll(pageable));
+    public ResponseEntity<ApiResponse<Page<LoginSession>>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(ApiResponse.success(loginSessionService.findAll(pageable)));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<LoginSession> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(loginSessionService.findById(id));
+    public ResponseEntity<ApiResponse<LoginSession>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(loginSessionService.findById(id)));
     }
 
     @GetMapping("/active")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<List<LoginSession>> findActiveSessions() {
-        return ResponseEntity.ok(loginSessionService.findActiveSessions());
+    public ResponseEntity<ApiResponse<List<LoginSession>>> findActiveSessions() {
+        return ResponseEntity.ok(ApiResponse.success(loginSessionService.findActiveSessions()));
     }
 
     @GetMapping("/active/count")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<Long> getActiveSessionCount() {
-        return ResponseEntity.ok(loginSessionService.getActiveSessionCount());
+    public ResponseEntity<ApiResponse<Long>> getActiveSessionCount() {
+        return ResponseEntity.ok(ApiResponse.success(loginSessionService.getActiveSessionCount()));
     }
 
     @GetMapping("/user/{userId}")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<List<LoginSession>> findByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(loginSessionService.findByUserId(userId));
+    public ResponseEntity<ApiResponse<List<LoginSession>>> findByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(ApiResponse.success(loginSessionService.findByUserId(userId)));
     }
 
     @GetMapping("/user/{userId}/active")
     @PreAuthorize("hasAuthority('ROLE_VIEW')")
-    public ResponseEntity<List<LoginSession>> findActiveSessionsByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(loginSessionService.findActiveSessionsByUserId(userId));
+    public ResponseEntity<ApiResponse<List<LoginSession>>> findActiveSessionsByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(ApiResponse.success(loginSessionService.findActiveSessionsByUserId(userId)));
     }
 
     @PostMapping("/{id}/terminate")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<LoginSession> terminateSession(@PathVariable Long id) {
-        return ResponseEntity.ok(loginSessionService.terminateSession(id));
+    public ResponseEntity<ApiResponse<LoginSession>> terminateSession(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(loginSessionService.terminateSession(id)));
     }
 
     @PostMapping("/user/{userId}/terminate-all")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<Void> terminateAllUserSessions(@PathVariable Long userId) {
+    public ResponseEntity<ApiResponse<Void>> terminateAllUserSessions(@PathVariable Long userId) {
         loginSessionService.terminateAllUserSessions(userId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         loginSessionService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

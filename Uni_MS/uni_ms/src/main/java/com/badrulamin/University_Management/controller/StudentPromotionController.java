@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.StudentPromotion;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.StudentPromotionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,32 +37,32 @@ public class StudentPromotionController {
         response.put("totalElements", items.getTotalElements());
         response.put("totalPages", items.getTotalPages());
         response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_VIEW')")
-    public ResponseEntity<StudentPromotion> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentPromotionService.findById(id));
+    public ResponseEntity<ApiResponse<StudentPromotion>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(studentPromotionService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<StudentPromotion> create(@RequestBody StudentPromotion studentPromotion) {
-        return ResponseEntity.ok(studentPromotionService.create(studentPromotion));
+    public ResponseEntity<ApiResponse<StudentPromotion>> create(@RequestBody StudentPromotion studentPromotion) {
+        return ResponseEntity.ok(ApiResponse.success(studentPromotionService.create(studentPromotion)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<StudentPromotion> update(@PathVariable Long id, @RequestBody StudentPromotion studentPromotion) {
-        return ResponseEntity.ok(studentPromotionService.update(id, studentPromotion));
+    public ResponseEntity<ApiResponse<StudentPromotion>> update(@PathVariable Long id, @RequestBody StudentPromotion studentPromotion) {
+        return ResponseEntity.ok(ApiResponse.success(studentPromotionService.update(id, studentPromotion)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         studentPromotionService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/stats")
@@ -72,6 +73,6 @@ public class StudentPromotionController {
         stats.put("totalPending", studentPromotionService.countByStatus("PENDING"));
         stats.put("totalRejected", studentPromotionService.countByStatus("REJECTED"));
         stats.put("totalDeferred", studentPromotionService.countByStatus("DEFERRED"));
-        return ResponseEntity.ok(stats);
+        return ResponseEntity.ok(ApiResponse.success(stats));
     }
 }

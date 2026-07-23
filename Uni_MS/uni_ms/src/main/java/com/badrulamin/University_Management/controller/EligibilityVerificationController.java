@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.EligibilityVerification;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.EligibilityVerificationService;
 import jakarta.validation.Valid;
@@ -25,7 +26,7 @@ public class EligibilityVerificationController {
 
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
     @GetMapping
-    public ResponseEntity<PagedResponse<EligibilityVerification>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<EligibilityVerification>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -34,66 +35,66 @@ public class EligibilityVerificationController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<EligibilityVerification> paged = eligibilityVerificationService.findAll(pageable);
         PagedResponse<EligibilityVerification> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<EligibilityVerification> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(eligibilityVerificationService.findById(id));
+    public ResponseEntity<ApiResponse<EligibilityVerification>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.findById(id)));
     }
 
     @GetMapping("/test/{testId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<EligibilityVerification>> findByTestId(@PathVariable Long testId) {
-        return ResponseEntity.ok(eligibilityVerificationService.findByTestId(testId));
+    public ResponseEntity<ApiResponse<List<EligibilityVerification>>> findByTestId(@PathVariable Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.findByTestId(testId)));
     }
 
     @GetMapping("/test/{testId}/status/{status}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<EligibilityVerification>> findByTestIdAndStatus(@PathVariable Long testId, @PathVariable String status) {
-        return ResponseEntity.ok(eligibilityVerificationService.findByTestIdAndStatus(testId, status));
+    public ResponseEntity<ApiResponse<List<EligibilityVerification>>> findByTestIdAndStatus(@PathVariable Long testId, @PathVariable String status) {
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.findByTestIdAndStatus(testId, status)));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<EligibilityVerification> save(@Valid @RequestBody EligibilityVerification eligibilityVerification) {
-        return ResponseEntity.ok(eligibilityVerificationService.save(eligibilityVerification));
+    public ResponseEntity<ApiResponse<EligibilityVerification>> save(@Valid @RequestBody EligibilityVerification eligibilityVerification) {
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.save(eligibilityVerification)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<EligibilityVerification> update(@PathVariable Long id, @Valid @RequestBody EligibilityVerification eligibilityVerification) {
-        return ResponseEntity.ok(eligibilityVerificationService.update(id, eligibilityVerification));
+    public ResponseEntity<ApiResponse<EligibilityVerification>> update(@PathVariable Long id, @Valid @RequestBody EligibilityVerification eligibilityVerification) {
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.update(id, eligibilityVerification)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         eligibilityVerificationService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PostMapping("/verify")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<EligibilityVerification> verifyEligibility(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<ApiResponse<EligibilityVerification>> verifyEligibility(@RequestBody Map<String, Object> request) {
         Long testId = Long.valueOf(request.get("testId").toString());
         Long registrationId = Long.valueOf(request.get("registrationId").toString());
         boolean eligible = Boolean.parseBoolean(request.get("eligible").toString());
         String verifiedBy = request.get("verifiedBy") != null ? request.get("verifiedBy").toString() : null;
         String remarks = request.get("remarks") != null ? request.get("remarks").toString() : null;
-        return ResponseEntity.ok(eligibilityVerificationService.verifyEligibility(testId, registrationId, eligible, verifiedBy, remarks));
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.verifyEligibility(testId, registrationId, eligible, verifiedBy, remarks)));
     }
 
     @PostMapping("/auto-verify/{testId}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<List<EligibilityVerification>> autoVerifyAll(@PathVariable Long testId) {
-        return ResponseEntity.ok(eligibilityVerificationService.autoVerifyAll(testId));
+    public ResponseEntity<ApiResponse<List<EligibilityVerification>>> autoVerifyAll(@PathVariable Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.autoVerifyAll(testId)));
     }
 
     @GetMapping("/stats/{testId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<Map<String, Object>> getStats(@PathVariable Long testId) {
-        return ResponseEntity.ok(eligibilityVerificationService.getStats(testId));
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats(@PathVariable Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(eligibilityVerificationService.getStats(testId)));
     }
 }

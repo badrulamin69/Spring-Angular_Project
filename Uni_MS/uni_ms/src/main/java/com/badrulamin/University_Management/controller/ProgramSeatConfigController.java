@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.ProgramSeatConfig;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.ProgramSeatConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,48 +19,48 @@ public class ProgramSeatConfigController {
 
     @GetMapping("/config/{configId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<ProgramSeatConfig>> getByConfigId(@PathVariable Long configId) {
-        return ResponseEntity.ok(seatConfigService.findByConfigId(configId));
+    public ResponseEntity<ApiResponse<List<ProgramSeatConfig>>> getByConfigId(@PathVariable Long configId) {
+        return ResponseEntity.ok(ApiResponse.success(seatConfigService.findByConfigId(configId)));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<ProgramSeatConfig> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(seatConfigService.findById(id));
+    public ResponseEntity<ApiResponse<ProgramSeatConfig>> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(seatConfigService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<ProgramSeatConfig> create(@RequestBody ProgramSeatConfig seatConfig) {
-        return ResponseEntity.ok(seatConfigService.create(seatConfig));
+    public ResponseEntity<ApiResponse<ProgramSeatConfig>> create(@RequestBody ProgramSeatConfig seatConfig) {
+        return ResponseEntity.ok(ApiResponse.success(seatConfigService.create(seatConfig)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<ProgramSeatConfig> update(@PathVariable Long id, @RequestBody ProgramSeatConfig seatConfig) {
-        return ResponseEntity.ok(seatConfigService.update(id, seatConfig));
+    public ResponseEntity<ApiResponse<ProgramSeatConfig>> update(@PathVariable Long id, @RequestBody ProgramSeatConfig seatConfig) {
+        return ResponseEntity.ok(ApiResponse.success(seatConfigService.update(id, seatConfig)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         seatConfigService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @GetMapping("/config/{configId}/available")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<List<ProgramSeatConfig>> getAvailable(@PathVariable Long configId) {
-        return ResponseEntity.ok(seatConfigService.findProgramsWithAvailableSeats(configId));
+    public ResponseEntity<ApiResponse<List<ProgramSeatConfig>>> getAvailable(@PathVariable Long configId) {
+        return ResponseEntity.ok(ApiResponse.success(seatConfigService.findProgramsWithAvailableSeats(configId)));
     }
 
     @GetMapping("/config/{configId}/summary")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_MANAGE')")
-    public ResponseEntity<java.util.Map<String, Object>> getSummary(@PathVariable Long configId) {
+    public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> getSummary(@PathVariable Long configId) {
         java.util.Map<String, Object> summary = new java.util.HashMap<>();
         summary.put("totalSeats", seatConfigService.getTotalSeats(configId));
         summary.put("allocatedSeats", seatConfigService.getAllocatedSeats(configId));
         summary.put("remainingSeats", seatConfigService.getTotalSeats(configId) - seatConfigService.getAllocatedSeats(configId));
-        return ResponseEntity.ok(summary);
+        return ResponseEntity.ok(ApiResponse.success(summary));
     }
 }

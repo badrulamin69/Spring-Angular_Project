@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionConfirmation;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.entity.AdmissionDocument;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.AdmissionConfirmationService;
@@ -26,7 +27,7 @@ public class AdmissionConfirmationController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMISSION_VIEW') or hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<PagedResponse<AdmissionConfirmation>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<AdmissionConfirmation>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -38,77 +39,77 @@ public class AdmissionConfirmationController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<AdmissionConfirmation> paged = confirmationService.findByFilters(search, status, documentsVerified, feePaid, pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_VIEW') or hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionConfirmation> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(confirmationService.getConfirmationById(id));
+    public ResponseEntity<ApiResponse<AdmissionConfirmation>> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.getConfirmationById(id)));
     }
 
     @GetMapping("/my")
     @PreAuthorize("hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<AdmissionConfirmation> getMyConfirmation(Authentication authentication) {
-        return ResponseEntity.ok(confirmationService.getMyConfirmation(authentication.getName()));
+    public ResponseEntity<ApiResponse<AdmissionConfirmation>> getMyConfirmation(Authentication authentication) {
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.getMyConfirmation(authentication.getName())));
     }
 
     @PostMapping("/initiate/{allocationId}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionConfirmation> initiateConfirmation(@PathVariable Long allocationId) {
-        return ResponseEntity.ok(confirmationService.initiateConfirmation(allocationId));
+    public ResponseEntity<ApiResponse<AdmissionConfirmation>> initiateConfirmation(@PathVariable Long allocationId) {
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.initiateConfirmation(allocationId)));
     }
 
     @PostMapping("/{id}/submit-documents")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<List<AdmissionDocument>> submitDocuments(
+    public ResponseEntity<ApiResponse<List<AdmissionDocument>>> submitDocuments(
             @PathVariable Long id,
             @RequestBody List<Map<String, String>> documents) {
-        return ResponseEntity.ok(confirmationService.submitDocuments(id, documents));
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.submitDocuments(id, documents)));
     }
 
     @PostMapping("/{id}/verify-documents")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<AdmissionConfirmation> verifyDocuments(
+    public ResponseEntity<ApiResponse<AdmissionConfirmation>> verifyDocuments(
             @PathVariable Long id,
             @RequestBody Map<String, Object> body,
             Authentication authentication) {
         boolean verified = (boolean) body.get("verified");
         String remarks = (String) body.getOrDefault("remarks", "");
         Long verifiedBy = getUser(authentication);
-        return ResponseEntity.ok(confirmationService.verifyDocuments(id, verified, remarks, verifiedBy));
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.verifyDocuments(id, verified, remarks, verifiedBy)));
     }
 
     @PostMapping("/{id}/pay-fee")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
-    public ResponseEntity<AdmissionConfirmation> payFee(
+    public ResponseEntity<ApiResponse<AdmissionConfirmation>> payFee(
             @PathVariable Long id,
             @RequestBody Map<String, Object> body) {
         Double amount = ((Number) body.get("amount")).doubleValue();
         String paymentMethod = (String) body.get("paymentMethod");
         String transactionId = (String) body.get("transactionId");
-        return ResponseEntity.ok(confirmationService.payFee(id, amount, paymentMethod, transactionId));
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.payFee(id, amount, paymentMethod, transactionId)));
     }
 
     @PostMapping("/{id}/confirm")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<Map<String, Object>> confirmAdmission(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> confirmAdmission(
             @PathVariable Long id,
             Authentication authentication) {
         Long confirmedBy = getUser(authentication);
-        return ResponseEntity.ok(confirmationService.confirmAdmission(id, confirmedBy));
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.confirmAdmission(id, confirmedBy)));
     }
 
     @GetMapping("/{id}/documents")
     @PreAuthorize("hasAuthority('ADMISSION_VIEW') or hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<List<AdmissionDocument>> getDocuments(@PathVariable Long id) {
-        return ResponseEntity.ok(confirmationService.getDocumentsByConfirmationId(id));
+    public ResponseEntity<ApiResponse<List<AdmissionDocument>>> getDocuments(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.getDocumentsByConfirmationId(id)));
     }
 
     @GetMapping("/stats")
     @PreAuthorize("hasAuthority('ADMISSION_VIEW') or hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<Map<String, Object>> getStats() {
-        return ResponseEntity.ok(confirmationService.getStats());
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getStats() {
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.getStats()));
     }
 
     private Long getUser(Authentication authentication) {

@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EnrollmentHistoryService {
 
     private final EnrollmentHistoryRepository enrollmentHistoryRepository;

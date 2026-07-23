@@ -20,6 +20,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class EligibilityVerificationService {
 
     private final EligibilityVerificationRepository eligibilityVerificationRepository;

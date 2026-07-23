@@ -16,6 +16,7 @@ import java.time.Year;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+    @Transactional
 @Slf4j
 @Service
 @RequiredArgsConstructor

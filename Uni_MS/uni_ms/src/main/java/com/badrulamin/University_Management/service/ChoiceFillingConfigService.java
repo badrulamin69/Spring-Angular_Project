@@ -17,6 +17,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ChoiceFillingConfigService {
 
     private final ChoiceFillingConfigRepository configRepository;

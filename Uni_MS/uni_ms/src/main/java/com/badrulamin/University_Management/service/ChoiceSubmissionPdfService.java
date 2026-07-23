@@ -12,9 +12,11 @@ import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ChoiceSubmissionPdfService {
 
     private static final Color PRIMARY = new Color(0, 102, 153);

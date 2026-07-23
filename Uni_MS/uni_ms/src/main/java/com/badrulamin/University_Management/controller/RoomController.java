@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Room;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.RoomService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class RoomController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('HOSTEL_VIEW')")
-    public ResponseEntity<PagedResponse<Room>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Room>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,31 +34,31 @@ public class RoomController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Room> paged = roomService.findAll(pageable);
         PagedResponse<Room> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('HOSTEL_VIEW')")
-    public ResponseEntity<Room> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(roomService.findById(id));
+    public ResponseEntity<ApiResponse<Room>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(roomService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
-    public ResponseEntity<Room> save(@Valid @RequestBody Room room) {
-        return ResponseEntity.ok(roomService.save(room));
+    public ResponseEntity<ApiResponse<Room>> save(@Valid @RequestBody Room room) {
+        return ResponseEntity.ok(ApiResponse.success(roomService.save(room)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
-    public ResponseEntity<Room> update(@PathVariable Long id, @Valid @RequestBody Room room) {
-        return ResponseEntity.ok(roomService.update(id, room));
+    public ResponseEntity<ApiResponse<Room>> update(@PathVariable Long id, @Valid @RequestBody Room room) {
+        return ResponseEntity.ok(ApiResponse.success(roomService.update(id, room)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('HOSTEL_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         roomService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

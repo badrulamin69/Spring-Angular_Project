@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.SeatAllocation;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.SeatAllocationService;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class SeatAllocationController {
 
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<SeatAllocation>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<SeatAllocation>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,43 +34,43 @@ public class SeatAllocationController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<SeatAllocation> paged = seatAllocationService.findAll(pageable);
         PagedResponse<SeatAllocation> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<SeatAllocation> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(seatAllocationService.findById(id));
+    public ResponseEntity<ApiResponse<SeatAllocation>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(seatAllocationService.findById(id)));
     }
 
     @GetMapping("/test/{testId}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_VIEW', 'ADMISSION_TEST_VIEW')")
-    public ResponseEntity<List<SeatAllocation>> findByTestId(@PathVariable Long testId) {
-        return ResponseEntity.ok(seatAllocationService.findByTestId(testId));
+    public ResponseEntity<ApiResponse<List<SeatAllocation>>> findByTestId(@PathVariable Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(seatAllocationService.findByTestId(testId)));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<SeatAllocation> save(@Valid @RequestBody SeatAllocation seatAllocation) {
-        return ResponseEntity.ok(seatAllocationService.save(seatAllocation));
+    public ResponseEntity<ApiResponse<SeatAllocation>> save(@Valid @RequestBody SeatAllocation seatAllocation) {
+        return ResponseEntity.ok(ApiResponse.success(seatAllocationService.save(seatAllocation)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<SeatAllocation> update(@PathVariable Long id, @Valid @RequestBody SeatAllocation seatAllocation) {
-        return ResponseEntity.ok(seatAllocationService.update(id, seatAllocation));
+    public ResponseEntity<ApiResponse<SeatAllocation>> update(@PathVariable Long id, @Valid @RequestBody SeatAllocation seatAllocation) {
+        return ResponseEntity.ok(ApiResponse.success(seatAllocationService.update(id, seatAllocation)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMISSION_MANAGE', 'ADMISSION_TEST_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         seatAllocationService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 
     @PostMapping("/auto-generate/{testId}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<List<SeatAllocation>> autoGenerateSeats(@PathVariable Long testId) {
-        return ResponseEntity.ok(seatAllocationService.autoGenerateSeats(testId));
+    public ResponseEntity<ApiResponse<List<SeatAllocation>>> autoGenerateSeats(@PathVariable Long testId) {
+        return ResponseEntity.ok(ApiResponse.success(seatAllocationService.autoGenerateSeats(testId)));
     }
 }

@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.FeeType;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.FeeTypeService;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class FeeTypeController {
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<FeeType>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<FeeType>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,43 +34,43 @@ public class FeeTypeController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<FeeType> paged = feeTypeService.findAll(pageable);
         PagedResponse<FeeType> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<FeeType> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(feeTypeService.findById(id));
+    public ResponseEntity<ApiResponse<FeeType>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(feeTypeService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/active")
-    public ResponseEntity<List<FeeType>> findActive() {
-        return ResponseEntity.ok(feeTypeService.findActive());
+    public ResponseEntity<ApiResponse<List<FeeType>>> findActive() {
+        return ResponseEntity.ok(ApiResponse.success(feeTypeService.findActive()));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_VIEW')")
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<FeeType>> findByCategory(@PathVariable String category) {
-        return ResponseEntity.ok(feeTypeService.findByCategory(category));
+    public ResponseEntity<ApiResponse<List<FeeType>>> findByCategory(@PathVariable String category) {
+        return ResponseEntity.ok(ApiResponse.success(feeTypeService.findByCategory(category)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PostMapping
-    public ResponseEntity<FeeType> save(@Valid @RequestBody FeeType feeType) {
-        return ResponseEntity.ok(feeTypeService.save(feeType));
+    public ResponseEntity<ApiResponse<FeeType>> save(@Valid @RequestBody FeeType feeType) {
+        return ResponseEntity.ok(ApiResponse.success(feeTypeService.save(feeType)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @PutMapping("/{id}")
-    public ResponseEntity<FeeType> update(@PathVariable Long id, @Valid @RequestBody FeeType feeType) {
-        return ResponseEntity.ok(feeTypeService.update(id, feeType));
+    public ResponseEntity<ApiResponse<FeeType>> update(@PathVariable Long id, @Valid @RequestBody FeeType feeType) {
+        return ResponseEntity.ok(ApiResponse.success(feeTypeService.update(id, feeType)));
     }
 
     @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         feeTypeService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

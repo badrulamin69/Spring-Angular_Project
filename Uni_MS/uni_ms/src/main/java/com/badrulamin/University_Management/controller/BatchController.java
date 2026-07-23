@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Batch;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.BatchService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class BatchController {
 
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Batch>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Batch>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -35,31 +36,31 @@ public class BatchController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Batch> paged = batchService.findAll(pageable);
         PagedResponse<Batch> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ACADEMIC_VIEW')")
-    public ResponseEntity<Batch> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(batchService.findById(id));
+    public ResponseEntity<ApiResponse<Batch>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(batchService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('BATCH_MANAGE')")
-    public ResponseEntity<Batch> save(@Valid @RequestBody Batch batch) {
-        return ResponseEntity.ok(batchService.save(batch));
+    public ResponseEntity<ApiResponse<Batch>> save(@Valid @RequestBody Batch batch) {
+        return ResponseEntity.ok(ApiResponse.success(batchService.save(batch)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('BATCH_MANAGE')")
-    public ResponseEntity<Batch> update(@PathVariable Long id, @Valid @RequestBody Batch batch) {
-        return ResponseEntity.ok(batchService.update(id, batch));
+    public ResponseEntity<ApiResponse<Batch>> update(@PathVariable Long id, @Valid @RequestBody Batch batch) {
+        return ResponseEntity.ok(ApiResponse.success(batchService.update(id, batch)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('BATCH_MANAGE')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         batchService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

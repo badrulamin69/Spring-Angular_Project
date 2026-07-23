@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.Mark;
+import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.MarkService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class MarkController {
 
     @PreAuthorize("hasAuthority('EXAM_VIEW')")
     @GetMapping
-    public ResponseEntity<PagedResponse<Mark>> findAll(
+    public ResponseEntity<ApiResponse<PagedResponse<Mark>>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -32,31 +33,31 @@ public class MarkController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Mark> paged = markService.findAll(pageable);
         PagedResponse<Mark> response = new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(), paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PreAuthorize("hasAuthority('EXAM_VIEW')")
     @GetMapping("/{id}")
-    public ResponseEntity<Mark> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(markService.findById(id));
+    public ResponseEntity<ApiResponse<Mark>> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.success(markService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('MARKS_ENTER')")
     @PostMapping
-    public ResponseEntity<Mark> save(@Valid @RequestBody Mark mark) {
-        return ResponseEntity.ok(markService.save(mark));
+    public ResponseEntity<ApiResponse<Mark>> save(@Valid @RequestBody Mark mark) {
+        return ResponseEntity.ok(ApiResponse.success(markService.save(mark)));
     }
 
     @PreAuthorize("hasAuthority('MARKS_ENTER')")
     @PutMapping("/{id}")
-    public ResponseEntity<Mark> update(@PathVariable Long id, @Valid @RequestBody Mark mark) {
-        return ResponseEntity.ok(markService.update(id, mark));
+    public ResponseEntity<ApiResponse<Mark>> update(@PathVariable Long id, @Valid @RequestBody Mark mark) {
+        return ResponseEntity.ok(ApiResponse.success(markService.update(id, mark)));
     }
 
     @PreAuthorize("hasAuthority('MARKS_ENTER')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         markService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
 }

@@ -61,28 +61,36 @@ public class EnrollmentConfig {
 
     @NotNull
     @Column(name = "min_credits", nullable = false)
+    @Builder.Default
     private Integer minCredits = 12;
 
     @NotNull
     @Column(name = "max_credits", nullable = false)
+    @Builder.Default
     private Integer maxCredits = 24;
 
     @Column(name = "enrollment_status", nullable = false)
+    @Builder.Default
     private String enrollmentStatus = "OPEN";
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean isActive = true;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean isClosed = false;
 
     @Column(name = "requires_advisor_approval", nullable = false)
+    @Builder.Default
     private Boolean requiresAdvisorApproval = true;
 
     @Column(name = "requires_payment", nullable = false)
+    @Builder.Default
     private Boolean requiresPayment = true;
 
     @Column(name = "allow_late_enrollment", nullable = false)
+    @Builder.Default
     private Boolean allowLateEnrollment = true;
 
     @Column(length = 500)

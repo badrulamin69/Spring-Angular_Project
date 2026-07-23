@@ -51,12 +51,15 @@ public class AdmissionWaitingListEntry {
     private Double totalWeightedScore;
 
     @Column(name = "status", length = 50)
+    @Builder.Default
     private String status = "WAITING";
 
     @Column(name = "is_promoted")
+    @Builder.Default
     private Boolean isPromoted = false;
 
     @Column(name = "is_offered")
+    @Builder.Default
     private Boolean isOffered = false;
 
     @Column(name = "remarks", length = 500)

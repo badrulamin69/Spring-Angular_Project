@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.service;
 
 import com.badrulamin.University_Management.entity.*;
+import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +52,7 @@ public class AdmissionWaitingListService {
     public void delete(Long id) {
         AdmissionWaitingList list = findById(id);
         if ("PUBLISHED".equals(list.getStatus())) {
-            throw new RuntimeException("Cannot delete a published waiting list.");
+            throw new BusinessException("Cannot delete a published waiting list.");
         }
         entryRepository.deleteAll(entryRepository.findByWaitingList_IdOrderByRankAsc(id));
         waitingListRepository.deleteById(id);

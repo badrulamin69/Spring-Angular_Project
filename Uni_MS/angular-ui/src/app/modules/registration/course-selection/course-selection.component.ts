@@ -117,7 +117,7 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
         </div>
       </div>
 
-      @if (summary.errors?.length) {
+      @if (summary.errors.length) {
         <div class="errors card">
           <h4>Errors</h4>
           @for (error of summary.errors; track $index) {

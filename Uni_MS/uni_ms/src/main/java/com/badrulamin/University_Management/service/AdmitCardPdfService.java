@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.entity.AdmitCard;
 import com.badrulamin.University_Management.entity.AdmissionTest;
 import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
@@ -136,7 +137,7 @@ public class AdmitCardPdfService {
             writer.close();
 
         } catch (DocumentException e) {
-            throw new RuntimeException("Failed to generate admit card PDF", e);
+            throw new BusinessException("Failed to generate admit card PDF: " + e.getMessage());
         }
 
         return baos.toByteArray();

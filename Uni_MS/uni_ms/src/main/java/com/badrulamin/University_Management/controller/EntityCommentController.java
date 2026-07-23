@@ -9,18 +9,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/comments")
+@RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class EntityCommentController {
 
     private final EntityCommentService commentService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Page<EntityComment>>> getComments(
             @RequestParam String entityType,
             @RequestParam Long entityId,
@@ -31,6 +33,7 @@ public class EntityCommentController {
     }
 
     @GetMapping("/count")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Map<String, Long>>> countComments(
             @RequestParam String entityType,
             @RequestParam Long entityId) {
@@ -39,6 +42,7 @@ public class EntityCommentController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<EntityComment>> addComment(
             @RequestBody Map<String, Object> body,
             @AuthenticationPrincipal User user) {
@@ -50,6 +54,7 @@ public class EntityCommentController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<EntityComment>> updateComment(
             @PathVariable Long id,
             @RequestBody Map<String, String> body,
@@ -58,6 +63,7 @@ public class EntityCommentController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Void>> deleteComment(
             @PathVariable Long id,
             @AuthenticationPrincipal User user) {

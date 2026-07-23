@@ -44,6 +44,7 @@ public class TimelineEvent extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
+    @Builder.Default
     private EventSeverity severity = EventSeverity.INFO;
 
     public enum EventType {

@@ -32,10 +32,12 @@ public class EntityComment extends BaseEntity {
     private Long parentId;
 
     @Column(name = "is_edited", nullable = false)
+    @Builder.Default
     private Boolean edited = false;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
+    @Builder.Default
     private CommentStatus status = CommentStatus.ACTIVE;
 
     public enum CommentStatus {

@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.entity.*;
 import com.badrulamin.University_Management.repository.*;
@@ -69,7 +70,7 @@ public class AdmissionTestAttemptService {
         AdmissionTestAttempt attempt = findById(attemptId);
 
         if (!"IN_PROGRESS".equals(attempt.getStatus())) {
-            throw new RuntimeException("This test attempt is not in progress");
+            throw new BusinessException("This test attempt is not in progress");
         }
 
         List<AdmissionTestQuestion> questions = questionRepository.findByTest_IdOrderByCreatedAtAsc(attempt.getTest().getId());

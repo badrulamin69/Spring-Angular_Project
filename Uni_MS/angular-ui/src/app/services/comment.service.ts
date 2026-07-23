@@ -25,7 +25,7 @@ export interface PagedResponse<T> {
 
 @Injectable({ providedIn: 'root' })
 export class CommentService {
-  private apiUrl = `${environment.apiUrl}/api/v1/comments`;
+  private apiUrl = `${environment.apiUrl}/comments`;
 
   constructor(private http: HttpClient) {}
 

@@ -44,33 +44,41 @@ public class RegistrationConfig extends BaseEntity {
 
     @NotNull
     @Column(name = "min_credits", nullable = false)
+    @Builder.Default
     private Integer minCredits = 12;
 
     @NotNull
     @Column(name = "max_credits", nullable = false)
+    @Builder.Default
     private Integer maxCredits = 24;
 
     @Column(name = "allow_add_drop", nullable = false)
+    @Builder.Default
     private Boolean allowAddDrop = true;
 
     @Column(name = "add_drop_deadline")
     private LocalDate addDropDeadline;
 
     @Column(name = "advisor_approval_required", nullable = false)
+    @Builder.Default
     private Boolean advisorApprovalRequired = true;
 
     @Column(name = "payment_required", nullable = false)
+    @Builder.Default
     private Boolean paymentRequired = true;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean isActive = true;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean isClosed = false;
 
     @Column(length = 500)
     private String remarks;
 
     @Column(nullable = false)
+    @Builder.Default
     private String status = "ACTIVE";
 }

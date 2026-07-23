@@ -30,7 +30,7 @@ export interface PagedResponse<T> {
 
 @Injectable({ providedIn: 'root' })
 export class AttachmentService {
-  private apiUrl = `${environment.apiUrl}/api/v1/attachments`;
+  private apiUrl = `${environment.apiUrl}/attachments`;
 
   constructor(private http: HttpClient) {}
 

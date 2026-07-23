@@ -6,12 +6,11 @@ import { EnrollmentConfigService } from '../../../services/enrollment-config.ser
 import { SemesterService } from '../../../services/semester.service';
 import { SemesterEnrollment, EnrollmentEligibility, EnrollmentConfig } from '../../../models/semester-enrollment';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-enrollment',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastComponent, ConfirmDialogComponent],
+  imports: [CommonModule, FormsModule, ToastComponent],
   template: `
     <app-toast></app-toast>
     <div class="page-header">

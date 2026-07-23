@@ -7,19 +7,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.badrulamin.University_Management.config.PaginationConfig;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/timeline")
+@RequestMapping("/api/timeline")
 @RequiredArgsConstructor
 public class TimelineEventController {
 
     private final TimelineEventService timelineService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Page<TimelineEvent>>> getTimeline(
             @RequestParam String entityType,
             @RequestParam Long entityId,
@@ -32,6 +34,7 @@ public class TimelineEventController {
     }
 
     @GetMapping("/recent")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Page<TimelineEvent>>> getRecentTimeline(
             @RequestParam String entityType,
             @RequestParam Long entityId) {
@@ -40,6 +43,7 @@ public class TimelineEventController {
     }
 
     @GetMapping("/count")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Map<String, Long>>> countEvents(
             @RequestParam String entityType,
             @RequestParam Long entityId) {

@@ -27,7 +27,7 @@ export interface PagedResponse<T> {
 
 @Injectable({ providedIn: 'root' })
 export class TimelineService {
-  private apiUrl = `${environment.apiUrl}/api/v1/timeline`;
+  private apiUrl = `${environment.apiUrl}/timeline`;
 
   constructor(private http: HttpClient) {}
 

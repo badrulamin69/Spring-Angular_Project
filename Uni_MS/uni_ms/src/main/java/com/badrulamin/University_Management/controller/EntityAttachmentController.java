@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,13 +17,14 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/attachments")
+@RequestMapping("/api/attachments")
 @RequiredArgsConstructor
 public class EntityAttachmentController {
 
     private final EntityAttachmentService attachmentService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Page<EntityAttachment>>> getAttachments(
             @RequestParam String entityType,
             @RequestParam Long entityId,
@@ -33,6 +35,7 @@ public class EntityAttachmentController {
     }
 
     @GetMapping("/count")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Map<String, Long>>> countAttachments(
             @RequestParam String entityType,
             @RequestParam Long entityId) {
@@ -41,6 +44,7 @@ public class EntityAttachmentController {
     }
 
     @PostMapping("/upload")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<EntityAttachment>> uploadAttachment(
             @RequestParam String entityType,
             @RequestParam Long entityId,
@@ -52,6 +56,7 @@ public class EntityAttachmentController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Void>> deleteAttachment(@PathVariable Long id) {
         attachmentService.deleteAttachment(id);
         return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));

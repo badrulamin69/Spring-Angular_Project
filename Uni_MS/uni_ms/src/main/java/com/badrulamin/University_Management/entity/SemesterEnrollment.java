@@ -123,9 +123,11 @@ public class SemesterEnrollment extends BaseEntity {
     private LocalDate enrollmentDate;
 
     @Column(nullable = false)
+    @Builder.Default
     private String status = "DRAFT";
 
     @Column(name = "registered_credits")
+    @Builder.Default
     private Integer registeredCredits = 0;
 
     @Column(name = "min_credits")
@@ -144,6 +146,7 @@ public class SemesterEnrollment extends BaseEntity {
     private LocalDateTime advisorApprovedAt;
 
     @Column(name = "payment_status", length = 20)
+    @Builder.Default
     private String paymentStatus = "PENDING";
 
     @Column(name = "payment_amount")
@@ -156,6 +159,7 @@ public class SemesterEnrollment extends BaseEntity {
     private LocalDateTime paymentDate;
 
     @Column(name = "is_finalized", nullable = false)
+    @Builder.Default
     private Boolean isFinalized = false;
 
     @Column(name = "finalized_at")
@@ -165,6 +169,7 @@ public class SemesterEnrollment extends BaseEntity {
     private String remarks;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean isActive = true;
 
     @Column(name = "cancelled_at")
@@ -174,9 +179,11 @@ public class SemesterEnrollment extends BaseEntity {
     private String cancellationReason;
 
     @Column(name = "enrollment_type", length = 20)
+    @Builder.Default
     private String enrollmentType = "NORMAL";
 
     @Column(name = "is_late_enrollment", nullable = false)
+    @Builder.Default
     private Boolean isLateEnrollment = false;
 
     public boolean canBeCancelled() {

@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.service;
 
+import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import com.badrulamin.University_Management.entity.PreAdmissionRegistration;
 import com.badrulamin.University_Management.entity.AdmissionTestResult;
@@ -92,7 +93,7 @@ public class PreAdmissionRegistrationService {
                 registration.setSignatureUrl(signatureUrl);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to upload files: " + e.getMessage(), e);
+            throw new BusinessException("Failed to upload files: " + e.getMessage());
         }
 
         PreAdmissionRegistration saved = repository.save(registration);

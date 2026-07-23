@@ -2,6 +2,7 @@ package com.badrulamin.University_Management.service;
 
 import com.badrulamin.University_Management.entity.Feature;
 import com.badrulamin.University_Management.entity.FeatureAuditLog;
+import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.exception.FeatureDisabledException;
 import com.badrulamin.University_Management.repository.FeatureAuditLogRepository;
 import com.badrulamin.University_Management.repository.FeatureRepository;
@@ -141,7 +142,7 @@ public class FeatureService {
     @Transactional
     public Feature createFeature(Feature feature, String createdBy) {
         if (featureRepository.existsByFeatureKey(feature.getFeatureKey())) {
-            throw new RuntimeException("Feature key already exists: " + feature.getFeatureKey());
+            throw new BusinessException("Feature key already exists: " + feature.getFeatureKey());
         }
         feature.setCreatedBy(createdBy);
         feature.setUpdatedBy(createdBy);

@@ -27,16 +27,19 @@ public class CourseAssignmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("CourseAssignment", "id", id));
     }
 
+    @Transactional
     public CourseAssignment save(CourseAssignment courseAssignment) {
         return courseAssignmentRepository.save(courseAssignment);
     }
 
+    @Transactional
     public CourseAssignment update(Long id, CourseAssignment courseAssignment) {
         findById(id);
         courseAssignment.setId(id);
         return courseAssignmentRepository.save(courseAssignment);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         courseAssignmentRepository.deleteById(id);

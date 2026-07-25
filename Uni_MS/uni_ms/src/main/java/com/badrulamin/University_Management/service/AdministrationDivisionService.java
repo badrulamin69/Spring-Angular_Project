@@ -25,16 +25,19 @@ public class AdministrationDivisionService {
                 .orElseThrow(() -> new ResourceNotFoundException("AdministrationDivision", "id", id));
     }
 
+    @Transactional
     public AdministrationDivision save(AdministrationDivision administrationDivision) {
         return administrationDivisionRepository.save(administrationDivision);
     }
 
+    @Transactional
     public AdministrationDivision update(Long id, AdministrationDivision administrationDivision) {
         findById(id);
         administrationDivision.setId(id);
         return administrationDivisionRepository.save(administrationDivision);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         administrationDivisionRepository.deleteById(id);

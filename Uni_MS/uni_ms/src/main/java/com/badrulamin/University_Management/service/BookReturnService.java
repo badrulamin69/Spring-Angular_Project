@@ -27,16 +27,19 @@ public class BookReturnService {
                 .orElseThrow(() -> new ResourceNotFoundException("BookReturn", "id", id));
     }
 
+    @Transactional
     public BookReturn save(BookReturn bookReturn) {
         return bookReturnRepository.save(bookReturn);
     }
 
+    @Transactional
     public BookReturn update(Long id, BookReturn bookReturn) {
         findById(id);
         bookReturn.setId(id);
         return bookReturnRepository.save(bookReturn);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         bookReturnRepository.deleteById(id);

@@ -31,10 +31,12 @@ public class LoginSessionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Login session", "id", id));
     }
 
+    @Transactional
     public LoginSession save(LoginSession loginSession) {
         return loginSessionRepository.save(loginSession);
     }
 
+    @Transactional
     public void delete(Long id) {
         loginSessionRepository.deleteById(id);
     }

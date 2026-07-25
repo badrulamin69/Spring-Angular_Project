@@ -2,11 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RegistrationService } from '../../../services/registration.service';
-import { RegistrationConfigService } from '../../../services/registration-config.service';
 import { SemesterService } from '../../../services/semester.service';
-import { StudentService } from '../../../services/student.service';
-import { SubjectService } from '../../../services/subject.service';
-import { RegistrationSummary, RegisteredCourseItem, RegistrationConfig } from '../../../models/registration';
+import { RegistrationSummary } from '../../../models/registration';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({

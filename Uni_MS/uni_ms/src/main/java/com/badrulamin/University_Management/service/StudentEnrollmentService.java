@@ -27,16 +27,19 @@ public class StudentEnrollmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("StudentEnrollment", "id", id));
     }
 
+    @Transactional
     public StudentEnrollment save(StudentEnrollment studentEnrollment) {
         return studentEnrollmentRepository.save(studentEnrollment);
     }
 
+    @Transactional
     public StudentEnrollment update(Long id, StudentEnrollment studentEnrollment) {
         findById(id);
         studentEnrollment.setId(id);
         return studentEnrollmentRepository.save(studentEnrollment);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         studentEnrollmentRepository.deleteById(id);

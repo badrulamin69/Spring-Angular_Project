@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SemesterEnrollmentService } from '../../../services/semester-enrollment.service';
 import { EnrollmentConfigService } from '../../../services/enrollment-config.service';
 import { SemesterService } from '../../../services/semester.service';
-import { SemesterEnrollment, EnrollmentEligibility, EnrollmentConfig } from '../../../models/semester-enrollment';
+import { SemesterEnrollment, EnrollmentEligibility } from '../../../models/semester-enrollment';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({

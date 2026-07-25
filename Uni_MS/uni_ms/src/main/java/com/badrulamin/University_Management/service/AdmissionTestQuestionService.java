@@ -35,10 +35,12 @@ public class AdmissionTestQuestionService {
         return repository.findByTest_IdOrderByCreatedAtAsc(testId);
     }
 
+    @Transactional
     public AdmissionTestQuestion save(AdmissionTestQuestion question) {
         return repository.save(question);
     }
 
+    @Transactional
     public AdmissionTestQuestion update(Long id, AdmissionTestQuestion question) {
         AdmissionTestQuestion existing = findById(id);
         existing.setQuestionText(question.getQuestionText());
@@ -59,6 +61,7 @@ public class AdmissionTestQuestionService {
         return repository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         repository.deleteById(id);

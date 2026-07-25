@@ -27,16 +27,19 @@ public class GuardianService {
                 .orElseThrow(() -> new ResourceNotFoundException("Guardian", "id", id));
     }
 
+    @Transactional
     public Guardian save(Guardian guardian) {
         return guardianRepository.save(guardian);
     }
 
+    @Transactional
     public Guardian update(Long id, Guardian guardian) {
         findById(id);
         guardian.setId(id);
         return guardianRepository.save(guardian);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         guardianRepository.deleteById(id);

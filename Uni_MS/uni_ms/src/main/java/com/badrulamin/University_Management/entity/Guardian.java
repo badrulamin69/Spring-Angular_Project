@@ -34,6 +34,7 @@ public class Guardian extends BaseEntity {
     @Column(nullable = false)
     private String relationship;
 
+    @Column(unique = true)
     private String email;
 
     @NotBlank

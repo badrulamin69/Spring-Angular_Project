@@ -27,16 +27,19 @@ public class BookCategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("BookCategory", "id", id));
     }
 
+    @Transactional
     public BookCategory save(BookCategory bookCategory) {
         return bookCategoryRepository.save(bookCategory);
     }
 
+    @Transactional
     public BookCategory update(Long id, BookCategory bookCategory) {
         findById(id);
         bookCategory.setId(id);
         return bookCategoryRepository.save(bookCategory);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         bookCategoryRepository.deleteById(id);

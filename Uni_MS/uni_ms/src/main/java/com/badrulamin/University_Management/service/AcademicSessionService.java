@@ -25,16 +25,19 @@ public class AcademicSessionService {
                 .orElseThrow(() -> new ResourceNotFoundException("AcademicSession", "id", id));
     }
 
+    @Transactional
     public AcademicSession save(AcademicSession academicSession) {
         return academicSessionRepository.save(academicSession);
     }
 
+    @Transactional
     public AcademicSession update(Long id, AcademicSession academicSession) {
         findById(id);
         academicSession.setId(id);
         return academicSessionRepository.save(academicSession);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         academicSessionRepository.deleteById(id);

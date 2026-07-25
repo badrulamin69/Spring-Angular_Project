@@ -29,6 +29,7 @@ public class ClubService {
                 .orElseThrow(() -> new ResourceNotFoundException("Club", "id", id));
     }
 
+    @Transactional
     public Club save(Club club) {
         return clubRepository.save(club);
     }
@@ -40,6 +41,7 @@ public class ClubService {
         return clubRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         clubRepository.deleteById(id);

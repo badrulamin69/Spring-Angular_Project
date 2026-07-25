@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Subject, takeUntil, interval, forkJoin } from 'rxjs';
+import { Subject, takeUntil, interval } from 'rxjs';
 import { DashboardService } from '../../services/dashboard.service';
 import { CurrentUserService } from '../../services/current-user.service';
 import { ToastService } from '../../shared/toast/toast.component';

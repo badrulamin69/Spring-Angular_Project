@@ -150,6 +150,7 @@ public class PreAdmissionRegistrationService {
         return "TRK-" + Year.now().getValue() + "-" + sb.toString();
     }
 
+    @Transactional
     public PreAdmissionRegistration update(Long id, PreAdmissionRegistration registration) {
         PreAdmissionRegistration existing = findById(id);
         registration.setId(id);
@@ -158,17 +159,20 @@ public class PreAdmissionRegistrationService {
         return repository.save(registration);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         repository.deleteById(id);
     }
 
+    @Transactional
     public PreAdmissionRegistration approve(Long id) {
         PreAdmissionRegistration reg = findById(id);
         reg.setStatus("ADMIT_CARD_GENERATED");
         return repository.save(reg);
     }
 
+    @Transactional
     public PreAdmissionRegistration reject(Long id, String remarks) {
         PreAdmissionRegistration reg = findById(id);
         reg.setStatus("REJECTED");

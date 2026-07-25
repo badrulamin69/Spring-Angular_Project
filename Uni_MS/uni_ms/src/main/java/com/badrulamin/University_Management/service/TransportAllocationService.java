@@ -27,16 +27,19 @@ public class TransportAllocationService {
                 .orElseThrow(() -> new ResourceNotFoundException("TransportAllocation", "id", id));
     }
 
+    @Transactional
     public TransportAllocation save(TransportAllocation transportAllocation) {
         return transportAllocationRepository.save(transportAllocation);
     }
 
+    @Transactional
     public TransportAllocation update(Long id, TransportAllocation transportAllocation) {
         findById(id);
         transportAllocation.setId(id);
         return transportAllocationRepository.save(transportAllocation);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         transportAllocationRepository.deleteById(id);

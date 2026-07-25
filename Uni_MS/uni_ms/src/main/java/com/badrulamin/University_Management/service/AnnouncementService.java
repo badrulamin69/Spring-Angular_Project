@@ -29,6 +29,7 @@ public class AnnouncementService {
                 .orElseThrow(() -> new ResourceNotFoundException("Announcement", "id", id));
     }
 
+    @Transactional
     public Announcement save(Announcement announcement) {
         return announcementRepository.save(announcement);
     }
@@ -40,6 +41,7 @@ public class AnnouncementService {
         return announcementRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         announcementRepository.deleteById(id);

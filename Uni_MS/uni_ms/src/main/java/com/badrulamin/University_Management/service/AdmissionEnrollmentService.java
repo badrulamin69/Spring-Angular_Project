@@ -36,6 +36,7 @@ public class AdmissionEnrollmentService {
         return admissionEnrollmentRepository.save(enrollment);
     }
 
+    @Transactional
     public AdmissionEnrollment update(Long id, AdmissionEnrollment enrollment) {
         AdmissionEnrollment existing = admissionEnrollmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionEnrollment", "id", id));
@@ -54,6 +55,7 @@ public class AdmissionEnrollmentService {
         return admissionEnrollmentRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         admissionEnrollmentRepository.deleteById(id);
     }

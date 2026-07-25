@@ -18,11 +18,13 @@ public class FacultyNameServiceImp implements FacultyNameService {
     private final FacultyNameRepository facultyNameRepository;
 
     @Override
+    @Transactional
     public FacultyName save(FacultyName facultyName) {
         return facultyNameRepository.save(facultyName);
     }
 
     @Override
+    @Transactional
     public FacultyName update(Long id, FacultyName faculty) {
         FacultyName existing = facultyNameRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("FacultyName", "id", id));
@@ -45,6 +47,7 @@ public class FacultyNameServiceImp implements FacultyNameService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         facultyNameRepository.deleteById(id);
     }

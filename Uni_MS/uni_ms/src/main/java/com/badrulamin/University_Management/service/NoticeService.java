@@ -33,6 +33,7 @@ public class NoticeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Notice", "id", id));
     }
 
+    @Transactional
     public Notice save(Notice notice) {
         return noticeRepository.save(notice);
     }
@@ -44,6 +45,7 @@ public class NoticeService {
         return noticeRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         noticeRepository.deleteById(id);

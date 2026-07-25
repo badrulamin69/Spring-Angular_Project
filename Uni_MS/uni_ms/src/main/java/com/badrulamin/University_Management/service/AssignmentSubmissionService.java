@@ -27,16 +27,19 @@ public class AssignmentSubmissionService {
                 .orElseThrow(() -> new ResourceNotFoundException("AssignmentSubmission", "id", id));
     }
 
+    @Transactional
     public AssignmentSubmission save(AssignmentSubmission assignmentSubmission) {
         return assignmentSubmissionRepository.save(assignmentSubmission);
     }
 
+    @Transactional
     public AssignmentSubmission update(Long id, AssignmentSubmission assignmentSubmission) {
         findById(id);
         assignmentSubmission.setId(id);
         return assignmentSubmissionRepository.save(assignmentSubmission);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         assignmentSubmissionRepository.deleteById(id);

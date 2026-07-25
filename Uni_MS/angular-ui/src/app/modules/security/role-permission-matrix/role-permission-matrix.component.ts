@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RoleService } from '../../../services/role.service';
@@ -6,7 +6,6 @@ import { PermissionService } from '../../../services/permission.service';
 import { RolePermissionService } from '../../../services/role-permission.service';
 import { Role } from '../../../models/role';
 import { Permission } from '../../../models/permission';
-import { RolePermission } from '../../../models/role-permission';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 

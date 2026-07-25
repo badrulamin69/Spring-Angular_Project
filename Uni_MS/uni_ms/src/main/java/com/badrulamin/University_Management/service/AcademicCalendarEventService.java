@@ -48,6 +48,7 @@ public class AcademicCalendarEventService {
         return toResponse(saved);
     }
 
+    @Transactional
     public AcademicCalendarEventResponse update(Long id, AcademicCalendarEventRequest request) {
         AcademicCalendarEvent event = academicCalendarEventRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AcademicCalendarEvent", "id", id));
@@ -60,6 +61,7 @@ public class AcademicCalendarEventService {
         return toResponse(saved);
     }
 
+    @Transactional
     public void delete(Long id) {
         if (!academicCalendarEventRepository.existsById(id)) {
             throw new ResourceNotFoundException("AcademicCalendarEvent", "id", id);

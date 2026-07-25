@@ -27,16 +27,19 @@ public class UserRoleService {
                 .orElseThrow(() -> new ResourceNotFoundException("UserRole", "id", id));
     }
 
+    @Transactional
     public UserRole save(UserRole userRole) {
         return userRoleRepository.save(userRole);
     }
 
+    @Transactional
     public UserRole update(Long id, UserRole userRole) {
         findById(id);
         userRole.setId(id);
         return userRoleRepository.save(userRole);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         userRoleRepository.deleteById(id);

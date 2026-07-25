@@ -31,12 +31,14 @@ public class AlumniService {
         return alumniRepository.save(alumni);
     }
 
+    @Transactional
     public Alumni update(Long id, Alumni alumni) {
         findById(id);
         alumni.setId(id);
         return alumniRepository.save(alumni);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         alumniRepository.deleteById(id);

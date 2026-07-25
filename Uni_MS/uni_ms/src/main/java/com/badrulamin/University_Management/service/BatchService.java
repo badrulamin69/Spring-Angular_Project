@@ -29,6 +29,7 @@ public class BatchService {
                 .orElseThrow(() -> new ResourceNotFoundException("Batch", "id", id));
     }
 
+    @Transactional
     public Batch save(Batch batch) {
         return batchRepository.save(batch);
     }
@@ -40,6 +41,7 @@ public class BatchService {
         return batchRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         batchRepository.deleteById(id);

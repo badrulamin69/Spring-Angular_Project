@@ -31,12 +31,14 @@ public class CertificateService {
         return certificateRepository.save(certificate);
     }
 
+    @Transactional
     public Certificate update(Long id, Certificate certificate) {
         findById(id);
         certificate.setId(id);
         return certificateRepository.save(certificate);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         certificateRepository.deleteById(id);

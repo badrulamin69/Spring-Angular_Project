@@ -29,6 +29,7 @@ public class SectionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Section", "id", id));
     }
 
+    @Transactional
     public Section save(Section section) {
         return sectionRepository.save(section);
     }
@@ -40,6 +41,7 @@ public class SectionService {
         return sectionRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         sectionRepository.deleteById(id);

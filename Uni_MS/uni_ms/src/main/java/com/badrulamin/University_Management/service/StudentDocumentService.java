@@ -31,12 +31,14 @@ public class StudentDocumentService {
         return studentDocumentRepository.save(studentDocument);
     }
 
+    @Transactional
     public StudentDocument update(Long id, StudentDocument studentDocument) {
         findById(id);
         studentDocument.setId(id);
         return studentDocumentRepository.save(studentDocument);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         studentDocumentRepository.deleteById(id);

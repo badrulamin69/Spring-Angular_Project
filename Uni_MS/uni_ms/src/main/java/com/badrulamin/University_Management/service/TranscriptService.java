@@ -31,12 +31,14 @@ public class TranscriptService {
         return transcriptRepository.save(transcript);
     }
 
+    @Transactional
     public Transcript update(Long id, Transcript transcript) {
         findById(id);
         transcript.setId(id);
         return transcriptRepository.save(transcript);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         transcriptRepository.deleteById(id);

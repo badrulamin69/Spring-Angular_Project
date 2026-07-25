@@ -33,6 +33,7 @@ public class AdmissionInterviewService {
         return admissionInterviewRepository.save(interview);
     }
 
+    @Transactional
     public AdmissionInterview update(Long id, AdmissionInterview interview) {
         AdmissionInterview existing = admissionInterviewRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionInterview", "id", id));
@@ -51,6 +52,7 @@ public class AdmissionInterviewService {
         return admissionInterviewRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         admissionInterviewRepository.deleteById(id);
     }

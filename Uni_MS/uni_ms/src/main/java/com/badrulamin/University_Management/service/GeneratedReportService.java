@@ -27,16 +27,19 @@ public class GeneratedReportService {
                 .orElseThrow(() -> new ResourceNotFoundException("GeneratedReport", "id", id));
     }
 
+    @Transactional
     public GeneratedReport save(GeneratedReport generatedReport) {
         return generatedReportRepository.save(generatedReport);
     }
 
+    @Transactional
     public GeneratedReport update(Long id, GeneratedReport generatedReport) {
         findById(id);
         generatedReport.setId(id);
         return generatedReportRepository.save(generatedReport);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         generatedReportRepository.deleteById(id);

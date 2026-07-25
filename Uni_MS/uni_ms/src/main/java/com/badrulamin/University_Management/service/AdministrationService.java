@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,16 +26,19 @@ public class AdministrationService {
                 .orElseThrow(() -> new ResourceNotFoundException("Administration", "id", id));
     }
 
+    @Transactional
     public Administration save(Administration administration) {
         return administrationRepository.save(administration);
     }
 
+    @Transactional
     public Administration update(Long id, Administration administration) {
         findById(id);
         administration.setId(id);
         return administrationRepository.save(administration);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         administrationRepository.deleteById(id);

@@ -25,16 +25,19 @@ public class CurriculumService {
                 .orElseThrow(() -> new ResourceNotFoundException("Curriculum", "id", id));
     }
 
+    @Transactional
     public Curriculum save(Curriculum curriculum) {
         return curriculumRepository.save(curriculum);
     }
 
+    @Transactional
     public Curriculum update(Long id, Curriculum curriculum) {
         findById(id);
         curriculum.setId(id);
         return curriculumRepository.save(curriculum);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         curriculumRepository.deleteById(id);

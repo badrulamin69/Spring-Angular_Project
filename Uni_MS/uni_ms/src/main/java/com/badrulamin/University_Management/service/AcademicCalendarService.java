@@ -27,16 +27,19 @@ public class AcademicCalendarService {
                 .orElseThrow(() -> new ResourceNotFoundException("AcademicCalendar", "id", id));
     }
 
+    @Transactional
     public AcademicCalendar save(AcademicCalendar academicCalendar) {
         return academicCalendarRepository.save(academicCalendar);
     }
 
+    @Transactional
     public AcademicCalendar update(Long id, AcademicCalendar academicCalendar) {
         findById(id);
         academicCalendar.setId(id);
         return academicCalendarRepository.save(academicCalendar);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         academicCalendarRepository.deleteById(id);

@@ -36,12 +36,6 @@ public class Feature extends BaseEntity {
     @Builder.Default
     private Boolean isEnabled = true;
 
-    @Column(name = "created_by", length = 100)
-    private String createdBy;
-
-    @Column(name = "updated_by", length = 100)
-    private String updatedBy;
-
     @Column(name = "sort_order")
     @Builder.Default
     private Integer sortOrder = 0;

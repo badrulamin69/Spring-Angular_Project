@@ -20,11 +20,6 @@ public class WebConfig implements WebMvcConfigurer {
     private String uploadDir;
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        // CORS is handled by Spring Security in WebSecurityConfig
-    }
-
-    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(featureToggleInterceptor)
                 .addPathPatterns("/api/**")

@@ -27,16 +27,19 @@ public class PermissionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Permission", "id", id));
     }
 
+    @Transactional
     public Permission save(Permission permission) {
         return permissionRepository.save(permission);
     }
 
+    @Transactional
     public Permission update(Long id, Permission permission) {
         findById(id);
         permission.setId(id);
         return permissionRepository.save(permission);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         permissionRepository.deleteById(id);

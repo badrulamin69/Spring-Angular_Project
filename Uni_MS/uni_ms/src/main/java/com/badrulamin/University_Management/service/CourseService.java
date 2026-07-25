@@ -36,6 +36,7 @@ public class CourseService {
                 .orElseThrow(() -> new ResourceNotFoundException("Course", "id", id));
     }
 
+    @Transactional
     public Course save(Course course) {
         return courseRepository.save(course);
     }
@@ -47,6 +48,7 @@ public class CourseService {
         return courseRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         courseRepository.deleteById(id);

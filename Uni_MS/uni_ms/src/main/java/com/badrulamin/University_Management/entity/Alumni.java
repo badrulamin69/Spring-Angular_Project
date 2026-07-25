@@ -48,7 +48,7 @@ public class Alumni {
     @Column(length = 200)
     private String currentLocation;
 
-    @Column(length = 200)
+    @Column(length = 200, unique = true)
     private String email;
 
     @Column(length = 20)

@@ -32,16 +32,19 @@ public class RoleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Role", "id", id));
     }
 
+    @Transactional
     public Role save(Role role) {
         return roleRepository.save(role);
     }
 
+    @Transactional
     public Role update(Long id, Role role) {
         findById(id);
         role.setId(id);
         return roleRepository.save(role);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         roleRepository.deleteById(id);

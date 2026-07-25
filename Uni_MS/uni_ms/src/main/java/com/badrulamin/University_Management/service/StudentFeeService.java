@@ -27,16 +27,19 @@ public class StudentFeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("StudentFee", "id", id));
     }
 
+    @Transactional
     public StudentFee save(StudentFee studentFee) {
         return studentFeeRepository.save(studentFee);
     }
 
+    @Transactional
     public StudentFee update(Long id, StudentFee studentFee) {
         findById(id);
         studentFee.setId(id);
         return studentFeeRepository.save(studentFee);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         studentFeeRepository.deleteById(id);

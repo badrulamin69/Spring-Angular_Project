@@ -25,16 +25,19 @@ public class CreditRuleService {
                 .orElseThrow(() -> new ResourceNotFoundException("CreditRule", "id", id));
     }
 
+    @Transactional
     public CreditRule save(CreditRule creditRule) {
         return creditRuleRepository.save(creditRule);
     }
 
+    @Transactional
     public CreditRule update(Long id, CreditRule creditRule) {
         findById(id);
         creditRule.setId(id);
         return creditRuleRepository.save(creditRule);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         creditRuleRepository.deleteById(id);

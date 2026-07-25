@@ -54,6 +54,7 @@ public class BuildingService {
         return toResponse(buildingRepository.save(building));
     }
 
+    @Transactional
     public BuildingResponse update(Long id, BuildingRequest request) {
         Building building = buildingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Building", "id", id));
@@ -78,6 +79,7 @@ public class BuildingService {
         return toResponse(buildingRepository.save(building));
     }
 
+    @Transactional
     public void delete(Long id) {
         if (!buildingRepository.existsById(id)) {
             throw new ResourceNotFoundException("Building", "id", id);

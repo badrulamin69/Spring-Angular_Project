@@ -27,16 +27,19 @@ public class SubjectService {
                 .orElseThrow(() -> new ResourceNotFoundException("Subject", "id", id));
     }
 
+    @Transactional
     public Subject save(Subject subject) {
         return subjectRepository.save(subject);
     }
 
+    @Transactional
     public Subject update(Long id, Subject subject) {
         findById(id);
         subject.setId(id);
         return subjectRepository.save(subject);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         subjectRepository.deleteById(id);

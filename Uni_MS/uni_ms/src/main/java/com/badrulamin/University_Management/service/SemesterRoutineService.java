@@ -25,16 +25,19 @@ public class SemesterRoutineService {
                 .orElseThrow(() -> new ResourceNotFoundException("SemesterRoutine", "id", id));
     }
 
+    @Transactional
     public SemesterRoutine save(SemesterRoutine semesterRoutine) {
         return semesterRoutineRepository.save(semesterRoutine);
     }
 
+    @Transactional
     public SemesterRoutine update(Long id, SemesterRoutine semesterRoutine) {
         findById(id);
         semesterRoutine.setId(id);
         return semesterRoutineRepository.save(semesterRoutine);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         semesterRoutineRepository.deleteById(id);

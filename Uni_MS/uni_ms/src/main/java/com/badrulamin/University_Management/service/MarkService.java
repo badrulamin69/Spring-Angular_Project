@@ -27,16 +27,19 @@ public class MarkService {
                 .orElseThrow(() -> new ResourceNotFoundException("Mark", "id", id));
     }
 
+    @Transactional
     public Mark save(Mark mark) {
         return markRepository.save(mark);
     }
 
+    @Transactional
     public Mark update(Long id, Mark mark) {
         findById(id);
         mark.setId(id);
         return markRepository.save(mark);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         markRepository.deleteById(id);

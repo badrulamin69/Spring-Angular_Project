@@ -27,6 +27,7 @@ public class SemesterService {
                 .orElseThrow(() -> new ResourceNotFoundException("Semester", "id", id));
     }
 
+    @Transactional
     public Semester save(Semester semester) {
         return semesterRepository.save(semester);
     }
@@ -38,6 +39,7 @@ public class SemesterService {
         return semesterRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         semesterRepository.deleteById(id);

@@ -41,16 +41,19 @@ public class AdmissionMeritListService {
                 .orElseThrow(() -> new ResourceNotFoundException("MeritList", "id", id));
     }
 
+    @Transactional
     public AdmissionMeritList save(AdmissionMeritList meritList) {
         return meritListRepository.save(meritList);
     }
 
+    @Transactional
     public AdmissionMeritList update(Long id, AdmissionMeritList meritList) {
         findById(id);
         meritList.setId(id);
         return meritListRepository.save(meritList);
     }
 
+    @Transactional
     public void delete(Long id) {
         AdmissionMeritList list = findById(id);
         if ("PUBLISHED".equals(list.getStatus())) {

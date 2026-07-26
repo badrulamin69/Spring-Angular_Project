@@ -31,12 +31,14 @@ public class SemesterRegistrationService {
         return semesterRegistrationRepository.save(semesterRegistration);
     }
 
+    @Transactional
     public SemesterRegistration update(Long id, SemesterRegistration semesterRegistration) {
         findById(id);
         semesterRegistration.setId(id);
         return semesterRegistrationRepository.save(semesterRegistration);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         semesterRegistrationRepository.deleteById(id);

@@ -30,6 +30,7 @@ public class StudentIdGenerationService {
         return repository.save(entity);
     }
 
+    @Transactional
     public StudentIdGeneration update(Long id, StudentIdGeneration entity) {
         StudentIdGeneration existing = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("StudentIdGeneration", "id", id));
@@ -45,6 +46,7 @@ public class StudentIdGenerationService {
         return repository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }

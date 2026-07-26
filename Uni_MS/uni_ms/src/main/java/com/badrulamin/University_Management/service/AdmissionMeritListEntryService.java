@@ -36,16 +36,19 @@ public class AdmissionMeritListEntryService {
                 .orElseThrow(() -> new ResourceNotFoundException("MeritListEntry", "id", id));
     }
 
+    @Transactional
     public AdmissionMeritListEntry save(AdmissionMeritListEntry entry) {
         return entryRepository.save(entry);
     }
 
+    @Transactional
     public AdmissionMeritListEntry update(Long id, AdmissionMeritListEntry entry) {
         findById(id);
         entry.setId(id);
         return entryRepository.save(entry);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         entryRepository.deleteById(id);

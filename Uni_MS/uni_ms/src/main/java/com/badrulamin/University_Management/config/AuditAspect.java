@@ -11,6 +11,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,8 @@ import java.time.LocalDateTime;
 @Aspect
 @Component
 public class AuditAspect {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuditAspect.class);
 
     @Autowired private AuditLogRepository auditLogRepository;
     @Autowired private UserRepository userRepository;
@@ -47,6 +51,10 @@ public class AuditAspect {
             String ipAddress = getClientIp();
             User currentUser = getCurrentUser();
 
+            if (currentUser == null) {
+                return result;
+            }
+
             AuditLog auditLog = new AuditLog();
             auditLog.setUser(currentUser);
             auditLog.setAction(action);
@@ -54,7 +62,9 @@ public class AuditAspect {
             auditLog.setEntityId(entityId);
             auditLog.setIpAddress(ipAddress);
             auditLogRepository.save(auditLog);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            logger.warn("Failed to save audit log: {}", e.getMessage());
+        }
 
         return result;
     }

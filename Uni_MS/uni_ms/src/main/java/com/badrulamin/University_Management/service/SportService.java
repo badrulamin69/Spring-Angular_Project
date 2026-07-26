@@ -29,6 +29,7 @@ public class SportService {
                 .orElseThrow(() -> new ResourceNotFoundException("Sport", "id", id));
     }
 
+    @Transactional
     public Sport save(Sport sport) {
         return sportRepository.save(sport);
     }
@@ -40,6 +41,7 @@ public class SportService {
         return sportRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         sportRepository.deleteById(id);

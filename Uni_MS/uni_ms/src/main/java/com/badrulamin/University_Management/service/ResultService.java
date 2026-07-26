@@ -27,16 +27,19 @@ public class ResultService {
                 .orElseThrow(() -> new ResourceNotFoundException("Result", "id", id));
     }
 
+    @Transactional
     public Result save(Result result) {
         return resultRepository.save(result);
     }
 
+    @Transactional
     public Result update(Long id, Result result) {
         findById(id);
         result.setId(id);
         return resultRepository.save(result);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         resultRepository.deleteById(id);

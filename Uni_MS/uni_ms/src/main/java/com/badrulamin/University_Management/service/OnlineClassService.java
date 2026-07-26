@@ -27,16 +27,19 @@ public class OnlineClassService {
                 .orElseThrow(() -> new ResourceNotFoundException("OnlineClass", "id", id));
     }
 
+    @Transactional
     public OnlineClass save(OnlineClass onlineClass) {
         return onlineClassRepository.save(onlineClass);
     }
 
+    @Transactional
     public OnlineClass update(Long id, OnlineClass onlineClass) {
         findById(id);
         onlineClass.setId(id);
         return onlineClassRepository.save(onlineClass);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         onlineClassRepository.deleteById(id);

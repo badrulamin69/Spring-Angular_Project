@@ -29,6 +29,7 @@ public class VehicleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle", "id", id));
     }
 
+    @Transactional
     public Vehicle save(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);
     }
@@ -40,6 +41,7 @@ public class VehicleService {
         return vehicleRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         vehicleRepository.deleteById(id);

@@ -31,6 +31,7 @@ public class FacultyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", id));
     }
 
+    @Transactional
     public Faculty save(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
@@ -42,6 +43,7 @@ public class FacultyService {
         return facultyRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         facultyRepository.deleteById(id);

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -14,9 +14,9 @@ import { RouterLink } from '@angular/router';
       --bg-topbar: rgba(255, 255, 255, 0.85);
       --bg-dash: rgba(255, 255, 255, 0.9);
       --bg-dash-solid: rgba(255, 255, 255, 0.95);
-      --text-primary: #1a1a2e;
-      --text-secondary: #4a5568;
-      --text-muted: #718096;
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
       --text-muted-dark: #475569;
       --accent-color: #0056b3;
       --brand-color: #002d5f;
@@ -61,11 +61,9 @@ import { RouterLink } from '@angular/router';
       box-sizing: border-box;
     }
 
-
-
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       SMART TOP BAR
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         SMART TOP BAR
+    ═══════════════════════════════════════ */
     .topbar {
       position: fixed;
       top: 0;
@@ -97,12 +95,6 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 10px;
       text-decoration: none;
-    }
-
-    .brand-logo {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
     }
 
     .brand-name {
@@ -159,13 +151,13 @@ import { RouterLink } from '@angular/router';
       background: var(--border-medium);
     }
 
-    .btn-smart {
+    .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 10px 20px;
-      background: linear-gradient(135deg, #002d5f, #0056b3);
-      color: var(--text-primary);
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
       border: none;
       border-radius: 10px;
       font-size: 0.875rem;
@@ -173,16 +165,16 @@ import { RouterLink } from '@angular/router';
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 20px rgba(0, 45, 95, 0.3), inset 0 1px 0 var(--border-stronger);
-      border: 1px solid rgba(0, 45, 95, 0.5);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.5);
     }
 
-    .btn-smart:hover {
+    .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 0 30px rgba(0, 45, 95, 0.5), inset 0 1px 0 var(--border-visible);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
-    .btn-smart svg {
+    .btn-primary svg {
       width: 16px;
       height: 16px;
     }
@@ -220,9 +212,9 @@ import { RouterLink } from '@angular/router';
       transition: transform 0.3s ease;
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       HERO SECTION
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         HERO SECTION
+    ═══════════════════════════════════════ */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -277,11 +269,11 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 8px;
       padding: 6px 14px 6px 6px;
-      background: rgba(0, 45, 95, 0.15);
-      border: 1px solid rgba(0, 45, 95, 0.25);
+      background: rgba(0, 45, 95, 0.1);
+      border: 1px solid rgba(0, 45, 95, 0.2);
       border-radius: 100px;
       font-size: 0.8125rem;
-      color: #8bb8e0;
+      color: #002d5f;
       font-weight: 500;
       margin-bottom: 1.5rem;
     }
@@ -312,7 +304,7 @@ import { RouterLink } from '@angular/router';
     }
 
     .hero-title .gradient {
-      background: linear-gradient(135deg, #5b9bd5 0%, #8bb8e0 50%, #b0d4f0 100%);
+      background: linear-gradient(135deg, #002d5f 0%, #0056b3 50%, #5b9bd5 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -337,8 +329,8 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 10px;
       padding: 14px 28px;
-      background: linear-gradient(135deg, #002d5f, #0056b3);
-      color: var(--text-primary);
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
       border: none;
       border-radius: 12px;
       font-size: 0.9375rem;
@@ -346,12 +338,12 @@ import { RouterLink } from '@angular/router';
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 30px rgba(0, 45, 95, 0.4), 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.3);
     }
 
     .btn-hero-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 40px rgba(0, 45, 95, 0.5), 0 8px 25px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5), 0 0 0 1px rgba(16, 185, 129, 0.4);
     }
 
     .btn-hero-primary svg {
@@ -377,13 +369,51 @@ import { RouterLink } from '@angular/router';
 
     .btn-hero-secondary:hover {
       color: var(--text-secondary);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: var(--border-visible);
       background: var(--border-verylight);
     }
 
     .btn-hero-secondary svg {
       width: 18px;
       height: 18px;
+    }
+
+    .hero-proof {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .hero-proof-avatars {
+      display: flex;
+      margin-right: -4px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #fff;
+      border: 2px solid var(--bg-base);
+      margin-left: -8px;
+    }
+
+    .avatar:first-child {
+      margin-left: 0;
+    }
+
+    .hero-proof-text {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
     /* Hero Visual */
@@ -397,7 +427,7 @@ import { RouterLink } from '@angular/router';
       border-radius: 20px;
       padding: 24px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border-medium);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--border-medium);
     }
 
     .dash-topbar {
@@ -438,8 +468,8 @@ import { RouterLink } from '@angular/router';
     }
 
     .dash-nav-item.active {
-      background: rgba(0, 45, 95, 0.15);
-      color: #5b9bd5;
+      background: rgba(0, 45, 95, 0.1);
+      color: #002d5f;
     }
 
     .dash-stats {
@@ -549,7 +579,7 @@ import { RouterLink } from '@angular/router';
       border-radius: 12px;
       padding: 12px 16px;
       backdrop-filter: blur(16px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       animation: floatY 4s ease-in-out infinite;
     }
 
@@ -586,8 +616,8 @@ import { RouterLink } from '@angular/router';
     }
 
     .float-icon.green {
-      background: rgba(40, 167, 69, 0.15);
-      color: #28a745;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
     }
 
     .float-icon.blue {
@@ -611,9 +641,9 @@ import { RouterLink } from '@angular/router';
       50% { transform: translateY(-10px); }
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       TRUSTED BY
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         TRUSTED BY
+    ═══════════════════════════════════════ */
     .trusted {
       padding: 4rem 2rem;
       text-align: center;
@@ -623,7 +653,7 @@ import { RouterLink } from '@angular/router';
 
     .trusted-label {
       font-size: 0.8125rem;
-      color: #475569;
+      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 2px;
       font-weight: 600;
@@ -646,9 +676,9 @@ import { RouterLink } from '@angular/router';
       letter-spacing: -0.5px;
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       FEATURES
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         FEATURES
+    ═══════════════════════════════════════ */
     .features-section {
       padding: 8rem 2rem;
       background: var(--bg-base);
@@ -671,12 +701,12 @@ import { RouterLink } from '@angular/router';
       align-items: center;
       gap: 6px;
       padding: 6px 14px;
-      background: rgba(0, 45, 95, 0.1);
-      border: 1px solid rgba(0, 45, 95, 0.15);
+      background: rgba(0, 45, 95, 0.08);
+      border: 1px solid rgba(0, 45, 95, 0.12);
       border-radius: 100px;
       font-size: 0.8125rem;
       font-weight: 600;
-      color: #5b9bd5;
+      color: #002d5f;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 1.25rem;
@@ -704,7 +734,7 @@ import { RouterLink } from '@angular/router';
     }
 
     .feature-card {
-      background: var(--border-ultralight);
+      background: var(--bg-base);
       border: 1px solid var(--border-heavy);
       border-radius: 16px;
       padding: 28px;
@@ -730,8 +760,9 @@ import { RouterLink } from '@angular/router';
     }
 
     .feature-card:hover {
-      background: var(--border-light);
+      background: var(--border-verylight);
       transform: translateY(-4px);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.08);
     }
 
     .feature-card:hover::before {
@@ -739,8 +770,8 @@ import { RouterLink } from '@angular/router';
     }
 
     .feature-icon-wrap {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -756,19 +787,19 @@ import { RouterLink } from '@angular/router';
     .feature-card h3 {
       font-size: 1rem;
       font-weight: 700;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       margin-bottom: 0.5rem;
     }
 
     .feature-card p {
       font-size: 0.8125rem;
-      color: var(--text-muted-dark);
+      color: var(--text-muted);
       line-height: 1.65;
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       HOW IT WORKS
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         HOW IT WORKS
+    ═══════════════════════════════════════ */
     .how-section {
       padding: 8rem 2rem;
       background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-alt) 100%);
@@ -788,7 +819,7 @@ import { RouterLink } from '@angular/router';
       left: 12%;
       right: 12%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0, 45, 95, 0.3), rgba(168, 85, 247, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 45, 95, 0.2), rgba(91, 155, 213, 0.2), transparent);
     }
 
     .step-card {
@@ -800,15 +831,15 @@ import { RouterLink } from '@angular/router';
       width: 72px;
       height: 72px;
       border-radius: 50%;
-      background: rgba(0, 45, 95, 0.1);
-      border: 2px solid rgba(0, 45, 95, 0.2);
+      background: rgba(0, 45, 95, 0.08);
+      border: 2px solid rgba(0, 45, 95, 0.15);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 1.5rem;
       font-size: 1.5rem;
       font-weight: 800;
-      color: #5b9bd5;
+      color: #002d5f;
       position: relative;
       z-index: 2;
     }
@@ -816,21 +847,21 @@ import { RouterLink } from '@angular/router';
     .step-card h3 {
       font-size: 1rem;
       font-weight: 700;
-      color: var(--text-secondary);
+      color: var(--text-primary);
       margin-bottom: 0.5rem;
     }
 
     .step-card p {
       font-size: 0.8125rem;
-      color: var(--text-muted-dark);
+      color: var(--text-muted);
       line-height: 1.6;
       max-width: 240px;
       margin: 0 auto;
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       MODULES
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         MODULES
+    ═══════════════════════════════════════ */
     .modules-section {
       padding: 6rem 2rem;
       background: var(--bg-alt);
@@ -923,9 +954,9 @@ import { RouterLink } from '@angular/router';
       color: var(--mod-color, #002d5f);
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       STATS
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         STATS
+    ═══════════════════════════════════════ */
     .stats-section {
       padding: 6rem 2rem;
       background: var(--bg-base);
@@ -951,7 +982,7 @@ import { RouterLink } from '@angular/router';
       letter-spacing: -1px;
       line-height: 1;
       margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #5b9bd5, #8bb8e0);
+      background: linear-gradient(135deg, #002d5f, #0056b3);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -963,9 +994,9 @@ import { RouterLink } from '@angular/router';
       font-weight: 500;
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       CTA
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         CTA
+    ═══════════════════════════════════════ */
     .cta-section {
       padding: 8rem 2rem;
       background: var(--bg-base);
@@ -981,7 +1012,7 @@ import { RouterLink } from '@angular/router';
     .cta-glow {
       position: absolute;
       inset: -40px;
-      background: radial-gradient(ellipse at center, rgba(0, 45, 95, 0.15), transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(0, 45, 95, 0.1), transparent 70%);
       pointer-events: none;
     }
 
@@ -1031,7 +1062,7 @@ import { RouterLink } from '@angular/router';
     .demo-item-role {
       font-size: 0.75rem;
       font-weight: 700;
-      color: #5b9bd5;
+      color: #002d5f;
       margin-bottom: 4px;
     }
 
@@ -1041,9 +1072,9 @@ import { RouterLink } from '@angular/router';
       font-family: 'SF Mono', 'Fira Code', monospace;
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       FOOTER
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════ */
     .footer {
       padding: 4rem 2rem 2rem;
       background: var(--bg-base);
@@ -1064,7 +1095,7 @@ import { RouterLink } from '@angular/router';
 
     .footer-brand p {
       font-size: 0.875rem;
-      color: #475569;
+      color: var(--text-muted);
       line-height: 1.6;
       margin-top: 1rem;
       max-width: 280px;
@@ -1082,14 +1113,14 @@ import { RouterLink } from '@angular/router';
     .footer-col a {
       display: block;
       font-size: 0.875rem;
-      color: #475569;
+      color: var(--text-muted);
       text-decoration: none;
       padding: 4px 0;
       transition: color 0.2s ease;
     }
 
     .footer-col a:hover {
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
 
     .footer-bottom {
@@ -1102,7 +1133,7 @@ import { RouterLink } from '@angular/router';
 
     .footer-bottom p {
       font-size: 0.8125rem;
-      color: #334155;
+      color: var(--text-muted-dark);
     }
 
     .footer-bottom-links {
@@ -1112,22 +1143,23 @@ import { RouterLink } from '@angular/router';
 
     .footer-bottom-links a {
       font-size: 0.8125rem;
-      color: #334155;
+      color: var(--text-muted-dark);
       text-decoration: none;
       transition: color 0.2s ease;
     }
 
     .footer-bottom-links a:hover {
-      color: var(--text-muted-dark);
+      color: var(--text-secondary);
     }
 
-    /* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-       RESPONSIVE
-    ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+    /* ═══════════════════════════════════════
+         RESPONSIVE
+    ═══════════════════════════════════════ */
     @media (max-width: 1024px) {
       .hero-content { grid-template-columns: 1fr; text-align: center; }
       .hero-subtitle { margin-left: auto; margin-right: auto; }
       .hero-actions { justify-content: center; }
+      .hero-proof { justify-content: center; }
       .hero-visual { max-width: 560px; margin: 3rem auto 0; }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .modules-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1139,7 +1171,6 @@ import { RouterLink } from '@angular/router';
 
     @media (max-width: 640px) {
       .topbar-nav { display: none; }
-      .brand-logo { width: 32px; height: 32px; }
       .hero-title { font-size: 2.5rem; letter-spacing: -1px; }
       .section-title { font-size: 2rem; }
       .features-grid { grid-template-columns: 1fr; }

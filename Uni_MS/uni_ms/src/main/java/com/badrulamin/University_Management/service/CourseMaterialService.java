@@ -27,16 +27,19 @@ public class CourseMaterialService {
                 .orElseThrow(() -> new ResourceNotFoundException("CourseMaterial", "id", id));
     }
 
+    @Transactional
     public CourseMaterial save(CourseMaterial courseMaterial) {
         return courseMaterialRepository.save(courseMaterial);
     }
 
+    @Transactional
     public CourseMaterial update(Long id, CourseMaterial courseMaterial) {
         findById(id);
         courseMaterial.setId(id);
         return courseMaterialRepository.save(courseMaterial);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         courseMaterialRepository.deleteById(id);

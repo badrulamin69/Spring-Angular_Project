@@ -29,6 +29,7 @@ public class RoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("Room", "id", id));
     }
 
+    @Transactional
     public Room save(Room room) {
         return roomRepository.save(room);
     }
@@ -40,6 +41,7 @@ public class RoomService {
         return roomRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         roomRepository.deleteById(id);

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RegistrationService } from '../../../services/registration.service';
 import { SemesterService } from '../../../services/semester.service';
-import { RegistrationDashboard, RecentRegistration } from '../../../models/registration';
+import { RegistrationDashboard } from '../../../models/registration';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 
 @Component({

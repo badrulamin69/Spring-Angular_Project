@@ -134,6 +134,7 @@ public class ClassRoutineService {
         return toResponse(saved);
     }
 
+    @Transactional
     public void delete(Long id) {
         classRoutineRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("ClassRoutine", "id", id));

@@ -30,6 +30,7 @@ public class AdmissionFeeCollectionService {
         return repository.save(entity);
     }
 
+    @Transactional
     public AdmissionFeeCollection update(Long id, AdmissionFeeCollection entity) {
         AdmissionFeeCollection existing = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionFeeCollection", "id", id));
@@ -47,6 +48,7 @@ public class AdmissionFeeCollectionService {
         return repository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }

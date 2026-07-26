@@ -27,16 +27,19 @@ public class EmployeeAttendanceService {
                 .orElseThrow(() -> new ResourceNotFoundException("EmployeeAttendance", "id", id));
     }
 
+    @Transactional
     public EmployeeAttendance save(EmployeeAttendance employeeAttendance) {
         return employeeAttendanceRepository.save(employeeAttendance);
     }
 
+    @Transactional
     public EmployeeAttendance update(Long id, EmployeeAttendance employeeAttendance) {
         findById(id);
         employeeAttendance.setId(id);
         return employeeAttendanceRepository.save(employeeAttendance);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         employeeAttendanceRepository.deleteById(id);

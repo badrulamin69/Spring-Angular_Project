@@ -42,6 +42,7 @@ public class DepartmentAllocationService {
                 .orElseThrow(() -> new ResourceNotFoundException("DepartmentAllocation", "registrationId", registrationId));
     }
 
+    @Transactional
     public DepartmentAllocation save(DepartmentAllocation allocation) {
         if (allocation.getAllocationNumber() == null) {
             allocation.setAllocationNumber("ALLOC-" + Year.now().getValue() + "-" + String.format("%05d", counter.getAndIncrement()));
@@ -49,12 +50,14 @@ public class DepartmentAllocationService {
         return repository.save(allocation);
     }
 
+    @Transactional
     public DepartmentAllocation update(Long id, DepartmentAllocation allocation) {
         findById(id);
         allocation.setId(id);
         return repository.save(allocation);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         repository.deleteById(id);
@@ -67,6 +70,7 @@ public class DepartmentAllocationService {
         return repository.save(alloc);
     }
 
+    @Transactional
     public DepartmentAllocation cancel(Long id) {
         DepartmentAllocation alloc = findById(id);
         alloc.setStatus("CANCELLED");

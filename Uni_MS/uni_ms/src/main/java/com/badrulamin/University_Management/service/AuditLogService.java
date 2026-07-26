@@ -27,16 +27,19 @@ public class AuditLogService {
                 .orElseThrow(() -> new ResourceNotFoundException("AuditLog", "id", id));
     }
 
+    @Transactional
     public AuditLog save(AuditLog auditLog) {
         return auditLogRepository.save(auditLog);
     }
 
+    @Transactional
     public AuditLog update(Long id, AuditLog auditLog) {
         findById(id);
         auditLog.setId(id);
         return auditLogRepository.save(auditLog);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         auditLogRepository.deleteById(id);

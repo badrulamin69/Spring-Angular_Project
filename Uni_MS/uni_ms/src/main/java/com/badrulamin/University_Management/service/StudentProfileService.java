@@ -27,16 +27,19 @@ public class StudentProfileService {
                 .orElseThrow(() -> new ResourceNotFoundException("StudentProfile", "id", id));
     }
 
+    @Transactional
     public StudentProfile save(StudentProfile studentProfile) {
         return studentProfileRepository.save(studentProfile);
     }
 
+    @Transactional
     public StudentProfile update(Long id, StudentProfile studentProfile) {
         findById(id);
         studentProfile.setId(id);
         return studentProfileRepository.save(studentProfile);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         studentProfileRepository.deleteById(id);

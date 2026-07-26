@@ -27,16 +27,19 @@ public class HostelAllocationService {
                 .orElseThrow(() -> new ResourceNotFoundException("HostelAllocation", "id", id));
     }
 
+    @Transactional
     public HostelAllocation save(HostelAllocation hostelAllocation) {
         return hostelAllocationRepository.save(hostelAllocation);
     }
 
+    @Transactional
     public HostelAllocation update(Long id, HostelAllocation hostelAllocation) {
         findById(id);
         hostelAllocation.setId(id);
         return hostelAllocationRepository.save(hostelAllocation);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         hostelAllocationRepository.deleteById(id);

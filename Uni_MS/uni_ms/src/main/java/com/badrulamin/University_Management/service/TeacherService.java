@@ -31,6 +31,7 @@ public class TeacherService {
                 .orElseThrow(() -> new ResourceNotFoundException("Teacher", "id", id));
     }
 
+    @Transactional
     public Teacher save(Teacher teacher) {
         return teacherRepository.save(teacher);
     }
@@ -42,6 +43,7 @@ public class TeacherService {
         return teacherRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         teacherRepository.deleteById(id);

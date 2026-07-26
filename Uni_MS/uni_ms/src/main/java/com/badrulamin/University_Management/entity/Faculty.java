@@ -31,6 +31,7 @@ public class Faculty extends BaseEntity {
 
     private String description;
 
+    @Column(unique = true)
     private String email;
 
     private String employeeCode;

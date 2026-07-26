@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +48,7 @@ public class StudentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Student", "id", id));
     }
 
+    @Transactional
     public Student save(Student student) {
         return studentRepository.save(student);
     }
@@ -60,6 +60,7 @@ public class StudentService {
         return studentRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         studentRepository.deleteById(id);

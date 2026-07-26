@@ -25,16 +25,19 @@ public class UniversityService {
                 .orElseThrow(() -> new ResourceNotFoundException("University", "id", id));
     }
 
+    @Transactional
     public University save(University university) {
         return universityRepository.save(university);
     }
 
+    @Transactional
     public University update(Long id, University university) {
         findById(id);
         university.setId(id);
         return universityRepository.save(university);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         universityRepository.deleteById(id);

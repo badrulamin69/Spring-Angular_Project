@@ -32,16 +32,19 @@ public class AdmissionTestService {
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTest", "id", id));
     }
 
+    @Transactional
     public AdmissionTest save(AdmissionTest admissionTest) {
         return admissionTestRepository.save(admissionTest);
     }
 
+    @Transactional
     public AdmissionTest update(Long id, AdmissionTest admissionTest) {
         findById(id);
         admissionTest.setId(id);
         return admissionTestRepository.save(admissionTest);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         admissionTestRepository.deleteById(id);

@@ -36,16 +36,19 @@ public class SeatAllocationService {
                 .orElseThrow(() -> new ResourceNotFoundException("SeatAllocation", "id", id));
     }
 
+    @Transactional
     public SeatAllocation save(SeatAllocation seatAllocation) {
         return seatAllocationRepository.save(seatAllocation);
     }
 
+    @Transactional
     public SeatAllocation update(Long id, SeatAllocation seatAllocation) {
         findById(id);
         seatAllocation.setId(id);
         return seatAllocationRepository.save(seatAllocation);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         seatAllocationRepository.deleteById(id);

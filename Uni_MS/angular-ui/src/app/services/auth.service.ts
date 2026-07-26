@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, throwError } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TokenService } from './token.service';
 import { CurrentUserService } from './current-user.service';
 import { environment } from '../../environments/environment';
@@ -22,6 +22,9 @@ export class AuthService {
     this.tokenService.setRememberMe(rememberMe);
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
+        if (response?.success === false) {
+          throw new Error(response?.message || 'Login failed');
+        }
         const token = response?.data?.token || response?.token;
         if (!token) {
           throw new Error('No authentication token received from server');
@@ -32,7 +35,8 @@ export class AuthService {
           this.tokenService.saveRefreshToken(refreshToken);
         }
         const userData = response?.data || response;
-        this.currentUserService.setUser(userData);
+        const { token: _t, refreshToken: _r, ...safeUserData } = userData;
+        this.currentUserService.setUser(safeUserData);
       })
     );
   }

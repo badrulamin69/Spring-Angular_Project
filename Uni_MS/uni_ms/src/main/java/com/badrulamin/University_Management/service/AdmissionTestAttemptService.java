@@ -121,6 +121,7 @@ public class AdmissionTestAttemptService {
         return saved;
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         repository.deleteById(id);

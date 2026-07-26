@@ -27,16 +27,19 @@ public class ExamCenterService {
                 .orElseThrow(() -> new ResourceNotFoundException("ExamCenter", "id", id));
     }
 
+    @Transactional
     public ExamCenter save(ExamCenter examCenter) {
         return examCenterRepository.save(examCenter);
     }
 
+    @Transactional
     public ExamCenter update(Long id, ExamCenter examCenter) {
         findById(id);
         examCenter.setId(id);
         return examCenterRepository.save(examCenter);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         examCenterRepository.deleteById(id);

@@ -44,16 +44,19 @@ public class ExamService {
                 .orElseThrow(() -> new ResourceNotFoundException("Exam", "id", id));
     }
 
+    @Transactional
     public Exam save(Exam exam) {
         return examRepository.save(exam);
     }
 
+    @Transactional
     public Exam update(Long id, Exam exam) {
         findById(id);
         exam.setId(id);
         return examRepository.save(exam);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         examRepository.deleteById(id);

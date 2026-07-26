@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.payload.request;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.time.LocalDate;
@@ -15,8 +16,10 @@ public class EnrollmentConfigRequest {
     private LocalDate endDate;
     private LocalDate lateEnrollmentDate;
     @NotNull(message = "Min credits is required")
+    @Min(value = 1, message = "Min credits must be at least 1")
     private Integer minCredits = 12;
     @NotNull(message = "Max credits is required")
+    @Min(value = 1, message = "Max credits must be at least 1")
     private Integer maxCredits = 24;
     private String enrollmentStatus = "OPEN";
     private Boolean isActive = true;

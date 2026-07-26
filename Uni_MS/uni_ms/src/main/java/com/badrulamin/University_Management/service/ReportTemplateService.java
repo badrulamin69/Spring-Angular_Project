@@ -27,16 +27,19 @@ public class ReportTemplateService {
                 .orElseThrow(() -> new ResourceNotFoundException("ReportTemplate", "id", id));
     }
 
+    @Transactional
     public ReportTemplate save(ReportTemplate reportTemplate) {
         return reportTemplateRepository.save(reportTemplate);
     }
 
+    @Transactional
     public ReportTemplate update(Long id, ReportTemplate reportTemplate) {
         findById(id);
         reportTemplate.setId(id);
         return reportTemplateRepository.save(reportTemplate);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         reportTemplateRepository.deleteById(id);

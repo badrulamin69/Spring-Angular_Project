@@ -27,16 +27,19 @@ public class AccountService {
                 .orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
     }
 
+    @Transactional
     public Account save(Account account) {
         return accountRepository.save(account);
     }
 
+    @Transactional
     public Account update(Long id, Account account) {
         findById(id);
         account.setId(id);
         return accountRepository.save(account);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         accountRepository.deleteById(id);

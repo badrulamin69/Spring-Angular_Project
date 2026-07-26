@@ -27,16 +27,19 @@ public class ExamScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("ExamSchedule", "id", id));
     }
 
+    @Transactional
     public ExamSchedule save(ExamSchedule examSchedule) {
         return examScheduleRepository.save(examSchedule);
     }
 
+    @Transactional
     public ExamSchedule update(Long id, ExamSchedule examSchedule) {
         findById(id);
         examSchedule.setId(id);
         return examScheduleRepository.save(examSchedule);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         examScheduleRepository.deleteById(id);

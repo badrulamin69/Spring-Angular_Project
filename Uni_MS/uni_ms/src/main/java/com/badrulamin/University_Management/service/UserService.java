@@ -27,6 +27,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
     }
 
+    @Transactional
     public User save(User user) {
         if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -34,6 +35,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public User update(Long id, User user) {
         User existing = findById(id);
         if (user.getFirstName() != null) existing.setFirstName(user.getFirstName());
@@ -49,6 +51,7 @@ public class UserService {
         return userRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         userRepository.deleteById(id);

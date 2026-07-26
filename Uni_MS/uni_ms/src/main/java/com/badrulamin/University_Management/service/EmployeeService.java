@@ -32,16 +32,19 @@ public class EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
     }
 
+    @Transactional
     public Employee save(Employee employee) {
         return employeeRepository.save(employee);
     }
 
+    @Transactional
     public Employee update(Long id, Employee employee) {
         findById(id);
         employee.setId(id);
         return employeeRepository.save(employee);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         employeeRepository.deleteById(id);

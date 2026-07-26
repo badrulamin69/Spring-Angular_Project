@@ -30,6 +30,7 @@ public class AdmissionRequirementService {
         return repository.save(entity);
     }
 
+    @Transactional
     public AdmissionRequirement update(Long id, AdmissionRequirement entity) {
         AdmissionRequirement existing = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionRequirement", "id", id));
@@ -44,6 +45,7 @@ public class AdmissionRequirementService {
         return repository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
     }

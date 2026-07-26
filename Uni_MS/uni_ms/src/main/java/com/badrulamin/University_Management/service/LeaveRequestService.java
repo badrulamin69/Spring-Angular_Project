@@ -27,16 +27,19 @@ public class LeaveRequestService {
                 .orElseThrow(() -> new ResourceNotFoundException("LeaveRequest", "id", id));
     }
 
+    @Transactional
     public LeaveRequest save(LeaveRequest leaveRequest) {
         return leaveRequestRepository.save(leaveRequest);
     }
 
+    @Transactional
     public LeaveRequest update(Long id, LeaveRequest leaveRequest) {
         findById(id);
         leaveRequest.setId(id);
         return leaveRequestRepository.save(leaveRequest);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         leaveRequestRepository.deleteById(id);

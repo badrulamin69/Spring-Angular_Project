@@ -27,6 +27,7 @@ public class Campus extends BaseEntity {
 
     private String phone;
 
+    @Column(unique = true)
     private String email;
 
     private String campusType;

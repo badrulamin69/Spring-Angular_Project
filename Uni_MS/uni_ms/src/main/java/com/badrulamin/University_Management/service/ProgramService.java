@@ -27,6 +27,7 @@ public class ProgramService {
                 .orElseThrow(() -> new ResourceNotFoundException("Program", "id", id));
     }
 
+    @Transactional
     public Program save(Program program) {
         return programRepository.save(program);
     }
@@ -38,6 +39,7 @@ public class ProgramService {
         return programRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         programRepository.deleteById(id);

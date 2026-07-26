@@ -25,16 +25,19 @@ public class AcademicPolicyService {
                 .orElseThrow(() -> new ResourceNotFoundException("AcademicPolicy", "id", id));
     }
 
+    @Transactional
     public AcademicPolicy save(AcademicPolicy academicPolicy) {
         return academicPolicyRepository.save(academicPolicy);
     }
 
+    @Transactional
     public AcademicPolicy update(Long id, AcademicPolicy academicPolicy) {
         findById(id);
         academicPolicy.setId(id);
         return academicPolicyRepository.save(academicPolicy);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         academicPolicyRepository.deleteById(id);

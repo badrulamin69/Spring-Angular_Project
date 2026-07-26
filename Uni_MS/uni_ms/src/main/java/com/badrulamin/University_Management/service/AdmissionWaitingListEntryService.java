@@ -36,16 +36,19 @@ public class AdmissionWaitingListEntryService {
                 .orElseThrow(() -> new ResourceNotFoundException("WaitingListEntry", "id", id));
     }
 
+    @Transactional
     public AdmissionWaitingListEntry save(AdmissionWaitingListEntry entry) {
         return entryRepository.save(entry);
     }
 
+    @Transactional
     public AdmissionWaitingListEntry update(Long id, AdmissionWaitingListEntry entry) {
         findById(id);
         entry.setId(id);
         return entryRepository.save(entry);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         entryRepository.deleteById(id);

@@ -189,6 +189,7 @@ public class AuthService {
                 roleInfo.permissions(), roleInfo.menus());
     }
 
+    @Transactional
     public Object registerUser(RegisterRequest registerRequest) {
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             return ApiResponse.error("Username is already taken");

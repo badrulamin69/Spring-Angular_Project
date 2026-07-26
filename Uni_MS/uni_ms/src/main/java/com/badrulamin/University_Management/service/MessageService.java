@@ -27,16 +27,19 @@ public class MessageService {
                 .orElseThrow(() -> new ResourceNotFoundException("Message", "id", id));
     }
 
+    @Transactional
     public Message save(Message message) {
         return messageRepository.save(message);
     }
 
+    @Transactional
     public Message update(Long id, Message message) {
         findById(id);
         message.setId(id);
         return messageRepository.save(message);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         messageRepository.deleteById(id);

@@ -40,12 +40,14 @@ public class MedicalInfoService {
         return medicalInfoRepository.save(medicalInfo);
     }
 
+    @Transactional
     public MedicalInfo update(Long id, MedicalInfo medicalInfo) {
         findById(id);
         medicalInfo.setId(id);
         return medicalInfoRepository.save(medicalInfo);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         medicalInfoRepository.deleteById(id);

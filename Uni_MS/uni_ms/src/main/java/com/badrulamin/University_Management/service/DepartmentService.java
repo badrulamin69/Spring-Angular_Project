@@ -33,6 +33,7 @@ public class DepartmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", id));
     }
 
+    @Transactional
     public Department save(Department department) {
         return departmentRepository.save(department);
     }
@@ -44,6 +45,7 @@ public class DepartmentService {
         return departmentRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         departmentRepository.deleteById(id);

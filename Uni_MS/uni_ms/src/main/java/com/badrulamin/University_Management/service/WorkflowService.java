@@ -30,10 +30,12 @@ public class WorkflowService {
                 .orElseThrow(() -> new ResourceNotFoundException("Workflow", "id", id));
     }
 
+    @Transactional
     public Workflow save(Workflow workflow) {
         return workflowRepository.save(workflow);
     }
 
+    @Transactional
     public Workflow update(Long id, Workflow updated) {
         Workflow existing = findById(id);
         existing.setName(updated.getName());
@@ -44,6 +46,7 @@ public class WorkflowService {
         return workflowRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         workflowRepository.deleteById(id);
     }
@@ -52,12 +55,14 @@ public class WorkflowService {
         return workflowStepRepository.findByWorkflow_IdOrderByStepOrderAsc(workflowId);
     }
 
+    @Transactional
     public WorkflowStep addStep(Long workflowId, WorkflowStep step) {
         Workflow workflow = findById(workflowId);
         step.setWorkflow(workflow);
         return workflowStepRepository.save(step);
     }
 
+    @Transactional
     public WorkflowStep updateStep(Long stepId, WorkflowStep updated) {
         WorkflowStep existing = workflowStepRepository.findById(stepId)
                 .orElseThrow(() -> new ResourceNotFoundException("Workflow step", "id", stepId));
@@ -69,6 +74,7 @@ public class WorkflowService {
         return workflowStepRepository.save(existing);
     }
 
+    @Transactional
     public void deleteStep(Long stepId) {
         workflowStepRepository.deleteById(stepId);
     }
@@ -77,6 +83,7 @@ public class WorkflowService {
         return workflowApprovalRepository.findByEntityTypeAndEntityIdOrderByActedAtDesc(entityType, entityId);
     }
 
+    @Transactional
     public WorkflowApproval approve(Long stepId, String entityType, Long entityId,
                                      Long approverId, String comments) {
         WorkflowStep step = workflowStepRepository.findById(stepId)
@@ -94,6 +101,7 @@ public class WorkflowService {
         return workflowApprovalRepository.save(approval);
     }
 
+    @Transactional
     public WorkflowApproval reject(Long stepId, String entityType, Long entityId,
                                     Long approverId, String rejectionReason) {
         WorkflowStep step = workflowStepRepository.findById(stepId)

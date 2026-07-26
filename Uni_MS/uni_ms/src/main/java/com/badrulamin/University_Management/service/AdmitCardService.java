@@ -38,16 +38,19 @@ public class AdmitCardService {
                 .orElseThrow(() -> new ResourceNotFoundException("AdmitCard", "id", id));
     }
 
+    @Transactional
     public AdmitCard save(AdmitCard admitCard) {
         return admitCardRepository.save(admitCard);
     }
 
+    @Transactional
     public AdmitCard update(Long id, AdmitCard admitCard) {
         findById(id);
         admitCard.setId(id);
         return admitCardRepository.save(admitCard);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         admitCardRepository.deleteById(id);

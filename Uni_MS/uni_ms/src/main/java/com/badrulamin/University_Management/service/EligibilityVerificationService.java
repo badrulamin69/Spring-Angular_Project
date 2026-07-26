@@ -38,16 +38,19 @@ public class EligibilityVerificationService {
                 .orElseThrow(() -> new ResourceNotFoundException("EligibilityVerification", "id", id));
     }
 
+    @Transactional
     public EligibilityVerification save(EligibilityVerification eligibilityVerification) {
         return eligibilityVerificationRepository.save(eligibilityVerification);
     }
 
+    @Transactional
     public EligibilityVerification update(Long id, EligibilityVerification eligibilityVerification) {
         findById(id);
         eligibilityVerification.setId(id);
         return eligibilityVerificationRepository.save(eligibilityVerification);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         eligibilityVerificationRepository.deleteById(id);

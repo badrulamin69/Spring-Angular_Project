@@ -25,16 +25,19 @@ public class PrerequisiteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Prerequisite", "id", id));
     }
 
+    @Transactional
     public Prerequisite save(Prerequisite prerequisite) {
         return prerequisiteRepository.save(prerequisite);
     }
 
+    @Transactional
     public Prerequisite update(Long id, Prerequisite prerequisite) {
         findById(id);
         prerequisite.setId(id);
         return prerequisiteRepository.save(prerequisite);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         prerequisiteRepository.deleteById(id);

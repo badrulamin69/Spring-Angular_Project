@@ -27,16 +27,19 @@ public class GradeRuleService {
                 .orElseThrow(() -> new ResourceNotFoundException("GradeRule", "id", id));
     }
 
+    @Transactional
     public GradeRule save(GradeRule gradeRule) {
         return gradeRuleRepository.save(gradeRule);
     }
 
+    @Transactional
     public GradeRule update(Long id, GradeRule gradeRule) {
         findById(id);
         gradeRule.setId(id);
         return gradeRuleRepository.save(gradeRule);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         gradeRuleRepository.deleteById(id);

@@ -29,6 +29,7 @@ public class RouteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Route", "id", id));
     }
 
+    @Transactional
     public Route save(Route route) {
         return routeRepository.save(route);
     }
@@ -40,6 +41,7 @@ public class RouteService {
         return routeRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         routeRepository.deleteById(id);

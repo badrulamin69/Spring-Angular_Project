@@ -40,6 +40,7 @@ public class AdmissionApplicationService {
         return admissionApplicationRepository.save(application);
     }
 
+    @Transactional
     public AdmissionApplication update(Long id, AdmissionApplication application) {
         AdmissionApplication existing = admissionApplicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionApplication", "id", id));
@@ -58,6 +59,7 @@ public class AdmissionApplicationService {
         return admissionApplicationRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         admissionApplicationRepository.deleteById(id);
     }

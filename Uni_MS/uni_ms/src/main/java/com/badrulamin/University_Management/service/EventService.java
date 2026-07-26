@@ -27,16 +27,19 @@ public class EventService {
                 .orElseThrow(() -> new ResourceNotFoundException("Event", "id", id));
     }
 
+    @Transactional
     public Event save(Event event) {
         return eventRepository.save(event);
     }
 
+    @Transactional
     public Event update(Long id, Event event) {
         findById(id);
         event.setId(id);
         return eventRepository.save(event);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         eventRepository.deleteById(id);

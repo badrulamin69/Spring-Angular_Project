@@ -32,6 +32,7 @@ public class AdmissionCircularService {
         return admissionCircularRepository.save(circular);
     }
 
+    @Transactional
     public AdmissionCircular update(Long id, AdmissionCircular circular) {
         AdmissionCircular existing = admissionCircularRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionCircular", "id", id));
@@ -50,6 +51,7 @@ public class AdmissionCircularService {
         return admissionCircularRepository.save(existing);
     }
 
+    @Transactional
     public void delete(Long id) {
         admissionCircularRepository.deleteById(id);
     }

@@ -27,16 +27,19 @@ public class DocumentVerificationService {
                 .orElseThrow(() -> new ResourceNotFoundException("DocumentVerification", "id", id));
     }
 
+    @Transactional
     public DocumentVerification save(DocumentVerification documentVerification) {
         return documentVerificationRepository.save(documentVerification);
     }
 
+    @Transactional
     public DocumentVerification update(Long id, DocumentVerification documentVerification) {
         findById(id);
         documentVerification.setId(id);
         return documentVerificationRepository.save(documentVerification);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         documentVerificationRepository.deleteById(id);

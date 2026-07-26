@@ -31,12 +31,14 @@ public class StudentPromotionService {
         return studentPromotionRepository.save(studentPromotion);
     }
 
+    @Transactional
     public StudentPromotion update(Long id, StudentPromotion studentPromotion) {
         findById(id);
         studentPromotion.setId(id);
         return studentPromotionRepository.save(studentPromotion);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         studentPromotionRepository.deleteById(id);

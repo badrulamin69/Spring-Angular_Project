@@ -31,12 +31,14 @@ public class CourseRegistrationService {
         return courseRegistrationRepository.save(courseRegistration);
     }
 
+    @Transactional
     public CourseRegistration update(Long id, CourseRegistration courseRegistration) {
         findById(id);
         courseRegistration.setId(id);
         return courseRegistrationRepository.save(courseRegistration);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         courseRegistrationRepository.deleteById(id);

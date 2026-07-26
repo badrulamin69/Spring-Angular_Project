@@ -27,16 +27,19 @@ public class PayrollService {
                 .orElseThrow(() -> new ResourceNotFoundException("Payroll", "id", id));
     }
 
+    @Transactional
     public Payroll save(Payroll payroll) {
         return payrollRepository.save(payroll);
     }
 
+    @Transactional
     public Payroll update(Long id, Payroll payroll) {
         findById(id);
         payroll.setId(id);
         return payrollRepository.save(payroll);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         payrollRepository.deleteById(id);

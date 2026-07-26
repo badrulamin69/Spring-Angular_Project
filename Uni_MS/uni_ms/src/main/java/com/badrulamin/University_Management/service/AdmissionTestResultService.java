@@ -35,6 +35,7 @@ public class AdmissionTestResultService {
                 .orElseThrow(() -> new ResourceNotFoundException("AdmissionTestResult", "registrationId", registrationId));
     }
 
+    @Transactional
     public AdmissionTestResult save(AdmissionTestResult result) {
         if (result.getStatus() == null) {
             result.setStatus("SCORED");
@@ -42,12 +43,14 @@ public class AdmissionTestResultService {
         return repository.save(result);
     }
 
+    @Transactional
     public AdmissionTestResult update(Long id, AdmissionTestResult result) {
         findById(id);
         result.setId(id);
         return repository.save(result);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         repository.deleteById(id);

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,16 +26,19 @@ public class AssignmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Assignment", "id", id));
     }
 
+    @Transactional
     public Assignment save(Assignment assignment) {
         return assignmentRepository.save(assignment);
     }
 
+    @Transactional
     public Assignment update(Long id, Assignment assignment) {
         findById(id);
         assignment.setId(id);
         return assignmentRepository.save(assignment);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         assignmentRepository.deleteById(id);

@@ -27,16 +27,19 @@ public class TransactionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction", "id", id));
     }
 
+    @Transactional
     public Transaction save(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 
+    @Transactional
     public Transaction update(Long id, Transaction transaction) {
         findById(id);
         transaction.setId(id);
         return transactionRepository.save(transaction);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         transactionRepository.deleteById(id);

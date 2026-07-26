@@ -21,7 +21,10 @@ public class RegisterRequest {
     @Size(min = 6, max = 40)
     private String password;
 
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
     private String phone;
     private String roleCode;

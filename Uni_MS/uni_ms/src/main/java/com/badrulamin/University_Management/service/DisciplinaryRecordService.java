@@ -31,12 +31,14 @@ public class DisciplinaryRecordService {
         return disciplinaryRecordRepository.save(disciplinaryRecord);
     }
 
+    @Transactional
     public DisciplinaryRecord update(Long id, DisciplinaryRecord disciplinaryRecord) {
         findById(id);
         disciplinaryRecord.setId(id);
         return disciplinaryRecordRepository.save(disciplinaryRecord);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         disciplinaryRecordRepository.deleteById(id);

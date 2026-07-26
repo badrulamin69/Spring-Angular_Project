@@ -27,16 +27,19 @@ public class RolePermissionService {
                 .orElseThrow(() -> new ResourceNotFoundException("RolePermission", "id", id));
     }
 
+    @Transactional
     public RolePermission save(RolePermission rolePermission) {
         return rolePermissionRepository.save(rolePermission);
     }
 
+    @Transactional
     public RolePermission update(Long id, RolePermission rolePermission) {
         findById(id);
         rolePermission.setId(id);
         return rolePermissionRepository.save(rolePermission);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         rolePermissionRepository.deleteById(id);

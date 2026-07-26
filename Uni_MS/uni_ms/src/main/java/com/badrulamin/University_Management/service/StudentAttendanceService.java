@@ -31,12 +31,14 @@ public class StudentAttendanceService {
         return studentAttendanceRepository.save(studentAttendance);
     }
 
+    @Transactional
     public StudentAttendance update(Long id, StudentAttendance studentAttendance) {
         findById(id);
         studentAttendance.setId(id);
         return studentAttendanceRepository.save(studentAttendance);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         studentAttendanceRepository.deleteById(id);

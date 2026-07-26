@@ -27,16 +27,19 @@ public class BookIssueService {
                 .orElseThrow(() -> new ResourceNotFoundException("BookIssue", "id", id));
     }
 
+    @Transactional
     public BookIssue save(BookIssue bookIssue) {
         return bookIssueRepository.save(bookIssue);
     }
 
+    @Transactional
     public BookIssue update(Long id, BookIssue bookIssue) {
         findById(id);
         bookIssue.setId(id);
         return bookIssueRepository.save(bookIssue);
     }
 
+    @Transactional
     public void delete(Long id) {
         findById(id);
         bookIssueRepository.deleteById(id);

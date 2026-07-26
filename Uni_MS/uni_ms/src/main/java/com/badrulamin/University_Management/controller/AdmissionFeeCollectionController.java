@@ -3,6 +3,7 @@ package com.badrulamin.University_Management.controller;
 import com.badrulamin.University_Management.entity.AdmissionFeeCollection;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AdmissionFeeCollectionService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -47,13 +48,13 @@ public class AdmissionFeeCollectionController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<ApiResponse<AdmissionFeeCollection>> create(@RequestBody AdmissionFeeCollection entity) {
+    public ResponseEntity<ApiResponse<AdmissionFeeCollection>> create(@Valid @RequestBody AdmissionFeeCollection entity) {
         return ResponseEntity.ok(ApiResponse.success(service.create(entity)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
-    public ResponseEntity<ApiResponse<AdmissionFeeCollection>> update(@PathVariable Long id, @RequestBody AdmissionFeeCollection entity) {
+    public ResponseEntity<ApiResponse<AdmissionFeeCollection>> update(@PathVariable Long id, @Valid @RequestBody AdmissionFeeCollection entity) {
         return ResponseEntity.ok(ApiResponse.success(service.update(id, entity)));
     }
 

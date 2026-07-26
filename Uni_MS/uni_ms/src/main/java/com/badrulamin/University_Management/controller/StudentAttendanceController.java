@@ -3,6 +3,7 @@ package com.badrulamin.University_Management.controller;
 import com.badrulamin.University_Management.entity.StudentAttendance;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.StudentAttendanceService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -48,13 +49,13 @@ public class StudentAttendanceController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<ApiResponse<StudentAttendance>> create(@RequestBody StudentAttendance studentAttendance) {
+    public ResponseEntity<ApiResponse<StudentAttendance>> create(@Valid @RequestBody StudentAttendance studentAttendance) {
         return ResponseEntity.ok(ApiResponse.success(studentAttendanceService.create(studentAttendance)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<ApiResponse<StudentAttendance>> update(@PathVariable Long id, @RequestBody StudentAttendance studentAttendance) {
+    public ResponseEntity<ApiResponse<StudentAttendance>> update(@PathVariable Long id, @Valid @RequestBody StudentAttendance studentAttendance) {
         return ResponseEntity.ok(ApiResponse.success(studentAttendanceService.update(id, studentAttendance)));
     }
 

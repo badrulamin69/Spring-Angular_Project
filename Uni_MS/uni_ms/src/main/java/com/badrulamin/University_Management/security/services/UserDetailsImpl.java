@@ -50,13 +50,6 @@ public class UserDetailsImpl implements UserDetails {
                     });
                 }
             }
-        } else if (user.getRole() != null) {
-            authorities.add(new SimpleGrantedAuthority(user.getRole().getCode()));
-            if (user.getRole().getPermissions() != null) {
-                user.getRole().getPermissions().forEach(permission -> {
-                    authorities.add(new SimpleGrantedAuthority(permission.getCode()));
-                });
-            }
         }
 
         boolean active = user.getActive() != null && user.getActive();

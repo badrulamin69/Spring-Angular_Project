@@ -33,10 +33,17 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction update(Long id, Transaction transaction) {
-        findById(id);
-        transaction.setId(id);
-        return transactionRepository.save(transaction);
+    public Transaction update(Long id, Transaction incoming) {
+        Transaction existing = transactionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction", "id", id));
+        if (incoming.getAccount() != null) existing.setAccount(incoming.getAccount());
+        if (incoming.getTransactionType() != null) existing.setTransactionType(incoming.getTransactionType());
+        if (incoming.getAmount() != null) existing.setAmount(incoming.getAmount());
+        if (incoming.getDescription() != null) existing.setDescription(incoming.getDescription());
+        if (incoming.getReferenceType() != null) existing.setReferenceType(incoming.getReferenceType());
+        if (incoming.getReferenceId() != null) existing.setReferenceId(incoming.getReferenceId());
+        if (incoming.getTransactionDate() != null) existing.setTransactionDate(incoming.getTransactionDate());
+        return transactionRepository.save(existing);
     }
 
     @Transactional

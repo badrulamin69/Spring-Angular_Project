@@ -84,6 +84,9 @@ public class InvoiceService {
         invoice.setFineAmount(0.0);
 
         double totalAmount = 0.0;
+        List<InvoiceItem> items = new java.util.ArrayList<>();
+
+        Invoice savedInvoice = invoiceRepository.save(invoice);
 
         for (FeeStructure feeStructure : feeStructures) {
             InvoiceItem item = new InvoiceItem();
@@ -92,18 +95,16 @@ public class InvoiceService {
             item.setAmount(feeStructure.getAmount());
             item.setDiscountAmount(0.0);
             item.setNetAmount(feeStructure.getAmount());
-            totalAmount += feeStructure.getAmount();
-
-            Invoice savedInvoice = invoiceRepository.save(invoice);
             item.setInvoice(savedInvoice);
-            invoiceItemRepository.save(item);
-
-            invoice = savedInvoice;
+            totalAmount += feeStructure.getAmount();
+            items.add(item);
         }
 
-        invoice.setTotalAmount(totalAmount);
-        invoice.setDueAmount(totalAmount);
-        return invoiceRepository.save(invoice);
+        invoiceItemRepository.saveAll(items);
+
+        savedInvoice.setTotalAmount(totalAmount);
+        savedInvoice.setDueAmount(totalAmount);
+        return invoiceRepository.save(savedInvoice);
     }
 
     @Transactional

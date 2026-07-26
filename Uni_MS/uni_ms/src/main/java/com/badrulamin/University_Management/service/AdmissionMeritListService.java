@@ -47,10 +47,29 @@ public class AdmissionMeritListService {
     }
 
     @Transactional
-    public AdmissionMeritList update(Long id, AdmissionMeritList meritList) {
-        findById(id);
-        meritList.setId(id);
-        return meritListRepository.save(meritList);
+    public AdmissionMeritList update(Long id, AdmissionMeritList incoming) {
+        AdmissionMeritList existing = meritListRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("MeritList", "id", id));
+        if (incoming.getName() != null) existing.setName(incoming.getName());
+        if (incoming.getDescription() != null) existing.setDescription(incoming.getDescription());
+        if (incoming.getAcademicYear() != null) existing.setAcademicYear(incoming.getAcademicYear());
+        if (incoming.getSession() != null) existing.setSession(incoming.getSession());
+        if (incoming.getFaculty() != null) existing.setFaculty(incoming.getFaculty());
+        if (incoming.getDepartment() != null) existing.setDepartment(incoming.getDepartment());
+        if (incoming.getProgram() != null) existing.setProgram(incoming.getProgram());
+        if (incoming.getShift() != null) existing.setShift(incoming.getShift());
+        if (incoming.getQuotaType() != null) existing.setQuotaType(incoming.getQuotaType());
+        if (incoming.getTest() != null) existing.setTest(incoming.getTest());
+        if (incoming.getStatus() != null) existing.setStatus(incoming.getStatus());
+        if (incoming.getTotalSeats() != null) existing.setTotalSeats(incoming.getTotalSeats());
+        if (incoming.getTotalApplicants() != null) existing.setTotalApplicants(incoming.getTotalApplicants());
+        if (incoming.getSelectedCount() != null) existing.setSelectedCount(incoming.getSelectedCount());
+        if (incoming.getWaitingCount() != null) existing.setWaitingCount(incoming.getWaitingCount());
+        if (incoming.getCutoffScore() != null) existing.setCutoffScore(incoming.getCutoffScore());
+        if (incoming.getPublishedAt() != null) existing.setPublishedAt(incoming.getPublishedAt());
+        if (incoming.getPublishedBy() != null) existing.setPublishedBy(incoming.getPublishedBy());
+        if (incoming.getRemarks() != null) existing.setRemarks(incoming.getRemarks());
+        return meritListRepository.save(existing);
     }
 
     @Transactional

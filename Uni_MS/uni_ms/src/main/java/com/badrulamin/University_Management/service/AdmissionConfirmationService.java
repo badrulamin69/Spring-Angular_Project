@@ -3,6 +3,7 @@ package com.badrulamin.University_Management.service;
 import com.badrulamin.University_Management.entity.*;
 import com.badrulamin.University_Management.exception.BusinessException;
 import com.badrulamin.University_Management.exception.ResourceNotFoundException;
+import com.badrulamin.University_Management.payload.request.AdmissionDocumentSubmitRequest;
 import com.badrulamin.University_Management.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -86,7 +87,7 @@ public class AdmissionConfirmationService {
     }
 
     @Transactional
-    public List<AdmissionDocument> submitDocuments(Long confirmationId, List<Map<String, String>> documents) {
+    public List<AdmissionDocument> submitDocuments(Long confirmationId, List<AdmissionDocumentSubmitRequest> documents) {
         AdmissionConfirmation confirmation = getConfirmationById(confirmationId);
 
         if ("ENROLLED".equals(confirmation.getStatus())) {
@@ -94,12 +95,13 @@ public class AdmissionConfirmationService {
         }
 
         List<AdmissionDocument> savedDocs = new ArrayList<>();
-        for (Map<String, String> docData : documents) {
+        for (AdmissionDocumentSubmitRequest docData : documents) {
             AdmissionDocument doc = new AdmissionDocument();
             doc.setConfirmation(confirmation);
-            doc.setDocumentType(docData.getOrDefault("documentType", "OTHER"));
-            doc.setDocumentName(docData.getOrDefault("documentName", "Untitled Document"));
-            doc.setFileUrl(docData.get("fileUrl"));
+            doc.setDocumentType(docData.getDocumentType() != null ? docData.getDocumentType() : "OTHER");
+            doc.setDocumentName(docData.getDocumentName() != null ? docData.getDocumentName() : "Untitled Document");
+            doc.setFileUrl(docData.getFileUrl());
+            doc.setFileSize(docData.getFileSize());
             doc.setStatus("SUBMITTED");
             savedDocs.add(documentRepository.save(doc));
         }

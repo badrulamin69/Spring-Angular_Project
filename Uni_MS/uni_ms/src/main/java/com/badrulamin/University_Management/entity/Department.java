@@ -27,8 +27,23 @@ public class Department extends BaseEntity {
 
     private String description;
 
-    @Column(name = "head_id")
-    private Long head;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "head_id")
+    @JsonIgnore
+    private Teacher head;
+
+    @JsonProperty("headId")
+    public void setHeadId(Long id) {
+        if (id != null) {
+            this.head = new Teacher();
+            this.head.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getHeadId() {
+        return this.head != null ? this.head.getId() : null;
+    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "administration_division_id")

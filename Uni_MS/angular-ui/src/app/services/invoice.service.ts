@@ -48,11 +48,16 @@ export class InvoiceService {
   }
 
   generateInvoice(studentId: number, semesterId: number, academicYear: string): Observable<Invoice> {
-    return this.http.post<Invoice>(`${this.apiUrl}/generate`, { studentId, semesterId, academicYear });
+    const params = new HttpParams()
+      .set('studentId', studentId)
+      .set('semesterId', semesterId)
+      .set('academicYear', academicYear);
+    return this.http.post<Invoice>(`${this.apiUrl}/generate`, null, { params });
   }
 
   updateStatus(id: number, status: string): Observable<Invoice> {
-    return this.http.put<Invoice>(`${this.apiUrl}/${id}/status`, { status });
+    const params = new HttpParams().set('status', status);
+    return this.http.put<Invoice>(`${this.apiUrl}/${id}/status`, null, { params });
   }
 
   delete(id: number): Observable<void> {

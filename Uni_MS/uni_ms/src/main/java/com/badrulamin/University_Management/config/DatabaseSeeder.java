@@ -441,7 +441,6 @@ public class DatabaseSeeder implements CommandLineRunner {
             u.setPhone(phone);
             u.setActive(true);
             u.setEmailVerified(true);
-            u.setRole(role);
             u.setDefaultRoleCode(role.getCode());
             u.addRole(role);
             userRepository.save(u);

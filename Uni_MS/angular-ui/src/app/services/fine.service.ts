@@ -44,6 +44,6 @@ export class FineService {
   }
 
   waiveFine(id: number): Observable<Fine> {
-    return this.http.put<Fine>(`${this.apiUrl}/${id}/waive`, {});
+    return this.http.post<Fine>(`${this.apiUrl}/${id}/waive`, {});
   }
 }

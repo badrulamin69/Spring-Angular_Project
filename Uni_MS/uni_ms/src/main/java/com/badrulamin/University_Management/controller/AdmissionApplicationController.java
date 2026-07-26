@@ -2,6 +2,7 @@ package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.AdmissionApplication;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
+import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.AdmissionApplicationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,12 +37,8 @@ public class AdmissionApplicationController {
             @RequestParam(required = false) Long sessionId) {
         Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
         Page<AdmissionApplication> applications = admissionApplicationService.search(search, status, programId, sessionId, PageRequest.of(page, size, Sort.by(sortDirection, sort)));
-        return ResponseEntity.ok(Map.of(
-                "content", applications.getContent(),
-                "totalElements", applications.getTotalElements(),
-                "totalPages", applications.getTotalPages(),
-                "currentPage", applications.getNumber()
-        ));
+        return ResponseEntity.ok(new PagedResponse<>(applications.getContent(), applications.getNumber(), applications.getSize(),
+                applications.getTotalElements(), applications.getTotalPages(), applications.isFirst(), applications.isLast()));
     }
 
     @GetMapping("/{id}")

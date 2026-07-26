@@ -105,11 +105,11 @@ public class SemesterEnrollment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "advisor_id")
-    private Faculty advisor;
+    private Teacher advisor;
 
     @JsonProperty("advisorId")
     public void setAdvisorId(Long id) {
-        if (id != null) { this.advisor = new Faculty(); this.advisor.setId(id); }
+        if (id != null) { this.advisor = new Teacher(); this.advisor.setId(id); }
     }
 
     @JsonProperty

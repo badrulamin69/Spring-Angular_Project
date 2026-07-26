@@ -1,11 +1,15 @@
+import { Student } from './student';
+import { Semester } from './semester';
+import { FeeType } from './fee-type';
+
 export interface Invoice {
   id?: number;
   invoiceNumber?: string;
   studentId?: number;
-  student?: any;
+  student?: Student;
   academicYear?: string;
   semesterId?: number;
-  semester?: any;
+  semester?: Semester;
   totalAmount?: number;
   paidAmount?: number;
   dueAmount?: number;
@@ -23,7 +27,7 @@ export interface InvoiceItem {
   id?: number;
   invoiceId?: number;
   feeTypeId?: number;
-  feeType?: any;
+  feeType?: FeeType;
   description?: string;
   amount?: number;
   discountAmount?: number;

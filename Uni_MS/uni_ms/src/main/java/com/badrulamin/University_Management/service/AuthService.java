@@ -76,10 +76,6 @@ public class AuthService {
         if (user.getRoles() != null) {
             user.getRoles().forEach(r -> roleCodes.add(r.getCode()));
         }
-        if (roleCodes.isEmpty() && user.getRole() != null) {
-            roleCodes.add(user.getRole().getCode());
-        }
-
         String primaryRoleCode = user.getDefaultRoleCode();
         if (primaryRoleCode == null || primaryRoleCode.isEmpty() || !roleCodes.contains(primaryRoleCode)) {
             primaryRoleCode = roleCodes.isEmpty() ? "ROLE_USER" : roleCodes.iterator().next();
@@ -94,9 +90,6 @@ public class AuthService {
                     r.getPermissions().forEach(p -> permissionSet.add(p.getCode()));
                 }
             }
-        }
-        if (permissionSet.isEmpty() && user.getRole() != null && user.getRole().getPermissions() != null) {
-            user.getRole().getPermissions().forEach(p -> permissionSet.add(p.getCode()));
         }
 
         List<Map<String, Object>> menus = buildMenuTree(user);
@@ -122,20 +115,12 @@ public class AuthService {
         }
 
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
-            if (user.getRole() == null) {
-                recordLoginAttempt(loginRequest.getUsername(), ipAddress, userAgent, false, "No role assigned");
-                return ApiResponse.error("Your account is not authorized to access this system.");
-            }
+            recordLoginAttempt(loginRequest.getUsername(), ipAddress, userAgent, false, "No role assigned");
+            return ApiResponse.error("Your account is not authorized to access this system.");
         }
 
-        boolean hasAllowedRole = false;
-        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
-            hasAllowedRole = user.getRoles().stream()
+        boolean hasAllowedRole = user.getRoles().stream()
                 .anyMatch(r -> ALLOWED_LOGIN_ROLES.contains(r.getCode()));
-        }
-        if (!hasAllowedRole && user.getRole() != null) {
-            hasAllowedRole = ALLOWED_LOGIN_ROLES.contains(user.getRole().getCode());
-        }
         if (!hasAllowedRole) {
             recordLoginAttempt(loginRequest.getUsername(), ipAddress, userAgent, false, "Role not authorized");
             return ApiResponse.error("Your account is not authorized to access this system.");
@@ -165,9 +150,6 @@ public class AuthService {
         Set<String> roleCodes = new HashSet<>();
         if (user.getRoles() != null) {
             user.getRoles().forEach(r -> roleCodes.add(r.getCode()));
-        }
-        if (roleCodes.isEmpty() && user.getRole() != null) {
-            roleCodes.add(user.getRole().getCode());
         }
 
         recordLoginAttempt(user.getUsername(), ipAddress, userAgent, true, null);
@@ -215,7 +197,6 @@ public class AuthService {
             if (!ALLOWED_LOGIN_ROLES.contains(role.getCode())) {
                 return ApiResponse.error("Registration with this role is not permitted");
             }
-            user.setRole(role);
             user.addRole(role);
         }
 
@@ -246,9 +227,6 @@ public class AuthService {
         Set<String> roleCodes = new HashSet<>();
         if (user.getRoles() != null) {
             user.getRoles().forEach(r -> roleCodes.add(r.getCode()));
-        }
-        if (roleCodes.isEmpty() && user.getRole() != null) {
-            roleCodes.add(user.getRole().getCode());
         }
 
         Map<String, Object> profile = new LinkedHashMap<>();
@@ -379,9 +357,6 @@ public class AuthService {
         if (user.getRoles() != null) {
             hasRole = user.getRoles().stream().anyMatch(r -> r.getCode().equals(roleCode));
         }
-        if (!hasRole && user.getRole() != null) {
-            hasRole = user.getRole().getCode().equals(roleCode);
-        }
         if (!hasRole) {
             return ApiResponse.error("You do not have this role");
         }
@@ -399,9 +374,6 @@ public class AuthService {
             for (Role r : user.getRoles()) {
                 if (r.getCode().equals(roleCode)) return r.getName();
             }
-        }
-        if (user.getRole() != null && user.getRole().getCode().equals(roleCode)) {
-            return user.getRole().getName();
         }
         return "";
     }
@@ -428,9 +400,6 @@ public class AuthService {
                     role.getPermissions().forEach(p -> permCodeSet.add(p.getCode()));
                 }
             }
-        }
-        if (permCodeSet.isEmpty() && user.getRole() != null && user.getRole().getPermissions() != null) {
-            user.getRole().getPermissions().forEach(p -> permCodeSet.add(p.getCode()));
         }
         List<String> permCodes = new ArrayList<>(permCodeSet);
         List<Menu> menus = menuRepository.findAuthorizedMenus(permCodes);

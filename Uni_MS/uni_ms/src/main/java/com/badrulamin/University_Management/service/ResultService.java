@@ -33,10 +33,18 @@ public class ResultService {
     }
 
     @Transactional
-    public Result update(Long id, Result result) {
-        findById(id);
-        result.setId(id);
-        return resultRepository.save(result);
+    public Result update(Long id, Result incoming) {
+        Result existing = resultRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Result", "id", id));
+        if (incoming.getExam() != null) existing.setExam(incoming.getExam());
+        if (incoming.getStudent() != null) existing.setStudent(incoming.getStudent());
+        if (incoming.getTotalMarksObtained() != null) existing.setTotalMarksObtained(incoming.getTotalMarksObtained());
+        if (incoming.getTotalMarks() != null) existing.setTotalMarks(incoming.getTotalMarks());
+        if (incoming.getPercentage() != null) existing.setPercentage(incoming.getPercentage());
+        if (incoming.getGrade() != null) existing.setGrade(incoming.getGrade());
+        if (incoming.getResultStatus() != null) existing.setResultStatus(incoming.getResultStatus());
+        if (incoming.getRemarks() != null) existing.setRemarks(incoming.getRemarks());
+        return resultRepository.save(existing);
     }
 
     @Transactional

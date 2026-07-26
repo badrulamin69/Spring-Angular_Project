@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../models/paged-response';
 import {
@@ -16,6 +17,19 @@ export class SemesterEnrollmentService {
   private apiUrl = `${environment.apiUrl}/semester-enrollments`;
 
   constructor(private http: HttpClient) {}
+
+  private normalizePageResponse(raw: any): PagedResponse<any> {
+    return {
+      content: raw.content || [],
+      page: raw.currentPage ?? raw.page ?? 0,
+      size: raw.size ?? 10,
+      totalElements: raw.totalElements ?? 0,
+      totalPages: raw.totalPages ?? 0,
+      first: raw.first ?? (raw.currentPage === 0),
+      last: raw.last ?? (raw.currentPage === raw.totalPages - 1),
+      empty: raw.empty ?? (raw.content?.length === 0)
+    };
+  }
 
   checkEligibility(studentId: number, semesterId: number): Observable<EnrollmentEligibility> {
     return this.http.get<EnrollmentEligibility>(`${this.apiUrl}/eligibility/${studentId}/semester/${semesterId}`);
@@ -88,7 +102,8 @@ export class SemesterEnrollmentService {
       if (filters.programId) httpParams = httpParams.set('programId', filters.programId.toString());
       if (filters.status) httpParams = httpParams.set('status', filters.status);
     }
-    return this.http.get<PagedResponse<any>>(this.apiUrl, { params: httpParams });
+    return this.http.get<any>(this.apiUrl, { params: httpParams })
+      .pipe(map(raw => this.normalizePageResponse(raw)));
   }
 
   getHistoryByStudent(studentId: number, page: number = 0, size: number = 20): Observable<any> {

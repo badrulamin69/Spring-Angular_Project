@@ -52,26 +52,32 @@ export class PaymentService {
   }
 
   initiatePayment(data: any): Observable<Payment> {
-    return this.http.post<Payment>(`${this.apiUrl}/initiate`, data);
+    const params = new HttpParams()
+      .set('studentId', data.studentId)
+      .set('semesterId', data.semesterId)
+      .set('paymentMethod', data.paymentMethod);
+    return this.http.post<Payment>(`${this.apiUrl}/initiate`, null, { params });
   }
 
   processOnlinePayment(id: number, data: any): Observable<Payment> {
-    return this.http.put<Payment>(`${this.apiUrl}/${id}/process-online`, data);
+    return this.http.post<Payment>(`${this.apiUrl}/${id}/process-online`, data);
   }
 
   processOfflinePayment(id: number): Observable<Payment> {
-    return this.http.put<Payment>(`${this.apiUrl}/${id}/process-offline`, {});
+    return this.http.post<Payment>(`${this.apiUrl}/${id}/process-offline`, {});
   }
 
   approvePayment(id: number, approvedBy: string): Observable<Payment> {
-    return this.http.put<Payment>(`${this.apiUrl}/${id}/approve`, { approvedBy });
+    const params = new HttpParams().set('approvedBy', approvedBy);
+    return this.http.post<Payment>(`${this.apiUrl}/${id}/approve`, null, { params });
   }
 
   rejectPayment(id: number): Observable<Payment> {
-    return this.http.put<Payment>(`${this.apiUrl}/${id}/reject`, {});
+    return this.http.post<Payment>(`${this.apiUrl}/${id}/reject`, {});
   }
 
   refundPayment(id: number, data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/${id}/refund`, data);
+    const params = new HttpParams().set('reason', data.reason);
+    return this.http.post<any>(`${this.apiUrl}/${id}/refund`, null, { params });
   }
 }

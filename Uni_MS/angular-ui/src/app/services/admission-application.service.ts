@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../models/paged-response';
 import { AdmissionApplication } from '../models/admission-application';
@@ -11,6 +12,19 @@ export class AdmissionApplicationService {
 
   constructor(private http: HttpClient) {}
 
+  private normalizePageResponse(raw: any): PagedResponse<any> {
+    return {
+      content: raw.content || [],
+      page: raw.currentPage ?? raw.page ?? 0,
+      size: raw.size ?? 10,
+      totalElements: raw.totalElements ?? 0,
+      totalPages: raw.totalPages ?? 0,
+      first: raw.first ?? (raw.currentPage === 0),
+      last: raw.last ?? (raw.currentPage === raw.totalPages - 1),
+      empty: raw.empty ?? (raw.content?.length === 0)
+    };
+  }
+
   findAll(params: PageParams = DEFAULT_PAGE_PARAMS, search: string = ''): Observable<PagedResponse<AdmissionApplication>> {
     let httpParams = new HttpParams()
       .set('page', params.page.toString())
@@ -20,7 +34,8 @@ export class AdmissionApplicationService {
     if (search) {
       httpParams = httpParams.set('search', search);
     }
-    return this.http.get<PagedResponse<AdmissionApplication>>(this.apiUrl, { params: httpParams });
+    return this.http.get<any>(this.apiUrl, { params: httpParams })
+      .pipe(map(raw => this.normalizePageResponse(raw)));
   }
 
   findById(id: number): Observable<AdmissionApplication> {

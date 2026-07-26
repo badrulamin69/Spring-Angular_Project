@@ -3,8 +3,6 @@ package com.badrulamin.University_Management.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -15,11 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Transcript {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Transcript extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String transcriptNumber;
@@ -51,13 +45,6 @@ public class Transcript {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "issued_by")
     private User issuedBy;
-
-    @Column(updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 
     @JsonProperty("studentId")
     public Long getStudentId() { return student != null ? student.getId() : null; }

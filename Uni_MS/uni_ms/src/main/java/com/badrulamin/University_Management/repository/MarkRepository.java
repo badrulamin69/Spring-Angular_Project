@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MarkRepository extends JpaRepository<Mark, Long> {
+
+    boolean existsByStudent_IdAndExam_IdAndSubject_Id(Long studentId, Long examId, Long subjectId);
 }

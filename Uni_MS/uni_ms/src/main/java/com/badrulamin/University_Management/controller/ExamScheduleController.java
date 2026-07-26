@@ -41,19 +41,19 @@ public class ExamScheduleController {
         return ResponseEntity.ok(ApiResponse.success(examScheduleService.findById(id)));
     }
 
-    @PreAuthorize("hasAuthority('EXAM_VIEW')")
+    @PreAuthorize("hasAuthority('EXAM_MANAGE')")
     @PostMapping
     public ResponseEntity<ApiResponse<ExamSchedule>> save(@Valid @RequestBody ExamSchedule examSchedule) {
         return ResponseEntity.ok(ApiResponse.success(examScheduleService.save(examSchedule)));
     }
 
-    @PreAuthorize("hasAuthority('EXAM_VIEW')")
+    @PreAuthorize("hasAuthority('EXAM_MANAGE')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ExamSchedule>> update(@PathVariable Long id, @Valid @RequestBody ExamSchedule examSchedule) {
         return ResponseEntity.ok(ApiResponse.success(examScheduleService.update(id, examSchedule)));
     }
 
-    @PreAuthorize("hasAuthority('EXAM_VIEW')")
+    @PreAuthorize("hasAuthority('EXAM_MANAGE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         examScheduleService.delete(id);

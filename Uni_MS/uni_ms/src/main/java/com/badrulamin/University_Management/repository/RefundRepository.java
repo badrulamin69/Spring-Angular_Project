@@ -21,4 +21,7 @@ public interface RefundRepository extends JpaRepository<Refund, Long> {
 
     @Query("SELECT COALESCE(MAX(CAST(SUBSTRING(r.refundNumber, :prefixLength + 1) AS long)), 0) FROM Refund r WHERE r.refundNumber LIKE CONCAT(:prefix, '%')")
     Long findMaxSequenceByPrefix(@Param("prefix") String prefix, @Param("prefixLength") int prefixLength);
+
+    @Query("SELECT MAX(r.refundNumber) FROM Refund r WHERE r.refundNumber LIKE :prefix%")
+    Optional<String> findMaxRefundNumberByPrefix(@Param("prefix") String prefix);
 }

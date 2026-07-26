@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -39,13 +40,9 @@ public class User extends BaseEntity {
 
     private String avatar;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private Role role;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "user_role_map",
+        name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
@@ -60,12 +57,15 @@ public class User extends BaseEntity {
     @Column(name = "email_verified", nullable = false)
     private Boolean emailVerified = false;
 
+    @JsonIgnore
     @Column(name = "email_verification_token", length = 255)
     private String emailVerificationToken;
 
+    @JsonIgnore
     @Column(name = "password_reset_token", length = 255)
     private String passwordResetToken;
 
+    @JsonIgnore
     @Column(name = "password_reset_token_expiry")
     private LocalDateTime passwordResetTokenExpiry;
 
@@ -78,24 +78,13 @@ public class User extends BaseEntity {
     @Column(name = "password_changed_at")
     private LocalDateTime passwordChangedAt;
 
+    @JsonIgnore
     @Column(name = "login_attempts")
     private Integer loginAttempts = 0;
 
+    @JsonIgnore
     @Column(name = "locked_until")
     private LocalDateTime lockedUntil;
-
-    @JsonProperty("roleId")
-    public void setRoleId(Long id) {
-        if (id != null) {
-            this.role = new Role();
-            this.role.setId(id);
-        }
-    }
-
-    @JsonProperty
-    public Long getRoleId() {
-        return this.role != null ? this.role.getId() : null;
-    }
 
     @JsonProperty("roleIds")
     public Set<Long> getRoleIds() {
@@ -108,22 +97,13 @@ public class User extends BaseEntity {
 
     public void addRole(Role role) {
         this.roles.add(role);
-        if (this.role == null) {
-            this.role = role;
-        }
     }
 
     public void removeRole(Role role) {
         this.roles.remove(role);
-        if (this.role != null && this.role.getId().equals(role.getId())) {
-            this.role = this.roles.isEmpty() ? null : this.roles.iterator().next();
-        }
     }
 
     public boolean hasRole(String roleCode) {
-        if (this.role != null && this.role.getCode().equals(roleCode)) {
-            return true;
-        }
         return this.roles != null && this.roles.stream().anyMatch(r -> r.getCode().equals(roleCode));
     }
 

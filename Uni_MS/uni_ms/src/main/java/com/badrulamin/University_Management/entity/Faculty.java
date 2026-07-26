@@ -34,21 +34,9 @@ public class Faculty extends BaseEntity {
     @Column(unique = true)
     private String email;
 
-    private String employeeCode;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String phone;
-
     private String qualification;
 
     private String specialization;
-
-    private String status;
-
-    private java.time.LocalDate joiningDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

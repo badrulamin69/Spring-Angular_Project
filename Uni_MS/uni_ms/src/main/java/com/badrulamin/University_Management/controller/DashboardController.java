@@ -2,6 +2,7 @@ package com.badrulamin.University_Management.controller;
 
 import com.badrulamin.University_Management.entity.DashboardWidget;
 import com.badrulamin.University_Management.entity.QuickAction;
+import com.badrulamin.University_Management.entity.Role;
 import com.badrulamin.University_Management.entity.User;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.DashboardResponse;
@@ -54,6 +55,17 @@ public class DashboardController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    private Role getPrimaryRole(User user) {
+        if (user.getRoles() == null || user.getRoles().isEmpty()) return null;
+        if (user.getDefaultRoleCode() != null) {
+            return user.getRoles().stream()
+                .filter(r -> r.getCode().equals(user.getDefaultRoleCode()))
+                .findFirst()
+                .orElse(user.getRoles().iterator().next());
+        }
+        return user.getRoles().iterator().next();
+    }
+
     @GetMapping("/widgets")
     @PreAuthorize("hasAuthority('DASHBOARD_VIEW')")
     public ResponseEntity<?> getWidgets() {
@@ -61,9 +73,10 @@ public class DashboardController {
                 .getAuthentication().getPrincipal();
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
 
-        if (user.getRole() == null) return ResponseEntity.ok(ApiResponse.success(new ArrayList<>()));
+        Role primaryRole = getPrimaryRole(user);
+        if (primaryRole == null) return ResponseEntity.ok(ApiResponse.success(new ArrayList<>()));
 
-        List<DashboardWidget> widgets = widgetRepository.findByRole_IdAndVisibleTrueOrderByOrderNo(user.getRole().getId());
+        List<DashboardWidget> widgets = widgetRepository.findByRole_IdAndVisibleTrueOrderByOrderNo(primaryRole.getId());
         List<Map<String, Object>> widgetList = widgets.stream().map(w -> {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("id", w.getId());
@@ -82,9 +95,10 @@ public class DashboardController {
 
     private List<Map<String, Object>> buildCardsFromDb(User user) {
         List<Map<String, Object>> cards = new ArrayList<>();
-        if (user.getRole() == null) return cards;
+        Role primaryRole = getPrimaryRole(user);
+        if (primaryRole == null) return cards;
 
-        List<DashboardWidget> widgets = widgetRepository.findByRole_IdAndVisibleTrueOrderByOrderNo(user.getRole().getId());
+        List<DashboardWidget> widgets = widgetRepository.findByRole_IdAndVisibleTrueOrderByOrderNo(primaryRole.getId());
         for (DashboardWidget w : widgets) {
             if (!"card".equals(w.getWidgetType())) continue;
 
@@ -131,8 +145,9 @@ public class DashboardController {
     }
 
     private List<Map<String, Object>> buildQuickActions(User user) {
-        if (user.getRole() == null) return Collections.emptyList();
-        List<QuickAction> actions = quickActionRepository.findByRole_IdAndVisibleTrueOrderByOrderNo(user.getRole().getId());
+        Role primaryRole = getPrimaryRole(user);
+        if (primaryRole == null) return Collections.emptyList();
+        List<QuickAction> actions = quickActionRepository.findByRole_IdAndVisibleTrueOrderByOrderNo(primaryRole.getId());
         return actions.stream().map(a -> {
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("title", a.getTitle());
@@ -145,7 +160,8 @@ public class DashboardController {
 
     private Map<String, Object> buildSummary(User user) {
         Map<String, Object> summary = new LinkedHashMap<>();
-        summary.put("role", user.getRole() != null ? user.getRole().getCode() : "UNKNOWN");
+        Role primaryRole = getPrimaryRole(user);
+        summary.put("role", primaryRole != null ? primaryRole.getCode() : "UNKNOWN");
         summary.put("timestamp", java.time.LocalDateTime.now());
         return summary;
     }

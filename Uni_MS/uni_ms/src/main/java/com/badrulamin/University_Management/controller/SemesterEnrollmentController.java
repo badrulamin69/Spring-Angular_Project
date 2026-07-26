@@ -20,9 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/semester-enrollments")
@@ -162,12 +160,9 @@ public class SemesterEnrollmentController {
         PageRequest pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
         Page<SemesterEnrollmentResponse> items = semesterEnrollmentService.getFilteredEnrollments(
                 semesterId, departmentId, facultyId, programId, status, pageable);
-        Map<String, Object> response = new HashMap<>();
-        response.put("content", items.getContent());
-        response.put("totalElements", items.getTotalElements());
-        response.put("totalPages", items.getTotalPages());
-        response.put("currentPage", items.getNumber());
-        return ResponseEntity.ok(ApiResponse.success(response));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(
+                items.getContent(), items.getNumber(), items.getSize(),
+                items.getTotalElements(), items.getTotalPages(), items.isFirst(), items.isLast())));
     }
 
     @GetMapping("/history/student/{studentId}")

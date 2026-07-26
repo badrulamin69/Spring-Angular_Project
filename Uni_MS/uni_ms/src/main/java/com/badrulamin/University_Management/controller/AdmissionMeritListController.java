@@ -47,8 +47,8 @@ public class AdmissionMeritListController {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<AdmissionMeritList> paged = meritListService.findByFilters(search, status, sessionId,
                 facultyId, departmentId, programId, testId, pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
-                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
+                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/{id}")
@@ -130,8 +130,8 @@ public class AdmissionMeritListController {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<AdmissionMeritListEntry> paged = entryService.findByFilters(meritListId, search, status, quotaType, pageable);
-        return ResponseEntity.ok(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
-                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast()));
+        return ResponseEntity.ok(ApiResponse.success(new PagedResponse<>(paged.getContent(), paged.getNumber(), paged.getSize(),
+                paged.getTotalElements(), paged.getTotalPages(), paged.isFirst(), paged.isLast())));
     }
 
     @GetMapping("/{meritListId}/entries/all")

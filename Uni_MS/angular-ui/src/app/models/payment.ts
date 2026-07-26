@@ -1,10 +1,14 @@
+import { Invoice } from './invoice';
+import { Student } from './student';
+import { FeeType } from './fee-type';
+
 export interface Payment {
   id?: number;
   paymentNumber?: string;
   invoiceId?: number;
-  invoice?: any;
+  invoice?: Invoice;
   studentId?: number;
-  student?: any;
+  student?: Student;
   amount?: number;
   paymentMethod?: string;
   paymentStatus?: string;
@@ -22,9 +26,9 @@ export interface Refund {
   id?: number;
   refundNumber?: string;
   paymentId?: number;
-  payment?: any;
+  payment?: Payment;
   studentId?: number;
-  student?: any;
+  student?: Student;
   amount?: number;
   reason?: string;
   status?: string;
@@ -37,9 +41,9 @@ export interface Refund {
 export interface Discount {
   id?: number;
   studentId?: number;
-  student?: any;
+  student?: Student;
   feeTypeId?: number;
-  feeType?: any;
+  feeType?: FeeType;
   discountType: string;
   discountValue: number;
   description?: string;
@@ -52,11 +56,11 @@ export interface Discount {
 export interface Fine {
   id?: number;
   studentId?: number;
-  student?: any;
+  student?: Student;
   invoiceId?: number;
-  invoice?: any;
+  invoice?: Invoice;
   feeTypeId?: number;
-  feeType?: any;
+  feeType?: FeeType;
   amount?: number;
   reason?: string;
   issuedBy?: string;

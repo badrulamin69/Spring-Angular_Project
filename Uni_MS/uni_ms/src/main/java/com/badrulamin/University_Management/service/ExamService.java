@@ -50,10 +50,19 @@ public class ExamService {
     }
 
     @Transactional
-    public Exam update(Long id, Exam exam) {
-        findById(id);
-        exam.setId(id);
-        return examRepository.save(exam);
+    public Exam update(Long id, Exam incoming) {
+        Exam existing = examRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Exam", "id", id));
+        if (incoming.getName() != null) existing.setName(incoming.getName());
+        if (incoming.getExamType() != null) existing.setExamType(incoming.getExamType());
+        if (incoming.getCourse() != null) existing.setCourse(incoming.getCourse());
+        if (incoming.getSubject() != null) existing.setSubject(incoming.getSubject());
+        if (incoming.getTotalMarks() != null) existing.setTotalMarks(incoming.getTotalMarks());
+        if (incoming.getPassingMarks() != null) existing.setPassingMarks(incoming.getPassingMarks());
+        if (incoming.getExamDate() != null) existing.setExamDate(incoming.getExamDate());
+        if (incoming.getDurationMinutes() != null) existing.setDurationMinutes(incoming.getDurationMinutes());
+        if (incoming.getDescription() != null) existing.setDescription(incoming.getDescription());
+        return examRepository.save(existing);
     }
 
     @Transactional

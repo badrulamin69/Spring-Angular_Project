@@ -19,13 +19,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 @RequiredArgsConstructor
@@ -84,6 +85,10 @@ public class PaymentService {
     public Payment processOnlinePayment(Long paymentId, String transactionId, String gatewayResponse) {
         Payment payment = findById(paymentId);
 
+        if (!"PENDING".equals(payment.getPaymentStatus())) {
+            throw new BusinessException("Payment must be PENDING to process. Current status: " + payment.getPaymentStatus());
+        }
+
         payment.setPaymentStatus("COMPLETED");
         payment.setTransactionId(transactionId);
         payment.setGatewayResponse(gatewayResponse);
@@ -113,7 +118,6 @@ public class PaymentService {
         Payment payment = findById(paymentId);
         payment.setPaymentStatus("COMPLETED");
         payment.setPaymentDate(LocalDateTime.now());
-        payment.setCreatedBy(approvedBy);
 
         PaymentTransaction transaction = new PaymentTransaction();
         transaction.setPayment(payment);
@@ -151,9 +155,12 @@ public class PaymentService {
         paymentRepository.save(payment);
 
         Invoice invoice = payment.getInvoice();
-        invoice.setPaidAmount(Math.max(0, invoice.getPaidAmount() - amount));
-        invoice.setDueAmount(invoice.getDueAmount() + amount);
-        if (invoice.getPaidAmount() < invoice.getTotalAmount()) {
+        BigDecimal refundAmt = BigDecimal.valueOf(amount);
+        BigDecimal newPaidAmount = BigDecimal.valueOf(invoice.getPaidAmount()).subtract(refundAmt).max(BigDecimal.ZERO);
+        BigDecimal newDueAmount = BigDecimal.valueOf(invoice.getDueAmount()).add(refundAmt);
+        invoice.setPaidAmount(newPaidAmount.doubleValue());
+        invoice.setDueAmount(newDueAmount.doubleValue());
+        if (newPaidAmount.compareTo(BigDecimal.valueOf(invoice.getTotalAmount())) < 0) {
             invoice.setStatus("PARTIAL");
         }
         invoiceRepository.save(invoice);
@@ -193,9 +200,11 @@ public class PaymentService {
     }
 
     private void updateInvoiceAmounts(Invoice invoice, Double paymentAmount) {
-        invoice.setPaidAmount(invoice.getPaidAmount() + paymentAmount);
-        invoice.setDueAmount(Math.max(0, invoice.getTotalAmount() - invoice.getPaidAmount()));
-        if (invoice.getPaidAmount() >= invoice.getTotalAmount()) {
+        BigDecimal paidAmt = BigDecimal.valueOf(invoice.getPaidAmount()).add(BigDecimal.valueOf(paymentAmount));
+        BigDecimal totalAmt = BigDecimal.valueOf(invoice.getTotalAmount());
+        invoice.setPaidAmount(paidAmt.doubleValue());
+        invoice.setDueAmount(totalAmt.subtract(paidAmt).max(BigDecimal.ZERO).doubleValue());
+        if (paidAmt.compareTo(totalAmt) >= 0) {
             invoice.setStatus("PAID");
         } else {
             invoice.setStatus("PARTIAL");
@@ -205,45 +214,33 @@ public class PaymentService {
 
     private String generatePaymentNumber() {
         String prefix = "PAY-" + Year.now().getValue() + "-";
-        List<Payment> allPayments = paymentRepository.findAll();
+        Optional<String> maxNumber = paymentRepository.findMaxPaymentNumberByPrefix(prefix);
 
-        AtomicLong maxSeq = new AtomicLong(0);
-        allPayments.forEach(p -> {
-            if (p.getPaymentNumber() != null && p.getPaymentNumber().startsWith(prefix)) {
-                try {
-                    String seqPart = p.getPaymentNumber().substring(prefix.length());
-                    long seq = Long.parseLong(seqPart);
-                    if (seq > maxSeq.get()) {
-                        maxSeq.set(seq);
-                    }
-                } catch (NumberFormatException ignored) {
-                }
+        long nextSeq = 1;
+        if (maxNumber.isPresent()) {
+            try {
+                String seqPart = maxNumber.get().substring(prefix.length());
+                nextSeq = Long.parseLong(seqPart) + 1;
+            } catch (NumberFormatException ignored) {
             }
-        });
+        }
 
-        long nextSeq = maxSeq.get() + 1;
         return prefix + String.format("%06d", nextSeq);
     }
 
     private String generateRefundNumber() {
         String prefix = "REF-" + Year.now().getValue() + "-";
-        List<Refund> allRefunds = refundRepository.findAll();
+        Optional<String> maxNumber = refundRepository.findMaxRefundNumberByPrefix(prefix);
 
-        AtomicLong maxSeq = new AtomicLong(0);
-        allRefunds.forEach(r -> {
-            if (r.getRefundNumber() != null && r.getRefundNumber().startsWith(prefix)) {
-                try {
-                    String seqPart = r.getRefundNumber().substring(prefix.length());
-                    long seq = Long.parseLong(seqPart);
-                    if (seq > maxSeq.get()) {
-                        maxSeq.set(seq);
-                    }
-                } catch (NumberFormatException ignored) {
-                }
+        long nextSeq = 1;
+        if (maxNumber.isPresent()) {
+            try {
+                String seqPart = maxNumber.get().substring(prefix.length());
+                nextSeq = Long.parseLong(seqPart) + 1;
+            } catch (NumberFormatException ignored) {
             }
-        });
+        }
 
-        long nextSeq = maxSeq.get() + 1;
         return prefix + String.format("%06d", nextSeq);
     }
 }

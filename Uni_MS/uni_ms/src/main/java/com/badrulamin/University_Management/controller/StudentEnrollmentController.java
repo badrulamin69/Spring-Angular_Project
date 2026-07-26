@@ -50,13 +50,13 @@ public class StudentEnrollmentController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('STUDENT_CREATE')")
+    @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
     public ResponseEntity<ApiResponse<StudentEnrollment>> update(@PathVariable Long id, @Valid @RequestBody StudentEnrollment studentEnrollment) {
         return ResponseEntity.ok(ApiResponse.success(studentEnrollmentService.update(id, studentEnrollment)));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('STUDENT_CREATE')")
+    @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         studentEnrollmentService.delete(id);
         return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));

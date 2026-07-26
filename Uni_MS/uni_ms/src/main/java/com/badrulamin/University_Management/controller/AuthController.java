@@ -3,8 +3,10 @@ package com.badrulamin.University_Management.controller;
 import com.badrulamin.University_Management.payload.request.ChangePasswordRequest;
 import com.badrulamin.University_Management.payload.request.ForgotPasswordRequest;
 import com.badrulamin.University_Management.payload.request.LoginRequest;
+import com.badrulamin.University_Management.payload.request.RefreshTokenRequest;
 import com.badrulamin.University_Management.payload.request.RegisterRequest;
 import com.badrulamin.University_Management.payload.request.ResetPasswordRequest;
+import com.badrulamin.University_Management.payload.request.SelectRoleRequest;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.AuthService;
 import com.badrulamin.University_Management.security.services.UserDetailsImpl;
@@ -67,9 +69,8 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> body) {
-        String refreshTokenStr = body.get("refreshToken");
-        return ResponseEntity.ok(authService.refreshToken(refreshTokenStr));
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody RefreshTokenRequest body) {
+        return ResponseEntity.ok(authService.refreshToken(body.getRefreshToken()));
     }
 
     @PostMapping("/forgot-password")
@@ -101,10 +102,10 @@ public class AuthController {
 
     @PostMapping("/select-default-role")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> selectDefaultRole(@RequestBody Map<String, String> body) {
+    public ResponseEntity<?> selectDefaultRole(@Valid @RequestBody SelectRoleRequest body) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
-        return ResponseEntity.ok(authService.selectDefaultRole(body.get("roleCode"), userDetails.getUsername()));
+        return ResponseEntity.ok(authService.selectDefaultRole(body.getRoleCode(), userDetails.getUsername()));
     }
 
     // ===== Request-specific helpers =====

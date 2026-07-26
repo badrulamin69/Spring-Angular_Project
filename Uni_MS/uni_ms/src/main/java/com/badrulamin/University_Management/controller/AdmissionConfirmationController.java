@@ -3,8 +3,13 @@ package com.badrulamin.University_Management.controller;
 import com.badrulamin.University_Management.entity.AdmissionConfirmation;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.entity.AdmissionDocument;
+import com.badrulamin.University_Management.payload.request.AdmissionDocumentSubmitRequest;
+import com.badrulamin.University_Management.payload.request.AdmissionDocumentVerificationRequest;
+import com.badrulamin.University_Management.payload.request.AdmissionFeePaymentRequest;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.service.AdmissionConfirmationService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -64,7 +69,8 @@ public class AdmissionConfirmationController {
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
     public ResponseEntity<ApiResponse<List<AdmissionDocument>>> submitDocuments(
             @PathVariable Long id,
-            @RequestBody List<Map<String, String>> documents) {
+            @NotEmpty(message = "Documents list must not be empty")
+            @Valid @RequestBody List<AdmissionDocumentSubmitRequest> documents) {
         return ResponseEntity.ok(ApiResponse.success(confirmationService.submitDocuments(id, documents)));
     }
 
@@ -72,23 +78,18 @@ public class AdmissionConfirmationController {
     @PreAuthorize("hasAuthority('ADMISSION_MANAGE')")
     public ResponseEntity<ApiResponse<AdmissionConfirmation>> verifyDocuments(
             @PathVariable Long id,
-            @RequestBody Map<String, Object> body,
+            @Valid @RequestBody AdmissionDocumentVerificationRequest body,
             Authentication authentication) {
-        boolean verified = (boolean) body.get("verified");
-        String remarks = (String) body.getOrDefault("remarks", "");
         Long verifiedBy = getUser(authentication);
-        return ResponseEntity.ok(ApiResponse.success(confirmationService.verifyDocuments(id, verified, remarks, verifiedBy)));
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.verifyDocuments(id, body.getVerified(), body.getRemarks(), verifiedBy)));
     }
 
     @PostMapping("/{id}/pay-fee")
-    @PreAuthorize("hasAuthority('ADMISSION_MANAGE') or hasAuthority('ADMISSION_VIEW')")
+    @PreAuthorize("hasAuthority('FINANCE_MANAGE')")
     public ResponseEntity<ApiResponse<AdmissionConfirmation>> payFee(
             @PathVariable Long id,
-            @RequestBody Map<String, Object> body) {
-        Double amount = ((Number) body.get("amount")).doubleValue();
-        String paymentMethod = (String) body.get("paymentMethod");
-        String transactionId = (String) body.get("transactionId");
-        return ResponseEntity.ok(ApiResponse.success(confirmationService.payFee(id, amount, paymentMethod, transactionId)));
+            @Valid @RequestBody AdmissionFeePaymentRequest body) {
+        return ResponseEntity.ok(ApiResponse.success(confirmationService.payFee(id, body.getAmount(), body.getPaymentMethod(), body.getTransactionId())));
     }
 
     @PostMapping("/{id}/confirm")

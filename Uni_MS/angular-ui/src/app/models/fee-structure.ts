@@ -1,13 +1,18 @@
+import { FeeType } from './fee-type';
+import { Program } from './program';
+import { Semester } from './semester';
+import { Batch } from './batch';
+
 export interface FeeStructure {
   id?: number;
   feeTypeId?: number;
-  feeType?: any;
+  feeType?: FeeType;
   programId?: number;
-  program?: any;
+  program?: Program;
   semesterId?: number;
-  semester?: any;
+  semester?: Semester;
   batchId?: number;
-  batch?: any;
+  batch?: Batch;
   amount: number;
   dueDays?: number;
   academicYear?: string;

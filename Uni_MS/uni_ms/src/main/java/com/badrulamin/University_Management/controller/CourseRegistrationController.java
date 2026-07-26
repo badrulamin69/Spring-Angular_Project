@@ -3,6 +3,7 @@ package com.badrulamin.University_Management.controller;
 import com.badrulamin.University_Management.entity.CourseRegistration;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.CourseRegistrationService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -48,13 +49,13 @@ public class CourseRegistrationController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<ApiResponse<CourseRegistration>> create(@RequestBody CourseRegistration courseRegistration) {
+    public ResponseEntity<ApiResponse<CourseRegistration>> create(@Valid @RequestBody CourseRegistration courseRegistration) {
         return ResponseEntity.ok(ApiResponse.success(courseRegistrationService.create(courseRegistration)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('STUDENT_MANAGE')")
-    public ResponseEntity<ApiResponse<CourseRegistration>> update(@PathVariable Long id, @RequestBody CourseRegistration courseRegistration) {
+    public ResponseEntity<ApiResponse<CourseRegistration>> update(@PathVariable Long id, @Valid @RequestBody CourseRegistration courseRegistration) {
         return ResponseEntity.ok(ApiResponse.success(courseRegistrationService.update(id, courseRegistration)));
     }
 

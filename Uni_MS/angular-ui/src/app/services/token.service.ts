@@ -46,7 +46,13 @@ export class TokenService {
 
   getUser(): any {
     const user = this.storage.getItem(USER_KEY);
-    return user ? JSON.parse(user) : null;
+    if (!user) return null;
+    try {
+      return JSON.parse(user);
+    } catch {
+      this.storage.removeItem(USER_KEY);
+      return null;
+    }
   }
 
   isLoggedIn(): boolean {

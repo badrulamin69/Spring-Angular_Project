@@ -27,12 +27,18 @@ export class ActivityLogService {
     return this.http.get<ActivityLog>(`${this.apiUrl}/${id}`);
   }
 
-  findByUserId(userId: number): Observable<ActivityLog[]> {
-    return this.http.get<ActivityLog[]>(`${this.apiUrl}/user/${userId}`);
+  findByUserId(userId: number, params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<ActivityLog>> {
+    let httpParams = new HttpParams()
+      .set('page', params.page.toString())
+      .set('size', params.size.toString());
+    return this.http.get<PagedResponse<ActivityLog>>(`${this.apiUrl}/user/${userId}`, { params: httpParams });
   }
 
-  findByModule(module: string): Observable<ActivityLog[]> {
-    return this.http.get<ActivityLog[]>(`${this.apiUrl}/module/${module}`);
+  findByModule(module: string, params: PageParams = DEFAULT_PAGE_PARAMS): Observable<PagedResponse<ActivityLog>> {
+    let httpParams = new HttpParams()
+      .set('page', params.page.toString())
+      .set('size', params.size.toString());
+    return this.http.get<PagedResponse<ActivityLog>>(`${this.apiUrl}/module/${module}`, { params: httpParams });
   }
 
   findRecent(limit: number): Observable<ActivityLog[]> {

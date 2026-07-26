@@ -24,23 +24,17 @@ export const permissionGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  const permissions = currentUserService.permissions();
-  if (permissions && permissions.length === 0) {
-    return authService.getMe().pipe(
-      map(() => {
-        if (currentUserService.hasPermission(requiredPermission)) {
-          return true;
-        }
-        router.navigate(['/access-denied']);
-        return false;
-      }),
-      catchError(() => {
-        router.navigate(['/access-denied']);
-        return of(false);
-      })
-    );
-  }
-
-  router.navigate(['/access-denied']);
-  return false;
+  return authService.getMe().pipe(
+    map(() => {
+      if (currentUserService.hasPermission(requiredPermission)) {
+        return true;
+      }
+      router.navigate(['/access-denied']);
+      return false;
+    }),
+    catchError(() => {
+      router.navigate(['/access-denied']);
+      return of(false);
+    })
+  );
 };

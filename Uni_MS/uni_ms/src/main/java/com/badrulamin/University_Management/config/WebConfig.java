@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(featureToggleInterceptor)
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/auth/**", "/api/features/**");
+                .excludePathPatterns("/api/auth/**", "/api/features/**", "/api/pre-admission/**");
     }
 
     @Override

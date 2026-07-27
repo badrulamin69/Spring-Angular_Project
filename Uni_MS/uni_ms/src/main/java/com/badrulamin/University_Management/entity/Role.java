@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,7 +37,14 @@ public class Role extends BaseEntity {
     @JsonIgnore
     private Role parentRole;
 
-
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "role_permission_map",
+        joinColumns = @JoinColumn(name = "role_id"),
+        inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
+    private Set<Permission> permissions = new HashSet<>();
 
     @JsonProperty("parentRoleId")
     public Long getParentRoleId() {

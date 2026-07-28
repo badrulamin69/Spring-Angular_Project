@@ -791,10 +791,6 @@ public class DatabaseSeeder implements CommandLineRunner {
             f.setName(name);
             f.setNameBn(nameBn);
             f.setEmail(code.toLowerCase() + "@university.edu");
-            f.setEmployeeCode("EMP-" + code);
-            f.setFirstName("Dean");
-            f.setLastName(name);
-            f.setStatus("ACTIVE");
             f.setActive(true);
             return facultyRepository.save(f);
         });

@@ -149,7 +149,7 @@ public class SemesterEnrollmentService {
                 .program(request.getProgramId() != null ? createProgramProxy(request.getProgramId()) : null)
                 .faculty(request.getFacultyId() != null ? createFacultyProxy(request.getFacultyId()) : null)
                 .department(request.getDepartmentId() != null ? createDepartmentProxy(request.getDepartmentId()) : null)
-                .advisor(request.getAdvisorId() != null ? createFacultyProxy(request.getAdvisorId()) : null)
+                .advisor(request.getAdvisorId() != null ? createTeacherProxy(request.getAdvisorId()) : null)
                 .enrollmentNumber(enrollmentNumber)
                 .enrollmentDate(LocalDate.now())
                 .status(status)
@@ -222,7 +222,7 @@ public class SemesterEnrollmentService {
 
         EnrollmentApproval approval = EnrollmentApproval.builder()
                 .semesterEnrollment(createEnrollmentProxy(enrollment.getId()))
-                .advisor(createFacultyProxy(userId))
+                .advisor(createTeacherProxy(userId))
                 .action(action)
                 .comments(request.getComments())
                 .ipAddress(ipAddress)
@@ -327,7 +327,7 @@ public class SemesterEnrollmentService {
                 .program(request.getProgramId() != null ? createProgramProxy(request.getProgramId()) : null)
                 .faculty(request.getFacultyId() != null ? createFacultyProxy(request.getFacultyId()) : null)
                 .department(request.getDepartmentId() != null ? createDepartmentProxy(request.getDepartmentId()) : null)
-                .advisor(request.getAdvisorId() != null ? createFacultyProxy(request.getAdvisorId()) : null)
+                .advisor(request.getAdvisorId() != null ? createTeacherProxy(request.getAdvisorId()) : null)
                 .enrollmentNumber(enrollmentNumber)
                 .enrollmentDate(LocalDate.now())
                 .status("APPROVED")
@@ -513,7 +513,7 @@ public class SemesterEnrollmentService {
         response.setDepartmentId(e.getDepartment() != null ? e.getDepartment().getId() : null);
         response.setDepartmentName(e.getDepartment() != null ? e.getDepartment().getName() : null);
         response.setAdvisorId(e.getAdvisor() != null ? e.getAdvisor().getId() : null);
-        response.setAdvisorName(e.getAdvisor() != null ? e.getAdvisor().getName() : null);
+        response.setAdvisorName(e.getAdvisor() != null ? e.getAdvisor().getFirstName() + " " + e.getAdvisor().getLastName() : null);
         response.setEnrollmentDate(e.getEnrollmentDate());
         response.setStatus(e.getStatus());
         response.setRegisteredCredits(e.getRegisteredCredits());
@@ -596,6 +596,12 @@ public class SemesterEnrollmentService {
         Faculty f = new Faculty();
         f.setId(id);
         return f;
+    }
+
+    private Teacher createTeacherProxy(Long id) {
+        Teacher t = new Teacher();
+        t.setId(id);
+        return t;
     }
 
     private Department createDepartmentProxy(Long id) {

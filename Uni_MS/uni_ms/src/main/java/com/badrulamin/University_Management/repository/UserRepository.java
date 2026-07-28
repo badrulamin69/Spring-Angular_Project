@@ -29,7 +29,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> searchUsers(@Param("search") String search, Pageable pageable);
 
     long countByActiveTrue();
-    long countByRoleCode(String roleCode);
+
+    @Query("SELECT COUNT(u) FROM User u JOIN u.roles r WHERE r.code = :roleCode")
+    long countByRoleCode(@Param("roleCode") String roleCode);
 
     long countByLockedUntilIsNotNullAndLockedUntilAfter(LocalDateTime now);
 

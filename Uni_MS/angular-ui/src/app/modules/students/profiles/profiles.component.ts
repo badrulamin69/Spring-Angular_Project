@@ -45,6 +45,7 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
         [title]="editingItem ? 'Edit Student Profile' : 'Add New Student Profile'"
         [saving]="saving"
         [errorMessage]="formError"
+        [errorResponse]="formErrorResponse"
         (save)="saveItem($event)"
         (cancel)="closeForm()">
       </app-dynamic-form>
@@ -90,6 +91,7 @@ export class ProfilesComponent implements OnInit {
   showForm = false;
   editingItem: any = null;
   formError = '';
+  formErrorResponse: any = null;
 
   showConfirm = false;
   confirmTitle = '';
@@ -124,6 +126,7 @@ export class ProfilesComponent implements OnInit {
   openForm(item?: any) {
     this.editingItem = item ? { ...item } : null;
     this.formError = '';
+    this.formErrorResponse = null;
     this.showForm = true;
   }
 
@@ -131,11 +134,13 @@ export class ProfilesComponent implements OnInit {
     this.showForm = false;
     this.editingItem = null;
     this.formError = '';
+    this.formErrorResponse = null;
   }
 
   saveItem(data: any) {
     this.saving = true;
     this.formError = '';
+    this.formErrorResponse = null;
 
     const handleSuccess = (msg: string) => {
       this.saving = false;
@@ -146,6 +151,7 @@ export class ProfilesComponent implements OnInit {
 
     const handleError = (err: any) => {
       this.saving = false;
+      this.formErrorResponse = err;
       this.formError = err.error?.message || err.message || 'Validation failed. Please check your input.';
     };
 

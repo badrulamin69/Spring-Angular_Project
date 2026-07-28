@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableColumn } from '../data-table/data-table.component';
@@ -118,12 +118,13 @@ import { TableColumn } from '../data-table/data-table.component';
     }
   `]
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() columns: TableColumn[] = [];
   @Input() initialData: any = null;
   @Input() title: string = 'Add Record';
   @Input() saving = false;
   @Input() errorMessage = '';
+  @Input() errorResponse: any = null;
 
   @Output() save = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
@@ -150,6 +151,12 @@ export class DynamicFormComponent implements OnInit {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['errorResponse'] && this.errorResponse) {
+      this.parseValidationErrors(this.errorResponse);
+    }
+  }
+
   resetForm() {
     if (this.initialData) {
       this.formData = { ...this.initialData };
@@ -167,12 +174,14 @@ export class DynamicFormComponent implements OnInit {
 
   parseValidationErrors(error: any) {
     this.fieldErrors = {};
-    if (error?.error?.errors) {
-      this.fieldErrors = error.error.errors;
-      const messages = Object.values(error.error.errors);
+    const errBody = error?.error;
+    const errorsMap = errBody?.data || errBody?.errors;
+    if (errorsMap && typeof errorsMap === 'object' && !Array.isArray(errorsMap)) {
+      this.fieldErrors = errorsMap;
+      const messages = Object.values(errorsMap).map((v: any) => typeof v === 'string' ? v : JSON.stringify(v));
       this.errorMessage = messages.join('. ');
-    } else if (error?.error?.message) {
-      this.errorMessage = error.error.message;
+    } else if (errBody?.message) {
+      this.errorMessage = errBody.message;
     } else {
       this.errorMessage = error?.message || 'An error occurred. Please try again.';
     }

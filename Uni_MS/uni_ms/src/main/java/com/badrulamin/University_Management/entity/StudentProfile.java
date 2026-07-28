@@ -1,5 +1,6 @@
 package com.badrulamin.University_Management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -37,4 +38,17 @@ public class StudentProfile extends BaseEntity {
     private String emergencyContactName;
 
     private String medicalInfo;
+
+    @JsonProperty("studentId")
+    public void setStudentId(Long id) {
+        if (id != null) {
+            this.student = new Student();
+            this.student.setId(id);
+        }
+    }
+
+    @JsonProperty
+    public Long getStudentId() {
+        return this.student != null ? this.student.getId() : null;
+    }
 }

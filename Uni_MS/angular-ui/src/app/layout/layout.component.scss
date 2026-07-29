@@ -47,31 +47,16 @@
   gap: 12px;
 }
 
-.logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  flex-shrink: 0;
+.logo-img {
+  width: 140px;
+  height: auto;
   object-fit: contain;
 }
 
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  white-space: nowrap;
-}
-
-.logo-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.2;
-}
-
-.logo-sub {
-  font-size: 11px;
-  color: #7a8da6;
-  font-weight: 400;
+.logo-img-collapsed {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
 
 /* ==================== NAV ==================== */

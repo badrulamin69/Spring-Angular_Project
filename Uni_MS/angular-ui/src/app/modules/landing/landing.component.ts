@@ -97,15 +97,17 @@ import { RouterLink } from '@angular/router';
       text-decoration: none;
     }
 
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
     .brand-name {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 700;
       color: var(--text-primary);
       letter-spacing: -0.5px;
-    }
-
-    .brand-name span {
-      color: #8bb8e0;
     }
 
     .topbar-nav {

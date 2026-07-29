@@ -53,33 +53,20 @@
 }
 
 .brand-logo {
-  width: 80px;
+  width: 120px;
   height: auto;
-  display: inline-block;
-  margin-bottom: 12px;
+  display: block;
+  margin: 0 auto 16px auto;
   object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
 .brand-title {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   color: #ffffff;
-  margin: 0 0 4px 0;
-  letter-spacing: -0.5px;
-}
-
-.brand-subtitle {
-  font-size: 14px;
-  color: #94a3b8;
   margin: 0;
-}
-
-.brand-tagline {
-  font-size: 12px;
-  color: #5eead4;
-  margin: 6px 0 0 0;
-  font-weight: 500;
-  letter-spacing: 0.3px;
+  letter-spacing: -0.3px;
 }
 
 .login-form {

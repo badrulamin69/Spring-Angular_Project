@@ -25,11 +25,19 @@ public class FileUploadController {
             "xls", "xlsx", "ppt", "pptx", "txt", "csv"
     );
 
+    private static final Set<String> ALLOWED_MODULES = Set.of(
+            "avatars", "documents", "reports", "admissions",
+            "student-documents", "certificates", "transcripts"
+    );
+
     @PreAuthorize("hasAuthority('SETTINGS_MANAGE')")
     @PostMapping("/{module}")
     public ResponseEntity<ApiResponse<Map<String, String>>> uploadFile(
             @PathVariable String module,
             @RequestParam("file") MultipartFile file) {
+        if (!ALLOWED_MODULES.contains(module)) {
+            return ResponseEntity.badRequest().body(ApiResponse.error("Invalid module. Allowed modules: " + String.join(", ", ALLOWED_MODULES)));
+        }
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body(ApiResponse.error("File is empty"));
         }

@@ -4,7 +4,7 @@ import com.badrulamin.University_Management.entity.Feature;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.service.FeatureService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,10 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/features")
+@RequiredArgsConstructor
 public class FeatureController {
 
-    @Autowired
-    private FeatureService featureService;
+    private final FeatureService featureService;
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")

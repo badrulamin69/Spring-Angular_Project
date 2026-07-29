@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 import { ProgramSeatAllocation } from '../../../models/seat-allocation';
 import { ProgramSeatAllocationService } from '../../../services/program-seat-allocation.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { SeatAllocationConfigService } from '../../../services/seat-allocation-config.service';
+import { map } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -219,8 +219,8 @@ export class ApplicantAllocationViewComponent implements OnInit {
 
   constructor(
     private allocationService: ProgramSeatAllocationService,
+    private seatAllocationConfigService: SeatAllocationConfigService,
     private toastService: ToastService,
-    private http: HttpClient,
     public router: Router
   ) {}
 
@@ -229,8 +229,10 @@ export class ApplicantAllocationViewComponent implements OnInit {
   }
 
   loadConfigs() {
-    this.http.get<any>(`${environment.apiUrl}/seat-allocation-configs?size=100&status=ACTIVE`).subscribe({
-      next: (data) => { this.configs = data.content || []; }
+    this.seatAllocationConfigService.findAll({ page: 0, size: 100, sortBy: 'id', sortDir: 'asc' }, { status: 'ACTIVE' }).pipe(
+      map(res => res.content || [])
+    ).subscribe({
+      next: (configs) => { this.configs = configs; }
     });
   }
 

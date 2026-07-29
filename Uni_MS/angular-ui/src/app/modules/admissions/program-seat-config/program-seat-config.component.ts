@@ -5,8 +5,9 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
 import { ProgramSeatConfig, SeatAllocationConfig } from '../../../models/seat-allocation';
 import { ProgramSeatConfigService } from '../../../services/program-seat-config.service';
 import { SeatAllocationConfigService } from '../../../services/seat-allocation-config.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { FacultyService } from '../../../services/faculty.service';
+import { DepartmentService } from '../../../services/department.service';
+import { ProgramService } from '../../../services/program.service';
 
 @Component({
   selector: 'app-program-seat-config',
@@ -185,8 +186,10 @@ export class ProgramSeatConfigComponent implements OnInit {
   constructor(
     private seatConfigService: ProgramSeatConfigService,
     private configService: SeatAllocationConfigService,
-    private toastService: ToastService,
-    private http: HttpClient
+    private facultyService: FacultyService,
+    private departmentService: DepartmentService,
+    private programService: ProgramService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -211,22 +214,22 @@ export class ProgramSeatConfigComponent implements OnInit {
   }
 
   loadFaculties() {
-    this.http.get<any>(`${environment.apiUrl}/faculties?size=200`).subscribe({
-      next: (data) => { this.faculties = data.content || data || []; }
+    this.facultyService.getForDropdown().subscribe({
+      next: (faculties) => { this.faculties = faculties; }
     });
   }
 
   loadDepartments() {
     if (!this.formData.facultyId) return;
-    this.http.get<any>(`${environment.apiUrl}/departments?facultyId=${this.formData.facultyId}&size=200`).subscribe({
-      next: (data) => { this.departments = data.content || data || []; }
+    this.departmentService.findByFaculty(this.formData.facultyId).subscribe({
+      next: (departments) => { this.departments = departments; }
     });
   }
 
   loadPrograms() {
     if (!this.formData.departmentId) return;
-    this.http.get<any>(`${environment.apiUrl}/programs?departmentId=${this.formData.departmentId}&size=200`).subscribe({
-      next: (data) => { this.programs = data.content || data || []; }
+    this.programService.findByDepartment(this.formData.departmentId).subscribe({
+      next: (programs) => { this.programs = programs; }
     });
   }
 

@@ -6,8 +6,8 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { SeatAllocationConfig } from '../../../models/seat-allocation';
 import { SeatAllocationConfigService } from '../../../services/seat-allocation-config.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { AcademicSessionService } from '../../../services/academic-session.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-seat-allocation-config',
@@ -183,8 +183,8 @@ export class SeatAllocationConfigComponent implements OnInit {
 
   constructor(
     private configService: SeatAllocationConfigService,
-    private toastService: ToastService,
-    private http: HttpClient
+    private academicSessionService: AcademicSessionService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -202,7 +202,7 @@ export class SeatAllocationConfigComponent implements OnInit {
   }
 
   loadStats() {
-    this.http.get<any>(`${environment.apiUrl}/seat-allocation-configs?size=1`).subscribe({
+    this.configService.findAll({ ...DEFAULT_PAGE_PARAMS, size: 1 }, {}).subscribe({
       next: (data) => {
         this.stats = { total: data.totalElements || 0, active: 0, draft: 0, closed: 0 };
         this.configService.findAll({ ...DEFAULT_PAGE_PARAMS, size: 200 }, {}).subscribe({
@@ -218,8 +218,10 @@ export class SeatAllocationConfigComponent implements OnInit {
   }
 
   loadSessions() {
-    this.http.get<any>(`${environment.apiUrl}/academic-sessions?size=100`).subscribe({
-      next: (data) => { this.sessions = data.content || data || []; }
+    this.academicSessionService.findAll({ page: 0, size: 100, sortBy: 'id', sortDir: 'asc' }).pipe(
+      map(res => res.content || [])
+    ).subscribe({
+      next: (sessions) => { this.sessions = sessions; }
     });
   }
 

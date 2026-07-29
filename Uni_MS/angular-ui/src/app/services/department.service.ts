@@ -45,4 +45,12 @@ export class DepartmentService {
       map(res => res.content || res || [])
     );
   }
+
+  findByFaculty(facultyId: number, size: number = 200): Observable<any[]> {
+    let params = new HttpParams().set('page', '0').set('size', size.toString());
+    if (facultyId) params = params.set('facultyId', facultyId.toString());
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      map(res => res.content || res || [])
+    );
+  }
 }

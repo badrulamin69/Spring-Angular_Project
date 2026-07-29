@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdmissionAttendanceService } from '../../../services/admission-attendance.service';
+import { AdmissionTestService } from '../../../services/admission-test.service';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastService } from '../../../shared/toast/toast.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-test-attendance',
@@ -90,11 +89,11 @@ export class TestAttendanceComponent implements OnInit {
     { key: 'checkOutTime', label: 'Check Out', type: 'text' },
     { key: 'remarks', label: 'Remarks' }
   ];
-  constructor(private attService: AdmissionAttendanceService, private toast: ToastService, private http: HttpClient) {}
+  constructor(private attService: AdmissionAttendanceService, private admissionTestService: AdmissionTestService, private toast: ToastService) {}
   ngOnInit() { this.loadTests(); this.loadData(); }
   loadTests() {
-    this.http.get<any>(`${environment.apiUrl}/admission-tests?page=0&size=100`).subscribe({
-      next: (res) => { this.tests = res.content || res || []; },
+    this.admissionTestService.getForDropdown().subscribe({
+      next: (tests) => { this.tests = tests; },
       error: () => { this.tests = []; }
     });
   }

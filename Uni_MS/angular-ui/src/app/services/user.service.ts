@@ -38,4 +38,8 @@ export class UserService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  unlock(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}/unlock`, {});
+  }
 }

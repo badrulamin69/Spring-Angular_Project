@@ -190,7 +190,7 @@ public class AuthService {
         user.setActive(true);
         user.setEmailVerified(false);
 
-        String roleCode = registerRequest.getRoleCode() != null ? registerRequest.getRoleCode() : "ROLE_STUDENT";
+        String roleCode = "ROLE_STUDENT";
         Optional<Role> roleOpt = roleRepository.findByCode(roleCode);
         if (roleOpt.isPresent()) {
             Role role = roleOpt.get();

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChoiceFillingConfigService } from '../../../services/choice-filling-config.service';
+import { AcademicSessionService } from '../../../services/academic-session.service';
 import { DataTableComponent, TableColumn, RowAction } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-choice-filling-config',
@@ -213,8 +213,8 @@ export class ChoiceFillingConfigComponent implements OnInit {
 
   constructor(
     private configService: ChoiceFillingConfigService,
-    private toastService: ToastService,
-    private http: HttpClient
+    private academicSessionService: AcademicSessionService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -224,8 +224,10 @@ export class ChoiceFillingConfigComponent implements OnInit {
   }
 
   loadSessions() {
-    this.http.get<any>(`${environment.apiUrl}/academic-sessions?page=0&size=100`).subscribe({
-      next: (res) => { this.sessions = res.content || res || []; },
+    this.academicSessionService.findAll({ page: 0, size: 100, sortBy: 'id', sortDir: 'asc' }).pipe(
+      map(res => res.content || [])
+    ).subscribe({
+      next: (sessions) => { this.sessions = sessions; },
       error: () => { this.sessions = []; }
     });
   }

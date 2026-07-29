@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
+import { AdmissionAnalyticsService } from '../../../services/admission-analytics.service';
 
 @Component({
   selector: 'app-admission-analytics',
@@ -164,8 +163,6 @@ import { ToastComponent, ToastService } from '../../../shared/toast/toast.compon
   `]
 })
 export class AdmissionAnalyticsComponent implements OnInit {
-  private http: HttpClient;
-
   totalApplications = 0;
   approvedCount = 0;
   pendingCount = 0;
@@ -184,9 +181,10 @@ export class AdmissionAnalyticsComponent implements OnInit {
   loading = true;
   error = false;
 
-  constructor(http: HttpClient, private toastService: ToastService) {
-    this.http = http;
-  }
+  constructor(
+    private admissionAnalyticsService: AdmissionAnalyticsService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit() {
     this.loadData();
@@ -196,11 +194,7 @@ export class AdmissionAnalyticsComponent implements OnInit {
     this.loading = true;
     this.error = false;
 
-    const statsUrl = `${environment.apiUrl}/admission-applications/stats`;
-    const trendUrl = `${environment.apiUrl}/admission-applications/analytics/monthly-trend`;
-    const breakdownUrl = `${environment.apiUrl}/admission-applications/analytics/program-breakdown`;
-
-    this.http.get<any>(statsUrl).subscribe({
+    this.admissionAnalyticsService.getStats().subscribe({
       next: (s) => {
         this.totalApplications = (s.total || 0);
         this.approvedCount = s.approved || 0;
@@ -214,7 +208,7 @@ export class AdmissionAnalyticsComponent implements OnInit {
       error: () => this.toastService.error('Operation failed. Please try again.')
     });
 
-    this.http.get<any[]>(trendUrl).subscribe({
+    this.admissionAnalyticsService.getMonthlyTrend().subscribe({
       next: (data) => {
         this.monthlyData = data.map(d => d.count || 0);
         this.buildChart();
@@ -222,7 +216,7 @@ export class AdmissionAnalyticsComponent implements OnInit {
       error: () => this.toastService.error('Operation failed. Please try again.')
     });
 
-    this.http.get<any[]>(breakdownUrl).subscribe({
+    this.admissionAnalyticsService.getProgramBreakdown().subscribe({
       next: (data) => {
         this.programBreakdown = data;
         this.loading = false;

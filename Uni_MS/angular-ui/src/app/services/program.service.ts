@@ -46,4 +46,12 @@ export class ProgramService {
       map(res => res.content || res || [])
     );
   }
+
+  findByDepartment(departmentId: number, size: number = 200): Observable<any[]> {
+    let params = new HttpParams().set('page', '0').set('size', size.toString());
+    if (departmentId) params = params.set('departmentId', departmentId.toString());
+    return this.http.get<any>(this.apiUrl, { params }).pipe(
+      map(res => res.content || res || [])
+    );
+  }
 }

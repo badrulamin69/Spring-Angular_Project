@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { UserService } from '../../../services/user.service';
 import { SystemSettingService } from '../../../services/system-setting.service';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-account-lock-rules',
@@ -47,12 +46,12 @@ import { environment } from '../../../../environments/environment';
               <div class="form-group">
                 <label for="max_login_attempts">Max Login Attempts</label>
                 <input type="number" id="max_login_attempts" [(ngModel)]="settings.max_login_attempts" name="max_login_attempts" class="form-control" min="3" max="20">
-                <span class="form-hint">Number of failed attempts before lockout (3GÇô20)</span>
+                <span class="form-hint">Number of failed attempts before lockout (3Gï¿½ï¿½20)</span>
               </div>
               <div class="form-group">
                 <label for="lockout_duration_minutes">Lockout Duration (Minutes)</label>
                 <input type="number" id="lockout_duration_minutes" [(ngModel)]="settings.lockout_duration_minutes" name="lockout_duration_minutes" class="form-control" min="5" max="1440">
-                <span class="form-hint">How long the account stays locked (5GÇô1440 min)</span>
+                <span class="form-hint">How long the account stays locked (5Gï¿½ï¿½1440 min)</span>
               </div>
               <div class="form-group">
                 <label for="reset_attempts_after_minutes">Reset Attempts After (Minutes)</label>
@@ -288,7 +287,7 @@ export class AccountLockRulesComponent implements OnInit {
 
   constructor(
     private service: SystemSettingService,
-    private http: HttpClient,
+    private userService: UserService,
     private toastService: ToastService
   ) {}
 
@@ -328,10 +327,11 @@ export class AccountLockRulesComponent implements OnInit {
 
   loadLockedUsers() {
     this.loadingUsers = true;
-    this.http.get<any[]>(`${environment.apiUrl}/users`).subscribe({
-      next: (users) => {
+    this.userService.findAll({ page: 0, size: 200, sortBy: 'id', sortDir: 'asc' }).subscribe({
+      next: (res) => {
+        const users = res.content || [];
         const now = new Date();
-        this.lockedUsers = (users || []).filter((u: any) => {
+        this.lockedUsers = users.filter((u: any) => {
           if (!u.lockedUntil && !u.locked_until) return false;
           const lockedUntil = new Date(u.lockedUntil || u.locked_until);
           return lockedUntil > now;
@@ -357,7 +357,7 @@ export class AccountLockRulesComponent implements OnInit {
     const userId = this.selectedUserId;
     this.confirmOpen = false;
 
-    this.http.put(`${environment.apiUrl}/users/${userId}/unlock`, {}).subscribe({
+    this.userService.unlock(userId).subscribe({
       next: () => {
         this.toastService.success('Account unlocked successfully');
         this.loadLockedUsers();

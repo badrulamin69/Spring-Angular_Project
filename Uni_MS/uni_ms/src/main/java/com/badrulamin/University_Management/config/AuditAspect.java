@@ -99,7 +99,9 @@ public class AuditAspect {
                     return id != null ? id.toString() : null;
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            logger.debug("Failed to extract entity ID from response: {}", e.getMessage());
+        }
         return null;
     }
 
@@ -120,7 +122,9 @@ public class AuditAspect {
                 if (xff != null && !xff.isEmpty()) return xff.split(",")[0].trim();
                 return request.getRemoteAddr();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            logger.debug("Failed to extract client IP: {}", e.getMessage());
+        }
         return null;
     }
 
@@ -130,7 +134,9 @@ public class AuditAspect {
             if (attrs != null) {
                 return attrs.getRequest().getMethod();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            logger.debug("Failed to extract HTTP method: {}", e.getMessage());
+        }
         return "UNKNOWN";
     }
 }

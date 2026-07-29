@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SeatAllocationService } from '../../../services/seat-allocation.service';
+import { AdmissionTestService } from '../../../services/admission-test.service';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastService } from '../../../shared/toast/toast.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-seat-plan',
@@ -63,11 +62,11 @@ export class SeatPlanComponent implements OnInit {
     { key: 'roomName', label: 'Room' },
     { key: 'status', label: 'Status' }
   ];
-  constructor(private seatService: SeatAllocationService, private toast: ToastService, private http: HttpClient) {}
+  constructor(private seatService: SeatAllocationService, private admissionTestService: AdmissionTestService, private toast: ToastService) {}
   ngOnInit() { this.loadTests(); this.loadData(); }
   loadTests() {
-    this.http.get<any>(`${environment.apiUrl}/admission-tests?page=0&size=100`).subscribe({
-      next: (res) => { this.tests = res.content || res || []; },
+    this.admissionTestService.getForDropdown().subscribe({
+      next: (tests) => { this.tests = tests; },
       error: () => { this.tests = []; }
     });
   }

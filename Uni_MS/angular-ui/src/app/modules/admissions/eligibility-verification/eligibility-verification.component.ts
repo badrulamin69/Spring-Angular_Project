@@ -2,12 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EligibilityVerificationService } from '../../../services/eligibility-verification.service';
+import { AdmissionTestService } from '../../../services/admission-test.service';
 import { DataTableComponent, TableColumn } from '../../../shared/data-table/data-table.component';
 import { PagedResponse, PageParams, DEFAULT_PAGE_PARAMS } from '../../../models/paged-response';
 import { ToastComponent, ToastService } from '../../../shared/toast/toast.component';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-eligibility-verification',
@@ -179,8 +178,8 @@ export class EligibilityVerificationComponent implements OnInit {
 
   constructor(
     private service: EligibilityVerificationService,
-    private toastService: ToastService,
-    private http: HttpClient
+    private admissionTestService: AdmissionTestService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -189,8 +188,8 @@ export class EligibilityVerificationComponent implements OnInit {
   }
 
   loadTests() {
-    this.http.get<any>(`${environment.apiUrl}/admission-tests?page=0&size=100`).subscribe({
-      next: (res) => { this.tests = res.content || res || []; },
+    this.admissionTestService.getForDropdown().subscribe({
+      next: (tests) => { this.tests = tests; },
       error: () => { this.tests = []; }
     });
   }

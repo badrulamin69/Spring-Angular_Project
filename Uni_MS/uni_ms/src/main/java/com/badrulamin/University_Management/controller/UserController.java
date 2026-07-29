@@ -1,6 +1,7 @@
 package com.badrulamin.University_Management.controller;
 
-import com.badrulamin.University_Management.entity.User;
+import com.badrulamin.University_Management.payload.request.CreateUserRequest;
+import com.badrulamin.University_Management.payload.request.UpdateUserRequest;
 import com.badrulamin.University_Management.payload.response.ApiResponse;
 import com.badrulamin.University_Management.payload.response.PagedResponse;
 import com.badrulamin.University_Management.payload.response.UserResponse;
@@ -14,8 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -46,14 +45,14 @@ public class UserController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('USER_CREATE')")
-    public ResponseEntity<ApiResponse<UserResponse>> save(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(ApiResponse.success(userService.save(user)));
+    public ResponseEntity<ApiResponse<UserResponse>> save(@Valid @RequestBody CreateUserRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(userService.save(request)));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('USER_EDIT')")
-    public ResponseEntity<ApiResponse<UserResponse>> update(@PathVariable Long id, @Valid @RequestBody User user) {
-        return ResponseEntity.ok(ApiResponse.success(userService.update(id, user)));
+    public ResponseEntity<ApiResponse<UserResponse>> update(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest request) {
+        return ResponseEntity.ok(ApiResponse.success(userService.update(id, request)));
     }
 
     @DeleteMapping("/{id}")

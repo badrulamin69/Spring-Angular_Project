@@ -1,2 +1,0 @@
-package com.badrulamin.University_Management.controller;  import com.badrulamin.University_Management.entity.AcademicResult;
-import com.badrulamin.University_Management.payload.response.ApiResponse; import com.badrulamin.University_Management.service.AcademicResultService;

@@ -122,7 +122,7 @@ public class DashboardController {
 
     private long resolveCount(String dataSource) {
         if (dataSource == null) return 0;
-        return switch (dataSource) {
+        return  switch (dataSource) {
             case "students" -> studentRepository.count();
             case "administration" -> AdministrationRepository.count();
             case "employees" -> employeeRepository.count();
